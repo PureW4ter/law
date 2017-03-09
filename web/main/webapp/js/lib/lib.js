@@ -29,13 +29,6 @@ $("body").append('<div id="i_loading_content" class="loading_content"><div class
 //配置信息
 window.frontJSVersion = "{front_version}";
 
-window.frontJSHost = "{frontJSHost}";
-window.seckillHost = "{seckillHost}";
-window.frontJYGAPIHost = "{frontJYGAPIHost}";
-window.frontOPENAPIJSHost = "{frontOPENAPIJSHost}";
-window.secretID = "{secretID}";
-window.UrlHost = "{UrlHost}";
-
 window.imgHost = "http://7xlovk.com2.z0.glb.qiniucdn.com/upload/";
 
 requirejs.config({
@@ -53,17 +46,3 @@ if(path === "/"){
 require([path], function(o){
     o.initialize();
 });
-
-//百度统计
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?b3a53ffb354b14b6c135f896624db725";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-
-var tj = document.createElement("script");
-tj.src = "http://sdk.talkingdata.com/app/h5/v1?appid=121BB75F16417631A463E2EB92CC058A&vn=我享运营活动&vc=2.0.0";
-var s = document.getElementsByTagName("script")[0]; 
-s.parentNode.insertBefore(tj, s);
