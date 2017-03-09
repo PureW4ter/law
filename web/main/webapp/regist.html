@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <title>首页</title>
+</head>
+<body>
+    <div id="i_main">
+        <!-- header -->
+        <div id="i_headbox">
+        </div>
+        <!--body-->
+        <div id="i_mainbox" style="background-color:#ffffff">
+            <div>
+                <img src="img/index_banner.jpg">
+            </div>
+            <div class="input_bxinfo">
+                <div class="input_section">
+                    <label>手机号码</label>
+                    <input placeholder="请输入您的手机号码" id="i_phone"/>
+                </div>
+                <div class="input_section">
+                    <label>验证码</label>
+                    <div>
+                        <div class="code_input">
+                            <input type="number" id="i_input_code" placeholder="请输入验证密码"/>
+                        </div>
+                        <span id="i_getcode_btn"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="regist_btn" id="i_regist_btn">绑定</div>
+        </div>
+    </div>
+</body>
+<script src="js/lib/jweixin-1.0.0.js"></script>
+<script src="js/lib/lib.js?ver={front_version}" type="text/javascript"></script>
+<script type="text/javascript">
+    //jscontent//
+</script>
+</html>

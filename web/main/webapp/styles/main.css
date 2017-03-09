@@ -543,6 +543,61 @@ header h1 {
     color: #999;
 }
 
+/*倒计时*/
+.code_input {
+    padding-right: 120px;
+}
+.getCodeBtn {
+    position: absolute;
+    right: 0;
+    top: 4px;
+    display: inline-block;
+    line-height: 36px;
+    font-size: 12px;
+    color: #ffffff;
+    width: 90px;
+    cursor: pointer;
+    background-color: #be9564;
+    text-align: center;
+    border-radius: 3px;
+}
+.getCodeBtn.time_button_disable {
+    color: #999999;
+}
+
+
+.input_bxinfo {
+  background: #fff;
+  color: #666666;
+  position: relative;
+  overflow: hidden;
+  font-size: 14px;
+  padding: 0 15px;
+}
+
+.input_section {
+  border-bottom: 1px solid #efefef;
+  padding-left: 68px;
+  position: relative;
+  min-height: 44px;
+}
+
+.input_section label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 44px;
+}
+.input_section input {
+  height: 44px;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+  overflow: hidden;
+}
+.input_section select{
+  height: 44px;
+  line-height: 44px;
+}
 /*首页*/
 .index_botton_box{
     position: absolute;
@@ -625,4 +680,25 @@ header h1 {
     bottom: 18px;
     width: 54px;
     right: 0px;
+}
+/*注册页面*/
+.regist_btn {
+    position: absolute;
+    height: 32px;
+    margin-top: 27px;
+    text-align: center;
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #be9564;
+    color: #ffffff;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    left: 15px;
+    right: 15px;
+    -webkit-tap-highlight-color: #e8aa01;
+}
+
+.regist_btn:active {
+    background: #e8aa01;
 }
