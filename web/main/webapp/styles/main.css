@@ -566,7 +566,7 @@ header h1 {
 .index_button_r{
     padding-left: 5px;
 }
-.index_icons{
+.index_icons_box {
     position: absolute;
     left: 0;
     right: 0;
@@ -574,22 +574,51 @@ header h1 {
     bottom: 0;
     text-align: center;
 }
-.index_icons img{
-    width: 70px;
-    display: inline-block;
-    margin-top: 10%;
+.index_icons {
+    background-image: url(../img/index_icons.png);
+    background-repeat: no-repeat;
+    background-size: 740px;
+    width: 68px;
+    height: 95px;
+    margin: 0 auto;
+    top: 12%;
+    position: relative;
 }
-.icon_text{
-    color: #b5b5b5;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 12px;
+.index_icon_1 {
+    background-position: -445px -47px;
 }
-.icon_text_r{
-    color: #c9a063;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 12px;
+.index_icon_2{
+    background-position: -628px -47px;
+}
+.index_icon_3{
+    background-position: -445px -182px;
+}
+.index_icon_4{
+    background-position: -628px -182px;
+}
+.index_icon_5{
+    background-position: -442px -317px;
+}
+.index_icon_6{
+    background-position: -628px -317px;
+}
+.index_icon_1a {
+    background-position: -47px -47px;
+}
+.index_icon_2a{
+    background-position: -232px -47px;
+}
+.index_icon_3a{
+    background-position: -47px -182px;
+}
+.index_icon_4a{
+    background-position: -232px -182px;
+}
+.index_icon_5a{
+    background-position: -43px -317px;
+}
+.index_icon_6a{
+    background-position: -232px -317px;
 }
 .pop{
     position: absolute;
