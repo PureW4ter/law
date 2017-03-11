@@ -698,7 +698,250 @@ header h1 {
     right: 15px;
     -webkit-tap-highlight-color: #e8aa01;
 }
-
 .regist_btn:active {
     background: #e8aa01;
+}
+/*精准阅读*/
+.read_title_box{
+    width: 100%;
+    height: 135px;
+    background-color: #ffffff;
+    text-align: center;
+}
+.read_title1{
+    font-size: 24px;
+    color: #333333;
+    height: 81px;
+    line-height: 95px;
+}
+.read_title2{
+    font-size: 14px;
+    color: #999999;
+}
+.read_bottom_box{
+    position: fixed;
+    bottom: 0;
+    height: 29px;
+    width: 100%;
+    padding: 15px;
+    background-color: #ffffff;
+}
+.read_bottom_info{
+    padding-top: 7px;
+    font-size: 14px;
+    color: #333333;
+}
+
+.regular_checkbox {
+    -webkit-appearance: none;
+    width: initial;
+    background-color: #fafafa;
+    border: 1px solid #be9564;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative
+}
+.read_bottom_info>label{
+    position: relative;
+    top: -3px;
+}
+.read_bottom_btn{
+    position: absolute;
+    right: 51px;
+    top: 19px;
+    height: 26px;
+    width: 100px;
+    text-align: center;
+    line-height: 26px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #be9564;
+    color: #ffffff;
+    border-radius: 20px;
+    letter-spacing: 2px;
+}
+.read_keys{
+    position: relative;
+}
+.read_keys>.small{
+    position: absolute;
+    border: 1px solid #999999;
+    border-radius: 50%;
+    color: #999999;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    font-size: 14px;
+}
+.read_keys>.middle{
+    position: absolute;
+    border: 1px solid #999999;
+    border-radius: 50%;
+    color: #999999;
+    width: 90px;
+    height: 90px;
+    text-align: center;
+    line-height: 90px;
+    font-size: 18;
+}
+.read_keys>.big{
+    position: absolute;
+    border: 1px solid #999999;
+    border-radius: 50%;
+    color: #999999;
+    width: 120px;
+    height: 120px;
+    text-align: center;
+    line-height: 120px;
+    font-size: 20px;
+}
+.read_keys>.law{
+    left: 27px;
+    top: 27px;
+}
+.read_keys>.house{
+    left: 101px;
+    top: 59px;
+}
+.read_keys>.estate{
+    right: 43px;
+    top: 55px;
+}
+.read_keys>.divorce{
+    left: 15px;
+    top: 176px;
+}
+.read_keys>.tax{
+    left: 150px;
+    top: 183px;
+}
+.read_keys>.property{
+    right: 38px;
+    top: 213px;
+}
+.read_keys>.hukou{
+    left: 129px;
+    top: 268px;
+}
+.read_keys>.contact{
+    left: 30px;
+    top: 355px
+}
+.read_keys>.rule{
+    left: 141px;
+    top: 338px;
+}
+.read_keys>.huji{
+    right: 23px;
+    top: 354px;
+}
+/*阅读列表*/
+.read_list_box{
+    position: relative;
+    background-color: #ffffff;
+    padding: 15px 15px 15px 120px;
+    border-bottom: 1px solid #efefef;
+}
+.read_list_img{
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    width: 100px;
+    height: 100px;
+}
+.read_list_title{
+    font-size: 18px;
+    font-weight: bold;
+}
+.read_list_content{
+    color: #666666;
+    font-size: 14px;
+    padding: 10px 0;
+}
+.read_list_subtitle{
+    position: relative;
+    overflow: hidden;
+    font-size: 12px;
+}
+.read_list_subtitle>div{
+    position: relative;
+    float: right;
+}
+.read_list_subtitle>div>span{
+    color:#be9564;
+}
+/*阅读详情*/
+.read_detail_box{
+    position: relative;
+    margin: 15px;
+    padding: 15px;
+    border: 1px solid #eeeeee;
+    color: #666666;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+.read_detail_title{
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    line-height: 44px;
+}
+.read_detail_keys{
+    font-size: 12px;
+    color: #666666;
+    margin: 0 15px;
+}
+.read_detail_related{
+    font-weight: bold;
+    color: #666666;
+    margin: 0 15px;
+    height: 44px;
+    line-height: 56px;
+}
+.product_info_box{
+    position: relative;
+    padding: 15px 10px 30px 75px;
+}
+.product_info_detail{
+    padding: 15px 15px 15px 50px;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    margin-bottom: 40px;
+    border-radius: 5px;
+    font-size: 13px;
+    color: #999999;
+}
+.product_info_noselected_btn{
+    position: absolute;
+    left: 15px;
+    top:30px;
+    height: 26px;
+    width: 100px;
+    text-align: center;
+    line-height: 26px;
+    font-size: 14px;
+    background: #ffffff;
+    color: #666666;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    letter-spacing: 2px;
+}
+.product_info_selected_btn{
+    position: absolute;
+    left: 15px;
+    top: 70px;
+    width: 100px;
+    height: 26px;
+    width: 100px;
+    text-align: center;
+    line-height: 26px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #be9564;
+    color: #ffffff;
+    border-radius: 20px;
+    letter-spacing: 2px;
 }
