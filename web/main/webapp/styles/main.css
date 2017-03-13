@@ -598,6 +598,26 @@ header h1 {
   height: 44px;
   line-height: 44px;
 }
+.arrow_down{
+    padding-right: 35px !important;
+}
+.arrow_down:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: 15px;
+    top: 40%;
+    margin-top: -5px;
+    border-top: 2px solid #ccc;
+    border-right: 2px solid #ccc;
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+
 /*首页*/
 .index_botton_box{
     position: absolute;
@@ -727,7 +747,7 @@ header h1 {
     background-color: #ffffff;
 }
 .read_bottom_info{
-    padding-top: 7px;
+    padding-top: 9px;
     font-size: 14px;
     color: #333333;
 }
@@ -1056,4 +1076,57 @@ header h1 {
     border: 1px solid #cccccc;
     border-radius: 20px;
     letter-spacing: 2px;
+}
+/*代查户口*/
+.new_input_section{
+    position: absolute;
+    width: 100%;
+    top: -31px;
+}
+.new_input_box{
+    position: relative;
+    margin: 0 15px;
+    padding: 0 15px;
+    background-color: #ffffff;
+    padding-left: 75px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+}
+.new_input_box>label{
+    position: absolute;
+    left: 15px;
+    color: #333333;
+    line-height: 44px;
+}
+.new_input_box>input{
+  height: 44px;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-align: right;
+}
+.money{
+    color: #be9564;
+    font-size: 16px;
+    font-weight: bold;
+}
+/*免费咨询*/
+.free_ask_box{
+    margin: 0 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 15px;
+    background-color: #ffffff;
+}
+.free_ask_box textarea{
+    width: 100%;
+    background-color: #ffffff;
+    border: 0px solid #cccccc;
+    resize:none;
+}
+.free_ask_intro{
+    font-size: 12px;
+    color: #999999;
+    margin: 0 15px;
 }
