@@ -968,3 +968,79 @@ header h1 {
     font-size: 14px;
     color: #999999;
 }
+/*完善问题信息*/
+.question_complete_title1{
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+    width: 100%;
+    line-height: 91px;
+    height: 77px;
+}
+.question_complete_title2{
+    font-size: 14px;
+    color: #666666;
+    text-align: center;
+    width: 100%
+}
+.question_complete_box{
+    margin: 40px 15px 0 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 15px;
+    background-color: #ffffff;
+}
+.question_complete_box textarea{
+    width: 100%;
+    background-color: #ffffff;
+    border: 0px solid #cccccc;
+    resize:none;
+}
+.question_complete_imgs{
+    background-color: #ffffff;
+    margin: 0 15px;
+    border-top: 1px solid #efefef;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.question_complete_imgs>ul{
+    position: relative;
+    overflow: hidden;
+    padding: 15px 0px 15px 15px;
+}
+.question_complete_imgs>ul>li{
+    position: relative;
+    float: left;
+    width: 25%;
+    padding-right: 15px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+.ok_btn{
+    height: 26px;
+    width: 100px;
+    text-align: center;
+    line-height: 26px;
+    font-size: 14px;
+    background: #be9564;
+    color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    margin: 30px auto 0 auto;
+}
+.cancel_btn{
+    height: 26px;
+    width: 100px;
+    text-align: center;
+    line-height: 26px;
+    font-size: 14px;
+    background: #cccccc;
+    color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    margin: 5px auto 0 auto;
+}
