@@ -1018,7 +1018,20 @@ header h1 {
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
+.question_btns{
+    position: relative;
+    margin-top: 30px;
+    overflow: hidden;
+}
+.question_btns>li{
+    position: relative;
+    float: left;
+    width: 50%;
+    height: 60px;
+}
 .ok_btn{
+    position: absolute;
+    right: 5px;
     height: 26px;
     width: 100px;
     text-align: center;
@@ -1029,9 +1042,10 @@ header h1 {
     border: 1px solid #cccccc;
     border-radius: 20px;
     letter-spacing: 2px;
-    margin: 30px auto 0 auto;
 }
 .cancel_btn{
+    position: absolute;
+    left: 5px;
     height: 26px;
     width: 100px;
     text-align: center;
@@ -1042,5 +1056,4 @@ header h1 {
     border: 1px solid #cccccc;
     border-radius: 20px;
     letter-spacing: 2px;
-    margin: 5px auto 0 auto;
 }
