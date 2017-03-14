@@ -746,6 +746,9 @@ header h1 {
     padding: 15px;
     background-color: #ffffff;
 }
+.bottom_height{
+    height: 70px;
+}
 .read_bottom_info{
     padding-top: 9px;
     font-size: 14px;
@@ -763,6 +766,32 @@ header h1 {
     display: inline-block;
     position: relative
 }
+
+.regular_checkbox:checked:after {
+    content: "";
+    position: absolute;
+    left: 1px;
+    bottom: 1px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #be9564;
+}
+/*.regular_checkbox:checked+label:after {
+    content: "";
+    position: absolute;
+    left: -18px;
+    bottom: 7px;
+    width: 9px;
+    height: 4px;
+    border-bottom: 3px solid #be9564;
+    border-left: 3px solid #be9564;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}*/
 .read_bottom_info>label{
     position: relative;
     top: -3px;
@@ -1079,9 +1108,8 @@ header h1 {
 }
 /*代查户口*/
 .new_input_section{
-    position: absolute;
     width: 100%;
-    top: -31px;
+    margin-top: -31px;
 }
 .new_input_box{
     position: relative;
@@ -1106,6 +1134,14 @@ header h1 {
   white-space: nowrap; 
   overflow: hidden;
   text-align: right;
+}
+.new_input_box2.new_input_box>label{
+    color: #be9564;
+}
+.new_input_box2.new_input_box>input{
+    height: initial;
+    float: right;
+    top: 16px;
 }
 .money{
     color: #be9564;
