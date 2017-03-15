@@ -1298,3 +1298,50 @@ header h1 {
     width: 59px;
     height: 18px;
 }
+/*我的订单*/
+.my_op_btn{
+    display: inline-block;
+    border: 1px solid #be9564;
+    font-size: 14px;
+    color: #be9564;
+    height: 20px;
+    width: 41px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 3px;
+}
+.my_op_status{
+    display: inline-block;
+    position: relative;
+    float: left;
+    font-size: 14px;
+    color: #be9564;
+}
+.my_op_status_r{
+    display: inline-block;
+    position: relative;
+    float: right;
+}
+.my_op_bar{
+    position: absolute;
+    left: 0;
+    right: 10px;
+    top: 10px;
+    display: inline-block;
+    margin: 6px 75px;
+    height: 10px;
+    background-color: #be9564;
+    border-radius: 5px;
+    z-index: 9;
+}
+.my_op_bar2{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10px;
+    display: inline-block;
+    margin: 6px 75px;
+    height: 10px;
+    background-color: #cccccc;
+    border-radius: 5px;
+}
