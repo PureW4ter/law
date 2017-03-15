@@ -1126,7 +1126,7 @@ header h1 {
     position: absolute;
     left: 15px;
     color: #333333;
-    line-height: 44px;
+    padding: 12px 0;
 }
 .new_input_box>input{
   height: 44px;
@@ -1192,9 +1192,12 @@ header h1 {
     background: #be9564;
     border: 0 solid #ffffff;
 }
-.quesiton_label1{
+.quesiton_intro{
+    position: relative;
     font-size: 12px;
-    color: #999999 !important;
+    color: #999999;
+    padding: 12px 0;
+    left: -62px;
 }
 .quesiton_bottom_info{
     font-size: 14px;
