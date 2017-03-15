@@ -952,48 +952,51 @@ header h1 {
 }
 .product_info_box{
     position: relative;
-    padding: 15px 10px 30px 75px;
+    padding: 15px 10px 0 75px;
 }
 .product_info_detail{
     padding: 15px 15px 15px 50px;
     border: 1px solid #cccccc;
     background-color: #ffffff;
-    margin-bottom: 40px;
     border-radius: 5px;
     font-size: 13px;
     color: #999999;
 }
-.product_info_noselected_btn{
+.product_info_btn{
     position: absolute;
     left: 15px;
-    top:30px;
-    height: 26px;
     width: 100px;
+    height: 26px;
     text-align: center;
     line-height: 26px;
     font-size: 14px;
+    border-radius: 20px;
+    letter-spacing: 2px;
+}
+.product_info_btn1{
+    top:30px;
+}
+.product_info_btn2{
+    top:70px;
+}
+.product_info_btn3{
+    top:110px;
+}
+.product_info_btn4{
+    top:150px;
+}
+
+.product_info_onselected{
     background: #ffffff;
     color: #666666;
     border: 1px solid #cccccc;
-    border-radius: 20px;
-    letter-spacing: 2px;
 }
-.product_info_selected_btn{
-    position: absolute;
-    left: 15px;
-    top: 70px;
-    width: 100px;
-    height: 26px;
-    width: 100px;
-    text-align: center;
-    line-height: 26px;
-    font-size: 14px;
+.product_info_selected{
     font-weight: bold;
     background: #be9564;
     color: #ffffff;
-    border-radius: 20px;
-    letter-spacing: 2px;
 }
+
 /*完成页*/
 .finish_box{
     width: 100%;
