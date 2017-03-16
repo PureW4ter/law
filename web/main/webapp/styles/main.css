@@ -1323,16 +1323,13 @@ header h1 {
     float: right;
 }
 .my_op_bar{
-    position: absolute;
-    left: 0;
-    right: 10px;
-    top: 10px;
+    position: relative;
+    top: -17px;
+    width: 30%;
     display: inline-block;
-    margin: 6px 75px;
     height: 10px;
     background-color: #be9564;
     border-radius: 5px;
-    z-index: 9;
 }
 .my_op_bar2{
     position: absolute;
