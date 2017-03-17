@@ -1,5 +1,5 @@
 define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
-    var HukouSearch = {
+    var ReadList = {
         initialize :function(){
 			//request
 			this._sendRequest();
@@ -11,11 +11,11 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			this._registEvent();
 		},
 		_registEvent:function(){
-			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
+			$(".read_list_box").off("click", this._go).on("click", {ctx: this}, this._go);
 		},
-		_pay:function(e){
-			window.location = "question_complete.html";
+		_go:function(e){
+			window.location = "read_detail.html";
 		}
     };
-    return HukouSearch;
+    return ReadList;
 });

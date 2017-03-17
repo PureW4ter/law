@@ -11,10 +11,10 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			this._registEvent();
 		},
 		_registEvent:function(){
-			$("#i_one").off("click", this._go).on("click", {ctx: this}, this._go);
+			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
 		},
-		_go:function(e){
-			window.location = "";
+		_pay:function(e){
+			window.location = "question_complete.html";
 		}
     };
     return AskPay;
