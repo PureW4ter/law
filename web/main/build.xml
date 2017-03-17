@@ -1,5 +1,5 @@
 <project  name="web-project" default="publish">
-	<property name="app.name" value="events" />
+	<property name="app.name" value="law" />
 	<property name="version" value="1.0" />
 	<property name="config.file" value="config.properties" />
 	<taskdef resource="net/sf/antcontrib/antlib.xml"/>
