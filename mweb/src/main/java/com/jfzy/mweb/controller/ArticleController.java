@@ -16,7 +16,7 @@ import com.jfzy.mweb.vo.TagVO;
 public class ArticleController {
 
 	@ResponseBody
-	@GetMapping("/article/tags")
+	@GetMapping("/article/tag")
 	public ResponseVO<List<TagVO>> getTags() {
 
 		return new ResponseVO<List<TagVO>>(ResponseStatusEnum.SUCCESS.getCode(), null, new ArrayList<TagVO>());

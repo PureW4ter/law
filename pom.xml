@@ -16,6 +16,7 @@
 	</properties>
 	<modules>
 		<module>mweb</module>
-		
+
+		<module>jf-service</module>
 	</modules>
 </project>
