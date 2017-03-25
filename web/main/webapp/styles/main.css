@@ -647,9 +647,11 @@ header h1 {
     right: 0;
     top: 0;
     bottom: 0;
+    height: 100%;
     text-align: center;
 }
 .index_icons {
+    position: relative;
     background-image: url(../img/index_icons.png);
     background-repeat: no-repeat;
     background-size: 740px;
@@ -662,7 +664,6 @@ header h1 {
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    position: relative;
 }
 .index_icon_1 {
     background-position: -445px -47px;
