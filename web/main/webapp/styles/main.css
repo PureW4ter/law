@@ -92,7 +92,7 @@ label > * {
 /*base.css end*/
 body {
     min-width: 320px;
-    background: #eeeeee;
+    background: #f8f8f8;
     color: #000000;
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -897,29 +897,35 @@ header h1 {
 .read_list_box{
     position: relative;
     background-color: #ffffff;
-    padding: 15px 15px 15px 120px;
-    border-bottom: 1px solid #efefef;
+    padding: 15px;
+    border: 1px solid #efefef;
+    border-radius: 5px;
+    margin: 15px 15px 0 15px;
 }
-.read_list_img{
+.read_list_img_box{
+    position: relative;
+}
+.read_list_img_title{
     position: absolute;
-    left: 10px;
-    top: 20px;
-    width: 100px;
-    height: 100px;
-}
-.read_list_title{
-    font-size: 18px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(203, 174, 129, 0.6);
+    padding: 10px;
+    color: #ffffff;
+    font-size: 14px;
     font-weight: bold;
 }
 .read_list_content{
-    color: #666666;
-    font-size: 14px;
+    color: #b5b5b5;
+    font-size: 13px;
     padding: 10px 0;
 }
 .read_list_subtitle{
     position: relative;
     overflow: hidden;
     font-size: 12px;
+    color: #898989;
 }
 .read_list_subtitle>div{
     position: relative;
@@ -928,6 +934,7 @@ header h1 {
 .read_list_subtitle>div>span{
     color:#be9564;
 }
+
 /*阅读详情*/
 .read_detail_box{
     position: relative;
@@ -1040,7 +1047,8 @@ header h1 {
     font-size: 14px;
     color: #666666;
     text-align: center;
-    width: 100%
+    width: 100%;
+    color: red;
 }
 .question_complete_box{
     margin: 40px 15px 0 15px;
