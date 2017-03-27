@@ -92,7 +92,7 @@ label > * {
 /*base.css end*/
 body {
     min-width: 320px;
-    background: #eeeeee;
+    background: #f8f8f8;
     color: #000000;
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -647,17 +647,23 @@ header h1 {
     right: 0;
     top: 0;
     bottom: 0;
+    height: 100%;
     text-align: center;
 }
 .index_icons {
+    position: relative;
     background-image: url(../img/index_icons.png);
     background-repeat: no-repeat;
     background-size: 740px;
     width: 68px;
     height: 95px;
     margin: 0 auto;
-    top: 12%;
-    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 .index_icon_1 {
     background-position: -445px -47px;
@@ -891,29 +897,35 @@ header h1 {
 .read_list_box{
     position: relative;
     background-color: #ffffff;
-    padding: 15px 15px 15px 120px;
-    border-bottom: 1px solid #efefef;
+    padding: 15px;
+    border: 1px solid #efefef;
+    border-radius: 5px;
+    margin: 15px 15px 0 15px;
 }
-.read_list_img{
+.read_list_img_box{
+    position: relative;
+}
+.read_list_img_title{
     position: absolute;
-    left: 10px;
-    top: 20px;
-    width: 100px;
-    height: 100px;
-}
-.read_list_title{
-    font-size: 18px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(203, 174, 129, 0.8);
+    padding: 5px;
+    color: #ffffff;
+    font-size: 14px;
     font-weight: bold;
 }
 .read_list_content{
-    color: #666666;
-    font-size: 14px;
+    color: #b5b5b5;
+    font-size: 13px;
     padding: 10px 0;
 }
 .read_list_subtitle{
     position: relative;
     overflow: hidden;
     font-size: 12px;
+    color: #898989;
 }
 .read_list_subtitle>div{
     position: relative;
@@ -922,6 +934,7 @@ header h1 {
 .read_list_subtitle>div>span{
     color:#be9564;
 }
+
 /*阅读详情*/
 .read_detail_box{
     position: relative;
@@ -950,9 +963,13 @@ header h1 {
     height: 44px;
     line-height: 56px;
 }
-.product_info_box{
+.product_info_box_rel{
     position: relative;
-    padding: 15px 10px 0 75px;
+}
+.product_info_box{
+    position: absolute;
+    top: -45px;
+    padding: 0 10px 0 75px;
 }
 .product_info_detail{
     padding: 15px 15px 15px 50px;
@@ -960,35 +977,73 @@ header h1 {
     background-color: #ffffff;
     border-radius: 5px;
     font-size: 13px;
-    color: #999999;
+    color: #b5b5b6;
 }
 .product_info_btn{
     position: absolute;
     left: 15px;
     width: 100px;
-    height: 26px;
+    height: 30px;
     text-align: center;
-    line-height: 26px;
+    line-height: 30px;
     font-size: 14px;
     border-radius: 20px;
     letter-spacing: 2px;
 }
 .product_info_btn1{
-    top:30px;
+    top:65px;
 }
 .product_info_btn2{
-    top:70px;
+    top:115px;
 }
 .product_info_btn3{
-    top:110px;
+    top:165px;
 }
 .product_info_btn4{
-    top:150px;
+    top:215px;
 }
+.check_btn{
+    position: relative;
+    bottom: -17px;
+    right: 18px;
+}
+.check_btn:before {
+    content: '';
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    background-color: #be9564;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.check_btn:after {
+        content: '';
+    position: absolute;
+    width: 18px;
+    height: 35px;
+    right: 31px;
+    margin-top: -10px;
+    top: 50%;
+    border-bottom: 3px solid #ffffff;
+    border-right: 3px solid #ffffff;
+    -webkit-transform: rotate(45deg) translateY(-50%);
+    -moz-transform: rotate(45deg) translateY(-50%);
+    -ms-transform: rotate(45deg) translateY(-50%);
+    -o-transform: rotate(45deg) translateY(-50%);
+    transform: rotate(45deg) translateY(-50%);
+}
+
 
 .product_info_onselected{
     background: #ffffff;
-    color: #666666;
+    color: #9fa0a0;
     border: 1px solid #cccccc;
 }
 .product_info_selected{
@@ -1032,9 +1087,10 @@ header h1 {
 }
 .question_complete_title2{
     font-size: 14px;
-    color: #666666;
     text-align: center;
-    width: 100%
+    width: 100%;
+    color: #be9564;
+    font-weight: bold;
 }
 .question_complete_box{
     margin: 40px 15px 0 15px;
@@ -1113,6 +1169,26 @@ header h1 {
 .new_input_section{
     width: 100%;
     margin-top: -31px;
+}
+.input_upper{
+    background-color: #ffffff;
+    padding: 5px 15px;
+    margin: 0 15px;
+    font-size: 12px;
+    color: #c9a063;
+    border: 1px solid #efefef;
+    border-bottom: 0;
+    border-radius: 5px;
+}
+.input_bottom{
+    background-color: #ffffff;
+    padding: 5px 15px;
+    margin: 0 15px;
+    font-size: 12px;
+    color: #b5b5b6;
+    border: 1px solid #efefef;
+    border-top: 0;
+    border-radius: 5px;
 }
 .new_input_box{
     position: relative;
@@ -1209,6 +1285,98 @@ header h1 {
 .quesiton_bottom_info2{
     font-size: 12px;
     color: #999999;
+}
+.quesiton_count_title{
+    margin: 15px 15px 5px 15px;
+    color: #b5b5b6;
+    font-size: 12px;
+}
+.question_pay{
+    margin: 5px 5px 15px 15px;
+}
+.question_pay>ul{
+    position: relative;
+    overflow: hidden;
+}
+.question_pay>ul>li{
+    position: relative;
+    width: 50%;
+    float: left;
+    text-align: center;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+.question_pay_box{
+    margin-right: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+}
+
+.question_pay_title1{
+    color: #595757;
+    font-size: 14px;
+    line-height: 32px;
+    height: 26px;
+}
+.question_pay_title2{
+    color: #b5b5b6;
+    font-size: 12px;
+    line-height: 28px;
+    height: 21px;
+}
+.question_pay_title3{
+    color: #c9a063;
+    font-size: 21px;
+    line-height: 40px;
+    height: 42px;
+}
+.question_pay_selected:before{
+    content:'';
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-bottom: 30px solid #c9a063;
+    border-left: 40px solid transparent;
+}
+.question_pay_selected:after{
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    width: 6px;
+    height: 12px;
+    right: 22px;
+    margin-top: -2px;
+    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+    -webkit-transform: rotate(45deg) translateY(-50%);
+    -moz-transform: rotate(45deg) translateY(-50%);
+    -ms-transform: rotate(45deg) translateY(-50%);
+    -o-transform: rotate(45deg) translateY(-50%);
+    transform: rotate(45deg) translateY(-50%);
+
+}
+.pay_btn {
+    position: relative;
+    height: 32px;
+    width: 100px;
+    margin-top: 27px;
+    text-align: center;
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #be9564;
+    color: #ffffff;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    margin: 0 auto;
+    -webkit-tap-highlight-color: #e8aa01;
+}
+.pay_btn:active {
+    background: #e8aa01;
 }
 /*调查回复*/
 .invest_result_tab{
