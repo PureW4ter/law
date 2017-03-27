@@ -19,7 +19,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			$("#i_my").off("click", this._goMy).on("click", {ctx: this}, this._goMy);
 		},
 		_goActivities:function(e){
-			window.location = "https://mp.weixin.qq.com/s?__biz=MzIxOTQyNDQ5NA==&mid=2247483836&idx=1&sn=d4f63d2fc4d90ac91c4435ac31a40ca7&chksm=97da323da0adbb2bcc6e2e05adaf4ce224d5fc0d0a0350dfc9d2a0027f6f32dbab92f58ca0d6&mpshare=1&scene=1&srcid=03239YygbTAGSW5rFJ5VNqR9&key=317ecbca617f644bb476ce4dfb73c7d63e13670af9021da072d2ff1e70b6f7daf3790b3b88b2690cf07d431f94b7cc9659d1e80d7d77ffeeedb2d0e9677b57b5dc141200f09fe3667f138bc64050248e&ascene=0&uin=MTEwMTQ3NjcwMg%3D%3D&devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.10.5+build(14F1808)&version=12020010&nettype=WIFI&fontScale=100&pass_ticket=KoXM62J0vCFrlZ%2F2QEwZxO%2FnrXuULrlMtEdKX1Rc8vOndQUdIUtBMVCjasLOiDMF";
+			window.location = "https://mp.weixin.qq.com/mp/homepage?__biz=MzI1MjM5NjQxMQ==&hid=2&sn=c06582c69f67b164fe2d430ccda2f220&uin=MTEwMTQ3NjcwMg%3D%3D&key=2262e7a374f390cb7c3afe006611807c3a64ebfd2a6fdb6c55f26ded1c0162c3c32354cb3d2a903d87132d3a2d34d66f33d998f7bd8eff360b92fe2da4c8256dc0c23ab6d2b508c570a85069bce0a4f3&devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.10.5+build(14F1808)&version=12020010&lang=zh_CN&nettype=WIFI&fontScale=100&pass_ticket=frESnNfvtzM2taC%2BagH61Y53hOKWUFfkVzm%2Fti4kWw72r2o%2FPiTvOQnBGtYdA9kG";
 		},
 		_goRead:function(e){
 			window.location = "read_keys.html";
