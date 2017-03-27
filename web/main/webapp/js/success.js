@@ -1,7 +1,6 @@
-define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, util, timeBtn) {
+define(['ajaxhelper', 'utility'], function(ajaxHelper, util) {
     var Regist = {
         initialize: function() {
-           timeBtn.initialize("i_getcode_btn");
         },
     };
     return Regist;
