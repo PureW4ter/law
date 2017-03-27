@@ -24,7 +24,7 @@
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
-                        <label>交易阶段</label>
+                        <label>目前所处的交易阶段</label>
                         <input placeholder="未付定价" id="i_phone"/>
                     </div>
                     <div class="blk10"></div>
@@ -52,32 +52,42 @@
                         </div>
                     </div>
                     <div class="blk10"></div>
+                    <div class="input_upper">
+                        上传合同文本，可以帮助律师做出准确判断
+                    </div>
                     <div class="new_input_box arrow_down">
-                        <label>需上传的合同</label>
+                        <label>我已经签署了</label>
                         <input placeholder="居间协议/买卖合同" id="i_phone"/>
                     </div>
-                    <div class="new_input_box">
-                        <div class="quesiton_intro">提示：根据选择的合同类型做提示说明</div>
+                    <div class="input_bottom">
+                        提示：根据选择的合同类型做提示说明
+                    </div>
+                    <div class="quesiton_count_title">提交后进入回复倒计时</div>
+                    <div class="question_pay">
+                        <ul>
+                            <li class="question_pay_selected">
+                                <div class="question_pay_title1">2小时内电话回复</div>
+                                <div class="question_pay_title2">24小时内书面回复</div>
+                                <div class="question_pay_title3">¥129</div>
+                            </li>
+                            <li>
+                                <div class="question_pay_title1">24小时内书面回复</div>
+                                <div class="question_pay_title2">&nbsp;</div>
+                                <div class="question_pay_title3">¥99</div>
+                            </li>
+                        </ul>
                     </div>
                     <div class="blk10"></div>
-                    <div class="new_input_box new_input_box2">
-                        <label>加急处理</label>
-                        <input name="i_check" type="checkbox" class="regular_checkbox"/>
-                    </div>
-                    <div class="new_input_box">
-                        <div class="quesiton_intro">提示：加急后，（8:00-22:00）付款后两小时将会接到律师回复电话，不加急则为工作日48小时内直接给书面回复意见。</div>
-                    </div>
-                    <div class="bottom_height"></div>
+                    <div class="pay_btn" id="i_pay_btn">去支付</div>
                 </div>
             </div>
         </div>
-        <div class="read_bottom_box">
+        <!--div class="read_bottom_box">
             <div class="quesiton_bottom_info">
                 您需支付：<span class="money">￥10000</span>
             </div>
-            <!--div class="quesiton_bottom_info2">明细：基本费用¥256+合同页数¥50（10*5）+加急¥50</div-->
             <div class="read_bottom_btn" id="i_pay">确认</div>
-        </div>
+        </div-->
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>

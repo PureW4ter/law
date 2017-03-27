@@ -910,8 +910,8 @@ header h1 {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(203, 174, 129, 0.6);
-    padding: 10px;
+    background-color: rgba(203, 174, 129, 0.8);
+    padding: 5px;
     color: #ffffff;
     font-size: 14px;
     font-weight: bold;
@@ -1170,6 +1170,26 @@ header h1 {
     width: 100%;
     margin-top: -31px;
 }
+.input_upper{
+    background-color: #ffffff;
+    padding: 5px 15px;
+    margin: 0 15px;
+    font-size: 12px;
+    color: #c9a063;
+    border: 1px solid #efefef;
+    border-bottom: 0;
+    border-radius: 5px;
+}
+.input_bottom{
+    background-color: #ffffff;
+    padding: 5px 15px;
+    margin: 0 15px;
+    font-size: 12px;
+    color: #b5b5b6;
+    border: 1px solid #efefef;
+    border-top: 0;
+    border-radius: 5px;
+}
 .new_input_box{
     position: relative;
     margin: 0 15px;
@@ -1265,6 +1285,94 @@ header h1 {
 .quesiton_bottom_info2{
     font-size: 12px;
     color: #999999;
+}
+.quesiton_count_title{
+    margin: 15px 15px 5px 15px;
+    color: #b5b5b6;
+    font-size: 12px;
+}
+.question_pay{
+    margin: 5px 15px 15px 15px;
+}
+.question_pay>ul{
+    position: relative;
+    overflow: hidden;
+}
+.question_pay>ul>li{
+    position: relative;
+    width: 50%;
+    float: left;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+.question_pay_title1{
+    color: #595757;
+    font-size: 14px;
+    line-height: 32px;
+    height: 26px;
+}
+.question_pay_title2{
+    color: #b5b5b6;
+    font-size: 12px;
+    line-height: 28px;
+    height: 21px;
+}
+.question_pay_title3{
+    color: #c9a063;
+    font-size: 21px;
+    line-height: 40px;
+    height: 42px;
+}
+.question_pay_selected:before{
+    content:'';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 30px solid #c9a063;
+    border-left: 40px solid transparent;
+}
+.question_pay_selected:after{
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    width: 6px;
+    height: 12px;
+    right: 12px;
+    margin-top: -2px;
+    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+    -webkit-transform: rotate(45deg) translateY(-50%);
+    -moz-transform: rotate(45deg) translateY(-50%);
+    -ms-transform: rotate(45deg) translateY(-50%);
+    -o-transform: rotate(45deg) translateY(-50%);
+    transform: rotate(45deg) translateY(-50%);
+
+}
+.pay_btn {
+    position: relative;
+    height: 32px;
+    width: 100px;
+    margin-top: 27px;
+    text-align: center;
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+    background: #be9564;
+    color: #ffffff;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    margin: 0 auto;
+    -webkit-tap-highlight-color: #e8aa01;
+}
+.pay_btn:active {
+    background: #e8aa01;
 }
 /*调查回复*/
 .invest_result_tab{
