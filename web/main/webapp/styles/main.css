@@ -963,9 +963,13 @@ header h1 {
     height: 44px;
     line-height: 56px;
 }
-.product_info_box{
+.product_info_box_rel{
     position: relative;
-    padding: 15px 10px 0 75px;
+}
+.product_info_box{
+    position: absolute;
+    top: -45px;
+    padding: 0 10px 0 75px;
 }
 .product_info_detail{
     padding: 15px 15px 15px 50px;
@@ -973,35 +977,73 @@ header h1 {
     background-color: #ffffff;
     border-radius: 5px;
     font-size: 13px;
-    color: #999999;
+    color: #b5b5b6;
 }
 .product_info_btn{
     position: absolute;
     left: 15px;
     width: 100px;
-    height: 26px;
+    height: 30px;
     text-align: center;
-    line-height: 26px;
+    line-height: 30px;
     font-size: 14px;
     border-radius: 20px;
     letter-spacing: 2px;
 }
 .product_info_btn1{
-    top:30px;
+    top:65px;
 }
 .product_info_btn2{
-    top:70px;
+    top:115px;
 }
 .product_info_btn3{
-    top:110px;
+    top:165px;
 }
 .product_info_btn4{
-    top:150px;
+    top:215px;
 }
+.check_btn{
+    position: relative;
+    bottom: -17px;
+    right: 18px;
+}
+.check_btn:before {
+    content: '';
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    background-color: #be9564;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.check_btn:after {
+        content: '';
+    position: absolute;
+    width: 18px;
+    height: 35px;
+    right: 31px;
+    margin-top: -10px;
+    top: 50%;
+    border-bottom: 3px solid #ffffff;
+    border-right: 3px solid #ffffff;
+    -webkit-transform: rotate(45deg) translateY(-50%);
+    -moz-transform: rotate(45deg) translateY(-50%);
+    -ms-transform: rotate(45deg) translateY(-50%);
+    -o-transform: rotate(45deg) translateY(-50%);
+    transform: rotate(45deg) translateY(-50%);
+}
+
 
 .product_info_onselected{
     background: #ffffff;
-    color: #666666;
+    color: #9fa0a0;
     border: 1px solid #cccccc;
 }
 .product_info_selected{
