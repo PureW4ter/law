@@ -1527,3 +1527,9 @@ header h1 {
     text-align: center;
     width: 100%;
 }
+.phone_icon{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 25px;
+}

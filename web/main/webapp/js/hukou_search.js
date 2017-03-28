@@ -14,7 +14,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
 		},
 		_pay:function(e){
-			window.location = "question_complete.html";
+			window.location = "success.html";
 		}
     };
     return HukouSearch;
