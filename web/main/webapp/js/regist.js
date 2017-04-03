@@ -1,9 +1,9 @@
-define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
+define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, util, timeBtn) {
     var Regist = {
-        initialize :function(){
-			//request
-			this._sendRequest();
-		},
+        initialize: function() {
+           timeBtn.initialize("i_getcode_btn");
+           this._sendRequest();
+        },
 		_sendRequest :function(){
 			this._render();
 		},
@@ -15,7 +15,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 		},
 		_go:function(e){
 			window.location = "my_question_list.html";
-		}
+		} 
     };
     return Regist;
 });
