@@ -1,4 +1,4 @@
-package com.jfzy.mweb;
+package com.jfzy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
