@@ -1,5 +1,6 @@
 package com.jfzy.service.po;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "jf_tag")
-public class TagPO {
+public class TagPo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +18,17 @@ public class TagPO {
 	private String name;
 
 	private int weight;
+
+	@Column(name = "is_deleted")
+	private boolean deleted;
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public int getId() {
 		return id;
@@ -41,5 +53,6 @@ public class TagPO {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
+	
 
 }

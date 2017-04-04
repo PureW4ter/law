@@ -12,4 +12,6 @@ public interface TagService {
 
 	void updateTag(TagBo bo);
 
+	void deleteTag(int id);
+
 }
