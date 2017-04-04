@@ -1,6 +1,6 @@
 package com.jfzy.service.bo;
 
-public class TagBO {
+public class TagBo {
 
 	private int id;
 

@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jfzy</groupId>
-	<artifactId>mweb-parent</artifactId>
+	<artifactId>jf-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mweb</name>
 	<packaging>pom</packaging>
@@ -18,5 +18,6 @@
 		<module>mweb</module>
 
 		<module>jf-service</module>
+		<module>oss-web</module>
 	</modules>
 </project>

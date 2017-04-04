@@ -5,7 +5,7 @@
 	<artifactId>mweb</artifactId>
 	<parent>
 		<groupId>com.jfzy</groupId>
-		<artifactId>mweb-parent</artifactId>
+		<artifactId>jf-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<dependencies>

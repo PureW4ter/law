@@ -2,6 +2,7 @@ package com.jfzy.mweb.vo;
 
 public class TagVO {
 
+	private int id;
 	private String name;
 	private int weight;
 
@@ -19,6 +20,14 @@ public class TagVO {
 
 	public void setWeight(int weight) {
 		this.weight = weight;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

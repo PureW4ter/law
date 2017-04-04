@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.jfzy</groupId>
-		<artifactId>mweb-parent</artifactId>
+		<artifactId>jf-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>jf-service</artifactId>
