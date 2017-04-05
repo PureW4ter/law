@@ -1,0 +1,21 @@
+<script type="text/template" id="i_navbar_tpl">
+    <div class="logo"><a href="#">Destinesia 后台管理系统</a></div>
+    <div id="i_tree">
+        <ul>
+            <li class="j_auth_quan">
+                <a href="javascript:void(0);" class="i_tree_level">
+                <span class="glyphicon caret"></span>专辑</a>
+                <ul>
+                    <li>
+                        <a href="album_management2.html" class="<%=nav_select==1?'nav_select':''%>">专辑审核</a>
+                    </li>
+                </ul>
+                    
+            </li>
+            <li class="j_auth_quan">
+                <a href="user_management.html" class="i_tree_level <%=nav_select==2?'nav_select':''%>">
+                <span class="glyphicon"></span>用户管理</a>
+            </li>
+        </ul>
+    </div>
+</script>

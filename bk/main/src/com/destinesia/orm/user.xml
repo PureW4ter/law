@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserSpace">
+	<resultMap id="userMap" type="com.destinesia.entity.User">
+		<result property="id" column="ID"/>
+		<result property="openid" column="OPENID"/>
+		<result property="headimg" column="HEADIMG"/>
+		<result property="sex" column="SEX"/>
+		<result property="grade" column="GRADE"/>
+		<result property="enabled" column="ENABLED"/>
+		<result property="name" column="NAME"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="phone" column="PHONE"/>
+		<result property="nickName" column="NICK_NAME"/>
+		<result property="mail" column="MAIL"/>
+		<result property="inviteCode" column="INVITE_CODE"/>
+		<result property="recommend" column="RECOMMEND"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="type" column="TYPE"/>
+		<result property="deviceNO" column="DEVICE_NO"/>
+		<result property="latitude" column="LATITUDE"/>
+		<result property="longitude" column="LONGITUDE"/>
+		<association  property="region" column="REGION_ID" select="AlbumSpace.findRegionById"/>
+	</resultMap>
+	<resultMap id="merchantMap" type="com.destinesia.entity.Merchant">
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="phone" column="PHONE"/>
+		<result property="accountId" column="ACCOUNT_ID"/>
+	</resultMap>
+	<resultMap id="codeMap" type="com.destinesia.entity.Code">
+		<result property="id" column="ID"/>
+		<result property="code" column="CODE"/>
+		<result property="validate" column="VALIDATE"/>
+		<result property="usedTime" column="USED_TIME"/>
+		<result property="fromTime" column="FROM_TIME"/>
+		<result property="toTime" column="TO_TIME"/>
+		<result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+	<resultMap id="tokenInfoMap" type="com.destinesia.entity.TokenInfo">
+		<result property="id" column="ID"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="value" column="VALUE"/>
+	</resultMap>
+	<resultMap id="userPathMap" type="com.destinesia.entity.UserPath">
+		<result property="id" column="ID"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="path" column="PATH"/>
+	</resultMap>
+	
+	<select id="list" resultMap="userMap">
+		SELECT * FROM user ORDER BY ENABLED DESC
+	</select>
+	<select id="findUserByOpenid" resultMap="userMap" parameterType="java.lang.String">
+		SELECT * FROM user WHERE openid = #{openid} 
+	</select>
+	<select id="findUserByPhone" resultMap="userMap" parameterType="java.lang.String">
+		SELECT * FROM user WHERE PHONE = #{phone} 
+	</select>
+	<select id="findUserById" resultMap="userMap" parameterType="java.lang.String">
+		SELECT * FROM user WHERE ID = #{id} 
+	</select>
+	<select id="findUserByEmail" resultMap="userMap" parameterType="java.lang.String">
+		SELECT * FROM user WHERE MAIL = #{mail} 
+	</select>
+	<select id="findUserByNickname" resultMap="userMap" parameterType="java.lang.String">
+		SELECT * FROM user WHERE NICK_NAME = #{nickName}
+	</select>
+	<select id="getTokenByUserId" resultMap="tokenInfoMap" parameterType="java.lang.String">
+		SELECT * FROM token_info WHERE USER_ID = #{userId} 
+			ORDER BY create_date DESC limit 1
+	</select>
+	<select id="getUserByUserId" resultMap="userMap" parameterType="java.lang.String">
+		SELECT * FROM user WHERE ID = #{id} 
+	</select>
+	<select id="getTokenByToken" resultMap="tokenInfoMap" parameterType="java.lang.String">
+		SELECT * FROM token_info WHERE VALUE = #{value} 
+	</select>
+	<select id="getCodeByCode" resultMap="codeMap" parameterType="java.lang.String">
+		SELECT * FROM code WHERE code = #{code}
+	</select>
+	<select id="getAlbumCounts" resultMap="codeMap" parameterType="java.lang.String">
+		SELECT * FROM code WHERE code = #{code}
+	</select>
+	
+	<update id="disableCode" parameterType="java.lang.String" >
+        update code set validate=0 where code=#{code}
+    </update>
+    
+    <update id="disableUser" parameterType="java.lang.String" >
+        update user set enabled=0 where id=#{id}
+    </update>
+    
+    <update id="enableUser" parameterType="java.lang.String" >
+        update user set enabled=1 where id=#{id}
+    </update>
+    
+	<insert id="addUser" parameterType="com.destinesia.entity.User">
+ 		insert into user
+ 			(id,
+ 			openid,
+ 			grade,
+ 			name,
+ 			password,
+ 			phone,
+ 			nick_name,
+ 			mail,
+ 			invite_code,
+ 			recommend,
+ 			device_no,
+ 			latitude,
+ 			longitude,
+ 			type)
+ 		values
+ 			(#{id},
+ 			#{openid},
+ 			#{grade},
+ 			#{name},
+ 			#{password},
+ 			#{phone},
+ 			#{nickName},
+ 			#{mail},
+ 			#{inviteCode},
+ 			#{recommend},
+ 			#{deviceNO},
+ 			#{latitude},
+ 			#{longitude},
+ 			#{type})
+ 	</insert>
+
+ 	<insert id="addCode" parameterType="com.destinesia.entity.Code">
+ 		insert into code
+ 			(id,
+ 			code,
+ 			from_time,
+ 			to_time,
+ 			grade,
+ 			identity)
+ 		values
+ 			(#{id},
+ 			#{code},
+ 			#{fromTime},
+ 			#{toTime},
+ 			#{grade},
+ 			#{identity})
+ 	</insert>
+ 	
+ 	<insert id="addTokeninfo" parameterType="com.destinesia.entity.TokenInfo">
+ 		insert into token_info
+ 			(id,
+ 			user_id,
+ 			value)
+ 		values
+ 			(#{id},
+ 			#{userId},
+ 			#{value})
+ 	</insert>
+ 	
+ 	<update id="increaseGrade" parameterType="java.lang.String" >
+        update user set grade=grade+1 where id=#{id}
+    </update>
+    <update id="updateGrade" parameterType="java.util.Map" >
+        update user set grade=#{grade} where id=#{id}
+    </update>
+     <update id="updateHeader" parameterType="java.util.Map" >
+        update user set headimg=#{header} where id=#{id}
+    </update>
+    <update id="updatePassword" parameterType="java.util.Map" >
+        update user set password=#{password} where phone=#{phone}
+    </update>
+</mapper>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Destinesia 后台系</title>
+    <link href="styles/bootstrap.css?ver={front_version}" rel="stylesheet" />
+    <link href="styles/main.css?ver={front_version}" rel="stylesheet" />
+    <link href="styles/swiper.css?ver={front_version}" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="container-fluid" id="main">
+        <div class="col-sm-2 j_tree_con">
+            <div id="i_navbar">
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div class="row" id="i_header"></div>
+            <div id="i_mainbox">
+                <ul id="i_tabs" class="nav nav-tabs">
+                    <script type="text/template" id="i_tabs_tpl">
+                        <li class="<%=result.index==1?'active':''%>">
+                            <a href="#i_waitingCheck" data-toggle="tab" data-index="1">待审核专辑(<%=result.waitingCheck%>)</a>
+                        </li>
+                        <li class="<%=result.index==2?'active':''%>">
+                            <a href="#i_promote" data-toggle="tab" data-index="2">推荐专辑(<%=result.promotion%>)</a>
+                        </li>
+                        <li class="<%=result.index==3?'active':''%>">
+                           <a href="#i_pass" data-toggle="tab" data-index="3">通过专辑(<%=result.passed%>)</a>
+                        </li>
+                        <li class="<%=result.index==4?'active':''%>">
+                           <a href="#i_unpass" data-toggle="tab" data-index="4">不通过专辑(<%=result.notPassed%>)</a>
+                        </li>
+                    </script>
+                </ul>
+                <div id="i_tabContent" class="tab-content tab_box">
+                    <div class="tab-pane fade in active" id="i_waitingCheck">
+                        <script type="text/template" id="i_albumList_tpl">
+                        <div class="album_date"><%=result&&result.length>0?(tempS=new Date(result[0].createDate).toLocaleDateString()):""%></div>
+                        <ul>
+                            <%_.each(result,function(item){%>
+                                <%if(tempS!=new Date(item.createDate).toLocaleDateString()){%>
+                                </ul>
+                                <div class="album_date"><%=(tempS=new Date(item.createDate).toLocaleDateString())%></div>
+                                <ul>
+                                <%}%>
+                            <li data-id="<%=item.id%>">
+                                <div class="album_pic_box j_album_pic_box">
+                                    <img src="<%=item.cover%>" class="cover_img">
+                                    <div class="album_info">
+                                        <div><%=item.name%></div>
+                                        <div><%=item.region?item.region.city:""%>, <%=item.region?item.region.country:""%></div>
+                                        <div><%=item.region?item.region.cityCN:""%>, <%=item.region?item.region.countryCN:""%></div>
+                                    </div>
+                                </div>
+                                <div class="album_btns">
+                                    <em><button class="btn btn-primary btn-sm j_promote">推荐</button></em>
+                                     <em><button class="btn btn-default btn-sm j_pass">通过</button></em>
+                                </div>
+                                <div class="album_btns">
+                                    <em><button class="btn btn-default btn-sm j_unpass">不通过</button></em>
+                                     <em><button class="btn btn-default btn-sm j_delete">删除</button></em>
+                                </div>
+                            </li>
+                            <%})%>
+                        </ul>
+                        </script>
+                    </div>
+                    <div class="tab-pane fade" id="i_promote">
+                    </div>
+                    <div class="tab-pane fade" id="i_pass">
+                    </div>
+                    <div class="tab-pane fade" id="i_unpass">
+                    </div>
+                </div>
+            </div>
+            <div id="i_page" class="text-center fr"></div>
+        </div>
+    </div>
+    <div class="over_dox_h" id="i_pic_mask">
+        <div class="close_btn" id=""><i></i></div>
+        <div class="over_main">
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src=""></div>
+                </div>
+            </div>
+            <div class="text_rig">
+                <p id="i_photo_title"></p>
+                <p id="i_photo_region"></p>
+                <p id="i_photo_regionCN"></p>
+            </div>
+            <div class="next"></div>
+            <div class="prev"></div>
+        </div>
+    </div>
+    <script src="js/lib/swiper.js?ver={front_version}" type="text/javascript"></script>
+    <script src="js/include.js?ver={front_version}" type="text/javascript"></script>
+</body>
+
+</html>

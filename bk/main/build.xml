@@ -1,0 +1,120 @@
+<project name="web-project" default="publish">
+	<property name="app.name" value="bk" />
+	<property name="version" value="1.0" />
+	<property name="config.file" value="config.properties" />	
+	
+	<tstamp prefix="my">
+        <format property="dt" pattern="yyyyMMddHHmmss"/>
+    </tstamp>
+
+	<path id="compile.classpath">
+		<fileset dir="webapp/WEB-INF/lib/">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="java.classpath">
+		<fileset dir="webapp/WEB-INF/lib/">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="dist">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="classes" quiet="true" />
+		<delete dir="dist" quiet="true" />
+		<mkdir dir="dist" />
+	</target>
+	
+	<target name="buildAll">
+	
+		<antcall target="clean"/>
+
+		<antcall target="build-server" inheritAll="true" inheritRefs="true" >
+			<param file="deploy.properties" />	
+		</antcall>
+					
+		<antcall target="build-server" inheritAll="true" inheritRefs="true" >
+			<param file="pre_deploy.properties" />	
+		</antcall>
+
+		<antcall target="build-server" inheritAll="true" inheritRefs="true" >
+			<param file="test.properties" />	
+		</antcall>
+		
+	</target>
+
+	<target name="build-server">
+		<property name="server.base.parent.output" value="dist/" />
+		<property name="server.base.output" value="${server.base.parent.output}/${suffix}/${app.name}/" />
+		<property name="server.jar.name" value="${app.name}.${version}.jar" />
+		<property name="server.war.name" value="${app.name}.war" />
+		<property name="server.jar.path" value="${server.base.output}/WEB-INF/lib/${server.jar.name}" />
+		<mkdir dir="${server.base.output}" />
+		<mkdir dir="classes" />
+		<mkdir dir="tmp-src" />
+
+		<copy toDir="tmp-src" overwrite="true" filtering="true">
+			<fileSet dir="src" casesensitive="false">
+				<include name="**/*" />
+				<exclude name="**/Thumbs.db" />
+			</fileSet>
+		</copy>
+		<copy toDir="classes" overwrite="true" filtering="true">
+			<fileSet dir="tmp-src" casesensitive="false">
+				<include name="**/*.xml" />
+			</fileSet>
+		</copy>
+		<javac destdir="classes" classpathref="compile.classpath" fork="true" debug="true"  optimize="true" deprecation="false" encoding="UTF-8">
+			<src path="tmp-src" />
+		</javac>
+
+		<delete dir="tmp-src" quiet="true" />
+
+		<copy toDir="${server.base.output}/WEB-INF/classes" overwrite="true" filtering="true">
+			<fileSet dir="config" casesensitive="false">
+				<include name="*.*" />
+			</fileSet>
+		</copy>
+		
+		<copy toDir="${server.base.output}/WEB-INF/classes" overwrite="true" filtering="true">
+			<fileSet dir="config/${suffix}" casesensitive="false">
+				<include name="*.*" />
+			</fileSet>
+		</copy>
+		<mkdir dir="${server.base.output}/WEB-INF/lib" />
+		<jar destfile="${server.jar.path}" basedir="classes" />
+		<delete dir="classes" quiet="true" />
+		<!--js build-->
+		<exec executable="node" failonerror="true">
+		    <arg line="webapp/r.js -o webapp/build.js" />
+		</exec>
+		<!--file version supported for web-->
+		<replace dir="webapp/dist" includes="*.html" token="{front_version}" value="${my.dt}" encoding="UTF-8"/>
+		<!--f<replace dir="webapp/dist/appdoc" includes="*.html" token="{front_version}" value="${my.dt}"/>-->
+		<replace file="webapp/dist/js/include.js" token="{front_version}" value="${my.dt}" encoding="UTF-8"/>
+
+		<!--js copy-->
+		<copy toDir="${server.base.output}" overwrite="true" filtering="false">
+			<fileSet dir="webapp/dist" casesensitive="false">
+				<include name="**/*.*" />
+			</fileSet>
+		</copy>
+		<copy toDir="${server.base.output}" overwrite="true" filtering="false">
+			<fileSet dir="webapp/dist" casesensitive="false">
+				<include name="**/*.js" />
+			</fileSet>
+			<filterset begintoken="{" endtoken="}">
+    			<filtersfile file="config/${suffix}/${config.file}"/>
+  			</filterset>
+		</copy>
+		<delete dir="${server.base.output}/dist" quiet="true" />
+		<!--js delete-->
+		<delete dir="webapp/dist" quiet="true" />
+		
+		<jar destfile="${server.base.parent.output}/${suffix}/${server.war.name}" basedir="${server.base.output}" />
+		<delete dir="${server.base.output}" quiet="true" />
+	</target>
+</project>

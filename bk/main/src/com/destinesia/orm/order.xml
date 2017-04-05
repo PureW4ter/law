@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderSpace">
+	<resultMap id="orderMap" type="com.destinesia.entity.Order">
+		<result property="id" column="ID"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="totalPrice" column="TOTAL_PRICE"/>
+		<result property="state" column="STATE"/>
+		<result property="payType" column="PAY_TYPE"/>
+		<association property="orderDetails" column="ID" select="findOrderDetailsByOderId"/>
+		<association property="customer" column="CUSTOMER_ID" select="findRecevierById"/>
+	</resultMap>
+	<resultMap id="orderDetaiMap" type="com.destinesia.entity.OrderDetail">
+		<result property="id" column="ID"/>
+		<result property="orderId" column="ORDER_ID"/>
+		<result property="count" column="COUNT"/>
+		<result property="price" column="PRICE"/>
+		<result property="totalPrice" column="TOTAL_PRICE"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<association  property="product" column="PRODUCT_ID" select="findProductById"/>
+	</resultMap>
+	<resultMap id="productMap" type="com.destinesia.entity.Product">
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="price" column="PRICE"/>
+		<result property="state" column="STATE"/>
+		<result property="detail" column="DETAIL"/>
+		<result property="picturePath" column="PICTURE_PATH"/>
+		<result property="online" column="ONLINE"/>
+		<result property="createDate" column="CREATE_DATE"/>
+	</resultMap>
+	
+	<resultMap id="customerMap" type="com.destinesia.entity.Customer">
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="addressCode" column="ADDRESS_CODE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="createDate" column="CREATE_DATE"/>
+	</resultMap>
+	
+	<select id="getOrdersByUserId" resultMap="orderMap" parameterType="java.util.Map">
+		SELECT * FROM destinesia.order WHERE USER_ID=#{userId}
+			LIMIT #{from} , #{size};
+	</select>
+	<select id="getCustomersByUserId" resultMap="customerMap" parameterType="java.util.Map">
+		SELECT * FROM destinesia.customer WHERE USER_ID=#{userId}
+			LIMIT #{from} , #{size};
+	</select>
+	<select id="getProducts" resultMap="productMap" parameterType="java.util.Map">
+		SELECT * FROM destinesia.product WHERE STATE=1 ORDER BY CREATE_DATE
+			LIMIT #{from} , #{size};
+	</select>
+	<select id="findOrderDetailsByOderId" resultMap="orderDetaiMap" parameterType="java.lang.String">
+		SELECT * FROM destinesia.order_detail WHERE orderId=#{orderId}
+	</select>
+	<select id="findOrderById" resultMap="orderMap" parameterType="java.lang.String">
+		SELECT * FROM destinesia.order WHERE id=#{id}
+	</select>
+	<select id="findProductById" resultMap="productMap" parameterType="java.lang.String">
+		SELECT * FROM product WHERE id=#{id}
+	</select>
+	<select id="findCustomerById" resultMap="customerMap" parameterType="java.lang.String">
+		SELECT * FROM customer WHERE id=#{id}
+	</select>
+	
+	<insert id="addOrder" parameterType="com.destinesia.entity.Order">
+ 		INSERT INTO destinesia.order
+ 			(id,
+ 			user_id,
+ 			customer_id,
+ 			total_price,
+ 			state,
+ 			pay_type)
+ 		VALUES
+ 			(#{id},
+ 			#{userId},
+ 			#{customer.id},
+ 			#{totalPrice},
+ 			#{state},
+ 			#{payType})
+ 	</insert>
+ 	
+ 	<insert id="addOrderDetail" parameterType="com.destinesia.entity.OrderDetail">
+ 		INSERT INTO destinesia.order_detail
+ 			(id,
+ 			order_id,
+ 			product_id,
+ 			count,
+ 			price,
+ 			total_price)
+ 		VALUES
+ 			(#{id},
+ 			#{orderId},
+ 			#{product.id},
+ 			#{count},
+ 			#{price},
+ 			#{totalPrice})
+ 	</insert>
+ 	
+ 	<insert id="addCustomer" parameterType="com.destinesia.entity.Customer">
+ 		INSERT INTO destinesia.customer
+ 			(id,
+ 			user_id,
+ 			name,
+ 			address,
+ 			address_code,
+ 			phone)
+ 		VALUES
+ 			(#{id},
+ 			#{userId},
+ 			#{name},
+ 			#{address},
+ 			#{addressCode},
+ 			#{phone})
+ 	</insert>
+ 	
+</mapper>
