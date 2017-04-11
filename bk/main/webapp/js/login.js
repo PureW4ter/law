@@ -24,8 +24,9 @@ define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header
             params.password = md5(params.password);
             $('input').blur();
             if ($('.popover.in').length < 1) {
-                ajaxHelper.post("http://" + window.frontJSHost + "/user/login", 
-                    params, e.data.ctx, e.data.ctx.success, null);
+                //ajaxHelper.post("http://" + window.frontJSHost + "/user/login", 
+                    //params, e.data.ctx, e.data.ctx.success, null);
+                e.data.ctx.success({"nickName": "哈哈"});
             }
         },
         bindEnter: function (e) {
@@ -37,7 +38,7 @@ define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header
         success: function (data) {
             data.expires_time = new Date().getTime() + 3600 * 1000;
             window.localStorage.setItem('userInfo', JSON.stringify(data));
-            window.location = "album_management2.html";
+            window.location = "user_management.html";
         }
     };
     return Login;

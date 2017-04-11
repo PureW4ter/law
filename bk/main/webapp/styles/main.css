@@ -408,7 +408,10 @@ a:hover, a:focus {
     width: 64px;
     height: 64px;
 }
-
+.blue_link{
+    color: #0000CC;
+    text-decoration:underline;
+}
 /*左边栏*/
 .panel-heading {
     font-weight: 700;
@@ -460,7 +463,7 @@ a:hover, a:focus {
 .logo {
     height: 60px;
     line-height: 60px;
-    background: #3ca4dd;
+    background: #c9a063;
     text-align: center;
 }
 
@@ -494,16 +497,16 @@ li {
 
 #i_tree li ul li a {
     padding-left: 40px;
-    color: #767676;
+    color: #c9a063;
 }
 
 #i_tree li a:hover {
-    background-color: #3CA4DD;
+    background-color: #c9a063;
     color: #fff !important
 }
 
 #i_tree li a.nav_select {
-    background-color: #3CA4DD;
+    background-color: #c9a063;
     color: #fff !important
 }
 
