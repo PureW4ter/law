@@ -465,6 +465,7 @@ a:hover, a:focus {
     line-height: 60px;
     background: #c9a063;
     text-align: center;
+    border-bottom: 1px solid #ffffff;
 }
 
 .logo > a {
@@ -554,4 +555,12 @@ input[type=checkbox] {
 
 input[type=file] {
     -webkit-appearance: none !important;
+}
+.btn-yel {
+    color: #ffffff;
+    background: #c9a063;
+    padding: 4px 24px;
+}
+.pd15{
+    padding-bottom: 15px;
 }
