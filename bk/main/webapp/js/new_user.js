@@ -3,7 +3,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 1);
-            header.initialize("i_header", "用户管理");
+            header.initialize("i_header", "创建用户");
             this.mainBox = $('#i_mainbox');
             this.tplFun = _.template($("#i_tpl").html());
             this._sendRequest();
@@ -21,11 +21,9 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._registEvent();
         },
         _registEvent: function () {
-            $('#i_new').off("click", this._createUser).on("click", this._createUser);
+            
         },
-        _createUser:function(e){
-            window.location = "new_user.html";
-        }
+
     };
     return UserManagement;
 });
