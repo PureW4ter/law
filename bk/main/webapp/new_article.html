@@ -22,64 +22,64 @@
         </div>
         <div class="col-sm-10">
             <div class="row" id="i_header"></div>
-            <div id="i_mainbox">
-            <script type="text/template" id="i_tpl">
-                <div class="panel panel-default text-center">
-                    <div class="panel-body">
-                        <form action="" class="form-horizontal" id="i_typeForm">
-                            <div class="form-group">
-                                <label for="" class="col-sm-2 control-label">标题:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="title"
-                                             value="" maxlength="10"
-                                             data-pattern="/.+/"
-                                             data-container="body"
-                                             data-toggle="popover"
-                                             data-placement="right"
-                                             data-content="请输入标题！"/>
+            <div class="panel panel-default">
+                <div class="panel-body add_coupon paddingtop30">
+                    <div class="col-sm-10 margintop24" id="i_mainbox">
+                        <script type="text/template" id="i_tpl">
+                            <form action="" class="form-horizontal" id="i_typeForm">
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">标题:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="noIm form-control" 
+                                        value="222" name="totalHouse" maxlength="10"
+                                                 data-pattern="/.+/"
+                                                 data-container="body"
+                                                 data-toggle="popover"
+                                                 data-placement="right"
+                                                 data-content="请输入标题！"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-sm-2 control-label">关键字:</label>
-                                <div class="col-sm-6">
-                                    <input type="checkbox" name="">dwer
-                                    <input type="checkbox" name="">dwer
-                                    <input type="checkbox" name="">dwer 
+                                <div class="form-group clearfix">
+                                    <label class="control-label col-sm-3">关键词:</label>
+                                    <div class="col-sm-6" id="i_artical_state">
+                                        <span class="artical_act"><b class="act_check j_act_check active"></b>法律</span>
+                                        <span class="artical_act"><b class="act_check j_act_check active"></b>法律</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-sm-2 control-label">城市:</label>
-                                <div class="col-sm-6">
-                                    <select>
-                                        <option>全国</option>
-                                        <option>北京</option>
-                                        <option>上海</option>
-                                        <option>广州</option>
-                                    </select>
+                                <div class="form-group clearfix">
+                                    <label class="control-label col-sm-3">城市:</label>
+                                    <div class="col-sm-6" id="">
+                                       <div class="btn-group" style="margin-top: 10px;">
+                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" style="min-width: 130px;">
+                                                <span class="j_current_value">全部城市</span><span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right" style="min-width: 130px;">
+                                                <li data-searchtype="code">北京</li>
+                                                <li data-searchtype="url">上海</li>
+                                                <li data-searchtype="url">广州</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-sm-2 control-label">转发小图:</label>
-                                <div class="col-sm-6">
-                                    <img src="img/add.png">
+                                <div class="form-group clearfix">
+                                    <label class="control-label col-sm-3">转发小图:</label>
+                                    <div class="col-sm-6">
+                                        <div class="head_img">
+                                            <img id="i_head_img" src="" alt="无图"/>
+                                            <span class="img_close j_img_close">&times;</span>
+                                            <div class="img_load j_imgLoad0"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-sm-2 control-label">摘要:</label>
-                                <div class="col-sm-6">
-                                    <textarea>dfsfsdfsd</textarea>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">摘要:</label>
+                                    <div class="col-sm-6">
+                                       <textarea type="text" class="form-control foreword" placeholder="2000个字内" maxlength="2000"></textarea>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-sm-2 control-label">正文:</label>
-                                <div class="col-sm-6">
-                                    <textarea>dfsfsdfsd</textarea>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </script>
                     </div>
                 </div>
-            </script>
             </div>
         </div>
     </div>

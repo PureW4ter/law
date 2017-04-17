@@ -2,7 +2,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
     var UserManagement = {
         initialize: function () {
             //nav_bar
-            nav_bar.initialize("i_navbar", 1);
+            nav_bar.initialize("i_navbar", 2);
             header.initialize("i_header", "录入文章");
             this.mainBox = $('#i_mainbox');
             this.tplFun = _.template($("#i_tpl").html());
