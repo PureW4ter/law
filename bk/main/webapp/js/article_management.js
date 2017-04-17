@@ -21,9 +21,11 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._registEvent();
         },
         _registEvent: function () {
-            
+            $('#i_new').off("click", this._createArticle).on("click", this._createArticle);
         },
-
+        _createArticle:function(e){
+            window.location = "new_article.html";
+        }
     };
     return UserManagement;
 });

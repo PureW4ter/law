@@ -21,7 +21,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._registEvent();
         },
         _registEvent: function () {
-            $('#i_new').off("click", this._createUser).on("click", this._createUser);
+            
         },
         _createUser:function(e){
             window.location = "new_user.html";
