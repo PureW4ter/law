@@ -21,8 +21,11 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._registEvent();
         },
         _registEvent: function () {
-            
+            $('#i_new').off("click", this._createEmployee).on("click", this._createEmployee);
         },
+        _createEmployee:function(e){
+            window.location = "new_employee.html";
+        }
 
     };
     return UserManagement;

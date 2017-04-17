@@ -49,14 +49,15 @@
                                 <div class="form-group clearfix">
                                     <label class="control-label col-sm-3">城市:</label>
                                     <div class="col-sm-6" id="">
-                                       <div class="btn-group" style="margin-top: 10px;">
-                                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" style="min-width: 130px;">
-                                                <span class="j_current_value">全部城市</span><span class="caret"></span>
+                                       <div class="btn-group">
+                                            <button type="button" class="btn btn-default">北京</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu dropdown-menu-right" style="min-width: 130px;">
-                                                <li data-searchtype="code">北京</li>
-                                                <li data-searchtype="url">上海</li>
-                                                <li data-searchtype="url">广州</li>
+                                            <ul class="dropdown-menu">
+                                                <li data-id="">北京</li>
+                                                <li data-id="">上海</li>
+                                                <li data-id="">广州</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -83,6 +84,10 @@
                                         <textarea id="elm1" rows="5" class="xheditor">d安抚</textarea>
                                 </div>
                             </form>
+                            <div class="col-sm-9 paddingtop30">
+                                <button class="btn btn-yel btn_big pull-right j_saveArtical">保存</button>
+                                <button class="btn btn-default btn_big pull-right marginR26">取消</button>
+                            </div>
                         </script>
                     </div>
                 </div>

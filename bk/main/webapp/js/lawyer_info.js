@@ -3,7 +3,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 4);
-            header.initialize("i_header", "律师管理");
+            header.initialize("i_header", "律师详细信息");
             this.mainBox = $('#i_mainbox');
             this.tplFun = _.template($("#i_tpl").html());
             this._sendRequest();
@@ -21,12 +21,11 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._registEvent();
         },
         _registEvent: function () {
-            $('#i_new').off("click", this._createLawyer).on("click", this._createLawyer);
+            $('#i_new').off("click", this._createUser).on("click", this._createUser);
         },
-        _createLawyer:function(e){
-            window.location = "new_lawyer.html";
+        _createUser:function(e){
+            window.location = "new_user.html";
         }
-
     };
     return UserManagement;
 });
