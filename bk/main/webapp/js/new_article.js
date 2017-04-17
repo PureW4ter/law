@@ -16,9 +16,14 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
                 params, this, this._render, null);*/
             this._render();
         },
+        _xheditor: function(){
+            var url="http://upload.do";
+            this.editor = $('#elm1').xheditor({width:'100%',height:1000, html5Upload:true, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
+        },
         _render: function (data) {
             this.mainBox.html(this.tplFun());
             this._registEvent();
+            this._xheditor();
         },
         _registEvent: function () {
             
