@@ -1,12 +1,12 @@
-package com.jfzy.mweb;
+package com.jfzy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MWebApplication {
+public class OssWebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MWebApplication.class, args);
+		SpringApplication.run(OssWebApplication.class, args);
 	}
 }

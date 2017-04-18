@@ -1,9 +1,11 @@
-package com.jfzy.mweb.vo;
+package com.jfzy.service.bo;
 
-public class TagVO {
+public class TagBo {
 
 	private int id;
+
 	private String name;
+
 	private int weight;
 
 	public String getName() {
