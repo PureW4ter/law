@@ -12,6 +12,7 @@ import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.ArticleVO;
 import com.jfzy.mweb.vo.ResponseVO;
 import com.jfzy.mweb.vo.TagVO;
+import com.jfzy.service.ArticleService;
 import com.jfzy.service.TagService;
 import com.jfzy.service.bo.TagBo;
 
@@ -20,6 +21,9 @@ public class ArticleController {
 
 	@Autowired
 	private TagService tagService;
+	
+	@Autowired
+	private ArticleService articleService;
 
 	@ResponseBody
 	@GetMapping("/article/tag")
