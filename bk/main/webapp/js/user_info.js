@@ -14,6 +14,18 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             };
             ajaxHelper.post("http://" + window.frontJSHost + "/user/list",
                 params, this, this._render, null);*/
+            /*var promise = new Promise(function(resolve, reject) {
+              if (true){
+                resolve(data);
+              } else {
+                reject();
+              }
+            });
+            promise.then(function(value) {
+              console.log("success");
+            }, function(error) {
+              console.log("fail");
+            });*/
             this._render();
         },
         _render: function (data) {
