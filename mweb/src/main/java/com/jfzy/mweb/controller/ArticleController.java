@@ -41,7 +41,8 @@ public class ArticleController {
 	@ResponseBody
 	@GetMapping("/article")
 	public ResponseVO<List<ArticleVO>> getArticles() {
-
+		articleService.searchByTags(null);
+		
 		return new ResponseVO<List<ArticleVO>>(ResponseStatusEnum.SUCCESS.getCode(), null, new ArrayList<ArticleVO>());
 	}
 

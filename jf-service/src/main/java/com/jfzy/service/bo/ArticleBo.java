@@ -1,14 +1,30 @@
 package com.jfzy.service.bo;
 
-import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
 
+@Document(indexName = "article", type = "article", shards = 1, replicas = 0, refreshInterval = "-1")
 public class ArticleBo {
 
+	@Id
 	private int id;
 	private String title;
 	private String titleImgUrl;
 	private String content;
-	private List<String> tags;
+	
+	private String[] tags;
+
+	public ArticleBo(int id, String title, String titleImgUrl, String content, String[] tags) {
+		this.id = id;
+		this.title = title;
+		this.titleImgUrl = titleImgUrl;
+		this.content = content;
+		this.tags = tags;
+	}
+
+	public ArticleBo() {
+	}
 
 	public int getId() {
 		return id;
@@ -42,14 +58,12 @@ public class ArticleBo {
 		this.content = content;
 	}
 
-	public List<String> getTags() {
+	public String[] getTags() {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
+	public void setTags(String[] tags) {
 		this.tags = tags;
 	}
-
-
 
 }
