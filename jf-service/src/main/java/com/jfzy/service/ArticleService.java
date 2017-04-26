@@ -8,5 +8,5 @@ import com.jfzy.service.bo.ArticleBo;
 
 public interface ArticleService {
 
-	List<ArticleBo> searchByTags(List<String> tags, Pageable page);
+	List<ArticleBo> searchByTags(String[] tags, Pageable page);
 }

@@ -3,6 +3,8 @@ package com.jfzy.service.bo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldIndex;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "article", type = "article", shards = 1, replicas = 0, refreshInterval = "-1")
 public class ArticleBo {
@@ -12,7 +14,8 @@ public class ArticleBo {
 	private String title;
 	private String titleImgUrl;
 	private String content;
-	
+
+	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
 	private String[] tags;
 
 	public ArticleBo(int id, String title, String titleImgUrl, String content, String[] tags) {

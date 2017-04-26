@@ -11,4 +11,6 @@ public interface ArticleElasticRepository extends ElasticsearchRepository<Articl
 
 	@Query("{terms:{tags:?0}}")
 	Page<ArticleBo> findByTagsContaining(String tags, Pageable pageable);
+	
+	
 }
