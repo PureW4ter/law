@@ -1,6 +1,6 @@
 package com.jfzy.mweb.vo;
 
-public class ArticleVO {
+public class ArticleVo {
 
 	private int id;
 	private String content;
