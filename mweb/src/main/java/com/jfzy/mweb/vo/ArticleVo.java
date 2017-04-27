@@ -1,5 +1,7 @@
 package com.jfzy.mweb.vo;
 
+import java.sql.Timestamp;
+
 public class ArticleVo {
 
 	private int id;
@@ -7,6 +9,7 @@ public class ArticleVo {
 	private String title;
 	private String titleImgUrl;
 	private String[] tags;
+	private Timestamp createTime;
 
 	public int getId() {
 		return id;
@@ -46,6 +49,14 @@ public class ArticleVo {
 
 	public void setTags(String[] tags) {
 		this.tags = tags;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 
 }

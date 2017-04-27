@@ -1,5 +1,7 @@
 package com.jfzy.service.bo;
 
+import java.sql.Timestamp;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -14,16 +16,18 @@ public class ArticleBo {
 	private String title;
 	private String titleImgUrl;
 	private String content;
+	private Timestamp createTime;
 
 	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
 	private String[] tags;
 
-	public ArticleBo(int id, String title, String titleImgUrl, String content, String[] tags) {
+	public ArticleBo(int id, String title, String titleImgUrl, String content, String[] tags, Timestamp createTime) {
 		this.id = id;
 		this.title = title;
 		this.titleImgUrl = titleImgUrl;
 		this.content = content;
 		this.tags = tags;
+		this.createTime = createTime;
 	}
 
 	public ArticleBo() {
@@ -67,6 +71,14 @@ public class ArticleBo {
 
 	public void setTags(String[] tags) {
 		this.tags = tags;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 
 }

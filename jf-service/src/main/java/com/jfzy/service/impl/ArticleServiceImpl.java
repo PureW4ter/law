@@ -7,10 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
-import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -82,7 +80,7 @@ public class ArticleServiceImpl implements ArticleService {
 		result.setTitleImgUrl(po.getTitleImgUrl());
 		result.setContent(po.getContent());
 		result.setTags(getTags(po.getTags()));
-
+		result.setCreateTime(po.getUpdateTime());
 		return result;
 	}
 

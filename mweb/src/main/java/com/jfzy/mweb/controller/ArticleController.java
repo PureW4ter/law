@@ -62,7 +62,7 @@ public class ArticleController {
 		vo.setTags(bo.getTags());
 		vo.setTitle(bo.getTitle());
 		vo.setTitleImgUrl(bo.getTitleImgUrl());
-
+		vo.setCreateTime(bo.getCreateTime());
 		return vo;
 	}
 
