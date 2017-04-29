@@ -1,5 +1,7 @@
 package com.jfzy.service.po;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,11 +23,22 @@ public class ArticlePo {
 
 	private String tags;
 
+	@Column(name = "update_time")
+	private Timestamp updateTime;
+
 	@Column(name = "title_img_url")
 	private String titleImgUrl;
-	
+
 	@Column(name = "is_deleted")
 	private boolean deleted;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getTitle() {
 		return title;
@@ -65,6 +78,14 @@ public class ArticlePo {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public Timestamp getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 }

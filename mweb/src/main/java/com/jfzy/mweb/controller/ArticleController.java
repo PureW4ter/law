@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.mweb.util.ResponseStatusEnum;
-import com.jfzy.mweb.vo.ArticleVO;
-import com.jfzy.mweb.vo.ResponseVO;
-import com.jfzy.mweb.vo.TagVO;
+import com.jfzy.mweb.vo.ArticleVo;
+import com.jfzy.mweb.vo.ResponseVo;
+import com.jfzy.mweb.vo.TagVo;
 import com.jfzy.service.ArticleService;
 import com.jfzy.service.TagService;
+import com.jfzy.service.bo.ArticleBo;
 import com.jfzy.service.bo.TagBo;
 
 @RestController
@@ -21,32 +23,51 @@ public class ArticleController {
 
 	@Autowired
 	private TagService tagService;
-	
+
 	@Autowired
 	private ArticleService articleService;
 
 	@ResponseBody
 	@GetMapping("/article/tag")
-	public ResponseVO<List<TagVO>> getTags() {
+	public ResponseVo<List<TagVo>> getTags() {
 
 		List<TagBo> tags = tagService.getAllTags();
-		List<TagVO> resultTags = new ArrayList<TagVO>(tags.size());
+		List<TagVo> resultTags = new ArrayList<TagVo>(tags.size());
 		for (TagBo bo : tags) {
 			resultTags.add(boToVo(bo));
 		}
 
-		return new ResponseVO<List<TagVO>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultTags);
+		return new ResponseVo<List<TagVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultTags);
 	}
 
 	@ResponseBody
 	@GetMapping("/article")
-	public ResponseVO<List<ArticleVO>> getArticles() {
+	public ResponseVo<List<ArticleVo>> getArticles(String[] tags, int page) {
+		if (page < 0) {
+			page = 0;
+		}
+		List<ArticleBo> values = articleService.searchByTags(tags, new PageRequest(page, 10));
+		List<ArticleVo> resultArticles = new ArrayList<ArticleVo>(values.size());
+		for (ArticleBo bo : values) {
+			resultArticles.add(boToVo(bo));
+		}
 
-		return new ResponseVO<List<ArticleVO>>(ResponseStatusEnum.SUCCESS.getCode(), null, new ArrayList<ArticleVO>());
+		return new ResponseVo<List<ArticleVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultArticles);
 	}
 
-	private static TagVO boToVo(TagBo bo) {
-		TagVO vo = new TagVO();
+	private static ArticleVo boToVo(ArticleBo bo) {
+		ArticleVo vo = new ArticleVo();
+		vo.setContent(bo.getContent());
+		vo.setId(bo.getId());
+		vo.setTags(bo.getTags());
+		vo.setTitle(bo.getTitle());
+		vo.setTitleImgUrl(bo.getTitleImgUrl());
+		vo.setCreateTime(bo.getCreateTime());
+		return vo;
+	}
+
+	private static TagVo boToVo(TagBo bo) {
+		TagVo vo = new TagVo();
 		vo.setId(bo.getId());
 		vo.setName(bo.getName());
 		vo.setWeight(bo.getWeight());
