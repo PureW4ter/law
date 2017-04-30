@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AlbumSpace">
+	<resultMap id="albumMap" type="com.destinesia.entity.Album">
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="description" column="DESCRIPTION"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="promotion" column="PROMOTION"/>
+		<result property="cover" column="COVER"/>
+		<result property="longitude" column="LONGITUDE"/>
+		<result property="latitude" column="LATITUDE"/>
+		<result property="altitude" column="ALTITUDE"/>
+		<result property="distance" column="DISTANCE"/>
+		<result property="road" column="ROAD"/>
+		<result property="keywords" column="KEYWORDS"/>
+		<result property="checkDate" column="CHECK_DATE"/>
+		<association  property="user" column="USER_ID" select="UserSpace.getUserByUserId"/>
+		<association  property="votes" column="ID" select="getVoteByAlbumId"/>
+		<association  property="viewed" column="ID" select="getViewByAlbumId"/>
+		<association  property="region" column="REGION_ID" select="findRegionById"/>
+		<association  property="picList" column="ID" select="findPicturesByAlbumId"/>
+	</resultMap>
+	
+	<resultMap id="pictureMap" type="com.destinesia.entity.Picture">
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="description" column="DESCRIPTION"/>
+		<result property="longitude" column="LONGITUDE"/>
+		<result property="latitude" column="LATITUDE"/>
+		<result property="altitude" column="ALTITUDE"/>
+		<result property="path" column="PATH"/>
+		<result property="type" column="TYPE"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<association  property="region" column="REGION_ID" select="findRegionById"/>
+	</resultMap>
+	
+	<resultMap id="ViewMap" type="com.destinesia.entity.View">
+		<result property="id" column="ID"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="deviceNO" column="DEVICE_NO"/>
+		<result property="ipAddress" column="IP_ADDRESS"/>
+		<result property="viewDate" column="VIEW_DATE"/>
+	</resultMap>
+	
+	<resultMap id="voteMap" type="com.destinesia.entity.Vote">
+		<result property="id" column="ID"/>
+		<result property="voteDate" column="VOTE_DATE"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="albumId" column="ALBUM_ID"/>
+		<result property="pictureId" column="PICTURE_ID"/>
+	</resultMap>
+	
+	<resultMap id="regionMap" type="com.destinesia.entity.Region">
+		<result property="id" column="ID"/>
+		<result property="country" column="COUNTRY"/>
+		<result property="province" column="PROVINCE"/>
+		<result property="city" column="CITY"/>
+		<result property="district" column="DISTRICT"/>
+		<result property="road" column="ROAD"/>
+		<result property="countryCN" column="COUNTRY_CN"/>
+		<result property="provinceCN" column="PROVINCE_CN"/>
+		<result property="cityCN" column="CITY_CN"/>
+		<result property="districtCN" column="DISTRICT_CN"/>
+		<result property="roadCN" column="ROAD_CN"/>
+	</resultMap>
+	
+	<resultMap id="UserPathMap" type="com.destinesia.entity.UserPath">
+		<result property="id" column="ID"/>
+		<result property="path" column="PATH"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="createDate" column="CREATE_DATE"/>
+	</resultMap>
+	
+	<resultMap id="CountsMap" type="com.destinesia.entity.Counts">
+		<result property="waitingCheck" column="WAITING_CHECK"/>
+		<result property="recommend" column="recommend"/>
+		<result property="passed" column="passed"/>
+		<result property="notPassed" column="NOT_PASSED"/>
+	</resultMap>
+	
+	<resultMap id="UserAlbumCountMap" type="com.destinesia.entity.UserAlbumCount">
+		<result property="albumCount" column="ALBUM_COUNT"/>
+		<result property="magzineCount" column="MAGZINE_COUNT"/>
+	</resultMap>
+	
+	<select id="getNewAlbums" resultMap="albumMap" parameterType="java.util.Map">
+		SELECT * FROM album WHERE DELETED=0 and PASSED=0 and type=0 ORDER BY CREATE_DATE
+			LIMIT #{from} , #{size}
+	</select>
+	<select id="getAlbumsByDate" resultMap="albumMap" parameterType="java.util.Map">
+		SELECT * FROM album WHERE DELETED=0 and PASSED=1 and CREATE_DATE>#{date} and type=0 ORDER BY CREATE_DATE
+			LIMIT #{from} , #{size}
+	</select>
+	<select id="getAlbumsByKeys" resultMap="albumMap" parameterType="java.util.Map">
+		SELECT * FROM album WHERE DELETED=0 and PASSED=1 and type=0 and 
+		<foreach item="key" collection="keys"  open="(" close=")" separator=" or ">
+    			keywords LIKE CONCAT('%',#{key},'%')
+  		</foreach> 
+		ORDER BY CREATE_DATE
+		LIMIT #{from} , #{size}
+	</select>
+	<select id="getMyAlbums" resultMap="albumMap" parameterType="java.util.Map">
+		SELECT * FROM album WHERE USER_ID = #{userId} and DELETED=0 and type=0
+		ORDER BY CREATE_DATE DESC LIMIT #{from} , #{size}
+	</select>
+	<select id="getNearAlbums" resultMap="albumMap" parameterType="java.util.Map">
+		SELECT * FROM album WHERE DELETED=0 and PASSED=1 and type=0
+		AND LEVEL=#{level} AND (X=#{xIndex} OR X=#{xIndex}-1 OR X=#{xIndex}+1) AND (Y=#{yIndex} OR Y=#{yIndex}-1 OR Y=#{yIndex}+1)
+		ORDER BY CREATE_DATE DESC LIMIT #{from} , #{size} 
+	</select>
+	<select id="getAlbumsByPromotioned" resultMap="albumMap" parameterType="java.util.Map">
+		SELECT * FROM album WHERE DELETED=0 and PASSED=1 and promotion=1 and type=0 ORDER BY CREATE_DATE DESC
+			LIMIT #{from} , #{size}
+	</select>
+	<select id="getPassAlbums" resultMap="albumMap" parameterType="java.util.Map">
+		SELECT * FROM album WHERE DELETED=0 and PASSED=#{pass} and type=0 ORDER BY CREATE_DATE DESC
+			LIMIT #{from}, #{size}
+	</select>
+	<select id="getAlbumById" resultMap="albumMap">
+		SELECT * FROM album WHERE ID = #{ID}
+	</select>
+	<select id="findPicturesByAlbumId" resultMap="pictureMap">
+		SELECT * FROM picture WHERE ALBUM_ID=#{ALBUMID}
+	</select>
+	<select id="findRegionById" resultMap="regionMap" parameterType="java.lang.String">
+		SELECT * FROM region WHERE ID = #{ID} 
+	</select>
+	<select id="findRegion" resultMap="regionMap" parameterType="java.util.Map">
+		SELECT * FROM region WHERE COUNTRY = #{country} AND CITY = #{city} AND DISTRICT = #{district} AND ROAD = #{road}
+	</select>
+	<select id="getVoteByAlbumId" resultType="java.lang.Long" parameterType="java.lang.String">
+		SELECT count(DISTINCT USER_ID) FROM vote WHERE ALBUM_ID = #{ID}
+	</select>
+	<select id="getViewByAlbumId" resultType="java.lang.Long" parameterType="java.lang.String">
+		SELECT count(*) FROM view WHERE ALBUM_ID = #{ID} 
+	</select>
+	<select id="getPassedAlbumsForUser" resultType="java.lang.Long" parameterType="java.lang.String">
+		SELECT count(*) FROM album WHERE DELETED=0 and PASSED=1 and type=0
+	</select>
+	<select id="getUserPath" resultType="java.lang.String" parameterType="java.util.Map">
+		SELECT path FROM user_path WHERE user_id=#{userId} and create_date=#{date}
+	</select>
+	<select id="getCounts" resultMap="CountsMap">
+		SELECT SUM(promotion) as promotion,SUM(passed) as passed,SUM(not_passed) as not_passed,SUM(waiting_check) as waiting_check
+		FROM(
+			SELECT COUNT(*) as promotion, 0 as passed, 0 as not_passed, 0 as waiting_check
+			FROM destinesia.album WHERE promotion=1 and passed=1 and deleted=0 and type=0
+			union
+			SELECT  0 as promotion, COUNT(*) as passed, 0 as notPassed, 0 as waiting_check
+			FROM destinesia.album WHERE passed=1 and deleted=0 and type=0
+			union
+			SELECT  0 as promotion, 0 as passed, count(*) as notPassed, 0 as waiting_check
+			FROM destinesia.album WHERE passed=2 and deleted=0 and type=0
+			union 
+			SELECT  0 as promotion, 0 as passed, 0 as notPassed, count(*) as waiting_check
+			FROM destinesia.album WHERE passed=0 and deleted=0 and type=0
+		) counts_table
+	</select>
+	<select id="albumCounts" resultMap="UserAlbumCountMap">
+		SELECT SUM(album_count) as album_count, SUM(magzine_count) as magzine_count
+		FROM(
+			SELECT COUNT(*) as album_count, 0 as magzine_count
+			FROM destinesia.album WHERE type=0 and user_id=#{userId}
+			union
+			SELECT 0 as album_count, COUNT(*)  as magzine_count
+			FROM destinesia.album WHERE type=1 and user_id=#{userId}
+		) counts_table
+	</select>
+	<select id="getCountsForToday" resultMap="CountsMap">
+		SELECT SUM(promotion) as promotion,SUM(passed) as passed,SUM(not_passed) as not_passed,SUM(waiting_check) as waiting_check
+		FROM(
+			SELECT COUNT(*) as promotion, 0 as passed, 0 as not_passed, 0 as waiting_check
+			FROM destinesia.album WHERE promotion=1 and to_days(check_date) = to_days(now())
+			union
+			SELECT  0 as promotion, COUNT(*) as passed, 0 as notPassed, 0 as waiting_check
+			FROM destinesia.album WHERE passed=1 and to_days(check_date) = to_days(now())
+			union
+			SELECT  0 as promotion, 0 as passed, count(*) as notPassed, 0 as waiting_check
+			FROM destinesia.album WHERE passed=2 and to_days(check_date) = to_days(now())
+			union 
+			SELECT  0 as promotion, 0 as passed, 0 as notPassed, count(*) as waiting_check
+			FROM destinesia.album WHERE passed=0 and to_days(check_date) = to_days(now())
+		) counts_table
+	</select>
+	
+	<insert id="addAlbum" parameterType="com.destinesia.entity.Album">
+ 		INSERT INTO album
+ 			(id,
+ 			user_id,
+ 			name,
+ 			description,
+ 			longitude,
+ 			latitude,
+ 			altitude,
+ 			cover,
+ 			region_id,
+ 			level,
+ 			x,
+ 			y,
+ 			distance,
+ 			road,
+ 			keywords)
+ 		VALUES
+ 			(#{id},
+ 			#{user.id},
+ 			#{name},
+ 			#{description},
+ 			#{longitude},
+ 			#{latitude},
+ 			#{altitude},
+ 			#{cover},
+ 			#{region.id},
+ 			#{level},
+ 			#{x},
+ 			#{y},
+ 			#{distance},
+ 			#{road},
+ 			#{keywords})
+ 	</insert>
+ 	
+	<insert id="addPicture" parameterType="com.destinesia.entity.Picture">
+ 		INSERT INTO picture
+ 			(id,
+ 			name,
+ 			description,
+ 			album_id,
+ 			longitude,
+ 			latitude,
+ 			altitude,
+ 			path,
+ 			region_id,
+ 			type)
+ 		VALUES
+ 			(#{id},
+ 			#{name},
+ 			#{description},
+ 			#{albumId},
+ 			#{longitude},
+ 			#{latitude},
+ 			#{altitude},
+ 			#{path},
+ 			#{region.id},
+ 			#{type})
+ 	</insert>
+	<insert id="addRegion" parameterType="com.destinesia.entity.Region">
+		INSERT INTO region
+ 			(id,
+ 			country,
+ 			province,
+ 			city,
+ 			district,
+ 			road,
+ 			country_cn,
+ 			province_cn,
+ 			city_cn,
+ 			district_cn,
+ 			road_cn
+ 			)
+ 		VALUES
+ 			(#{id},
+ 			#{country},
+ 			#{province},
+ 			#{city},
+ 			#{district},
+ 			#{road},
+ 			#{countryCN},
+ 			#{provinceCN},
+ 			#{cityCN},
+ 			#{districtCN},
+ 			#{roadCN}
+ 			)
+	</insert>
+ 	<insert id="addVote" parameterType="com.destinesia.entity.Vote">
+ 		INSERT INTO vote
+ 			(id,
+ 			user_id,
+ 			album_id,
+ 			picture_id)
+ 		VALUES
+ 			(#{id},
+ 			#{userId},
+ 			#{albumId},
+ 			#{pictureId})
+ 	</insert>
+	<delete id="deleteVote" parameterType="com.destinesia.entity.Vote">
+        DELETE from vote WHERE user_id=#{userId} AND album_id=#{albumId} AND picture_id=#{pictureId}
+    </delete>
+
+    <insert id="addView" parameterType="com.destinesia.entity.View">
+ 		INSERT INTO view
+ 			(id,
+ 			album_id,
+ 			device_no,
+ 			ip_address)
+ 		VALUES
+ 			(#{id},
+ 			#{albumId},
+ 			#{deviceNO},
+ 			#{ipAddress})
+ 	</insert>
+ 	
+ 	<update id="promoteAlbum" parameterType="java.lang.String" >
+        update album set promotion=1, passed=1, check_date=now() where id=#{id}
+    </update>
+ 	<update id="unpassAlbum" parameterType="java.lang.String" >
+        update album set passed=2, check_date=now() where id=#{id}
+    </update>
+    <update id="passAlbum" parameterType="java.lang.String" >
+        update album set passed=1, check_date=now() where id=#{id}
+    </update>
+ 	<update id="deleteAlbum" parameterType="java.lang.String" >
+        update album set deleted=1, passed=3, check_date=now() where id=#{id}
+    </update>
+    
+    <insert id="addPath" parameterType="com.destinesia.entity.UserPath">
+ 		INSERT INTO user_path
+ 			(id,
+ 			user_id,
+ 			path,
+ 			create_date)
+ 		VALUES
+ 			(#{id},
+ 			#{userId},
+ 			#{path},
+ 			#{createDate})
+ 	</insert>
+ 	<update id="updatePath" parameterType="com.destinesia.entity.UserPath">
+ 		update user_path set path=#{path} where id=#{id} and data=#{date}
+ 	</update>
+</mapper>
