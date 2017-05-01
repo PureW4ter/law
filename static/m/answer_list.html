@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <title>互动回答</title>
+</head>
+<body>
+    <div id="i_main">
+        <!-- header -->
+        <div id="i_headbox">
+        </div>
+        <!--body-->
+        <div id="i_mainbox">
+            <div class="read_list_box">
+                <div class="read_list_img_box">
+                    <img src="img/read_list_head.jpg">
+                    <div class="read_list_img_title">
+                        浦东小区房屋纠纷
+                    </div>
+                </div>
+                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
+                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
+            </div>
+            <div class="read_list_box">
+                <div class="read_list_img_box">
+                    <img src="img/read_list_head.jpg">
+                    <div class="read_list_img_title">
+                        浦东小区房屋纠纷
+                    </div>
+                </div>
+                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
+                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
+            </div>
+            <div class="read_list_box">
+                <div class="read_list_img_box">
+                    <img src="img/read_list_head.jpg">
+                    <div class="read_list_img_title">
+                        浦东小区房屋纠纷
+                    </div>
+                </div>
+                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
+                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
+            </div>
+            <div class="blk15"></div>
+        </div>
+
+    </div>
+</body>
+<script src="js/lib/jweixin-1.0.0.js"></script>
+<script src="js/lib/lib.js?ver=20170417144807" type="text/javascript"></script>
+<script type="text/javascript">
+    define('answer_list',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this._sendRequest()},_sendRequest:function(){this._render()},_render:function(){this._registEvent()},_registEvent:function(){$("#i_one").off("click",this._go).on("click",{ctx:this},this._go)},_go:function(e){window.location=""}};return r});
+</script>
+</html>

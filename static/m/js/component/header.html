@@ -1,0 +1,28 @@
+<script type="text/template" id="i_header_tpl">
+    <div class="<%=showHeader%>">
+        <%
+            if(window.WSBridge){
+                if(window.WSBridge.updateTitle){
+                    window.WSBridge.updateTitle(title);
+                }
+            }
+            document.title = title;
+        %>
+        <header>
+            <h1 id="i_header_title" class="<%=showDownicon?'downico':''%>"><%=title%>
+            </h1>
+            <%if(showBackBtn){%>
+                <i class="returnico" id="i_return"></i>
+            <%}%>
+            <%if(showRefreshBtn){%>
+                <span id="i_refresh_btn" class="refresh_btn"></span>
+            <%}%>
+            <%if(rightFunBtn){%>
+                <button class="right_fun_btn" id="i_right_fun_button"></button>
+            <%}%>
+            <%if(showShareBtn){%>
+                <span id="i_share_btn" class="share_btn"></span>
+            <%}%>
+        </header>
+    </div>
+</script>

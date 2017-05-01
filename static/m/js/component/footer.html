@@ -1,0 +1,35 @@
+<script type="text/template" id="i_footer_tpl">
+    <footer>
+        <div class="footer_small <%=result.smallText?'':'footer_none'%>" id="i_openFooter">
+            <div class="footer_btn">
+            <%if(result.smallText){%>  
+                <p><%=result.smallText.split("/")[0]%></p>
+                <p><%=result.smallText.split("/")[1]%></p>
+            <%}%>   
+            </div>    
+        </div>
+        <div class="footer_big" id="i_footerBox">
+            <div class="footer_left">
+            <%if(window.WSBridge){%>   
+               <div class="footer_phone">
+                    <p>了解更多活动信息</p>
+                    <p>请致电400-990-3838</p>
+               </div>
+            <%}else{%>
+               <div class="footer_down" id="i_footerDown">
+                   <p>下载我享度假APP</p>
+                   <p>参与更多活动</p> 
+               </div>
+            <%}%>   
+            </div>
+            <div class="footer_right">
+                <div class="footer_tel" id="i_footerTel">
+                    <p><%=result.bigText%></p>
+                    <p>9:00-20:00</p>
+                </div>
+                <div class="footer_close" id="i_closeFooter">
+                </div>
+            </div>
+        </div>
+    </footer>
+</script>
