@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.jfzy.service.po.ArticlePo;
 
-public class OrderRepository extends JpaRepository<ArticlePo, Integer> {
+public interface OrderRepository extends JpaRepository<ArticlePo, Integer> {
 
 	@Query("SELECT t FROM ArticlePo t WHERE t.deleted=0")
 	List<ArticlePo> findNotDeleted();

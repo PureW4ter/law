@@ -43,3 +43,10 @@ CREATE TABLE `jf_user` (
   `status` tinyint(2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `jf_property` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type_id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
