@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>后台管理系统</title>
+    <link href="styles/bootstrap.css?ver=20170417144433" rel="stylesheet" />
+    <link href="styles/main.css?ver=20170417144433" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="container-fluid" id="main">
+        <div class="col-sm-2 j_tree_con">
+            <div id="i_navbar">
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div class="row" id="i_header"></div>
+            <div class="panel panel-default">
+                <div class="panel-body add_coupon paddingtop30">
+                    <div class="col-sm-10 margintop24" id="i_mainbox">
+                        <script type="text/template" id="i_tpl">
+                            <form action="" class="form-horizontal" id="i_typeForm">
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">姓名:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="noIm form-control" 
+                                        value="222" name="totalHouse" maxlength="10"
+                                                 data-pattern="/.+/"
+                                                 data-container="body"
+                                                 data-toggle="popover"
+                                                 data-placement="right"
+                                                 data-content="请输入姓名！"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">电话:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="noIm form-control" 
+                                        value="222" name="totalHouse" maxlength="10"
+                                                 data-pattern="/.+/"
+                                                 data-container="body"
+                                                 data-toggle="popover"
+                                                 data-placement="right"
+                                                 data-content="请输入电话！"/>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="control-label col-sm-3">权限:</label>
+                                    <div class="col-sm-6" id="">
+                                       <div class="btn-group">
+                                            <button type="button" class="btn btn-default">普通</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li data-id="">普通</li>
+                                                <li data-id="">客服</li>
+                                                <li data-id="">超管</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="control-label col-sm-3">状态:</label>
+                                    <div class="col-sm-6" id="">
+                                       <div class="btn-group">
+                                            <button type="button" class="btn btn-default">启用</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li data-id="">启用</li>
+                                                <li data-id="">禁用</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-sm-9 paddingtop30">
+                                <button class="btn btn-yel btn_big pull-right j_saveArtical">保存</button>
+                                <button class="btn btn-default btn_big pull-right marginR26">取消</button>
+                            </div>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/include.js?ver=20170417144433" type="text/javascript"></script>
+</body>
+
+</html>

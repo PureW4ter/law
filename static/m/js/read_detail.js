@@ -1,0 +1,1 @@
+define('read_detail',["ajaxhelper","utility","component/time_button"],function(e,t,n){var r={initialize:function(){n.initialize("i_getcode_btn")}};return r});

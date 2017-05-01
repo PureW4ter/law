@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <title>一站咨询</title>
+</head>
+<body>
+    <div id="i_main">
+        <!-- header -->
+        <div id="i_headbox">
+        </div>
+        <!--body-->
+        <div id="i_mainbox">
+            <div>
+                <img src="img/index_banner.jpg">
+                <div class="phone_icon">
+                    <img src="img/phone.png">
+                </div>
+            </div>
+            <div style="position:relative">
+                <div class="new_input_section">
+                    <div class="new_input_box arrow_down">
+                        <label>您的身份</label>
+                        <input placeholder="房主" id="i_phone"/>
+                    </div>
+                    <div class="blk10"></div>
+                    <div class="new_input_box arrow_down">
+                        <label>目前所处的交易阶段</label>
+                        <input placeholder="未付定价" id="i_phone"/>
+                    </div>
+                    <div class="blk10"></div>
+                    <div class="new_input_box">
+                        <label>交易阶段</label>
+                        <div class="question_types">
+                            <ul>
+                                <li>因限购</li>
+                                <li>政策变动</li>
+                                <li>税费承担</li>
+                            </ul>
+                            <ul>
+                                <li>合同条款</li>
+                                <li>贷款问题</li>
+                                <li>不想买了</li>
+                            </ul>
+                            <ul>
+                                <li>户口问题</li>
+                                <li>不想卖了</li>
+                                <li>他人异议</li>
+                            </ul>
+                            <ul>
+                                <li>存在风险</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="blk10"></div>
+                    <div class="input_upper">
+                        上传合同文本，可以帮助律师做出准确判断
+                    </div>
+                    <div class="new_input_box arrow_down">
+                        <label>我已经签署了</label>
+                        <input placeholder="居间协议/买卖合同" id="i_phone"/>
+                    </div>
+                    <div class="input_bottom">
+                        提示：根据选择的合同类型做提示说明
+                    </div>
+                    <div class="quesiton_count_title">提交后进入回复倒计时</div>
+                    <div class="question_pay">
+                        <ul>
+                            <li class="question_pay_selected">
+                                <div class="question_pay_box">
+                                    <div class="question_pay_title1">2小时内电话回复</div>
+                                    <div class="question_pay_title2">24小时内书面回复</div>
+                                    <div class="question_pay_title3">¥129</div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="question_pay_box">
+                                    <div class="question_pay_title1">24小时内书面回复</div>
+                                    <div class="question_pay_title2">&nbsp;</div>
+                                    <div class="question_pay_title3">¥99</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="blk10"></div>
+                    <div class="pay_btn" id="i_pay">去支付</div>
+                    <div class="blk15"></div>
+                </div>
+            </div>
+        </div>
+        <!--div class="read_bottom_box">
+            <div class="quesiton_bottom_info">
+                您需支付：<span class="money">￥10000</span>
+            </div>
+            <div class="read_bottom_btn" id="i_pay">确认</div>
+        </div-->
+    </div>
+</body>
+<script src="js/lib/jweixin-1.0.0.js"></script>
+<script src="js/lib/lib.js?ver=20170417144807" type="text/javascript"></script>
+<script type="text/javascript">
+    define('ask_pay',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this._sendRequest()},_sendRequest:function(){this._render()},_render:function(){this._registEvent()},_registEvent:function(){$("#i_pay").off("click",this._pay).on("click",{ctx:this},this._pay)},_pay:function(e){window.location="question_complete.html"}};return r});
+</script>
+</html>
