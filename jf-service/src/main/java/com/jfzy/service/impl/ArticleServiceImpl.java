@@ -40,7 +40,7 @@ public class ArticleServiceImpl implements ArticleService {
 		retriveArticles();
 	}
 
-	@Scheduled(fixedRate = 50000)
+	@Scheduled(fixedRate = 60000)
 	public void retriveArticles() {
 		List<ArticlePo> articlePos = articleRepo.findNotDeleted(lastUpdatedTime);
 		Timestamp tmpTimestamp = lastUpdatedTime;
@@ -73,6 +73,21 @@ public class ArticleServiceImpl implements ArticleService {
 
 	}
 
+	@Override
+	public void createArticle(ArticleBo bo) {
+		ArticlePo po = bo2Po(bo);
+		articleRepo.save(po);
+	}
+
+	private static ArticlePo bo2Po(ArticleBo bo) {
+		ArticlePo po = new ArticlePo();
+		po.setContent(bo.getContent());
+		po.setTags(getTagString(bo.getTags()));
+		po.setTitle(bo.getTitle());
+		po.setTitleImgUrl(bo.getTitleImgUrl());
+		return po;
+	}
+
 	private static ArticleBo po2Bo(ArticlePo po) {
 		ArticleBo result = new ArticleBo();
 		result.setId(po.getId());
@@ -92,4 +107,9 @@ public class ArticleServiceImpl implements ArticleService {
 			return new String[0];
 		}
 	}
+
+	private static String getTagString(String[] tags) {
+		return StringUtils.join(tags, TAG_SEPARATOR);
+	}
+
 }

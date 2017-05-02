@@ -2,7 +2,7 @@ package com.jfzy.web.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ResponseVO<T> {
+public class ResponseVo<T> {
 
 	@JsonProperty("s")
 	private int status;
@@ -11,7 +11,7 @@ public class ResponseVO<T> {
 	@JsonProperty("r")
 	private T response;
 
-	public ResponseVO(int status, String message, T response) {
+	public ResponseVo(int status, String message, T response) {
 		this.status = status;
 		this.setMessage(message);
 		this.response = response;
