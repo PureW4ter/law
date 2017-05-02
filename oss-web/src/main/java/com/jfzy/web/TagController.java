@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jfzy.service.TagService;
 import com.jfzy.service.bo.TagBo;
 import com.jfzy.web.vo.ResponseStatusEnum;
-import com.jfzy.web.vo.ResponseVO;
+import com.jfzy.web.vo.ResponseVo;
 import com.jfzy.web.vo.TagVO;
 
 @RestController
@@ -25,7 +25,7 @@ public class TagController {
 
 	@ResponseBody
 	@GetMapping("/tag")
-	public ResponseVO<List<TagVO>> getTags() {
+	public ResponseVo<List<TagVO>> getTags() {
 
 		List<TagBo> tags = tagService.getAllTags();
 		List<TagVO> resultTags = new ArrayList<TagVO>(tags.size());
@@ -33,21 +33,21 @@ public class TagController {
 			resultTags.add(boToVo(bo));
 		}
 
-		return new ResponseVO<List<TagVO>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultTags);
+		return new ResponseVo<List<TagVO>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultTags);
 	}
 
 	@ResponseBody
 	@PutMapping("/tag")
-	public ResponseVO addTag(TagVO tag) {
+	public ResponseVo addTag(TagVO tag) {
 
-		return new ResponseVO(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+		return new ResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 
 	@ResponseBody
 	@DeleteMapping("/tag/{id}")
-	public ResponseVO deleteTag(@PathVariable("id") int id) {
+	public ResponseVo deleteTag(@PathVariable("id") int id) {
 		tagService.deleteTag(id);
-		return new ResponseVO(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+		return new ResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 
 	private static TagVO boToVo(TagBo bo) {
