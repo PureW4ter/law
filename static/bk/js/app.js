@@ -1,0 +1,1 @@
+requirejs.config({baseUrl:"./js",urlArgs:"ver="+window.frontJSVersion,paths:{text:"lib/text"}});

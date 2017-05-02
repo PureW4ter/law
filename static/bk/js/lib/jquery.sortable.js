@@ -1,0 +1,9 @@
+/*
+ * HTML5 Sortable jQuery Plugin
+ * http://farhadi.ir/projects/html5sortable
+ * 
+ * Copyright 2012, Ali Farhadi
+ * Released under the MIT license.
+ */
+
+(function(e){var t,n=e();e.fn.sortable=function(r){return r=r||{},this.each(function(){if(/^enable|disable|destroy$/.test(r)){var i=e(this).children(e(this).data("items")).attr("draggable",r=="enable");r=="destroy"&&i.add(this).removeData("connectWith").removeData("items").unbind("dragstart.h5s dragend.h5s selectstart.h5s dragover.h5s dragenter.h5s drop.h5s");return}var s,i=e(this).children(r.items),o=r.connectWith||!1,u=e("<"+i[0].tagName+' class="sortable-placeholder">'),a=r.handle,f;i.find(a).mousedown(function(){f=!0}).mouseup(function(){f=!1}),e(this).data("items",r.items),n=n.add(u),o&&e(o).add(this).data("connectWith",o),i.attr("draggable","true").bind("dragstart.h5s",function(n){if(a&&!f)return!1;f=!1;var r=n.originalEvent.dataTransfer;r.effectAllowed="move",r.setData("Text","dummy"),t=e(this).addClass("sortable-dragging"),s=t.index()}).bind("dragend.h5s",function(){t.removeClass("sortable-dragging").fadeIn(),n.detach(),s!=t.index()&&i.parent().trigger("sortupdate",[t]),t=null}).not("a[href], img").bind("selectstart.h5s",function(){return this.dragDrop&&this.dragDrop(),!1}).end().add([this,u]).bind("dragover.h5s dragenter.h5s drop.h5s",function(r){return!i.is(t)&&o!==e(t).parent().data("connectWith")?!0:r.type=="drop"?(r.stopPropagation(),n.filter(":visible").after(t),!1):(r.preventDefault(),r.originalEvent.dataTransfer.dropEffect="move",i.is(this)&&(t.hide(),e(this)[u.index()<e(this).index()?"after":"before"](u),n.not(u).detach()),!1)})})}})(jQuery);
