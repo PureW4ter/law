@@ -1,4 +1,5 @@
-define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], function (nav_bar, header, ajaxHelper, util) {
+define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qiniu/up_xiniu'], 
+        function (nav_bar, header, ajaxHelper, util, qiniu) {
     var UserManagement = {
         initialize: function () {
             //nav_bar
@@ -24,6 +25,25 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this.mainBox.html(this.tplFun());
             this._registEvent();
             this._xheditor();
+        },
+        _qiniuLoad:function(){
+            var imgLoad = $(".img_load");
+            for(var i=0;i<imgLoad.length;i++){
+                new qiniu(imgLoad[i],"/exchange/upload/artical_img/",function(up, file, info){
+                   var url = JSON.parse(info).key;
+                   var oImg = this.parentNode.getElementsByTagName("img")[0];
+                   var oClose = this.parentNode.getElementsByClassName("img_close")[0];
+                   var oRemove = this.parentNode.parentNode.getElementsByClassName("removeModule")[0];
+                   oImg.style.display = "block";
+                   oClose.style.display = "block";
+                   this.style.display = "none";
+                   if(oRemove){
+                        oRemove.style.display = "none";
+                   }
+                   oImg.setAttribute("src",window.qiniuDomain+url);
+                })
+            }
+            this._rigistEvent();
         },
         _registEvent: function () {
             
