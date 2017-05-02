@@ -3,12 +3,12 @@
     baseUrl: './js',
     dir: './dist',
     optimize: "uglify",
-    modules: [],
+    modules: [
+        {
+            name: 'main'
+        }
+    ],
     paths: {
-        zepto: 'lib/zepto',
-        underscore: 'lib/underscore',
-        text: 'lib/text',
-        iscroll: 'lib/iscroll',
     },
     fileExclusionRegExp: /^(r|build)\.js$/,
     optimizeCss: 'standard',
