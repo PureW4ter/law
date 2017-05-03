@@ -10,19 +10,25 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             this._sendRequest();
         },
         _sendRequest: function () {
-            /*var params = {
-                type:2
-            };
-            ajaxHelper.post("http://" + window.frontJSHost + "/user/list",
-                params, this, this._render, null);*/
-            this._render();
+            ajaxHelper.get("http://" + window.frontJSHost + "/article/tag",
+                {}, this, this._getArticle, null);
+        },
+        _getArticle: function(tags){
+            if(!util.getQueryParameter("id")){
+                 this._render({result:{}, tags:tags});
+            }else{
+                ajaxHelper.post("http://" + window.frontJSHost + "/user/list",
+                    {}, this, function(data){
+                        this._render({result:data, tags:tags});
+                    }, null);
+            }
         },
         _xheditor: function(){
             var url="http://upload.do";
             this.editor = $('#elm1').xheditor({width:'100%',height:1000, html5Upload:true, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
         },
         _render: function (data) {
-            this.mainBox.html(this.tplFun());
+            this.mainBox.html(this.tplFun(data));
             this._xheditor();
             this._qiniuLoad();
         },
@@ -43,6 +49,17 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         },
         _registEvent: function () {
             $(".j_img_close").off("click",this._removeImg).on("click",this._removeImg);
+            $(".j_act_check").off("click",this._actChecked).on("click",{ctx:this},this._actChecked);
+            $(".j_selType li").off("click",this._selType).on("click",{ctx: this},this._selType);
+            $(".j_saveArtical").off("click",this._doSave).on("click",{ctx: this},this._doSave);
+        },
+        _selType:function(){
+            var type = $(this).data("type");
+            var text = $(this).text();
+            $(this).closest("ul").prev("button").data("type",type).find("span").eq(0).text(text);
+        },
+        _actChecked:function(){
+            $(this).toggleClass("active");
         },
         _removeImg:function(){
             $(this).siblings("img").attr("src","").css("display","none");
@@ -53,6 +70,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         _doSave:function(e){
             var params = {};
             params.instructions = e.data.ctx.editor.getSource();
+            
         }
 
     };

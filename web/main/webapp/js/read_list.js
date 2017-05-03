@@ -4,7 +4,7 @@ define(['component/header', 'ajaxhelper', 'utility', 'scroll'],function(header, 
 	var ReadList = {
 		//初始化标志
 		initialized : false,
-		pageNo : 1,
+		pageNo : 0,
 		pageSize: 5,
 		initialize :function(){
 			//body
@@ -14,10 +14,9 @@ define(['component/header', 'ajaxhelper', 'utility', 'scroll'],function(header, 
 			this._sendRequest(false);
 		},
 		_sendRequest :function(isPaging){
-			var params = {"pageNo": this.pageNo, "pageSize":this.pageSize};
-			/*ajaxHelper.get("http://" + window.frontJSHost + "/api/v2/weshare/app/informations",
-                params, this, this._render, null, isPaging);*/
-			this._render({result:[{},{},{},{},{}]});
+			var params = {"page": this.pageNo, "size":this.pageSize};
+			ajaxHelper.get("http://" + window.frontJSHost + "/article/list",
+                params, this, this._render, null, isPaging);
 		},
 		_render:function(data){
 			this.pageNo++;
@@ -26,7 +25,7 @@ define(['component/header', 'ajaxhelper', 'utility', 'scroll'],function(header, 
 				this.mainBox.html(this.tplfun({"result": data}));
 				this._registEvent();
 				this.initialized = true;
-				if(data.result.length == this.pageSize){
+				if(data.r.length == this.pageSize){
 					listScroll.initialize(this);
 				}else{
 					$("#i_refresh").css("display", "none");
@@ -34,7 +33,7 @@ define(['component/header', 'ajaxhelper', 'utility', 'scroll'],function(header, 
 			}else{
 				var a = $(this.tplfun({"result":data})).find("#i_info_list ul");
 				a.insertBefore('#i_refresh');
-				if(data.result.length<this.pageSize){
+				if(data.r.length<this.pageSize){
 					$("#i_refresh").css("display", "none");
 					listScroll.setDisabled();
 				}else{
@@ -45,8 +44,7 @@ define(['component/header', 'ajaxhelper', 'utility', 'scroll'],function(header, 
 			}
 		},
 		_registEvent:function(){
-			$("#i_info_list").off("click", 'li', this._goDetail).on("click", 'li', this._goDetail);
-			$(".read_list_box").off("click", this._go).on("click", {ctx: this}, this._go);
+			$("#i_info_list").off("click", 'li', this._go).on("click", 'li', this._go);
 		},
 		_go:function(e){
 			var id = $(e.currentTarget).data("id");

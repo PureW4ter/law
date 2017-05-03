@@ -1,8 +1,27 @@
-define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, util, timeBtn) {
-    var Regist = {
-        initialize: function() {
-           timeBtn.initialize("i_getcode_btn");
-        },
+define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
+    var ReadKeys = {
+        initialize :function(){
+        	//body
+			this.detailBox = $('#i_detail');
+			this.tplDetailfun = _.template($("#i_tpl_detail").html());
+
+			this.listBox = $('#i_list');
+			this.tplListfun = _.template($("#i_tpl_list").html());
+			//request
+			this._sendRequest();
+		},
+		_sendRequest :function(){
+			var params = {id: util.getQueryParameter("id")};
+			ajaxHelper.get("http://" + window.frontJSHost + "/article/detail",
+                params, this, this._render);
+		},
+		_render:function(data){
+			this.detailBox.html(this.tplDetailfun({"result": data}));
+			this._registEvent();
+		},
+		_registEvent:function(){
+			
+		}
     };
-    return Regist;
+    return ReadKeys;
 });

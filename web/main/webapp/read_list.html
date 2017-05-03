@@ -16,16 +16,21 @@
             <script type="text/template" id="i_tpl">
             <div class="read_list" id="i_info_list">
                 <ul>
-                    <%_.each(result.result,function(item){%>
-                        <li class="read_list_box">
+                    <%_.each(result.r,function(item){%>
+                        <li class="read_list_box" data-id="<%=item.id%>">
                             <div class="read_list_img_box">
-                                <img src="img/read_list_head.jpg">
+                                <img src="<%=item.titleImgUrl%>">
                                 <div class="read_list_img_title">
-                                    这是一个非常长的名字，很长很长这是一个非常长的名字，很长很长这是一个非常长的名字，很长很长
+                                    <%=item.title%>
                                 </div>
                             </div>
-                            <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
-                            <div class="read_list_subtitle"><div><span>限购&nbsp;&nbsp;</span><span>定金&nbsp;&nbsp;</span>2016年7月20日</div></div>
+                            <div class="read_list_content"><%=item.summary%></div>
+                            <div class="read_list_subtitle">
+                                <div>
+                                <%_.each(item.tags,function(tag){%><span><%=tag%>&nbsp;&nbsp;</span><%})%>
+                                <%=item.createTime%>
+                                </div>
+                            </div>
                         </li>
                     <%})%>
                 </ul>
@@ -34,8 +39,6 @@
                 </dl>
             </div>
             </script>
-
-            
         </div>
     </div>
 </body>

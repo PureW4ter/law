@@ -15,19 +15,25 @@ public class ArticleBo {
 	private int id;
 	private String title;
 	private String titleImgUrl;
+	private String shareIconUrl;
 	private String content;
 	private Timestamp createTime;
+	private String summary;
+	private int cityId;
 
 	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
 	private String[] tags;
 
-	public ArticleBo(int id, String title, String titleImgUrl, String content, String[] tags, Timestamp createTime) {
+	public ArticleBo(int id, String title, String titleImgUrl, String content, String shareIconUrl, String summary, String[] tags, Timestamp createTime, int cityId) {
 		this.id = id;
 		this.title = title;
 		this.titleImgUrl = titleImgUrl;
+		this.shareIconUrl = shareIconUrl;
+		this.summary = summary;
 		this.content = content;
 		this.tags = tags;
 		this.createTime = createTime;
+		this.cityId = cityId;
 	}
 
 	public ArticleBo() {
@@ -57,12 +63,28 @@ public class ArticleBo {
 		this.titleImgUrl = titleImgUrl;
 	}
 
+	public String getShareIconUrl() {
+		return shareIconUrl;
+	}
+
+	public void setShareIconUrl(String shareIconUrl) {
+		this.shareIconUrl = shareIconUrl;
+	}
+
 	public String getContent() {
 		return content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 	public String[] getTags() {
@@ -81,4 +103,12 @@ public class ArticleBo {
 		this.createTime = createTime;
 	}
 
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+	
 }

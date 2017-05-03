@@ -5,11 +5,14 @@ import java.sql.Timestamp;
 public class ArticleVo {
 
 	private int id;
+	private String summary;
 	private String content;
 	private String title;
 	private String titleImgUrl;
+	private String shareIconUrl;
 	private String[] tags;
 	private Timestamp createTime;
+	private int cityId;
 
 	public int getId() {
 		return id;
@@ -25,6 +28,14 @@ public class ArticleVo {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 	public String getTitle() {
@@ -43,6 +54,14 @@ public class ArticleVo {
 		this.titleImgUrl = titleImgUrl;
 	}
 
+	public String getShareIconUrl() {
+		return shareIconUrl;
+	}
+
+	public void setShareIconUrl(String shareIconUrl) {
+		this.shareIconUrl = shareIconUrl;
+	}
+
 	public String[] getTags() {
 		return tags;
 	}
@@ -59,4 +78,11 @@ public class ArticleVo {
 		this.createTime = createTime;
 	}
 
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
 }

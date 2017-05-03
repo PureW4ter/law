@@ -38,17 +38,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <%_.each(result.r,function(item){%>
                                 <tr data-id="">
-                                    <td><a href="" class="blue_link">吃过了犯法吗</a></td>
-                                    <td>口感, 食材</td>
-                                    <td>打的费大是大非地方大撒范德萨大....</td>
+                                    <td><a href="new_article.html?id=<%=item.id%>" class="blue_link"><%=item.title%></a></td>
+                                    <td><%=item.tags.join(",")%></td>
+                                    <td class="ar_summry"><%=item.summary%></td>
                                 </tr>
+                                <%})%>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </script>
             </div>
+            <div id="i_page" class="text-center fr"></div>
         </div>
     </div>
     <script src="js/include.js?ver={front_version}" type="text/javascript"></script>

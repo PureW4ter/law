@@ -27,7 +27,7 @@ $("body").append('<div id="i_loading_content" class="loading_content"><div class
 
 //---------------------------------------------------------------------------------------
 //配置信息
-window.frontJSVersion = "{front_version}";
+window.frontJSHost = "localhost:8080";
 
 window.imgHost = "http://7xlovk.com2.z0.glb.qiniucdn.com/upload/";
 

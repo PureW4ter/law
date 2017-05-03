@@ -62,7 +62,7 @@ define(['ajaxhelper',
 			}
 
 			var _this = this;
-			ajaxHelper.get("http://" + window.frontJSHost + "/api/v1/exchange/activity/getCdnToken?paramStr=" + JSON.stringify(param2)+ "&access_token=4lwkREXLjom7ZYDVxqbI0n",
+			ajaxHelper.get("http://" + "api.weshare12.net" + "/api/v1/exchange/activity/getCdnToken?paramStr=" + JSON.stringify(param2)+ "&access_token=4lwkREXLjom7ZYDVxqbI0n",
 				null, this, function (data) {
 					window.localStorage["xiniuToken"] = JSON.parse(data)["backend.common.getCdnToken"].results.uptoken;
 					window.newToken = true;
