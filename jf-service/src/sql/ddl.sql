@@ -15,15 +15,18 @@ CREATE TABLE `jf_tag` (
 CREATE TABLE `jf_article` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(500) NOT NULL DEFAULT '',
+  `city_id` int(11) NOT NULL DEFAULT '0',
   `content` longtext,
   `tags` varchar(1000) NOT NULL DEFAULT '',
+  `summary` varchar(1000) NOT NULL,
   `type` tinyint(1) NOT NULL DEFAULT '0',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `title_img_url` varchar(2000) DEFAULT NULL,
+  `title_img_url` varchar(2000) NOT NULL,
+  `share_icon_url` varchar(200) DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `jf_user_account` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
