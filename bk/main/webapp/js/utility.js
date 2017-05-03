@@ -95,7 +95,10 @@ define([],function(){
                 result[field.name] = field.value;
             });
             return result;
-        }
+        },
+        getJson: function (res) {
+            return '{"' + res.replace(/=/g, '":"').replace(/&/g, '","').replace(/\n/g,'\\n').replace(/\r/g,'\\r') + '"}';
+        },
 	};
 	return Utility;
 });

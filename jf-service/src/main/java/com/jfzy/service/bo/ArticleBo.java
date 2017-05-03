@@ -18,13 +18,15 @@ public class ArticleBo {
 	private String shareIconUrl;
 	private String content;
 	private Timestamp createTime;
+	private Timestamp updateTime;
 	private String summary;
 	private int cityId;
 
 	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
 	private String[] tags;
 
-	public ArticleBo(int id, String title, String titleImgUrl, String content, String shareIconUrl, String summary, String[] tags, Timestamp createTime, int cityId) {
+	public ArticleBo(int id, String title, String titleImgUrl, String content, String shareIconUrl, String summary, String[] tags, 
+			Timestamp createTime, Timestamp updateTime, int cityId) {
 		this.id = id;
 		this.title = title;
 		this.titleImgUrl = titleImgUrl;
@@ -33,6 +35,7 @@ public class ArticleBo {
 		this.content = content;
 		this.tags = tags;
 		this.createTime = createTime;
+		this.updateTime = updateTime;
 		this.cityId = cityId;
 	}
 
@@ -109,6 +112,14 @@ public class ArticleBo {
 
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
+	}
+
+	public Timestamp getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 }

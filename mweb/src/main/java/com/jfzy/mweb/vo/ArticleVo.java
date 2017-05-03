@@ -11,6 +11,7 @@ public class ArticleVo {
 	private String titleImgUrl;
 	private String shareIconUrl;
 	private String[] tags;
+	private String tagStr;
 	private Timestamp createTime;
 	private int cityId;
 
@@ -85,4 +86,13 @@ public class ArticleVo {
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
 	}
+
+	public String getTagStr() {
+		return tagStr;
+	}
+
+	public void setTagStr(String tagStr) {
+		this.tagStr = tagStr;
+	}
+	
 }

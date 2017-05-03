@@ -91,6 +91,8 @@ public class ArticleServiceImpl implements ArticleService {
 		po.setTitleImgUrl(bo.getTitleImgUrl());
 		po.setShareIconUrl(bo.getShareIconUrl());
 		po.setSummary(bo.getSummary());
+		po.setCreateTime(bo.getCreateTime());
+		po.setUpdateTime(bo.getUpdateTime());
 		return po;
 	}
 

@@ -745,6 +745,7 @@ textarea.foreword{
 .btn_big{
     width: 135px;
     height: 45px;
+    line-height: 32px;
     font-size: 16px;
 }
 .marginR26{

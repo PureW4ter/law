@@ -1,10 +1,12 @@
 define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qiniu/up_xiniu'], 
         function (nav_bar, header, ajaxHelper, util, qiniu) {
     var UserManagement = {
+        articleId:"",
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 2);
             header.initialize("i_header", "录入文章");
+            this.articleId = util.getQueryParameter("id");
             this.mainBox = $('#i_mainbox');
             this.tplFun = _.template($("#i_tpl").html());
             this._sendRequest();
@@ -14,11 +16,11 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                 {}, this, this._getArticle, null);
         },
         _getArticle: function(tags){
-            if(!util.getQueryParameter("id")){
+            if(!this.articleId){
                  this._render({result:{}, tags:tags});
             }else{
-                ajaxHelper.post("http://" + window.frontJSHost + "/user/list",
-                    {}, this, function(data){
+                ajaxHelper.get("http://" + window.frontJSHost + "/article/detail",
+                    {id:this.articleId}, this, function(data){
                         this._render({result:data, tags:tags});
                     }, null);
             }
@@ -51,12 +53,21 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             $(".j_img_close").off("click",this._removeImg).on("click",this._removeImg);
             $(".j_act_check").off("click",this._actChecked).on("click",{ctx:this},this._actChecked);
             $(".j_selType li").off("click",this._selType).on("click",{ctx: this},this._selType);
-            $(".j_saveArtical").off("click",this._doSave).on("click",{ctx: this},this._doSave);
+            $("#i_save_btn").off("click",this._doSave).on("click",{ctx: this},this._doSave);
+            $("[data-toggle='popover']").off({
+                'focus': p_destroy,
+                'click': p_destroy,
+                'checkis': input_check
+            }).on({
+                'focus': p_destroy,
+                'click': p_destroy,
+                'checkis': input_check
+            });
         },
         _selType:function(){
-            var type = $(this).data("type");
+            var id = $(this).data("id");
             var text = $(this).text();
-            $(this).closest("ul").prev("button").data("type",type).find("span").eq(0).text(text);
+            $(this).closest("ul").prev("button").data("id",id).find("span").eq(0).text(text);
         },
         _actChecked:function(){
             $(this).toggleClass("active");
@@ -68,9 +79,39 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             $(this).css("display","none");
         },
         _doSave:function(e){
-            var params = {};
-            params.instructions = e.data.ctx.editor.getSource();
-            
+            var formList = $("#i_typeForm");
+            formList.find("input, button, textarea").trigger('checkis');
+            setpopover();
+            if ($(".popover.in").length < 1) { 
+                var addForm = formList.serialize();
+                addForm = util.getJson(addForm);
+                addForm = addForm.replace(/\\n/g, "\\n").replace(/\\r/g, "\\r")
+                var formJson = JSON.parse(addForm);
+                var tags = new Array();
+                $("#i_articl_keys").find(".j_act_check").each(function(){
+                    if($(this).hasClass("active")){
+                        tags.push($(this).closest("span").data("name"));
+                    }
+                });
+                if (e.data.ctx.articleId) { 
+                    
+                } else {
+                    formJson.content = e.data.ctx.editor.getSource();
+                    formJson.tagStr = tags.join(",");
+                    formJson.shareIconUrl = $("#i_head_img").attr("src");
+                    formJson.cityId = $("#i_city").data("id");
+                    ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
+                        formJson, e.data.ctx, function(){
+                            util.showToast("保存成功！", function(){
+                                window.location = "article_management.html";
+                            })
+                        });
+                }
+            }else{
+                return;
+            }
+            //params.instructions = 
+
         }
 
     };

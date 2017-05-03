@@ -1,14 +1,22 @@
 package com.jfzy.mweb.controller;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,9 +68,11 @@ public class ArticleController {
 	}
 
 	@ResponseBody
-	@GetMapping("/article/create")
-	public void createArticle(String[] tags, int page) {
-		return;
+	@PostMapping(path="/article/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public void createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody ArticleVo vo) {
+		
+		ArticleBo bo = voToBo(vo);
+		articleService.createArticle(bo);
 	}
 	
 	@ResponseBody
@@ -76,6 +86,21 @@ public class ArticleController {
 		}
 	}
 	
+	private static ArticleBo voToBo(ArticleVo vo) {
+		ArticleBo bo = new ArticleBo();
+		bo.setContent(vo.getContent());
+		bo.setSummary(vo.getSummary());
+		bo.setId(vo.getId());
+		bo.setTags(vo.getTagStr().split(","));
+		bo.setTitle(vo.getTitle());
+		bo.setTitleImgUrl(vo.getTitleImgUrl());
+		bo.setShareIconUrl(vo.getShareIconUrl());
+		bo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		bo.setCityId(vo.getCityId());
+		return bo;
+	}
+	
 	private static ArticleVo boToVo(ArticleBo bo) {
 		ArticleVo vo = new ArticleVo();
 		vo.setContent(bo.getContent());
@@ -86,6 +111,7 @@ public class ArticleController {
 		vo.setTitleImgUrl(bo.getTitleImgUrl());
 		vo.setShareIconUrl(bo.getShareIconUrl());
 		vo.setCreateTime(bo.getCreateTime());
+		vo.setCityId(bo.getCityId());
 		return vo;
 	}
 

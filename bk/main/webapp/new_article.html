@@ -26,12 +26,12 @@
                 <div class="panel-body add_coupon paddingtop30">
                     <div class="col-sm-10 margintop24" id="i_mainbox">
                         <script type="text/template" id="i_tpl">
-                            <form action="" class="form-horizontal" id="i_typeForm">
+                            <form class="form-horizontal" id="i_typeForm">
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">标题:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="222" name="totalHouse" maxlength="10"
+                                        value="" name="title" maxlength="10"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -43,7 +43,7 @@
                                     <label for="" class="col-sm-3 control-label">首图:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="222" name="totalHouse" maxlength="10"
+                                        value="" name="titleImgUrl" maxlength="10"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -53,9 +53,9 @@
                                 </div>
                                 <div class="form-group clearfix">
                                     <label class="control-label col-sm-3">关键词:</label>
-                                    <div class="col-sm-6" id="i_artical_state">
+                                    <device-width class="col-sm-6" id="i_articl_keys">
                                         <%_.each(tags.r, function(item, index){%>
-                                        <span class="artical_act" data-id="<%=item.id%>"><b class="act_check j_act_check"></b><%=item.name%>
+                                        <span class="artical_act" data-name="<%=item.name%>"><b class="act_check j_act_check"></b><%=item.name%>
                                         </span>
                                         <br>
                                         <%})%>
@@ -65,13 +65,13 @@
                                     <label class="control-label col-sm-3">城市:</label>
                                     <div class="col-sm-6" id="">
                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span>北京</span>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" data-id="1" id="i_city"><span>北京</span>
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu j_selType">
-                                                <li data-id="bj">北京</li>
-                                                <li data-id="sh">上海</li>
-                                                <li data-id="gz">广州</li>
+                                                <li data-id="1">北京</li>
+                                                <li data-id="2">上海</li>
+                                                <li data-id="3">广州</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                                     <label class="control-label col-sm-3">转发小图:</label>
                                     <div class="col-sm-3">
                                         <div class="head_img">
-                                            <img id="i_head_img" src="" alt="无图"/>
+                                            <img id="i_head_img" src="" alt="无图" id="i_share_img"/>
                                             <span class="img_close j_img_close">&times;</span>
                                             <div class="img_load j_imgLoad0"></div>
                                         </div>
@@ -89,7 +89,14 @@
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">摘要:</label>
                                     <div class="col-sm-6">
-                                       <textarea type="text" class="form-control foreword" placeholder="2000个字内" maxlength="2000"></textarea>
+                                       <textarea type="text" class="form-control foreword" placeholder="2000个字内" maxlength="2000" id="i_summary"
+                                            name="summary"
+                                                data-pattern="/.+/"
+                                                data-container="body"
+                                                data-toggle="popover"
+                                                data-placement="right"
+                                                data-content="摘要"/>
+                                       </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
@@ -99,8 +106,8 @@
                                 </div>
                             </form>
                             <div class="col-sm-9 paddingtop30">
-                                <button class="btn btn-yel btn_big pull-right j_saveArtical">保存</button>
-                                <button class="btn btn-default btn_big pull-right marginR26">取消</button>
+                                <div class="btn btn-yel btn_big pull-right" id="i_save_btn">保存</div>
+                                <div class="btn btn-default btn_big pull-right marginR26" id="i_cancel_btn">取消</div>
                             </div>
                         </script>
                     </div>
