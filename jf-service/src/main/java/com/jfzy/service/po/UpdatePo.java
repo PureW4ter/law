@@ -20,6 +20,9 @@ public class UpdatePo {
 	private String title;
 
 	private int type;
+	
+	@Column(name = "city_id")
+	private int cityId;
 
 	@Column(name = "sub_title")
 	private String subTitle;
@@ -76,6 +79,14 @@ public class UpdatePo {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
 
 }

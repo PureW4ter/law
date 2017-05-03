@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `jfzy` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE  IF NOT EXISTS `jfzy` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `jfzy`;
--- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.7.12, for osx10.9 (x86_64)
 --
--- Host: localhost    Database: jfzy
+-- Host: 192.168.10.220    Database: jfzy
 -- ------------------------------------------------------
--- Server version	5.6.15
+-- Server version	5.1.73
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,25 +27,19 @@ DROP TABLE IF EXISTS `jf_article`;
 CREATE TABLE `jf_article` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(500) NOT NULL DEFAULT '',
+  `city_id` int(11) DEFAULT NULL,
   `content` longtext,
   `tags` varchar(1000) NOT NULL DEFAULT '',
+  `summary` varchar(1000) NOT NULL,
   `type` tinyint(1) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
-  `title_img_url` varchar(2000) DEFAULT NULL,
+  `title_img_url` varchar(2000) NOT NULL,
+  `share_icon_url` varchar(200) DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jf_article`
---
-
-LOCK TABLES `jf_article` WRITE;
-/*!40000 ALTER TABLE `jf_article` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jf_article` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `jf_order`
@@ -63,24 +57,15 @@ CREATE TABLE `jf_order` (
   `product_id` int(11) NOT NULL,
   `origin_price` double NOT NULL,
   `real_price` double NOT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL,
   `state` int(1) DEFAULT NULL,
   `pay_way` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jf_order`
---
-
-LOCK TABLES `jf_order` WRITE;
-/*!40000 ALTER TABLE `jf_order` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jf_order` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `jf_order_detail`
@@ -100,17 +85,8 @@ CREATE TABLE `jf_order_detail` (
   `house_city_id` int(11) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jf_order_detail`
---
-
-LOCK TABLES `jf_order_detail` WRITE;
-/*!40000 ALTER TABLE `jf_order_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jf_order_detail` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `jf_order_photos`
@@ -123,18 +99,10 @@ CREATE TABLE `jf_order_photos` (
   `id` int(11) NOT NULL,
   `order_detail_id` int(11) NOT NULL,
   `photo_path` varchar(2000) NOT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jf_order_photos`
---
-
-LOCK TABLES `jf_order_photos` WRITE;
-/*!40000 ALTER TABLE `jf_order_photos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jf_order_photos` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `jf_product`
@@ -151,17 +119,23 @@ CREATE TABLE `jf_product` (
   `update_time` timestamp NULL DEFAULT NULL,
   `is_deleted` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `jf_product`
+-- Table structure for table `jf_property`
 --
 
-LOCK TABLES `jf_product` WRITE;
-/*!40000 ALTER TABLE `jf_product` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jf_product` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `jf_property`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `jf_property` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type_id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `jf_tag`
@@ -178,17 +152,8 @@ CREATE TABLE `jf_tag` (
   `update_time` timestamp NULL DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jf_tag`
---
-
-LOCK TABLES `jf_tag` WRITE;
-/*!40000 ALTER TABLE `jf_tag` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jf_tag` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `jf_user`
@@ -208,18 +173,10 @@ CREATE TABLE `jf_user` (
   `head_img` varchar(2000) DEFAULT NULL,
   `open_id` varchar(45) DEFAULT NULL,
   `union_id` varchar(45) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jf_user`
---
-
-LOCK TABLES `jf_user` WRITE;
-/*!40000 ALTER TABLE `jf_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jf_user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `jf_user_account`
@@ -238,18 +195,10 @@ CREATE TABLE `jf_user_account` (
   `new_task` int(3) DEFAULT '0',
   `score` double DEFAULT '0',
   `money` double DEFAULT '0',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='比如两个微信号，那么就是两个user对应同一个user_account';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='比如两个微信号，那么就是两个user对应同一个user_account';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `jf_user_account`
---
-
-LOCK TABLES `jf_user_account` WRITE;
-/*!40000 ALTER TABLE `jf_user_account` DISABLE KEYS */;
-/*!40000 ALTER TABLE `jf_user_account` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -260,4 +209,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-01  2:00:41
+-- Dump completed on 2017-05-03 20:47:33

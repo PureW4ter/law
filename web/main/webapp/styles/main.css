@@ -894,13 +894,17 @@ header h1 {
     top: 354px;
 }
 /*阅读列表*/
+.read_list {
+    padding: 10px 12px;
+    min-height: 100%;
+}
 .read_list_box{
     position: relative;
     background-color: #ffffff;
     padding: 15px;
     border: 1px solid #efefef;
     border-radius: 5px;
-    margin: 15px 15px 0 15px;
+    margin-bottom: 15px;
 }
 .read_list_img_box{
     position: relative;
@@ -919,7 +923,11 @@ header h1 {
 .read_list_content{
     color: #b5b5b5;
     font-size: 13px;
-    padding: 10px 0;
+    margin: 10px 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .read_list_subtitle{
     position: relative;

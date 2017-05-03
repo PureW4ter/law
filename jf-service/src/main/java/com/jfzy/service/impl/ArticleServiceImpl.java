@@ -67,12 +67,16 @@ public class ArticleServiceImpl implements ArticleService {
 			Iterable<ArticleBo> values = articleElasticRepo.findAll(page);
 			List<ArticleBo> results = new ArrayList<ArticleBo>();
 			values.forEach(bo -> results.add(bo));
-
 			return results;
 		}
-
 	}
 
+	@Override
+	public ArticleBo getArticle(int id) {
+		ArticlePo po = articleRepo.getById(id);
+		return po2Bo(po);
+	}
+	
 	@Override
 	public void createArticle(ArticleBo bo) {
 		ArticlePo po = bo2Po(bo);
@@ -85,6 +89,10 @@ public class ArticleServiceImpl implements ArticleService {
 		po.setTags(getTagString(bo.getTags()));
 		po.setTitle(bo.getTitle());
 		po.setTitleImgUrl(bo.getTitleImgUrl());
+		po.setShareIconUrl(bo.getShareIconUrl());
+		po.setSummary(bo.getSummary());
+		po.setCreateTime(bo.getCreateTime());
+		po.setUpdateTime(bo.getUpdateTime());
 		return po;
 	}
 
@@ -93,9 +101,11 @@ public class ArticleServiceImpl implements ArticleService {
 		result.setId(po.getId());
 		result.setTitle(po.getTitle());
 		result.setTitleImgUrl(po.getTitleImgUrl());
+		result.setShareIconUrl(po.getShareIconUrl());
 		result.setContent(po.getContent());
 		result.setTags(getTags(po.getTags()));
-		result.setCreateTime(po.getUpdateTime());
+		result.setCreateTime(po.getCreateTime());
+		result.setSummary(po.getSummary());
 		return result;
 	}
 

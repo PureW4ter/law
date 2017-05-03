@@ -22,13 +22,21 @@ public class ArticlePo {
 	private String content;
 
 	private String tags;
+	
+	private String summary;
 
 	@Column(name = "update_time")
 	private Timestamp updateTime;
+	
+	@Column(name = "create_time")
+	private Timestamp createTime;
 
 	@Column(name = "title_img_url")
 	private String titleImgUrl;
 
+	@Column(name = "share_icon_url")
+	private String shareIconUrl;
+	
 	@Column(name = "is_deleted")
 	private boolean deleted;
 
@@ -56,6 +64,22 @@ public class ArticlePo {
 		this.content = content;
 	}
 
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
 	public String getTags() {
 		return tags;
 	}
@@ -70,6 +94,14 @@ public class ArticlePo {
 
 	public void setTitleImgUrl(String titleImgUrl) {
 		this.titleImgUrl = titleImgUrl;
+	}
+
+	public String getShareIconUrl() {
+		return shareIconUrl;
+	}
+
+	public void setShareIconUrl(String shareIconUrl) {
+		this.shareIconUrl = shareIconUrl;
 	}
 
 	public boolean isDeleted() {

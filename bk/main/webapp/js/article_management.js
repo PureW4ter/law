@@ -1,5 +1,7 @@
 define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], function (nav_bar, header, ajaxHelper, util) {
     var UserManagement = {
+        currentPage: 0,
+        size: 30,
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 2);
@@ -9,15 +11,12 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._sendRequest();
         },
         _sendRequest: function () {
-            /*var params = {
-                type:2
-            };
-            ajaxHelper.post("http://" + window.frontJSHost + "/user/list",
-                params, this, this._render, null);*/
-            this._render();
+            var params = {"page": this.currentPage, "size": this.size};
+            ajaxHelper.get("http://" + window.frontJSHost + "/article/list",
+                params, this, this._render, null);
         },
         _render: function (data) {
-            this.mainBox.html(this.tplFun());
+            this.mainBox.html(this.tplFun({'result': data}));
             this._registEvent();
         },
         _registEvent: function () {
