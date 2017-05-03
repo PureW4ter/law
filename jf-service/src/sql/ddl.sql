@@ -17,8 +17,8 @@ CREATE TABLE `jf_article` (
   `title` varchar(500) NOT NULL DEFAULT '',
   `content` longtext,
   `tags` varchar(1000) NOT NULL DEFAULT '',
-  `create_time` timestamp NULL DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `title_img_url` varchar(2000) DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
