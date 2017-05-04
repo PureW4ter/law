@@ -54,3 +54,17 @@ CREATE TABLE `jf_property` (
   `name` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `jf_lawyer` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `city_id` int(11) NOT NULL DEFAULT '0',
+  `oss_user_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `phone_num` varchar(50) NOT NULL DEFAULT '',
+  `memo` varchar(200) DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
