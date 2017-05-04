@@ -1,4 +1,4 @@
-package com.jfzy.service.po;
+package com.jfzy.mweb.vo;
 
 import java.sql.Timestamp;
 
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "jf_user")
-public class UserPo {
+public class UserVo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

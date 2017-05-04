@@ -38,7 +38,25 @@ CREATE TABLE `jf_article` (
   `share_icon_url` varchar(200) DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `jf_bk_user`
+--
+
+DROP TABLE IF EXISTS `jf_bk_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `jf_bk_user` (
+  `id` int(11) NOT NULL,
+  `wealth` int(11) DEFAULT '0',
+  `finished_task` int(3) DEFAULT '0',
+  `new_task` int(3) DEFAULT '0',
+  `score` double DEFAULT '0',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,8 +189,7 @@ CREATE TABLE `jf_user` (
   `postcode` varchar(10) DEFAULT NULL,
   `status` tinyint(2) NOT NULL,
   `head_img` varchar(2000) DEFAULT NULL,
-  `open_id` varchar(45) DEFAULT NULL,
-  `union_id` varchar(45) DEFAULT NULL,
+  `money` double DEFAULT '0',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -188,13 +205,9 @@ DROP TABLE IF EXISTS `jf_user_account`;
 CREATE TABLE `jf_user_account` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `role` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
-  `wealth` int(11) DEFAULT '0',
-  `finished_task` int(3) DEFAULT '0',
-  `new_task` int(3) DEFAULT '0',
-  `score` double DEFAULT '0',
-  `money` double DEFAULT '0',
+  `status` int(1) NOT NULL,
+  `type` int(2) DEFAULT NULL,
+  `value` varchar(225) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='比如两个微信号，那么就是两个user对应同一个user_account';
@@ -209,4 +222,4 @@ CREATE TABLE `jf_user_account` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-03 20:47:33
+-- Dump completed on 2017-05-04 18:59:32
