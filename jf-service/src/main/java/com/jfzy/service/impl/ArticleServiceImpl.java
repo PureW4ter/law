@@ -82,9 +82,10 @@ public class ArticleServiceImpl implements ArticleService {
 		ArticlePo po = bo2Po(bo);
 		articleRepo.save(po);
 	}
-
+	
 	private static ArticlePo bo2Po(ArticleBo bo) {
 		ArticlePo po = new ArticlePo();
+		po.setId(bo.getId());
 		po.setContent(bo.getContent());
 		po.setTags(getTagString(bo.getTags()));
 		po.setTitle(bo.getTitle());
@@ -93,6 +94,7 @@ public class ArticleServiceImpl implements ArticleService {
 		po.setSummary(bo.getSummary());
 		po.setCreateTime(bo.getCreateTime());
 		po.setUpdateTime(bo.getUpdateTime());
+		po.setCityId(bo.getCityId());
 		return po;
 	}
 
@@ -106,6 +108,7 @@ public class ArticleServiceImpl implements ArticleService {
 		result.setTags(getTags(po.getTags()));
 		result.setCreateTime(po.getCreateTime());
 		result.setSummary(po.getSummary());
+		result.setCityId(po.getCityId());
 		return result;
 	}
 

@@ -2,6 +2,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         function (nav_bar, header, ajaxHelper, util, qiniu) {
     var UserManagement = {
         articleId:"",
+        cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 2);
@@ -17,11 +18,24 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         },
         _getArticle: function(tags){
             if(!this.articleId){
-                 this._render({result:{}, tags:tags});
+                 this._render({"result":{}, "tags":tags, "cities":this.cities});
             }else{
                 ajaxHelper.get("http://" + window.frontJSHost + "/article/detail",
                     {id:this.articleId}, this, function(data){
-                        this._render({result:data, tags:tags});
+                        for(var tt in data.r.tags){
+                            for(var t in tags.r){
+                                if(tags.r[t].name == data.r.tags[tt]){
+                                    tags.r[t].selected = true;
+                                    break;
+                                }
+                            }
+                        }
+                        for(var c in this.cities){
+                            if(this.cities[c].id == data.r.cityId){
+                                data.r.cityName = this.cities[c].name;
+                            }
+                        }
+                        this._render({"result":data, "tags":tags, "cities":this.cities});
                     }, null);
             }
         },
@@ -33,6 +47,14 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             this.mainBox.html(this.tplFun(data));
             this._xheditor();
             this._qiniuLoad();
+            //七牛上传图片
+            $(".head_img img").each(function(){
+                if($(this).attr("src")){
+                    $(this).css("display","block");
+                    $(this).siblings(".img_close").css("display","block");
+                    $(this).siblings(".img_load").css("display","none");
+                }
+            });
         },
         _qiniuLoad:function(){
             var imgLoad = $(".img_load");
@@ -83,37 +105,39 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             formList.find("input, button, textarea").trigger('checkis');
             setpopover();
             if ($(".popover.in").length < 1) { 
-                var addForm = formList.serialize();
-                addForm = util.getJson(addForm);
-                addForm = addForm.replace(/\\n/g, "\\n").replace(/\\r/g, "\\r")
-                var formJson = JSON.parse(addForm);
+                var formJson = {};
+                formJson.title = $("#i_title").val();
+                formJson.titleImgUrl = $("#i_titleImgUrl").val();
+                formJson.summary = $("#i_summary").val();
+                formJson.shareIconUrl = $("#i_head_img").attr("src");
+                formJson.cityId = $("#i_city").data("id");
+                formJson.content = e.data.ctx.editor.getSource();
                 var tags = new Array();
                 $("#i_articl_keys").find(".j_act_check").each(function(){
                     if($(this).hasClass("active")){
                         tags.push($(this).closest("span").data("name"));
                     }
                 });
+                formJson.tagStr = tags.join(",");
+                
                 if (e.data.ctx.articleId) { 
-                    
+                    formJson.id=e.data.ctx.articleId;
+                    ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
+                        formJson, e.data.ctx, function(){
+                            util.showToast("更新成功！", function(){
+                                //window.location = "article_management.html";
+                            })
+                        });
                 } else {
-                    formJson.content = e.data.ctx.editor.getSource();
-                    formJson.tagStr = tags.join(",");
-                    formJson.shareIconUrl = $("#i_head_img").attr("src");
-                    formJson.cityId = $("#i_city").data("id");
                     ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
                         formJson, e.data.ctx, function(){
                             util.showToast("保存成功！", function(){
-                                window.location = "article_management.html";
+                                //window.location = "article_management.html";
                             })
                         });
                 }
-            }else{
-                return;
             }
-            //params.instructions = 
-
         }
-
     };
     return UserManagement;
 });

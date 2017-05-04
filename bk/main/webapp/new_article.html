@@ -31,7 +31,7 @@
                                     <label for="" class="col-sm-3 control-label">标题:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="" name="title" maxlength="10"
+                                        value="<%=result.r.title%>" id="i_title" maxlength="15"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -43,7 +43,7 @@
                                     <label for="" class="col-sm-3 control-label">首图:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="" name="titleImgUrl" maxlength="10"
+                                        value="<%=result.r.titleImgUrl%>" id="i_titleImgUrl"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -54,10 +54,10 @@
                                 <div class="form-group clearfix">
                                     <label class="control-label col-sm-3">关键词:</label>
                                     <device-width class="col-sm-6" id="i_articl_keys">
-                                        <%_.each(tags.r, function(item, index){%>
-                                        <span class="artical_act" data-name="<%=item.name%>"><b class="act_check j_act_check"></b><%=item.name%>
+                                        <%_.each(tags.r, function(item){%>
+                                        <span class="artical_act" data-name="<%=item.name%>"><b class="act_check j_act_check <%=item.selected?'active':''%>"></b><%=item.name%>
                                         </span>
-                                        <br>
+                                        <br/>
                                         <%})%>
                                     </div>
                                 </div>
@@ -65,13 +65,13 @@
                                     <label class="control-label col-sm-3">城市:</label>
                                     <div class="col-sm-6" id="">
                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" data-id="1" id="i_city"><span>北京</span>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" data-id="<%=result.r?result.r.cityId:1%>" id="i_city"><span><%=result.r?result.r.cityName:'北京'%></span>
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu j_selType">
-                                                <li data-id="1">北京</li>
-                                                <li data-id="2">上海</li>
-                                                <li data-id="3">广州</li>
+                                                <%_.each(cities, function(item){%>
+                                                <li data-id="<%=item.id%>"><%=item.name%></li>
+                                                <%})%>
                                             </ul>
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                                     <label class="control-label col-sm-3">转发小图:</label>
                                     <div class="col-sm-3">
                                         <div class="head_img">
-                                            <img id="i_head_img" src="" alt="无图" id="i_share_img"/>
+                                            <img id="i_head_img" src="<%=result.r.shareIconUrl%>" alt="无图" id="i_share_img"/>
                                             <span class="img_close j_img_close">&times;</span>
                                             <div class="img_load j_imgLoad0"></div>
                                         </div>
@@ -90,19 +90,18 @@
                                     <label for="" class="col-sm-3 control-label">摘要:</label>
                                     <div class="col-sm-6">
                                        <textarea type="text" class="form-control foreword" placeholder="2000个字内" maxlength="2000" id="i_summary"
-                                            name="summary"
+                                            id="i_summary"
                                                 data-pattern="/.+/"
                                                 data-container="body"
                                                 data-toggle="popover"
                                                 data-placement="right"
-                                                data-content="摘要"/>
-                                       </textarea>
+                                                data-content="摘要"><%=result.r.summary%></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
                                     <label for="" class="col-sm-3 control-label">正文:</label>
                                     <div class="col-sm-9">
-                                        <textarea id="elm1" rows="5" class="xheditor">d安抚</textarea>
+                                        <textarea id="elm1" rows="5" class="xheditor"><%=result.r.content%></textarea>
                                 </div>
                             </form>
                             <div class="col-sm-9 paddingtop30">
