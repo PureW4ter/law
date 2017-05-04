@@ -83,37 +83,38 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             formList.find("input, button, textarea").trigger('checkis');
             setpopover();
             if ($(".popover.in").length < 1) { 
-                var addForm = formList.serialize();
-                addForm = util.getJson(addForm);
-                addForm = addForm.replace(/\\n/g, "\\n").replace(/\\r/g, "\\r")
-                var formJson = JSON.parse(addForm);
+                var formJson = {};
+                formJson.title = $("#i_title").val();
+                formJson.titleImgUrl = $("#i_titleImgUrl").val();
+                formJson.summary = $("#i_summary").val();
+                formJson.shareIconUrl = $("#i_head_img").attr("src");
+                formJson.cityId = $("#i_city").data("id");
+                formJson.content = e.data.ctx.editor.getSource();
                 var tags = new Array();
                 $("#i_articl_keys").find(".j_act_check").each(function(){
                     if($(this).hasClass("active")){
                         tags.push($(this).closest("span").data("name"));
                     }
                 });
+                formJson.tagStr = tags.join(",");
+                
                 if (e.data.ctx.articleId) { 
-                    
+                    ajaxHelper.post("http://" + window.frontJSHost + "/article/update",
+                        formJson, e.data.ctx, function(){
+                            util.showToast("更新成功！", function(){
+                                //window.location = "article_management.html";
+                            })
+                        });
                 } else {
-                    formJson.content = e.data.ctx.editor.getSource();
-                    formJson.tagStr = tags.join(",");
-                    formJson.shareIconUrl = $("#i_head_img").attr("src");
-                    formJson.cityId = $("#i_city").data("id");
                     ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
                         formJson, e.data.ctx, function(){
                             util.showToast("保存成功！", function(){
-                                window.location = "article_management.html";
+                                //window.location = "article_management.html";
                             })
                         });
                 }
-            }else{
-                return;
             }
-            //params.instructions = 
-
         }
-
     };
     return UserManagement;
 });

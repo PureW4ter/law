@@ -1,5 +1,6 @@
 package com.jfzy.mweb.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,10 +70,17 @@ public class ArticleController {
 
 	@ResponseBody
 	@PostMapping(path="/article/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody ArticleVo vo) {
-		
+	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody ArticleVo vo) {
+		/*try {
+			vo.setTagStr(new String(vo.getTagStr().getBytes("ISO-8859-1"),"UTF-8"));
+			vo.setSummary(new String(vo.getSummary().getBytes("ISO-8859-1"),"UTF-8"));
+			vo.setContent(new String(vo.getContent().getBytes("ISO-8859-1"),"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}*/
 		ArticleBo bo = voToBo(vo);
 		articleService.createArticle(bo);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody

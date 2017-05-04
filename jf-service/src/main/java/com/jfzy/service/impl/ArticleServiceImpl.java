@@ -93,6 +93,7 @@ public class ArticleServiceImpl implements ArticleService {
 		po.setSummary(bo.getSummary());
 		po.setCreateTime(bo.getCreateTime());
 		po.setUpdateTime(bo.getUpdateTime());
+		po.setCityId(bo.getCityId());
 		return po;
 	}
 

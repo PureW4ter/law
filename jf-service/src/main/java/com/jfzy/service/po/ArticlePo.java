@@ -25,6 +25,9 @@ public class ArticlePo {
 	
 	private String summary;
 
+	@Column(name = "city_id")
+	private int cityId;
+	
 	@Column(name = "update_time")
 	private Timestamp updateTime;
 	
@@ -118,6 +121,14 @@ public class ArticlePo {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
 
 }
