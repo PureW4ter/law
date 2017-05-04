@@ -1,10 +1,10 @@
 package com.jfzy.mweb.vo;
 
-import java.sql.Timestamp;
 
 public class SimpleArticleVo {
 
 	private int id;
+	private int cityId;
 	private String title;
 	private String titleImgUrl;
 	private String summary;
@@ -58,4 +58,13 @@ public class SimpleArticleVo {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
+
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+	
 }

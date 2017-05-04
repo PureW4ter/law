@@ -1,10 +1,8 @@
 package com.jfzy.mweb.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -96,6 +94,7 @@ public class ArticleController {
 	
 	private static ArticleBo voToBo(ArticleVo vo) {
 		ArticleBo bo = new ArticleBo();
+		bo.setId(vo.getId());
 		bo.setContent(vo.getContent());
 		bo.setSummary(vo.getSummary());
 		bo.setId(vo.getId());
@@ -111,6 +110,7 @@ public class ArticleController {
 	
 	private static ArticleVo boToVo(ArticleBo bo) {
 		ArticleVo vo = new ArticleVo();
+		vo.setId(bo.getId());
 		vo.setContent(bo.getContent());
 		vo.setSummary(bo.getSummary());
 		vo.setId(bo.getId());
@@ -132,8 +132,10 @@ public class ArticleController {
 		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
 		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		vo.setSummary(bo.getSummary());
+		vo.setCityId(bo.getCityId());
 		return vo;
 	}
+	
 	private static TagVo boToVo(TagBo bo) {
 		TagVo vo = new TagVo();
 		vo.setId(bo.getId());

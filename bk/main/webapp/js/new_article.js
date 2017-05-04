@@ -2,6 +2,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         function (nav_bar, header, ajaxHelper, util, qiniu) {
     var UserManagement = {
         articleId:"",
+        cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 2);
@@ -17,11 +18,24 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         },
         _getArticle: function(tags){
             if(!this.articleId){
-                 this._render({result:{}, tags:tags});
+                 this._render({"result":{}, "tags":tags, "cities":this.cities});
             }else{
                 ajaxHelper.get("http://" + window.frontJSHost + "/article/detail",
                     {id:this.articleId}, this, function(data){
-                        this._render({result:data, tags:tags});
+                        for(var tt in data.r.tags){
+                            for(var t in tags.r){
+                                if(tags.r[t].name == data.r.tags[tt]){
+                                    tags.r[t].selected = true;
+                                    break;
+                                }
+                            }
+                        }
+                        for(var c in this.cities){
+                            if(this.cities[c].id == data.r.cityId){
+                                data.r.cityName = this.cities[c].name;
+                            }
+                        }
+                        this._render({"result":data, "tags":tags, "cities":this.cities});
                     }, null);
             }
         },
@@ -33,6 +47,14 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             this.mainBox.html(this.tplFun(data));
             this._xheditor();
             this._qiniuLoad();
+            //七牛上传图片
+            $(".head_img img").each(function(){
+                if($(this).attr("src")){
+                    $(this).css("display","block");
+                    $(this).siblings(".img_close").css("display","block");
+                    $(this).siblings(".img_load").css("display","none");
+                }
+            });
         },
         _qiniuLoad:function(){
             var imgLoad = $(".img_load");
@@ -99,7 +121,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                 formJson.tagStr = tags.join(",");
                 
                 if (e.data.ctx.articleId) { 
-                    ajaxHelper.post("http://" + window.frontJSHost + "/article/update",
+                    formJson.id=e.data.ctx.articleId;
+                    ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
                         formJson, e.data.ctx, function(){
                             util.showToast("更新成功！", function(){
                                 //window.location = "article_management.html";
