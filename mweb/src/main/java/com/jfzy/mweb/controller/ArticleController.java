@@ -92,6 +92,13 @@ public class ArticleController {
 		}
 	}
 	
+	@ResponseBody
+	@GetMapping(value = "/article/delete")
+	public ResponseVo<Object> articleDelete(int id) {
+		articleService.deleteArticle(id);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
 	private static ArticleBo voToBo(ArticleVo vo) {
 		ArticleBo bo = new ArticleBo();
 		bo.setId(vo.getId());

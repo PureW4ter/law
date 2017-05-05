@@ -83,6 +83,10 @@ public class ArticleServiceImpl implements ArticleService {
 		articleRepo.save(po);
 	}
 	
+	@Override
+	public void deleteArticle(int id) {
+		articleRepo.updateDeleted(id);
+	}
 	private static ArticlePo bo2Po(ArticleBo bo) {
 		ArticlePo po = new ArticlePo();
 		po.setId(bo.getId());

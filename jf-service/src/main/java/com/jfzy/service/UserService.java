@@ -6,5 +6,7 @@ import com.jfzy.service.bo.UserBo;
 public interface UserService {
 
 	void register(UserAccountBo ua, UserBo user);
-
+	
+	
+	
 }
