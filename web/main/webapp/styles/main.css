@@ -896,7 +896,6 @@ header h1 {
 /*阅读列表*/
 .read_list {
     padding: 10px 12px;
-    min-height: 100%;
 }
 .read_list_box{
     position: relative;

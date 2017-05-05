@@ -53,7 +53,7 @@ public class ArticleController {
 
 	@ResponseBody
 	@GetMapping("/article/list")
-	public ResponseVo<List<SimpleArticleVo>> getArticles(String[] tags, int page, int size) {
+	public ResponseVo<List<SimpleArticleVo>> getArticles(String tags, int page, int size) {
 		if (page < 0) {
 			page = 0;
 		}

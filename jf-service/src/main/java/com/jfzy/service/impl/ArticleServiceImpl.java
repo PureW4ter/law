@@ -54,10 +54,10 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleBo> searchByTags(String[] tags, Pageable page) {
+	public List<ArticleBo> searchByTags(String tags, Pageable page) {
 
-		if (tags != null && tags.length > 0) {
-			QueryBuilder qb = QueryBuilders.termsQuery("tags", tags);
+		if (tags != null && tags.length() > 0) {
+			QueryBuilder qb = QueryBuilders.termsQuery("tags", tags.split(","));
 			Iterable<ArticleBo> values = articleElasticRepo.search(qb, page);
 			List<ArticleBo> results = new ArrayList<ArticleBo>();
 			values.forEach(bo -> results.add(bo));
