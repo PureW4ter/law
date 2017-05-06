@@ -17,7 +17,7 @@ import com.jfzy.service.bo.TagBo;
 @RestController
 public class APPUserController {
 	@Autowired
-	private UserService userService;
+	//private UserService userService;
 	
 	@ResponseBody
 	@GetMapping("/user/bind")

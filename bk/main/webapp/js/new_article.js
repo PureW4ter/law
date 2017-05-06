@@ -18,7 +18,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         },
         _getArticle: function(tags){
             if(!this.articleId){
-                 this._render({"result":{}, "tags":tags, "cities":this.cities});
+                 this._render({"result":{"r":{}}, "tags":tags, "cities":this.cities});
             }else{
                 ajaxHelper.get("http://" + window.frontJSHost + "/article/detail",
                     {id:this.articleId}, this, function(data){
