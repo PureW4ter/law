@@ -34,4 +34,40 @@ public class LawyerServiceImpl implements LawyerService {
 		return bo;
 	}
 
+	private static LawyerPo boToPo(LawyerBo bo) {
+		LawyerPo po = new LawyerPo();
+		BeanUtils.copyProperties(bo, po);
+		po.setId(0);
+		return po;
+	}
+
+	@Override
+	public List<LawyerBo> getLawyerByCity(int cityId) {
+
+		List<LawyerPo> pos = lawyerRepo.findByCityId(cityId);
+		List<LawyerBo> results = new ArrayList<LawyerBo>(pos.size());
+		pos.forEach(po -> results.add(poToBo(po)));
+		return results;
+
+	}
+
+	@Override
+	public void createLawyer(LawyerBo bo) {
+		lawyerRepo.save(boToPo(bo));
+	}
+
+	@Override
+	public void updateLawyer(LawyerBo bo) {
+		LawyerPo po = lawyerRepo.findOne(bo.getId());
+		if (po != null) {
+			BeanUtils.copyProperties(bo, po);
+			lawyerRepo.save(po);
+		}
+	}
+
+	@Override
+	public void updateLawyerStatus(int lawyerId, int status) {
+		lawyerRepo.updateStatus(lawyerId, status);
+	}
+
 }
