@@ -7,14 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.jfzy.service.po.ArticlePo;
+import com.jfzy.service.po.OrderPo;
 
-public interface OrderRepository extends JpaRepository<ArticlePo, Integer> {
+public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
-	@Query("SELECT t FROM ArticlePo t WHERE t.deleted=0")
-	List<ArticlePo> findNotDeleted();
 
-	@Query(value = "SELECT t FROM ArticlePo t WHERE t.deleted=0 and t.updateTime>?1")
-	List<ArticlePo> findNotDeleted(Timestamp lastDatetime);
 
 }
-

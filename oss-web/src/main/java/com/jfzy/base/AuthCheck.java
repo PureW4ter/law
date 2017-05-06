@@ -14,6 +14,5 @@ import org.springframework.stereotype.Component;
 @Component
 public @interface AuthCheck {
 
-	// String[] roles() default {};
 	String[] privileges();
 }

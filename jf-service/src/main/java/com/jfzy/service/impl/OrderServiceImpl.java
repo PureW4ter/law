@@ -1,0 +1,62 @@
+package com.jfzy.service.impl;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.jfzy.service.LawyerService;
+import com.jfzy.service.OrderService;
+import com.jfzy.service.bo.LawyerBo;
+import com.jfzy.service.bo.LawyerStatusEnum;
+import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.OrderStatusEnum;
+import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.po.OrderPo;
+import com.jfzy.service.repository.OrderRepository;
+
+public class OrderServiceImpl implements OrderService {
+
+	@Autowired
+	private OrderRepository orderRepo;
+
+	@Autowired
+	private LawyerService lawyerSerivce;
+
+	@Override
+	public void createOrder(OrderBo bo) {
+		orderRepo.save(boToPo(bo));
+	}
+
+	private static OrderPo boToPo(OrderBo bo) {
+		OrderPo po = new OrderPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
+	}
+
+	@Override
+	public void assignOrder(int orderId, int lawyerId, int processorId, String processorName) {
+
+		LawyerBo lawyer = lawyerSerivce.getLawyerById(lawyerId);
+		if (lawyer != null && lawyer.getStatus() == LawyerStatusEnum.ACTIVE.getId()) {
+			OrderPo po = orderRepo.getOne(orderId);
+			if (po == null) {
+				throw new JfApplicationRuntimeException(400, "无此订单");
+			} else if (po.getCityId() != lawyer.getCityId()) {
+				throw new JfApplicationRuntimeException(400, "城市不匹配");
+			} else if (po.getStatus() == OrderStatusEnum.NEED_DISPATCH.getId()
+					|| po.getStatus() == OrderStatusEnum.DISPATCHED.getId()) {
+				po.setLawyerId(lawyerId);
+				po.setLawyerName(lawyer.getName());
+				po.setLawyerPhoneNum(lawyer.getPhoneNum());
+				po.setProcessorId(processorId);
+				po.setProcessorName(processorName);
+				po.setStatus(OrderStatusEnum.DISPATCHED.getId());
+				orderRepo.save(po);
+			} else {
+				throw new JfApplicationRuntimeException(400, "订单状态错误");
+			}
+		} else {
+			throw new JfApplicationRuntimeException(400, "无此律师或非启用律师");
+		}
+	}
+
+}
