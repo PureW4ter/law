@@ -42,13 +42,13 @@
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">首图:</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="noIm form-control" 
-                                        value="<%=result.r.titleImgUrl%>" id="i_titleImgUrl"
-                                                 data-pattern="/.+/"
-                                                 data-container="body"
-                                                 data-toggle="popover"
-                                                 data-placement="right"
-                                                 data-content="请输入首图地址！"/>
+                                        <div class="col-sm-3">
+                                            <div class="head_img">
+                                                <img id="i_titleImgUrl" src="<%=result.r.titleImgUrl%>" alt="无图" id="i_share_img"/>
+                                                <span class="img_close j_img_close">&times;</span>
+                                                <div class="img_load j_imgLoad0"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">

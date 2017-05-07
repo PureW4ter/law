@@ -107,7 +107,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             if ($(".popover.in").length < 1) { 
                 var formJson = {};
                 formJson.title = $("#i_title").val();
-                formJson.titleImgUrl = $("#i_titleImgUrl").val();
+                formJson.titleImgUrl = $("#i_titleImgUrl").attr("src");
                 formJson.summary = $("#i_summary").val();
                 formJson.shareIconUrl = $("#i_head_img").attr("src");
                 formJson.cityId = $("#i_city").data("id");
