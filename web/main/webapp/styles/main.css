@@ -897,6 +897,13 @@ header h1 {
 .read_list {
     padding: 10px 12px;
 }
+.read_head_wrap{
+    height: 160px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
 .read_list_box{
     position: relative;
     background-color: #ffffff;

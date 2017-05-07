@@ -19,7 +19,8 @@
                     <%_.each(result.r,function(item){%>
                         <li class="read_list_box" data-id="<%=item.id%>">
                             <div class="read_list_img_box">
-                                <img src="<%=item.titleImgUrl%>">
+                                <div class="read_head_wrap" style="background-image:url('<%=item.titleImgUrl%>')">
+                                </div>
                                 <div class="read_list_img_title">
                                     <%=item.title%>
                                 </div>
