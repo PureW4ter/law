@@ -1,7 +1,14 @@
 package com.jfzy.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.OrderService;
@@ -13,6 +20,7 @@ import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.OrderPo;
 import com.jfzy.service.repository.OrderRepository;
 
+@Service
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
@@ -30,6 +38,12 @@ public class OrderServiceImpl implements OrderService {
 		OrderPo po = new OrderPo();
 		BeanUtils.copyProperties(bo, po);
 		return po;
+	}
+
+	private static OrderBo poToBo(OrderPo po) {
+		OrderBo bo = new OrderBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
 	}
 
 	@Override
@@ -57,6 +71,52 @@ public class OrderServiceImpl implements OrderService {
 		} else {
 			throw new JfApplicationRuntimeException(400, "无此律师或非启用律师");
 		}
+	}
+
+	@Override
+	public OrderBo getOrderById(int id) {
+		OrderPo po = orderRepo.findOne(id);
+		if (po == null) {
+			throw new JfApplicationRuntimeException(400, "此订单不存在");
+		} else {
+			return poToBo(po);
+		}
+	}
+
+	@Override
+	public OrderBo getOrderBySn(String sn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<OrderBo> getOrdersByCityIdAndStatus(int cityId, int status, Pageable page) {
+		Page<OrderPo> poPage = orderRepo.findByCityIdAndStatus(cityId, status, page);
+		List<OrderBo> bos = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> bos.add(poToBo(po)));
+		}
+		Page<OrderBo> resultPage = new AggregatedPageImpl<OrderBo>(bos, page, poPage.getTotalElements());
+
+		return resultPage;
+	}
+
+	@Override
+	public List<OrderBo> getOrdersByUser(int userId, Pageable page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderBo> getUnprocessedOrdersByLawyer(int lawyerId, Pageable page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
