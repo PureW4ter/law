@@ -68,3 +68,38 @@ CREATE TABLE `jf_lawyer` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `jf_oss_role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL DEFAULT '',
+  `desc` varchar(200) NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:启用,1:禁用',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `jf_order` (
+  `id` int(11) NOT NULL,
+  `order_sn` varchar(50) NOT NULL DEFAULT '',
+  `city_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
+  `user_name` varchar(50) NOT NULL DEFAULT '',
+  `user_phone_num` varchar(50) NOT NULL DEFAULT '',
+  `lawyer_id` int(11) NOT NULL DEFAULT '0',
+  `lawyer_name` varchar(50) DEFAULT NULL,
+  `lawyer_phone_num` varchar(50) DEFAULT NULL,
+  `processor_id` int(11) NOT NULL DEFAULT '0',
+  `processor_name` varchar(200) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(200) NOT NULL DEFAULT '',
+  `origin_price` double NOT NULL,
+  `real_price` double NOT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `start_time` timestamp NULL DEFAULT NULL,
+  `end_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `pay_way` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

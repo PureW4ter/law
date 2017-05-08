@@ -16,4 +16,6 @@ public interface LawyerService {
 
 	void updateLawyerStatus(int lawyerId, int status);
 
+	LawyerBo getLawyerById(int id);
+
 }

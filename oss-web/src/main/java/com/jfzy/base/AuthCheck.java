@@ -1,13 +1,18 @@
 package com.jfzy.base;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Role {
+import org.springframework.stereotype.Component;
 
-	String name();
+@Target({ ElementType.TYPE, ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Component
+public @interface AuthCheck {
+
+	String[] privileges();
 }

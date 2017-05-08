@@ -1,65 +1,23 @@
-package com.jfzy.service.po;
+package com.jfzy.web.vo;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class SimpleOrderVo {
 
-@Entity
-@Table(name = "jf_order")
-public class OrderPo {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
-	@Column(name = "order_sn")
 	private String sn;
-	@Column(name = "city_id")
 	private int cityId;
-	@Column(name = "user_id")
 	private int userId;
-	@Column(name = "user_name")
 	private String userName;
-
-	@Column(name = "user_phone_num")
 	private String userPhoneNum;
-
-	@Column(name = "lawyer_id")
 	private int lawyerId;
-
-	@Column(name = "lawyer_name")
 	private String lawyerName;
-
-	@Column(name = "lawyer_phone_num")
 	private String lawyerPhoneNum;
-
-	@Column(name = "processor_id")
-	private int processorId;
-	@Column(name = "processor_name")
+	private String processorId;
 	private String processorName;
-
-	@Column(name = "product_id")
-	private int productId;
-
-	@Column(name = "product_name")
-	private String productName;
-
-	@Column(name = "origin_price")
-	private Double originPrice;
-
-	@Column(name = "real_price")
 	private Double realPrice;
-
 	private int status;
-
-	@Column(name = "create_time")
 	private Timestamp createTime;
-
-	@Column(name = "update_time")
 	private Timestamp updateTime;
 
 	public int getId() {
@@ -134,11 +92,11 @@ public class OrderPo {
 		this.lawyerPhoneNum = lawyerPhoneNum;
 	}
 
-	public int getProcessorId() {
+	public String getProcessorId() {
 		return processorId;
 	}
 
-	public void setProcessorId(int processorId) {
+	public void setProcessorId(String processorId) {
 		this.processorId = processorId;
 	}
 
@@ -148,30 +106,6 @@ public class OrderPo {
 
 	public void setProcessorName(String processorName) {
 		this.processorName = processorName;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public Double getOriginPrice() {
-		return originPrice;
-	}
-
-	public void setOriginPrice(Double originPrice) {
-		this.originPrice = originPrice;
 	}
 
 	public Double getRealPrice() {

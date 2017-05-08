@@ -70,4 +70,10 @@ public class LawyerServiceImpl implements LawyerService {
 		lawyerRepo.updateStatus(lawyerId, status);
 	}
 
+	@Override
+	public LawyerBo getLawyerById(int id) {
+		LawyerPo po = lawyerRepo.getOne(id);
+		return poToBo(po);
+	}
+
 }
