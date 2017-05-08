@@ -125,7 +125,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                     ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
                         formJson, e.data.ctx, function(){
                             util.showToast("更新成功！", function(){
-                                //window.location = "article_management.html";
+                                window.location = "article_management.html";
                             })
                         });
                 } else {
