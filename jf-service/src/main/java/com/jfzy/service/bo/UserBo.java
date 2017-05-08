@@ -11,7 +11,7 @@ public class UserBo {
 	private String memo;
 	private String address;
 	private String postcode;
-	private StatusEnum status;
+	private int status;
 	private double money;
 	private String headImg;
 	private Timestamp createTime;
@@ -52,10 +52,10 @@ public class UserBo {
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
-	public StatusEnum getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(StatusEnum status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	public double getMoney() {
