@@ -897,6 +897,13 @@ header h1 {
 .read_list {
     padding: 10px 12px;
 }
+.read_head_wrap{
+    height: 160px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
 .read_list_box{
     position: relative;
     background-color: #ffffff;
@@ -945,8 +952,7 @@ header h1 {
 /*阅读详情*/
 .read_detail_box{
     position: relative;
-    margin: 15px;
-    padding: 15px;
+    padding: 15px 10px;
     border: 1px solid #eeeeee;
     color: #666666;
     background-color: #ffffff;

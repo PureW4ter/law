@@ -6,9 +6,9 @@ public class UserAccountBo {
 
 	private int id;
 	private int userId;
-	private UserAccountTypeEnum type;
+	private int type;
 	private String value;
-	private StatusEnum status;
+	private int status;
 	private Timestamp createTime;
 	
 	public int getId() {
@@ -23,10 +23,10 @@ public class UserAccountBo {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public UserAccountTypeEnum getType() {
+	public int getType() {
 		return type;
 	}
-	public void setType(UserAccountTypeEnum type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	public String getValue() {
@@ -35,10 +35,10 @@ public class UserAccountBo {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public StatusEnum getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(StatusEnum status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	public Timestamp getCreateTime() {

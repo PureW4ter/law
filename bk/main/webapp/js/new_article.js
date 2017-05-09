@@ -18,7 +18,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         },
         _getArticle: function(tags){
             if(!this.articleId){
-                 this._render({"result":{}, "tags":tags, "cities":this.cities});
+                 this._render({"result":{"r":{}}, "tags":tags, "cities":this.cities});
             }else{
                 ajaxHelper.get("http://" + window.frontJSHost + "/article/detail",
                     {id:this.articleId}, this, function(data){
@@ -107,7 +107,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             if ($(".popover.in").length < 1) { 
                 var formJson = {};
                 formJson.title = $("#i_title").val();
-                formJson.titleImgUrl = $("#i_titleImgUrl").val();
+                formJson.titleImgUrl = $("#i_titleImgUrl").attr("src");
                 formJson.summary = $("#i_summary").val();
                 formJson.shareIconUrl = $("#i_head_img").attr("src");
                 formJson.cityId = $("#i_city").data("id");
@@ -125,7 +125,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                     ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
                         formJson, e.data.ctx, function(){
                             util.showToast("更新成功！", function(){
-                                //window.location = "article_management.html";
+                                window.location = "article_management.html";
                             })
                         });
                 } else {

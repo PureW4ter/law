@@ -11,4 +11,5 @@ public interface ArticleService {
 	List<ArticleBo> searchByTags(String tags, Pageable page);
 	ArticleBo getArticle(int id);
 	void createArticle(ArticleBo bo);
+	void deleteArticle(int id);
 }
