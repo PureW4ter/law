@@ -63,27 +63,6 @@ CREATE TABLE `jf_bk_user` (
 -- Table structure for table `jf_order`
 --
 
-DROP TABLE IF EXISTS `jf_order`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `jf_order` (
-  `id` int(11) NOT NULL,
-  `order_detai_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `lawyer_id` int(11) DEFAULT NULL,
-  `processor_id` int(11) DEFAULT NULL,
-  `product_id` int(11) NOT NULL,
-  `origin_price` double NOT NULL,
-  `real_price` double NOT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `start_time` timestamp NULL DEFAULT NULL,
-  `end_time` timestamp NULL DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT NULL,
-  `state` int(1) DEFAULT NULL,
-  `pay_way` int(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `jf_order_detail`
