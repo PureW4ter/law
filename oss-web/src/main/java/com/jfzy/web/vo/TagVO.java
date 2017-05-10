@@ -1,6 +1,6 @@
 package com.jfzy.web.vo;
 
-public class TagVO {
+public class TagVo {
 
 	private int id;
 	private String name;

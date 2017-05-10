@@ -14,4 +14,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccountPo, Inte
 	@Modifying
 	@Query("UPDATE UserAccountPo SET deleted=1 WHERE id=:id")
 	void updateDeleted(@Param("id") int id);
+	
+	@Query(value = "SELECT t FROM UserAccountPo t WHERE t.value=?1 and t.status=0")
+	UserAccountPo getByOpenid(String id);
 }

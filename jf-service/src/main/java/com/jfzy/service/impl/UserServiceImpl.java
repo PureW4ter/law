@@ -57,6 +57,12 @@ public class UserServiceImpl implements UserService{
 		return po2BoForUser(po);
 	}
 	
+	@Override
+	public UserAccountBo getUserAccountByOpenid(String openid) {
+		UserAccountPo po = userAccountRepo.getByOpenid(openid);
+		return po2BoForUserAccount(po);
+	}
+	
 	private static UserPo bo2PoForUser(UserBo bo) {
 		UserPo po = new UserPo();
 		po.setId(bo.getId());
@@ -68,6 +74,8 @@ public class UserServiceImpl implements UserService{
 		po.setPostcode(bo.getPostcode());
 		po.setRealName(bo.getRealName());
 		po.setStatus(bo.getStatus());
+		po.setGender(bo.getGender());
+		po.setCity(bo.getCity());
 		return po;
 	}
 
@@ -82,6 +90,8 @@ public class UserServiceImpl implements UserService{
 		result.setPostcode(po.getPostcode());
 		result.setRealName(po.getRealName());
 		result.setStatus(po.getStatus());
+		result.setGender(po.getGender());
+		result.setCity(po.getCity());
 		return result;
 	}
 	

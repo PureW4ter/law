@@ -76,6 +76,8 @@ public class APPUserController {
 		bo.setPostcode(vo.getPostcode());
 		bo.setRealName(vo.getRealName());
 		bo.setStatus(vo.getStatus());
+		bo.setGender(vo.getGender());
+		bo.setCity(vo.getCity());
 		return bo;
 	}
 	
@@ -90,6 +92,8 @@ public class APPUserController {
 		vo.setPostcode(bo.getPostcode());
 		vo.setRealName(bo.getRealName());
 		vo.setStatus(bo.getStatus());
+		vo.setGender(bo.getGender());
+		vo.setCity(bo.getCity());
 		return vo;
 	}
 	
