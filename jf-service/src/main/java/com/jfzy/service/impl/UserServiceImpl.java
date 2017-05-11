@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jfzy.service.UserService;
+import com.jfzy.service.bo.StatusEnum;
 import com.jfzy.service.bo.UserAccountBo;
+import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
 import com.jfzy.service.po.UserAccountPo;
 import com.jfzy.service.po.UserPo;
@@ -32,12 +34,22 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void register(UserAccountBo ua, int userId){
+	public void register(UserAccountBo ua){
 		UserAccountPo userAccountPo = bo2PoForUserAccount(ua);
-		userAccountPo.setUserId(userId);
 		userAccountRepo.save(userAccountPo);
 	}
 
+
+	@Override
+	public void bind(String phone, int userId) {
+		UserAccountBo bo = new UserAccountBo();
+		bo.setUserId(userId);
+		bo.setStatus(StatusEnum.ENABLED.getId());
+		bo.setType(UserAccountTypeEnum.MOBILE.getId());
+		bo.setValue(phone);
+		this.register(bo);
+	}
+	
 	@Override
 	public void unbind(int userAccountId) {
 		userAccountRepo.updateDeleted(userAccountId);

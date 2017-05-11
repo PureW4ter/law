@@ -17,8 +17,9 @@ public interface UserService {
 	
 	int createOrUpdateUser(UserBo user);
 
-	void register(UserAccountBo ua, int userId);
+	void register(UserAccountBo ua);
 	
 	void unbind(int userAccountId);
 	
+	void bind(String phone, int userId);
 }
