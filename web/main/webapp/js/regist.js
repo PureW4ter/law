@@ -1,6 +1,6 @@
 define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, util, timeBtn) {
     var Regist = {
-    	userAccount:null,
+    	user:null,
         initialize: function() {
         	//body
 			this.mainBox = $('#i_mainbox');
@@ -30,8 +30,8 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
             url = url.substr(0, url.length-1);
             window.location = url + "#wechat_redirect"
         },
-		_render:function(userAccount){
-			this.userAccount = userAccount;
+		_render:function(user){
+			this.user = user;
 			this.mainBox.html(this.tplfun());
 			timeBtn.initialize("i_getcode_btn");
 			this._registEvent();
@@ -47,10 +47,12 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
 			var params = {
 				"phone": $("#i_phone").val(),
 				"code": $("#i_input_code").val(),
-				"userId": e.data.ctx.userAccount
+				"userId": e.data.ctx.user.id
 			}
 			ajaxHelper.get("http://" + window.frontJSHost + "/user/bind",
-                params, this, this._render);
+                params, this, function(){
+                	window.location = "question_list.html";
+                });
 		} 
     };
     return Regist;

@@ -22,7 +22,7 @@ import com.jfzy.service.po.WechatUser;
 @Service
 public class WechatServiceImpl implements WechatService{
 	
-	private static String SECRET = "9476fc7b509bbd7b58ff530d429a7046";
+	private static String SECRET = "491313d383488b3d33d7a717f9c7a950";
 	private static String APP_ID = "wx79ad71f12e49251b";
 	
 	@Autowired
