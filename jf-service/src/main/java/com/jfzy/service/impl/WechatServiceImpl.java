@@ -1,6 +1,7 @@
 package com.jfzy.service.impl;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jfzf.core.HttpClientUtils;
 import com.jfzf.core.JsonUtils;
-import com.jfzy.service.TagService;
 import com.jfzy.service.UserService;
 import com.jfzy.service.WechatService;
 import com.jfzy.service.bo.GenderEnum;
@@ -42,13 +42,17 @@ public class WechatServiceImpl implements WechatService{
 		return JsonUtils.fromJson(result, WechatTokenInfo.class);
 	}
 	
-	public UserAccountBo getWXUserAccount(String code, Integer userId) throws IOException  {
+	public UserBo wxlogin(String code) throws IOException  {
 		UserAccountBo userAccountBo = null;
 		WechatTokenInfo wechatUserInfo = getTokenByCode(code);
+		UserBo userBo = null;
+		
 		if (wechatUserInfo != null) {
 			//获取用户账号信息
 			userAccountBo = userService.getUserAccountByOpenid(wechatUserInfo.getOpenid());
-			if (userAccountBo == null) {
+			if(userAccountBo !=null){
+				userBo = userService.getUser(userAccountBo.getUserId());
+			}else{
 				StringBuilder sb = new StringBuilder("https://api.weixin.qq.com/sns/userinfo");
 				sb.append("?access_token=").append(wechatUserInfo.getAccess_token()).append("&openid=")
 						.append(wechatUserInfo.getOpenid()).append("&lang=zh_CN");
@@ -58,19 +62,16 @@ public class WechatServiceImpl implements WechatService{
 					return null;
 				}
 				WechatUser wechatUser = new WechatUser(result);
-				//upate user
-				UserBo userBo = null;
-				if(userId!=null){
-					userBo = userService.getUser(userId);
-				}else{
-					userBo = new UserBo();
-				}
+				
+				//create user
+				userBo = new UserBo();
+				userBo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 				userBo.setHeadImg(wechatUser.getHeadimgurl());
 				userBo.setName(wechatUser.getNickname());
-				userBo.setCity(wechatUser.getCity());
+				userBo.setCity(wechatUser.getCountry() + "," + wechatUser.getProvince() + "," + wechatUser.getCity());
 				int sex = wechatUser.getSex();
 				userBo.setGender(sex == 1 ? GenderEnum.MEN.getId() : (sex == 2 ? GenderEnum.WOMEN.getId() : null));
-				userId = userService.createOrUpdateUser(userBo);
+				int userId = userService.createOrUpdateUser(userBo);
 
 				//create user account
 				userAccountBo = new UserAccountBo();
@@ -78,6 +79,7 @@ public class WechatServiceImpl implements WechatService{
 				userAccountBo.setType(UserAccountTypeEnum.WECHAT_OPENID.getId());
 				userAccountBo.setValue(wechatUser.getOpenid());
 				userAccountBo.setUserId(userId);
+				userAccountBo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 				userService.register(userAccountBo);
 				
 				if(wechatUser.getUnionid()!=null){
@@ -86,10 +88,12 @@ public class WechatServiceImpl implements WechatService{
 					userAccountBo.setType(UserAccountTypeEnum.WECHAT_UNIONID.getId());
 					userAccountBo.setValue(wechatUser.getUnionid());
 					userAccountBo.setUserId(userId);
+					userAccountBo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 					userService.register(userAccountBo);
 				}
 			}
 		}
-		return userAccountBo;
+		return userBo;
+		/*return userService.getUser(new Integer(code));*/
 	}
 }

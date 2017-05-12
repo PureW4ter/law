@@ -5,7 +5,7 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
         	//body
 			this.mainBox = $('#i_mainbox');
 			this.tplfun = _.template($("#i_tpl").html());
-            if(util.getQueryParameter("code")){
+            if(!util.getQueryParameter("code")){
            		this._createWXUser();
             }else{
            		this._sendRequest();
@@ -18,7 +18,7 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
 		},
 		_createWXUser :function(){
             var url = "https://open.weixin.qq.com/connect/oauth2/authorize?";
-            var redirect_uri = "http://m.weshare123.net/law/regist.html";
+            var redirect_uri = "http://m.weshare123.com/law/regist.html";
             var params = {};
             params["appid"] = util.appid;
             params["redirect_uri"] = encodeURIComponent(redirect_uri);
@@ -31,7 +31,10 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
             window.location = url + "#wechat_redirect"
         },
 		_render:function(user){
-			this.user = user;
+			this.user = user.r;
+			if(!!this.user.phone){
+				window.location = "read_list.html";
+			}
 			this.mainBox.html(this.tplfun());
 			timeBtn.initialize("i_getcode_btn");
 			this._registEvent();
@@ -51,7 +54,7 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
 			}
 			ajaxHelper.get("http://" + window.frontJSHost + "/user/bind",
                 params, this, function(){
-                	window.location = "question_list.html";
+                	window.location = "read_list.html";
                 });
 		} 
     };

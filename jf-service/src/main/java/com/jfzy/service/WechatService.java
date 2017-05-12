@@ -3,7 +3,8 @@ package com.jfzy.service;
 import java.io.IOException;
 
 import com.jfzy.service.bo.UserAccountBo;
+import com.jfzy.service.bo.UserBo;
 
 public interface WechatService {
-	public UserAccountBo getWXUserAccount(String code, Integer userId) throws IOException;
+	public UserBo wxlogin(String code) throws IOException;
 }

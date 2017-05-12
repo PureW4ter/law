@@ -15,6 +15,8 @@ public interface UserService {
 	
 	UserAccountBo getUserAccountByOpenid(String openid);
 	
+	UserAccountBo getUserAccountByUserId(int userId, int type);
+	
 	int createOrUpdateUser(UserBo user);
 
 	void register(UserAccountBo ua);

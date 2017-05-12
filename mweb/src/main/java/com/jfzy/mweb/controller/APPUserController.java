@@ -20,6 +20,7 @@ import com.jfzy.mweb.vo.UserVo;
 import com.jfzy.service.UserService;
 import com.jfzy.service.WechatService;
 import com.jfzy.service.bo.UserAccountBo;
+import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
 
 @RestController
@@ -47,13 +48,17 @@ public class APPUserController {
 	}
 	
 	@ResponseBody
-	@PostMapping(path="/user/wxlogin")
-	public ResponseVo<UserAccountVo> register(String code) {
+	@GetMapping(path="/user/wxlogin")
+	public ResponseVo<UserVo> wxlogin(String code) {
 		try {
-			UserAccountBo bo = wechatService.getWXUserAccount(code, null);
-			return new ResponseVo<UserAccountVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVoForUserAccount(bo));
+			UserBo bo = wechatService.wxlogin(code);
+			UserAccountBo abo = userService.getUserAccountByUserId(bo.getId(), UserAccountTypeEnum.MOBILE.getId());
+			UserVo vo = boToVoForUser(bo);
+			if(abo != null)
+				vo.setPhone(abo.getValue());
+			return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 		} catch (IOException e) {
-			return new ResponseVo<UserAccountVo>(ResponseStatusEnum.SERVER_ERROR.getCode(), null, null);
+			return new ResponseVo<UserVo>(ResponseStatusEnum.SERVER_ERROR.getCode(), null, null);
 		}
 	}
 	

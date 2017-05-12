@@ -77,6 +77,7 @@ public class ArticleController {
 			e.printStackTrace();
 		}*/
 		ArticleBo bo = voToBo(vo);
+		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		articleService.createArticle(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
@@ -110,7 +111,6 @@ public class ArticleController {
 		bo.setTitleImgUrl(vo.getTitleImgUrl());
 		bo.setShareIconUrl(vo.getShareIconUrl());
 		bo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		bo.setCityId(vo.getCityId());
 		return bo;
 	}

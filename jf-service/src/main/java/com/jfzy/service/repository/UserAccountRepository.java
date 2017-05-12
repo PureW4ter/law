@@ -17,4 +17,8 @@ public interface UserAccountRepository extends JpaRepository<UserAccountPo, Inte
 	
 	@Query(value = "SELECT t FROM UserAccountPo t WHERE t.value=?1 and t.status=0")
 	UserAccountPo getByOpenid(String id);
+	
+	
+	@Query(value = "SELECT t FROM UserAccountPo t WHERE t.userId=?1 and t.type=?2 and t.status=0")
+	UserAccountPo getByUserid(int userId, int type);
 }

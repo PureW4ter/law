@@ -1,5 +1,6 @@
 package com.jfzy.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class UserServiceImpl implements UserService{
 		bo.setStatus(StatusEnum.ENABLED.getId());
 		bo.setType(UserAccountTypeEnum.MOBILE.getId());
 		bo.setValue(phone);
+		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		this.register(bo);
 	}
 	
@@ -72,7 +74,17 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserAccountBo getUserAccountByOpenid(String openid) {
 		UserAccountPo po = userAccountRepo.getByOpenid(openid);
-		return po2BoForUserAccount(po);
+		if(po!=null)
+			return po2BoForUserAccount(po);
+		return null;
+	}
+	
+	@Override
+	public UserAccountBo getUserAccountByUserId(int userId, int type) {
+		UserAccountPo po = userAccountRepo.getByUserid(userId, type);
+		if(po!=null)
+			return po2BoForUserAccount(po);
+		return null;
 	}
 	
 	private static UserPo bo2PoForUser(UserBo bo) {

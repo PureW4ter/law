@@ -17,6 +17,8 @@ public class UserVo {
 	private String city;
 	private int gender;
 	private Timestamp createTime;
+	private String phone;
+	
 	public int getId() {
 		return id;
 	}
@@ -89,6 +91,10 @@ public class UserVo {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
-	
-	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }
