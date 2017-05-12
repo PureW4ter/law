@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<UserPo, Integer> {
 	@Modifying
 	@Query("UPDATE UserPo SET deleted=1 WHERE id=:id")
 	void updateDeleted(@Param("id") int id);
+	
 }

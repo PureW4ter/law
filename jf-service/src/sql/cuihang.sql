@@ -170,6 +170,8 @@ CREATE TABLE `jf_user` (
   `head_img` varchar(2000) DEFAULT NULL,
   `money` double DEFAULT '0',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `city` varchar(45) DEFAULT NULL,
+  `gender` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

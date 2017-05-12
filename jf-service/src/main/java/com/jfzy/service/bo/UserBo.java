@@ -14,6 +14,8 @@ public class UserBo {
 	private int status;
 	private double money;
 	private String headImg;
+	private String city;
+	private int gender;
 	private Timestamp createTime;
 	
 	public int getId() {
@@ -75,6 +77,18 @@ public class UserBo {
 	}
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public int getGender() {
+		return gender;
+	}
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 	
 }

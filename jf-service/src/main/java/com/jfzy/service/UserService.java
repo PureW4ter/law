@@ -13,10 +13,15 @@ public interface UserService {
 	
 	UserBo getUser(int id);
 	
+	UserAccountBo getUserAccountByOpenid(String openid);
+	
+	UserAccountBo getUserAccountByUserId(int userId, int type);
+	
 	int createOrUpdateUser(UserBo user);
 
-	void register(UserAccountBo ua, int userId);
+	void register(UserAccountBo ua);
 	
 	void unbind(int userAccountId);
 	
+	void bind(String phone, int userId);
 }

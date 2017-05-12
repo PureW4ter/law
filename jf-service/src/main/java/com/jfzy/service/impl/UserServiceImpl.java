@@ -1,5 +1,6 @@
 package com.jfzy.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jfzy.service.UserService;
+import com.jfzy.service.bo.StatusEnum;
 import com.jfzy.service.bo.UserAccountBo;
+import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
 import com.jfzy.service.po.UserAccountPo;
 import com.jfzy.service.po.UserPo;
@@ -32,12 +35,23 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void register(UserAccountBo ua, int userId){
+	public void register(UserAccountBo ua){
 		UserAccountPo userAccountPo = bo2PoForUserAccount(ua);
-		userAccountPo.setUserId(userId);
 		userAccountRepo.save(userAccountPo);
 	}
 
+
+	@Override
+	public void bind(String phone, int userId) {
+		UserAccountBo bo = new UserAccountBo();
+		bo.setUserId(userId);
+		bo.setStatus(StatusEnum.ENABLED.getId());
+		bo.setType(UserAccountTypeEnum.MOBILE.getId());
+		bo.setValue(phone);
+		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		this.register(bo);
+	}
+	
 	@Override
 	public void unbind(int userAccountId) {
 		userAccountRepo.updateDeleted(userAccountId);
@@ -57,6 +71,22 @@ public class UserServiceImpl implements UserService{
 		return po2BoForUser(po);
 	}
 	
+	@Override
+	public UserAccountBo getUserAccountByOpenid(String openid) {
+		UserAccountPo po = userAccountRepo.getByOpenid(openid);
+		if(po!=null)
+			return po2BoForUserAccount(po);
+		return null;
+	}
+	
+	@Override
+	public UserAccountBo getUserAccountByUserId(int userId, int type) {
+		UserAccountPo po = userAccountRepo.getByUserid(userId, type);
+		if(po!=null)
+			return po2BoForUserAccount(po);
+		return null;
+	}
+	
 	private static UserPo bo2PoForUser(UserBo bo) {
 		UserPo po = new UserPo();
 		po.setId(bo.getId());
@@ -68,6 +98,8 @@ public class UserServiceImpl implements UserService{
 		po.setPostcode(bo.getPostcode());
 		po.setRealName(bo.getRealName());
 		po.setStatus(bo.getStatus());
+		po.setGender(bo.getGender());
+		po.setCity(bo.getCity());
 		return po;
 	}
 
@@ -82,6 +114,8 @@ public class UserServiceImpl implements UserService{
 		result.setPostcode(po.getPostcode());
 		result.setRealName(po.getRealName());
 		result.setStatus(po.getStatus());
+		result.setGender(po.getGender());
+		result.setCity(po.getCity());
 		return result;
 	}
 	

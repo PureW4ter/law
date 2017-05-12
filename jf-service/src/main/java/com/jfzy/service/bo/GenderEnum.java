@@ -1,11 +1,11 @@
 package com.jfzy.service.bo;
 
-public enum StatusEnum {
-	ENABLED(0), DISABLED(1);
+public enum GenderEnum {
+	MEN(0), WOMEN(1);
 	
 	private int id;
 
-	private StatusEnum(int id) {
+	private GenderEnum(int id) {
 		this.id = id;
 	}
 

@@ -15,7 +15,7 @@ import com.jfzy.service.TagService;
 import com.jfzy.service.bo.TagBo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
-import com.jfzy.web.vo.TagVO;
+import com.jfzy.web.vo.TagVo;
 
 @RestController
 public class TagController {
@@ -25,20 +25,20 @@ public class TagController {
 
 	@ResponseBody
 	@GetMapping("/tag")
-	public ResponseVo<List<TagVO>> getTags() {
+	public ResponseVo<List<TagVo>> getTags() {
 
 		List<TagBo> tags = tagService.getAllTags();
-		List<TagVO> resultTags = new ArrayList<TagVO>(tags.size());
+		List<TagVo> resultTags = new ArrayList<TagVo>(tags.size());
 		for (TagBo bo : tags) {
 			resultTags.add(boToVo(bo));
 		}
 
-		return new ResponseVo<List<TagVO>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultTags);
+		return new ResponseVo<List<TagVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultTags);
 	}
 
 	@ResponseBody
 	@PutMapping("/tag")
-	public ResponseVo addTag(TagVO tag) {
+	public ResponseVo addTag(TagVo tag) {
 
 		return new ResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
@@ -50,8 +50,8 @@ public class TagController {
 		return new ResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 
-	private static TagVO boToVo(TagBo bo) {
-		TagVO vo = new TagVO();
+	private static TagVo boToVo(TagBo bo) {
+		TagVo vo = new TagVo();
 		vo.setId(bo.getId());
 		vo.setName(bo.getName());
 		vo.setWeight(bo.getWeight());
@@ -59,7 +59,7 @@ public class TagController {
 		return vo;
 	}
 
-	private static TagBo voToBo(TagVO vo) {
+	private static TagBo voToBo(TagVo vo) {
 		TagBo bo = new TagBo();
 		bo.setName(vo.getName());
 		bo.setWeight(vo.getWeight());

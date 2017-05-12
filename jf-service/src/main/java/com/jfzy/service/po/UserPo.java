@@ -38,7 +38,10 @@ public class UserPo {
 	@Column(name = "create_time")
 	private Timestamp createTime;
 	
-
+	private String city;
+	
+	private int gender;
+	
 	public int getId() {
 		return id;
 	}
@@ -118,4 +121,21 @@ public class UserPo {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+	
 }
