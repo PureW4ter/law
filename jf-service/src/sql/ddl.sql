@@ -115,3 +115,16 @@ CREATE TABLE `jf_order` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `jf_qa` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `user_real_name` varchar(200) NOT NULL DEFAULT '',
+  `role` varchar(200) NOT NULL DEFAULT '',
+  `phase` varchar(200) NOT NULL DEFAULT '',
+  `content` longtext NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
