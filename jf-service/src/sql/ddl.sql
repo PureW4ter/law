@@ -128,3 +128,11 @@ CREATE TABLE `jf_qa` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `jf_phase` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `phase` varchar(200) NOT NULL DEFAULT '',
+  `parent_phase_id` int(11) NOT NULL DEFAULT '0',
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
