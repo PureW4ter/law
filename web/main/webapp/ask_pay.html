@@ -13,6 +13,7 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
+            <script type="text/template" id="i_tpl">
             <div>
                 <img src="img/index_banner.jpg">
                 <div class="phone_icon">
@@ -23,35 +24,35 @@
                 <div class="new_input_section">
                     <div class="new_input_box arrow_down">
                         <label>您的身份</label>
-                        <input placeholder="房主" id="i_phone"/>
+                        <select id="i_identity">
+                            <%_.each(result.r[2],function(item, index){%>
+                            <option value="<%=index%>"><%=item.role%></option>
+                            <%})%>
+                        </select>
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
                         <label>目前所处的交易阶段</label>
-                        <input placeholder="未付定价" id="i_phone"/>
+                        <select id="i_trade_phase">
+                             <%_.each(result.r[2][0].phases,function(item, index){%>
+                                <option value="<%=index%>"><%=item.phase%></option>
+                            <%})%>
+                        </select>
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box">
                         <label>交易阶段</label>
-                        <div class="question_types">
+                        <div class="question_types" id="i_question_types">
                             <ul>
-                                <li>因限购</li>
-                                <li>政策变动</li>
-                                <li>税费承担</li>
+                                <%_.each(result.r[2][0].phases[0].subPhases,function(item, index){%>
+                                <li><%=item.phase%></li>
+                                <%if(index/3==2){%>
+                                    </ul>
+                                    <ul>
+                                <%}%>
+                                <%})%>
                             </ul>
-                            <ul>
-                                <li>合同条款</li>
-                                <li>贷款问题</li>
-                                <li>不想买了</li>
-                            </ul>
-                            <ul>
-                                <li>户口问题</li>
-                                <li>不想卖了</li>
-                                <li>他人异议</li>
-                            </ul>
-                            <ul>
-                                <li>存在风险</li>
-                            </ul>
+                            
                         </div>
                     </div>
                     <div class="blk10"></div>
@@ -60,22 +61,26 @@
                     </div>
                     <div class="new_input_box arrow_down">
                         <label>我已经签署了</label>
-                        <input placeholder="居间协议/买卖合同" id="i_phone"/>
+                        <select id="i_sign">
+                            <%_.each(result.r[1],function(item){%>
+                            <option value="<%=item.id%>"><%=item.name%></option>
+                            <%})%>
+                        </select>
                     </div>
                     <div class="input_bottom">
                         提示：根据选择的合同类型做提示说明
                     </div>
                     <div class="quesiton_count_title">提交后进入回复倒计时</div>
-                    <div class="question_pay">
+                    <div class="question_pay" id="i_pay_way">
                         <ul>
-                            <li class="question_pay_selected">
+                            <li class="question_pay_selected j_tab">
                                 <div class="question_pay_box">
                                     <div class="question_pay_title1">2小时内电话回复</div>
                                     <div class="question_pay_title2">24小时内书面回复</div>
                                     <div class="question_pay_title3">¥129</div>
                                 </div>
                             </li>
-                            <li>
+                            <li class="j_tab">
                                 <div class="question_pay_box">
                                     <div class="question_pay_title1">24小时内书面回复</div>
                                     <div class="question_pay_title2">&nbsp;</div>
@@ -89,13 +94,8 @@
                     <div class="blk15"></div>
                 </div>
             </div>
+            </script>
         </div>
-        <!--div class="read_bottom_box">
-            <div class="quesiton_bottom_info">
-                您需支付：<span class="money">￥10000</span>
-            </div>
-            <div class="read_bottom_btn" id="i_pay">确认</div>
-        </div-->
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>

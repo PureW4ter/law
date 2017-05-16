@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.QAService;
 import com.jfzy.service.bo.QABo;
@@ -12,6 +13,7 @@ import com.jfzy.service.bo.QAStatusEnum;
 import com.jfzy.service.po.QAPo;
 import com.jfzy.service.repository.QARepository;
 
+@Service
 public class QAServiceImpl implements QAService {
 
 	@Autowired

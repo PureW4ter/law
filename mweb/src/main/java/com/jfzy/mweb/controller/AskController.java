@@ -13,6 +13,7 @@ import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.PropertyVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SimpleResponseVo;
+import com.jfzy.service.OrderRoleService;
 import com.jfzy.service.PropertyService;
 import com.jfzy.service.QAService;
 import com.jfzy.service.bo.PropertyBo;
@@ -21,39 +22,42 @@ import com.jfzy.service.bo.QABo;
 import com.jfzy.service.bo.QAStatusEnum;
 
 @RestController
-public class AskFreeController {
+public class AskController {
 
 	@Autowired
 	private PropertyService propService;
 
 	@Autowired
+	private OrderRoleService roleService;
+	
+	@Autowired
 	private QAService qaService;
 
 	@ResponseBody
-	@GetMapping("/askfree/props")
-	public ResponseVo<List<List<PropertyVo>>> getProps() {
+	@GetMapping("/ask/props")
+	public ResponseVo<List<Object>> getProps() {
 		List<PropertyBo> roleProps = propService.getPropertyByType(PropertyTypeEnum.ROLE.getId());
-		List<PropertyBo> phaseProps = propService.getPropertyByType(PropertyTypeEnum.PHASE.getId());
+		List<PropertyBo> signProps = propService.getPropertyByType(PropertyTypeEnum.SIGN.getId());
 
 		List<PropertyVo> roleResult = new ArrayList<PropertyVo>(roleProps.size());
 		for (PropertyBo bo : roleProps) {
 			roleResult.add(boToVo(bo));
 		}
-		List<PropertyVo> phaseResult = new ArrayList<PropertyVo>(phaseProps.size());
-		for (PropertyBo bo : phaseProps) {
-			phaseResult.add(boToVo(bo));
+		List<PropertyVo> signResult = new ArrayList<PropertyVo>(signProps.size());
+		for (PropertyBo bo : signProps) {
+			signResult.add(boToVo(bo));
 		}
 
-		List<List<PropertyVo>> results = new ArrayList<List<PropertyVo>>(2);
+		List<Object> results = new ArrayList<Object>(3);
 		results.add(roleResult);
-		results.add(phaseResult);
-
-		return new ResponseVo<List<List<PropertyVo>>>(ResponseStatusEnum.SUCCESS.getCode(), null, results);
+		results.add(signResult);
+		results.add(roleService.getAllRoles());
+		return new ResponseVo<List<Object>>(ResponseStatusEnum.SUCCESS.getCode(), null, results);
 
 	}
 
 	@ResponseBody
-	@PostMapping("/askfree")
+	@PostMapping("/ask")
 	public SimpleResponseVo createQA(String role, String phase, String questionDetail) {
 		QABo bo = new QABo();
 		bo.setCityId(0);// FIXME
