@@ -1,6 +1,7 @@
 define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
     var LawyerConsultInfo = {
         initialize :function(){
+        	$("#i_detail2").hide();
 			//request
 			this._sendRequest();
 		},
@@ -11,14 +12,26 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			this._registEvent();
 		},
 		_registEvent:function(){
-			$("#i_pay").off("click", this._goPay).on("click", {ctx: this}, this._goPay);
-			$("#i_free").off("click", this._goFree).on("click", {ctx: this}, this._goFree);
+			$(".j_tab").off("click", this._doselect).on("click", {ctx: this}, this._doselect);
+			$("#i_ok_btn").off("click", this._go).on("click", {ctx: this}, this._go);
 		},
-		_goPay:function(e){
-			window.location = "ask_pay.html";
+		_doselect:function(e){
+			$(".j_tab").removeClass("product_info_selected").addClass("product_info_onselected");
+			$(e.currentTarget).removeClass("product_info_onselected").addClass("product_info_selected");
+			if($(e.currentTarget).data("type") == 1){
+				$("#i_detail1").show();
+				$("#i_detail2").hide();
+			}else{
+				$("#i_detail1").hide();
+				$("#i_detail2").show();
+			}
 		},
-		_goFree:function(e){
-			window.location = "ask_free.html";
+		_go:function(e){
+			if($($(".product_info_selected")[0]).data("type") == 1){
+				window.location = "ask_pay.html";
+			}else{
+				window.location = "ask_free.html";
+			}
 		}
     };
     return LawyerConsultInfo;

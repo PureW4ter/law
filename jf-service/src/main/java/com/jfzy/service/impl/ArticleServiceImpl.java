@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.ArticleService;
 import com.jfzy.service.bo.ArticleBo;
@@ -23,6 +24,7 @@ import com.jfzy.service.repository.ArticleRepository;
 
 @Component
 @EnableScheduling
+@Service
 public class ArticleServiceImpl implements ArticleService {
 
 	private static final char TAG_SEPARATOR = ',';

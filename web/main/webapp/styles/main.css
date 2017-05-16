@@ -598,8 +598,9 @@ header h1 {
   height: 44px;
   line-height: 44px;
 }
+
 .arrow_down{
-    padding-right: 35px !important;
+    
 }
 .arrow_down:after {
     content: '';
@@ -1227,6 +1228,14 @@ header h1 {
   overflow: hidden;
   text-align: right;
 }
+.new_input_box>select{
+    width: initial;
+    height: 44px;
+    line-height: 44px;
+    padding-right: 20px;
+    float: right;
+    direction: rtl;
+}
 .new_input_box2.new_input_box>label{
     color: #be9564;
 }
@@ -1274,10 +1283,15 @@ header h1 {
     text-align: center;
     font-size: 12px;
     background: #ffffff;
-    color: #bbbbbb;
+    color: #999999;
     border-radius: 20px;
     margin-right: 10px;
-    border: 1px solid #bbbbbb;
+    border: 1px solid #999999;
+    padding: 0 5px;
+}
+.question_types>ul>li.selected{
+    color: #be9564;
+    border: 1px solid #be9564;
 }
 .question_types .question_selected{
     color: #ffffff;
@@ -1564,3 +1578,8 @@ header h1 {
     right: 15px;
     width: 28px;
 }
+.vw {
+        width: 50%;
+        height: 50vw;
+        background: red;
+    }

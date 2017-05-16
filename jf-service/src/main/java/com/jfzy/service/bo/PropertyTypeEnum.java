@@ -2,7 +2,7 @@ package com.jfzy.service.bo;
 
 public enum PropertyTypeEnum {
 
-	ROLE(1), PHASE(2);
+	ROLE(1), SIGN(2);
 
 	private int id;
 

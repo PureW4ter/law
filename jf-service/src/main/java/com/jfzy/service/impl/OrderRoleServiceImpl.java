@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.OrderRoleService;
 import com.jfzy.service.PropertyService;
@@ -19,6 +20,7 @@ import com.jfzy.service.bo.PropertyTypeEnum;
 import com.jfzy.service.po.PhasePo;
 import com.jfzy.service.repository.PhaseRepository;
 
+@Service
 public class OrderRoleServiceImpl implements OrderRoleService {
 
 	@Autowired
