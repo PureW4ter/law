@@ -68,6 +68,7 @@ public class WechatServiceImpl implements WechatService{
 				userBo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 				userBo.setHeadImg(wechatUser.getHeadimgurl());
 				userBo.setName(wechatUser.getNickname());
+				userBo.setRealName(wechatUser.getNickname());
 				userBo.setCity(wechatUser.getCountry() + "," + wechatUser.getProvince() + "," + wechatUser.getCity());
 				int sex = wechatUser.getSex();
 				userBo.setGender(sex == 1 ? GenderEnum.MEN.getId() : (sex == 2 ? GenderEnum.WOMEN.getId() : null));

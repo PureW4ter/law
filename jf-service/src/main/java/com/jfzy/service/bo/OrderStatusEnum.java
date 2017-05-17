@@ -2,8 +2,7 @@ package com.jfzy.service.bo;
 
 public enum OrderStatusEnum {
 
-	INIT(0), NEED_DISPATCH(1), DISPATCHED(2);
-
+	INIT(0), NEED_DISPATCH(1), DISPATCHED(2), FINISHED(3);
 	private int id;
 
 	private OrderStatusEnum(int id) {

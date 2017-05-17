@@ -14,6 +14,7 @@ import com.jfzy.mweb.vo.PropertyVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SimpleResponseVo;
 import com.jfzy.service.OrderRoleService;
+import com.jfzy.service.ProductService;
 import com.jfzy.service.PropertyService;
 import com.jfzy.service.QAService;
 import com.jfzy.service.bo.PropertyBo;
@@ -32,6 +33,9 @@ public class AskController {
 	
 	@Autowired
 	private QAService qaService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@ResponseBody
 	@GetMapping("/ask/props")
@@ -52,6 +56,7 @@ public class AskController {
 		results.add(roleResult);
 		results.add(signResult);
 		results.add(roleService.getAllRoles());
+		results.add(productService.getProducts());
 		return new ResponseVo<List<Object>>(ResponseStatusEnum.SUCCESS.getCode(), null, results);
 
 	}

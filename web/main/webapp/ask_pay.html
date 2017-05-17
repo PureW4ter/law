@@ -73,18 +73,18 @@
                     <div class="quesiton_count_title">提交后进入回复倒计时</div>
                     <div class="question_pay" id="i_pay_way">
                         <ul>
-                            <li class="question_pay_selected j_tab">
+                            <li class="question_pay_selected j_tab" data-id="<%=result.r[3][1].id%>">
                                 <div class="question_pay_box">
                                     <div class="question_pay_title1">2小时内电话回复</div>
                                     <div class="question_pay_title2">24小时内书面回复</div>
-                                    <div class="question_pay_title3">¥129</div>
+                                    <div class="question_pay_title3">¥<%=result.r[3][1].price%></div>
                                 </div>
                             </li>
-                            <li class="j_tab">
+                            <li class="j_tab" data-id="<%=result.r[3][0].id%>">
                                 <div class="question_pay_box">
                                     <div class="question_pay_title1">24小时内书面回复</div>
                                     <div class="question_pay_title2">&nbsp;</div>
-                                    <div class="question_pay_title3">¥99</div>
+                                    <div class="question_pay_title3">¥<%=result.r[3][0].price%></div>
                                 </div>
                             </li>
                         </ul>

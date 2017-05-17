@@ -23,6 +23,12 @@ define(["utility"], function(util) {
                 return;
             }
             //逻辑代码开始
+            //判断传输类型
+            var contentType = "application/x-www-form-urlencoded; charset=utf-8";
+            if (type === "POST" || type === "PUT") {
+                contentType = "application/json;";
+                param = JSON.stringify(param);
+            }
             var me = this;
             me._showLoading();
             $.ajax({
@@ -32,7 +38,7 @@ define(["utility"], function(util) {
                 dataType: 'json',
                 timeout: 600000,
                 async: true,
-                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                contentType: contentType,
                 beforeSend: function(xhr, settings) {
                 },
                 success: function(data) {

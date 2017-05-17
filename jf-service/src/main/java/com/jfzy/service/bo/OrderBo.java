@@ -22,6 +22,10 @@ public class OrderBo {
 	private int status;
 	private Timestamp createTime;
 	private Timestamp updateTime;
+	private String role;
+	private String tradePhase;
+	private String tradeSubphase;
+	private int payWay;
 
 	public int getId() {
 		return id;
@@ -166,4 +170,37 @@ public class OrderBo {
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getTradePhase() {
+		return tradePhase;
+	}
+
+	public void setTradePhase(String tradePhase) {
+		this.tradePhase = tradePhase;
+	}
+
+	public String getTradeSubphase() {
+		return tradeSubphase;
+	}
+
+	public void setTradeSubphase(String tradeSubphase) {
+		this.tradeSubphase = tradeSubphase;
+	}
+
+	public int getPayWay() {
+		return payWay;
+	}
+
+	public void setPayWay(int payWay) {
+		this.payWay = payWay;
+	}
+	
 }

@@ -64,14 +64,32 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			e.data.ctx._registEvent();
 		},
 		_pay:function(e){
-			window.location = "question_complete.html";
+			var subPhases = "";
+			$(".subPhase_selected").forEach(
+				function(item, index){
+					subPhases = subPhases+ $(item).text() +",";
+				}
+			);
+			subPhases = subPhases.substring(0, subPhases.length-1);
+			var params = {
+				"userId": 1,
+				"productId": $($(".question_pay_selected")[0]).data("id"),
+				"role": $("#i_identity option").not(function(){ return !this.selected }).text(),
+				"tradePhase": $("#i_trade_phase option").not(function(){ return !this.selected }).text(),
+				"tradeSubphase": subPhases,
+				"sn": $("#i_sign option").not(function(){ return !this.selected }).text()
+			}
+			ajaxHelper.post("http://" + window.frontJSHost + "/order/screate",
+                params, this, function(){
+                	window.location = "question_complete.html";
+                }, null);
 		},
 		_selectPayWay:function(e){
 			$(".j_tab").removeClass("question_pay_selected");
 			$(e.currentTarget).addClass("question_pay_selected");
 		},
 		_chooseType:function(e){
-			$(e.currentTarget).addClass("selected");
+			$(e.currentTarget).addClass("subPhase_selected");
 		}
     };
     return AskPay;
