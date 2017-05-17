@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "jf_order")
 public class OrderPo {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -61,6 +62,17 @@ public class OrderPo {
 
 	@Column(name = "update_time")
 	private Timestamp updateTime;
+
+	private String role;
+	
+	@Column(name = "pay_way")
+	private int payWay;
+	
+	@Column(name = "trade_phase")
+	private String tradePhase;
+	
+	@Column(name = "trade_subphase")
+	private String tradeSubphase;
 
 	public int getId() {
 		return id;
@@ -205,4 +217,37 @@ public class OrderPo {
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public int getPayWay() {
+		return payWay;
+	}
+
+	public void setPayWay(int payWay) {
+		this.payWay = payWay;
+	}
+
+	public String getTradePhase() {
+		return tradePhase;
+	}
+
+	public void setTradePhase(String tradePhase) {
+		this.tradePhase = tradePhase;
+	}
+
+	public String getTradeSubphase() {
+		return tradeSubphase;
+	}
+
+	public void setTradeSubphase(String tradeSubphase) {
+		this.tradeSubphase = tradeSubphase;
+	}
+
 }
