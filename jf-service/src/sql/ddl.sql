@@ -138,3 +138,17 @@ CREATE TABLE `jf_phase` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `jf_oss_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `login_name` varchar(1000) NOT NULL,
+  `password` varchar(2000) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `city_id` int(11) NOT NULL DEFAULT '0',
+  `phone_num` varchar(20) NOT NULL,
+  `role` varchar(100) NOT NULL DEFAULT '',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

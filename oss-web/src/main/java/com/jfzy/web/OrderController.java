@@ -9,19 +9,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.service.OrderService;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.web.vo.LawyerVo;
 import com.jfzy.web.vo.PageResponseVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.SimpleOrderVo;
+import com.jfzy.web.vo.SimpleResponseVo;
 
 @RestController
-public class OrderController {
+public class OrderController extends BaseController {
 
 	@Autowired
 	private OrderService orderService;
@@ -39,6 +42,17 @@ public class OrderController {
 
 		return new PageResponseVo<List<SimpleOrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, vos, pageNo, size,
 				orders.getTotalElements());
+	}
+
+	@ResponseBody
+	@PostMapping("/order/assignment")
+	public SimpleResponseVo assignOrder(int lawyerId, int orderId) {
+		OssUserBo ossUser = getOssUser();
+		if (ossUser != null) {
+			orderService.assignOrder(orderId, lawyerId, ossUser.getId(), ossUser.getName());
+		}
+
+		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
 
 	private static SimpleOrderVo boToSimpleVo(OrderBo bo) {
