@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <title>精准阅读详情</title>
+</head>
+<body>
+    <div id="i_main">
+        <!-- header -->
+        <div id="i_headbox">
+        </div>
+        <!--body-->
+        <div id="i_mainbox">
+            <div id="i_detail">
+                <script type="text/template" id="i_tpl_detail">
+                <div class="read_detail_box">
+                    <div class="read_detail_content">
+                        <div class="read_detail_title"><%=result.r.title%></div>
+                        <div><%=result.r.content%></div>
+                    </div>
+                </div>
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/lib/jweixin-1.0.0.js"></script>
+<script src="js/lib/lib.js?ver={front_version}" type="text/javascript"></script>
+<script type="text/javascript">
+    //jscontent//
+</script>
+</html>
