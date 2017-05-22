@@ -13,6 +13,7 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
+            <script type="text/template" id="i_tpl">
             <div>
                 <img src="img/index_banner.jpg">
                 <div class="phone_icon">
@@ -23,30 +24,36 @@
                 <div class="new_input_section">
                     <div class="new_input_box">
                         <label>产权人姓名</label>
-                        <input placeholder="请使用真实姓名" id="i_phone"/>
+                        <input placeholder="请使用真实姓名" id="i_name"/>
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
                         <label>房产地址</label>
-                        <input placeholder="所在城市" id="i_phone"/>
+                        <select id="i_city">
+                            <%_.each(result.r[4], function(item){%>
+                                <option value="<%=item.id%>"><%=item.name%></option>
+                            <%})%>
+                        </select>
                     </div>
                     <div class="new_input_box">
-                        <input placeholder="详细地址" id="i_phone"/>
+                        <input placeholder="详细地址" id="i_addr"/>
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box">
                         <label>邮件地址</label>
-                        <input placeholder="扫描件我们将通过邮件告知您" id="i_phone"/>
+                        <input placeholder="扫描件我们将通过邮件告知您" id="i_email"/>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="read_bottom_box">
-            <div class="read_bottom_info">
-                您需支付：<span class="money">￥10000</span>
+            <div class="read_bottom_box">
+                <div id="i_product" class="read_bottom_info" data-id="<%=result.r[3][3].id%>">
+                    您需支付：<span class="money">¥<%=result.r[3][3].price%></span>
+                </div>
+                <div class="read_bottom_btn" id="i_pay">确认</div>
             </div>
-            <div class="read_bottom_btn" id="i_pay">确认</div>
+            </script>
         </div>
+
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>

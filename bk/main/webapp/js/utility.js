@@ -1,6 +1,7 @@
 define([],function(){
 	var Utility = {
 		pageSize:10,
+		cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
 		getQueryParameter: function(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
 			var r = window.location.search.substr(1).match(reg);

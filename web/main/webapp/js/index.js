@@ -34,7 +34,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			window.location = "answer_list.html";
 		},
 		_goMy:function(e){
-			window.location = "regist.html";
+			window.location = "my_question_list.html";
 		},
     };
     return Index;

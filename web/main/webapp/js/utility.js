@@ -3,6 +3,7 @@ define([],function(){
 		pageSize:20,
 		//生产
 		appid: "wx79ad71f12e49251b",
+		cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
 		getQueryParameter: function(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
 			var r = window.location.search.substr(1).match(reg);
@@ -179,6 +180,9 @@ define([],function(){
                     }
             	});
        	 	});
+        },
+        getUserId:function(){
+        	return 1;
         }
 	};
 	return Utility;

@@ -1425,10 +1425,13 @@ header h1 {
     margin: 0 auto;
 }
 .invest_result_box{
-    margin: 0 15px;
+    margin: 15px 15px 0 15px;
     border: 1px solid #eeeeee;
     background-color: #ffffff;
 }
+/*.invest_result_box:nth-last-of-type(1){
+    margin-bottom:20px;
+}*/
 .invest_result_line{
     position: relative;
     overflow: hidden;
@@ -1514,6 +1517,8 @@ header h1 {
     line-height: 20px;
     text-align: center;
     border-radius: 3px;
+}
+.my_op_btn.view{
     top: -6px;
 }
 .my_op_status{
@@ -1533,7 +1538,6 @@ header h1 {
 .my_op_bar{
     position: relative;
     top: -17px;
-    width: 30%;
     display: inline-block;
     height: 10px;
     background-color: #be9564;
@@ -1579,7 +1583,11 @@ header h1 {
     width: 28px;
 }
 .vw {
-        width: 50%;
-        height: 50vw;
-        background: red;
-    }
+    width: 50%;
+    height: 50vw;
+    background: red;
+}
+.product_price{
+    margin: 10px 15px;
+    font-size: 14px;
+}  

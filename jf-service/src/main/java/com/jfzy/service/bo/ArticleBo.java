@@ -21,12 +21,21 @@ public class ArticleBo {
 	private Timestamp updateTime;
 	private String summary;
 	private int cityId;
+	private int type;
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
 	private String[] tags;
 
 	public ArticleBo(int id, String title, String titleImgUrl, String content, String shareIconUrl, String summary, String[] tags, 
-			Timestamp createTime, Timestamp updateTime, int cityId) {
+			Timestamp createTime, Timestamp updateTime, int cityId, int type) {
 		this.id = id;
 		this.title = title;
 		this.titleImgUrl = titleImgUrl;
@@ -37,6 +46,7 @@ public class ArticleBo {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.cityId = cityId;
+		this.type = type;
 	}
 
 	public ArticleBo() {

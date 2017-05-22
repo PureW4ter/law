@@ -1,9 +1,6 @@
-package com.jfzy.service.bo;
+package com.jfzy.mweb.vo;
 
-import java.sql.Timestamp;
-
-public class OrderBo {
-
+public class OrderVo {
 	private int id;
 	private String sn;
 	private int cityId;
@@ -20,10 +17,11 @@ public class OrderBo {
 	private Double originPrice;
 	private Double realPrice;
 	private int status;
-	private Timestamp createTime;
-	private Timestamp updateTime;
-	private Timestamp startTime;
-	private Timestamp endTime;
+	private String createTime;
+	private String updateTime;
+	private String startTime;
+	private String endTime;
+	private String processPer;
 	private String role;
 	private String tradePhase;
 	private String tradeSubphase;
@@ -129,29 +127,35 @@ public class OrderBo {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public Timestamp getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public Timestamp getUpdateTime() {
+	public String getUpdateTime() {
 		return updateTime;
 	}
-	public void setUpdateTime(Timestamp updateTime) {
+	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
 	}
-	public Timestamp getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Timestamp startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
-	public Timestamp getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Timestamp endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+	public String getProcessPer() {
+		return processPer;
+	}
+	public void setProcessPer(String processPer) {
+		this.processPer = processPer;
 	}
 	public String getRole() {
 		return role;
@@ -201,4 +205,5 @@ public class OrderBo {
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
 	}
+
 }

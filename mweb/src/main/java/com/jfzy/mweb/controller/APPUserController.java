@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -85,53 +85,25 @@ public class APPUserController {
 	
 	private static UserBo voToBoForUser(UserVo vo) {
 		UserBo bo = new UserBo();
-		bo.setId(vo.getId());
-		bo.setAddress(vo.getAddress());
-		bo.setCreateTime(vo.getCreateTime());
-		bo.setHeadImg(vo.getHeadImg());
-		bo.setMemo(vo.getMemo());
-		bo.setName(vo.getName());
-		bo.setPostcode(vo.getPostcode());
-		bo.setRealName(vo.getRealName());
-		bo.setStatus(vo.getStatus());
-		bo.setGender(vo.getGender());
-		bo.setCity(vo.getCity());
+		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
 	
 	private static UserVo boToVoForUser(UserBo bo) {
 		UserVo vo = new UserVo();
-		vo.setId(bo.getId());
-		vo.setAddress(bo.getAddress());
-		vo.setCreateTime(bo.getCreateTime());
-		vo.setHeadImg(bo.getHeadImg());
-		vo.setMemo(bo.getMemo());
-		vo.setName(bo.getName());
-		vo.setPostcode(bo.getPostcode());
-		vo.setRealName(bo.getRealName());
-		vo.setStatus(bo.getStatus());
-		vo.setGender(bo.getGender());
-		vo.setCity(bo.getCity());
+		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
 	
 	private static UserAccountBo voToBoForUserAccount(UserAccountVo vo) {
 		UserAccountBo bo = new UserAccountBo();
-		bo.setCreateTime(vo.getCreateTime());
-		bo.setStatus(vo.getStatus());
-		bo.setType(vo.getType());
-		bo.setUserId(vo.getUserId());
-		bo.setValue(vo.getValue());
+		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
 	
 	private static UserAccountVo boToVoForUserAccount(UserAccountBo bo) {
 		UserAccountVo vo = new UserAccountVo();
-		vo.setCreateTime(bo.getCreateTime());
-		vo.setStatus(bo.getStatus());
-		vo.setType(bo.getType());
-		vo.setUserId(bo.getUserId());
-		vo.setValue(bo.getValue());
+		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
 }

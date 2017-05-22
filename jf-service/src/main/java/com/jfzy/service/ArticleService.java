@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 import com.jfzy.service.bo.ArticleBo;
 
 public interface ArticleService {
-
 	List<ArticleBo> searchByTags(String tags, Pageable page);
-	ArticleBo getArticle(int id);
-	void createArticle(ArticleBo bo);
-	void deleteArticle(int id);
+	List<ArticleBo> getQAs(Pageable page);
+	ArticleBo get(int id);
+	void create(ArticleBo bo);
+	void delete(int id);
 }

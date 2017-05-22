@@ -2,7 +2,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         function (nav_bar, header, ajaxHelper, util, qiniu) {
     var UserManagement = {
         articleId:"",
-        cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
+        artType:["文章", "问答"],
+        cities: util.cities,
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 2);
@@ -18,7 +19,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         },
         _getArticle: function(tags){
             if(!this.articleId){
-                 this._render({"result":{"r":{}}, "tags":tags, "cities":this.cities});
+                 this._render({"result":{"r":{}}, "tags":tags, "cities":this.cities, "artType":this.artType});
             }else{
                 ajaxHelper.get("http://" + window.frontJSHost + "/article/detail",
                     {id:this.articleId}, this, function(data){
@@ -75,6 +76,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             $(".j_img_close").off("click",this._removeImg).on("click",this._removeImg);
             $(".j_act_check").off("click",this._actChecked).on("click",{ctx:this},this._actChecked);
             $(".j_selType li").off("click",this._selType).on("click",{ctx: this},this._selType);
+            $(".j_artType li").off("click",this._selArt).on("click",{ctx: this},this._selArt);
             $("#i_save_btn").off("click",this._doSave).on("click",{ctx: this},this._doSave);
             $("[data-toggle='popover']").off({
                 'focus': p_destroy,
@@ -87,6 +89,11 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             });
         },
         _selType:function(){
+            var id = $(this).data("id");
+            var text = $(this).text();
+            $(this).closest("ul").prev("button").data("id",id).find("span").eq(0).text(text);
+        },
+        _selArt:function(){
             var id = $(this).data("id");
             var text = $(this).text();
             $(this).closest("ul").prev("button").data("id",id).find("span").eq(0).text(text);
@@ -111,6 +118,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                 formJson.summary = $("#i_summary").val();
                 formJson.shareIconUrl = $("#i_head_img").attr("src");
                 formJson.cityId = $("#i_city").data("id");
+                formJson.type = $("#i_artType").data("id");
                 formJson.content = e.data.ctx.editor.getSource();
                 var tags = new Array();
                 $("#i_articl_keys").find(".j_act_check").each(function(){

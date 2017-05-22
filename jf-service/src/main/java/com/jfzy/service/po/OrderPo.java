@@ -19,10 +19,13 @@ public class OrderPo {
 
 	@Column(name = "order_sn")
 	private String sn;
+	
 	@Column(name = "city_id")
 	private int cityId;
+	
 	@Column(name = "user_id")
 	private int userId;
+	
 	@Column(name = "user_name")
 	private String userName;
 
@@ -63,16 +66,25 @@ public class OrderPo {
 	@Column(name = "update_time")
 	private Timestamp updateTime;
 
-	private String role;
+	@Column(name = "start_time")
+	private Timestamp startTime;
 	
+	@Column(name = "end_time")
+	private Timestamp endTime;
+	
+	@Column(name = "memo")
+	private String memo;
+
 	@Column(name = "pay_way")
 	private int payWay;
 	
-	@Column(name = "trade_phase")
-	private String tradePhase;
-	
-	@Column(name = "trade_subphase")
-	private String tradeSubphase;
+	public int getPayWay() {
+		return payWay;
+	}
+
+	public void setPayWay(int payWay) {
+		this.payWay = payWay;
+	}
 
 	public int getId() {
 		return id;
@@ -218,36 +230,28 @@ public class OrderPo {
 		this.updateTime = updateTime;
 	}
 
-	public String getRole() {
-		return role;
+	public Timestamp getStartTime() {
+		return startTime;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setStartTime(Timestamp startTime) {
+		this.startTime = startTime;
 	}
 
-	public int getPayWay() {
-		return payWay;
+	public Timestamp getEndTime() {
+		return endTime;
 	}
 
-	public void setPayWay(int payWay) {
-		this.payWay = payWay;
+	public void setEndTime(Timestamp endTime) {
+		this.endTime = endTime;
 	}
 
-	public String getTradePhase() {
-		return tradePhase;
+	public String getMemo() {
+		return memo;
 	}
 
-	public void setTradePhase(String tradePhase) {
-		this.tradePhase = tradePhase;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
-
-	public String getTradeSubphase() {
-		return tradeSubphase;
-	}
-
-	public void setTradeSubphase(String tradeSubphase) {
-		this.tradeSubphase = tradeSubphase;
-	}
-
+	
 }

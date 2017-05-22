@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jfzy.service.ProductService;
-import com.jfzy.service.bo.ArticleBo;
 import com.jfzy.service.bo.ProductBo;
 import com.jfzy.service.po.ProductPo;
 import com.jfzy.service.repository.ProductRepository;

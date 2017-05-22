@@ -46,7 +46,7 @@ CREATE TABLE `jf_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `real_name` varchar(100) DEFAULT NULL,
-  `memo` varchar(500) DEFAULT NULL,
+  `memo` varchar(2000) DEFAULT NULL,
   `address` varchar(2000) DEFAULT NULL,
   `postcode` varchar(10) DEFAULT NULL,
   `status` tinyint(2) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `jf_lawyer` (
   `status` int(11) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL DEFAULT '',
   `phone_num` varchar(50) NOT NULL DEFAULT '',
-  `memo` varchar(200) DEFAULT NULL,
+  `memo` varchar(2000) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -93,7 +93,7 @@ CREATE TABLE `jf_oss_role` (
 
 DROP TABLE IF EXISTS `jf_order`;
 CREATE TABLE `jf_order` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_sn` varchar(50) NOT NULL DEFAULT '',
   `city_id` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
@@ -111,10 +111,15 @@ CREATE TABLE `jf_order` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '0',
   `pay_way` int(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `type` int(1) DEFAULT NULL,
+  `trade_phase` varchar(45) DEFAULT NULL,
+  `trade_subphase` varchar(45) DEFAULT NULL,
+  `has_signed` varchar(45) DEFAULT NULL,
+  `role` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `jf_qa` (
