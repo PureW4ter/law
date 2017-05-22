@@ -64,6 +64,12 @@ public class OrderServiceImpl implements OrderService {
 		orderRepo.updateStatus(OrderStatusEnum.CANCELED.getId(), id);
 	}
 	
+
+	@Override
+	public void complete(int id, String comment, String[] picList) {
+		orderRepo.updateStatus(OrderStatusEnum.NEED_DISPATCH.getId(), id);
+	}
+	
 	@Override
 	public void assignOrder(int orderId, int lawyerId, int processorId, String processorName) {
 
@@ -152,4 +158,5 @@ public class OrderServiceImpl implements OrderService {
 		BeanUtils.copyProperties(po, bo);
 		return bo;
 	}
+
 }

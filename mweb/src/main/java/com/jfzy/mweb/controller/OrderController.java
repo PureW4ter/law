@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -96,6 +97,15 @@ public class OrderController {
 	@GetMapping(value = "/order/cancel")
 	public ResponseVo<Object> cancel(int id) {
 		orderService.cancel(id);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/order/complete")
+	public ResponseVo<Object> complete(@RequestParam(value = "id")int id, 
+			@RequestParam(value = "comment")String comment, 
+			@RequestParam(value = "picList[]") String[] picList) {
+		orderService.complete(id, comment, picList);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	

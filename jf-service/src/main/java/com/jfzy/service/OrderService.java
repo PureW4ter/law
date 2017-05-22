@@ -18,6 +18,8 @@ public interface OrderService {
 	void pay(int id);
 	
 	void cancel(int id);
+	
+	void complete(int id, String comment, String[] picList);
 
 	OrderBo getOrderById(int id);
 
