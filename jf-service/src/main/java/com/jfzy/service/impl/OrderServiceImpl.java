@@ -16,6 +16,7 @@ import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderStatusEnum;
+import com.jfzy.service.bo.PayWayEnum;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.OrderPo;
 import com.jfzy.service.repository.OrderRepository;
@@ -30,22 +31,39 @@ public class OrderServiceImpl implements OrderService {
 	private LawyerService lawyerSerivce;
 
 	@Override
-	public void createOrder(OrderBo bo) {
-		orderRepo.save(boToPo(bo));
+	public OrderBo createSOrder(OrderBo bo) {
+		bo.setStatus(OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId());
+		bo.setPayWay(PayWayEnum.NO_PAY.getId());
+		OrderPo po = orderRepo.save(boToPo(bo));
+		return poToBo(po);
 	}
 
-	private static OrderPo boToPo(OrderBo bo) {
-		OrderPo po = new OrderPo();
-		BeanUtils.copyProperties(bo, po);
-		return po;
+	@Override
+	public OrderBo createIOrder(OrderBo bo) {
+		bo.setStatus(OrderStatusEnum.NO_PAY.getId());
+		bo.setPayWay(PayWayEnum.NO_PAY.getId());
+		OrderPo po = orderRepo.save(boToPo(bo));
+		return poToBo(po);
+	}
+	
+	@Override
+	public void pay(int id) {
+		//FIXED ME
+		OrderBo bo = getOrderById(id);
+		if(bo.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()){
+			orderRepo.updateStatus(OrderStatusEnum.NOT_COMPLETED.getId(), id);
+		}else if(bo.getStatus() == OrderStatusEnum.NO_PAY.getId()){
+			orderRepo.updateStatus(OrderStatusEnum.NEED_PROCESS.getId(), id);
+		}
+		orderRepo.updatePayWay(PayWayEnum.WEIXIN.getId(), id);
+		
 	}
 
-	private static OrderBo poToBo(OrderPo po) {
-		OrderBo bo = new OrderBo();
-		BeanUtils.copyProperties(po, bo);
-		return bo;
+	@Override
+	public void cancel(int id) {
+		orderRepo.updateStatus(OrderStatusEnum.CANCELED.getId(), id);
 	}
-
+	
 	@Override
 	public void assignOrder(int orderId, int lawyerId, int processorId, String processorName) {
 
@@ -103,8 +121,12 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<OrderBo> getOrdersByUser(int userId, Pageable page) {
-		// TODO Auto-generated method stub
-		return null;
+		Page<OrderPo> poPage = orderRepo.findByUserId(userId, page);
+		List<OrderBo> results = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(poToBo(po)));
+		}
+		return results;
 	}
 
 	@Override
@@ -118,5 +140,16 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private static OrderPo boToPo(OrderBo bo) {
+		OrderPo po = new OrderPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
+	}
 
+	private static OrderBo poToBo(OrderPo po) {
+		OrderBo bo = new OrderBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
+	}
 }

@@ -72,7 +72,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			);
 			subPhases = subPhases.substring(0, subPhases.length-1);
 			var params = {
-				"userId": 1,
+				"userId": util.getUserId(),
 				"productId": $($(".question_pay_selected")[0]).data("id"),
 				"role": $("#i_identity option").not(function(){ return !this.selected }).text(),
 				"tradePhase": $("#i_trade_phase option").not(function(){ return !this.selected }).text(),
@@ -81,8 +81,15 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			}
 			ajaxHelper.post("http://" + window.frontJSHost + "/order/screate",
                 params, this, function(){
-                	window.location = "question_complete.html";
-                }, null);
+                	var ps = {
+                		"id": data.r.id
+                	}
+                	ajaxHelper.post("http://" + window.frontJSHost + "/order/pay",  ps, 
+                		this, function(data){
+                			util.showToast("支付成功");
+                			//window.location = "question_complete.html";
+                		});
+                });
 		},
 		_selectPayWay:function(e){
 			$(".j_tab").removeClass("question_pay_selected");

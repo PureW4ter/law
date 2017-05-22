@@ -77,14 +77,14 @@ public class ArticleController {
 			e.printStackTrace();
 		}*/
 		ArticleBo bo = voToBo(vo);
-		articleService.createArticle(bo);
+		articleService.create(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody
 	@GetMapping(value = "/article/detail")
 	public ResponseVo<ArticleVo> articleDetail(int id) {
-		ArticleBo bo = articleService.getArticle(id);
+		ArticleBo bo = articleService.get(id);
 		if(bo!=null){
 			return new ResponseVo<ArticleVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(bo));
 		}else{
@@ -95,7 +95,7 @@ public class ArticleController {
 	@ResponseBody
 	@GetMapping(value = "/article/delete")
 	public ResponseVo<Object> articleDelete(int id) {
-		articleService.deleteArticle(id);
+		articleService.delete(id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	

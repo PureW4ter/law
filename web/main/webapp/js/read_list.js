@@ -31,7 +31,7 @@ define(['component/header', 'ajaxhelper', 'utility', 'scroll'],function(header, 
 					$("#i_refresh").css("display", "none");
 				}
 			}else{
-				var a = $(this.tplfun({"result":data})).find("#i_info_list ul");
+				var a = $(this.tplfun({"result":data})).find("#i_info_list li");
 				a.insertBefore('#i_refresh');
 				if(data.r.length<this.pageSize){
 					$("#i_refresh").css("display", "none");

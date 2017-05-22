@@ -9,9 +9,15 @@ import com.jfzy.service.bo.OrderBo;
 
 public interface OrderService {
 
-	void createOrder(OrderBo bo);
+	OrderBo createSOrder(OrderBo bo);
+	
+	OrderBo createIOrder(OrderBo bo);
 
 	void assignOrder(int orderId, int lawyerId, int processorId, String processorName);
+	
+	void pay(int id);
+	
+	void cancel(int id);
 
 	OrderBo getOrderById(int id);
 

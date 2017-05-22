@@ -1,5 +1,5 @@
 define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
-    var ReadKeys = {
+    var ReadDetail = {
         initialize :function(){
         	//body
 			this.detailBox = $('#i_detail');
@@ -33,5 +33,5 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			window.location = "read_detail.html?id=" + id;
 		}
     };
-    return ReadKeys;
+    return ReadDetail;
 });

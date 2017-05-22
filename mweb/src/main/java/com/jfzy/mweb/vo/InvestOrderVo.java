@@ -1,17 +1,16 @@
 package com.jfzy.mweb.vo;
 
-public class SearchOrderVo {
-	
+public class InvestOrderVo {
 	private int id;
 	private String sn;
 	private int userId;
 	private int productId;
 	private Double originPrice;
 	private Double realPrice;
-	private String role;
-	private String tradePhase;
-	private String tradeSubphase;
-	private String memo;
+	private String ownerName;
+	private String address;
+	private int cityId;
+	private String email;
 	
 	public int getId() {
 		return id;
@@ -49,28 +48,29 @@ public class SearchOrderVo {
 	public void setRealPrice(Double realPrice) {
 		this.realPrice = realPrice;
 	}
-	public String getRole() {
-		return role;
+	public String getOwnerName() {
+		return ownerName;
 	}
-	public void setRole(String role) {
-		this.role = role;
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
 	}
-	public String getTradePhase() {
-		return tradePhase;
+	public String getAddress() {
+		return address;
 	}
-	public void setTradePhase(String tradePhase) {
-		this.tradePhase = tradePhase;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	public String getTradeSubphase() {
-		return tradeSubphase;
+	public int getCityId() {
+		return cityId;
 	}
-	public void setTradeSubphase(String tradeSubphase) {
-		this.tradeSubphase = tradeSubphase;
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
-	public String getMemo() {
-		return memo;
+	public String getEmail() {
+		return email;
 	}
-	public void setMemo(String memo) {
-		this.memo = memo;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+	
 }

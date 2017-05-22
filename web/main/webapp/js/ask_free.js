@@ -1,21 +1,59 @@
 define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
     var AskFree = {
+        ipropertis: null,
+    	idIndex: 0,
         initialize :function(){
+        	//body
+			this.mainBox = $('#i_mainbox');
+			this.tplfun = _.template($("#i_tpl").html());
 			//request
 			this._sendRequest();
 		},
 		_sendRequest :function(){
-			this._render();
+			var params = {};
+			ajaxHelper.get("http://" + window.frontJSHost + "/ask/props",
+                params, this, this._render, null);
 		},
-		_render:function(){
+		_render:function(data){
+			this.propertis = data;
+			this.mainBox.html(this.tplfun({"result": data}));
 			this._registEvent();
 		},
 		_registEvent:function(){
-			$("#i_one").off("click", this._go).on("click", {ctx: this}, this._go);
+			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
+			$("#i_identity").off("change", this._changeIdentity).on("change", {ctx: this}, this._changeIdentity);
 		},
-		_go:function(e){
-			window.location = "";
-		}
+		_changeIdentity:function(e){
+			var index = $(e.target).find("option").
+						not(function(){ return !this.selected }).val();
+			e.data.ctx.idIndex = index;
+			$("#i_trade_phase").find("option").remove();
+			e.data.ctx.propertis.r[2][index].phases.forEach(
+				function(item, index){
+					$("#i_trade_phase").append("<option value='"+ index + "'>"+ item.phase + "</option>"); 
+				}
+			);
+			e.data.ctx._registEvent();
+		},
+		_pay:function(e){
+			var params = {
+				"userId": util.getUserId(),
+				"productId": $("#i_product").data("id"),
+				"role": $("#i_identity option").not(function(){ return !this.selected }).text(),
+				"tradePhase": $("#i_trade_phase option").not(function(){ return !this.selected }).text(),
+				"memo": $("#i_memo").val()
+			}
+			ajaxHelper.post("http://" + window.frontJSHost + "/order/screate",
+                params, this, function(data){
+                	var ps = {
+                		"id": data.r.id
+                	}
+                	ajaxHelper.post("http://" + window.frontJSHost + "/order/pay",  ps, 
+                		this, function(data){
+                			util.showToast("支付成功");
+                		});
+                });
+		},
     };
     return AskFree;
 });

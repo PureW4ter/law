@@ -1,6 +1,7 @@
 define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
     var LawyerInvesttInfo = {
         initialize :function(){
+        	$("#i_detail2").hide();
 			//request
 			this._sendRequest();
 		},
@@ -11,14 +12,26 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			this._registEvent();
 		},
 		_registEvent:function(){
-			$("#i_hukou").off("click", this._goHukou).on("click", {ctx: this}, this._goHukou);
-			$("#i_ceil").off("click", this._goCeil).on("click", {ctx: this}, this._goCeil);
+			$(".j_tab").off("click", this._doselect).on("click", {ctx: this}, this._doselect);
+			$("#i_ok_btn").off("click", this._go).on("click", {ctx: this}, this._go);
 		},
-		_goHukou:function(e){
-			window.location = "hukou_search.html";
+		_doselect:function(e){
+			$(".j_tab").removeClass("product_info_selected").addClass("product_info_onselected");
+			$(e.currentTarget).removeClass("product_info_onselected").addClass("product_info_selected");
+			if($(e.currentTarget).data("type") == 1){
+				$("#i_detail1").show();
+				$("#i_detail2").hide();
+			}else{
+				$("#i_detail1").hide();
+				$("#i_detail2").show();
+			}
 		},
-		_goCeil:function(e){
-			window.location = "hukou_search.html";
+		_go:function(e){
+			if($($(".product_info_selected")[0]).data("type") == 1){
+				window.location = "hukou_search.html";
+			}else{
+				window.location = "ask_free.html";
+			}
 		}
     };
     return LawyerInvesttInfo;

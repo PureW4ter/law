@@ -1,11 +1,11 @@
 package com.jfzy.service.bo;
 
-public enum QAStatusEnum {
-	UNPROCESSED(0), PROCESSED(1);
-
+public enum ArticleTypeEnum {
+	ARTICLE(0), QA(1);
+	
 	private int id;
 
-	private QAStatusEnum(int id) {
+	private ArticleTypeEnum(int id) {
 		this.id = id;
 	}
 

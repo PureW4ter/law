@@ -67,6 +67,21 @@ public class ArticleController {
 	}
 
 	@ResponseBody
+	@GetMapping("/article/listqa")
+	public ResponseVo<List<SimpleArticleVo>> getQAs(String tags, int page, int size) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		List<ArticleBo> values = articleService.getQAs( new PageRequest(page, size, sort));
+		List<SimpleArticleVo> resultArticles = new ArrayList<SimpleArticleVo>(values.size());
+		for (ArticleBo bo : values) {
+			resultArticles.add(boToSVo(bo));
+		}
+		return new ResponseVo<List<SimpleArticleVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultArticles);
+	}
+	
+	@ResponseBody
 	@PostMapping(path="/article/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody ArticleVo vo) {
 		/*try {
@@ -78,14 +93,14 @@ public class ArticleController {
 		}*/
 		ArticleBo bo = voToBo(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		articleService.createArticle(bo);
+		articleService.create(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody
 	@GetMapping(value = "/article/detail")
 	public ResponseVo<ArticleVo> articleDetail(int id) {
-		ArticleBo bo = articleService.getArticle(id);
+		ArticleBo bo = articleService.get(id);
 		if(bo!=null){
 			return new ResponseVo<ArticleVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(bo));
 		}else{
@@ -96,7 +111,7 @@ public class ArticleController {
 	@ResponseBody
 	@GetMapping(value = "/article/delete")
 	public ResponseVo<Object> articleDelete(int id) {
-		articleService.deleteArticle(id);
+		articleService.delete(id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	

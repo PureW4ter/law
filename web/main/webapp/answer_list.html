@@ -13,39 +13,34 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
-            <div class="read_list_box">
-                <div class="read_list_img_box">
-                    <img src="img/read_list_head.jpg">
-                    <div class="read_list_img_title">
-                        浦东小区房屋纠纷
-                    </div>
-                </div>
-                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
-                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
+            <script type="text/template" id="i_tpl">
+            <div class="read_list" id="i_info_list">
+                <ul>
+                    <%_.each(result.r,function(item){%>
+                        <li class="read_list_box" data-id="<%=item.id%>">
+                            <div class="read_list_img_box">
+                                <div class="read_head_wrap" style="background-image:url('<%=item.titleImgUrl%>')">
+                                </div>
+                                <div class="read_list_img_title">
+                                    <%=item.title%>
+                                </div>
+                            </div>
+                            <div class="read_list_content"><%=item.summary%></div>
+                            <div class="read_list_subtitle">
+                                <div>
+                                <%=item.createTime%>
+                                </div>
+                            </div>
+                        </li>
+                    <%})%>
+                    <dl id="i_refresh">
+                        <dt id="i_refresh_content" class="refresh_content">上拉刷新...</dt>
+                    </dl>
+                </ul>
+               
             </div>
-            <div class="read_list_box">
-                <div class="read_list_img_box">
-                    <img src="img/read_list_head.jpg">
-                    <div class="read_list_img_title">
-                        浦东小区房屋纠纷
-                    </div>
-                </div>
-                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
-                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
-            </div>
-            <div class="read_list_box">
-                <div class="read_list_img_box">
-                    <img src="img/read_list_head.jpg">
-                    <div class="read_list_img_title">
-                        浦东小区房屋纠纷
-                    </div>
-                </div>
-                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
-                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
-            </div>
-            <div class="blk15"></div>
+            </script>
         </div>
-
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>

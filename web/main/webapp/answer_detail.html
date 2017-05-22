@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
     <link href="styles/main.css" rel="stylesheet" />
-    <title>提交成功</title>
+    <title>精准阅读详情</title>
 </head>
 <body>
     <div id="i_main">
@@ -13,11 +13,15 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
-            <div class="finish_box">
-                <img src="img/success.png">
-                <div class="finish_title">您的咨询已经提交成功</div>
-                <div class="finish_title2">正在自动跳转到您的主页</div>
-                <div class="finish_title2" id="i_time">3s</div>
+            <div id="i_detail">
+                <script type="text/template" id="i_tpl_detail">
+                <div class="read_detail_box">
+                    <div class="read_detail_content">
+                        <div class="read_detail_title"><%=result.r.title%></div>
+                        <div><%=result.r.content%></div>
+                    </div>
+                </div>
+                </script>
             </div>
         </div>
     </div>

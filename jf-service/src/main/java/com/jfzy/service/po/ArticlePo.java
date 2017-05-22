@@ -42,6 +42,16 @@ public class ArticlePo {
 	
 	@Column(name = "is_deleted")
 	private boolean deleted;
+	
+	private int type;
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public int getId() {
 		return id;
