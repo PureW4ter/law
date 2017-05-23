@@ -29,7 +29,7 @@ public class LoginController {
 	@GetMapping("/login")
 	public SimpleResponseVo login(String userName, String password) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String abstracts = encoder.encode(password);
+		String abstracts = encoder.encode(password.trim());
 		OssUserBo user = ossUserService.login(userName, abstracts);
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);
