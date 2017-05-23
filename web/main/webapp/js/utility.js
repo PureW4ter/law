@@ -187,7 +187,11 @@ define([],function(){
        	 	});
         },
         getUserId:function(){
-        	return 1;
+        	if(!this.getData("userInfo")){
+        		window.location = "regist.html";
+        	}
+        	var userInfo = JSON.parse(this.getData("userInfo"));
+        	return userInfo.id;
         }
 	};
 	return Utility;
