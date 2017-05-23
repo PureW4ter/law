@@ -16,16 +16,15 @@
             <div class="finish_box">
                 <img src="img/success.png">
                 <div class="finish_title">您的咨询已经提交成功</div>
-                <div class="finish_title2">正在自动跳转到您的主页</div>
-                <div class="finish_title2">3s</div>
+                <div class="finish_title2">正在自动跳转到网站首页</div>
+                <div class="finish_title2" id="i_time">3s</div>
             </div>
-
         </div>
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170417144807" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170523160123" type="text/javascript"></script>
 <script type="text/javascript">
-    define('success',["ajaxhelper","utility"],function(e,t){var n={initialize:function(){}};return n});
+    define('success',["ajaxhelper","utility"],function(e,t){var n={intervalId:null,count:3,initialize:function(){var e=this;e.intervalId&&clearInterval(e.intervalId),e.intervalId=setInterval(function(){e.count--,e.count==0&&(window.location="index.html"),e._updateTime(e.count)},1e3)},_updateTime:function(e){$("#i_time").text(e+"s")}};return n});
 </script>
 </html>

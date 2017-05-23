@@ -1,0 +1,1 @@
+define('invest_result',["ajaxhelper","utility"],function(e,t){var n={initialize:function(){}};return n});

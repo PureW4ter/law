@@ -1,0 +1,41 @@
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <title>付费咨询-问题补充</title>
+</head>
+<body>
+    <div id="i_main">
+        <!-- header -->
+        <div id="i_headbox">
+        </div>
+        <!--body-->
+        <div id="i_mainbox">
+            <div class="question_complete_title1">请上传你所掌握的查封信息</div>
+            <div class="question_complete_title2">
+                请上传你所掌握的查封信息<br>请上传你所掌握的查封信息
+            </div>
+            <div class="blk15"></div>
+            <div class="question_complete_imgs">
+                <ul>
+                    <li id="i_img_selector"></li>
+                </ul>
+            </div>
+            <!--ul class="question_btns">
+                <li><div class="ok_btn" id="i_commit">提交</div></li>
+                <li><div class="cancel_btn">撤销</div></li>
+            </ul-->
+            <div class="blk15"></div>
+            <div class="blk15"></div>
+            <div class="pay_btn" id="i_commit">提交</div>
+        </div>
+    </div>
+</body>
+<script src="js/lib/jweixin-1.0.0.js"></script>
+<script src="js/lib/lib.js?ver=20170523160123" type="text/javascript"></script>
+<script type="text/javascript">
+    define('question_complete2',["component/header","ajaxhelper","utility","lib/qiniu/up_xiniu"],function(e,t,n,r){var i={initialize:function(){this._qiniuLoad()},_qiniuLoad:function(){new r($("#i_img_selector"),"/exchange/upload/order_img/",function(e,t,n){var r=JSON.parse(n).key,i=$("#i_img_selector");i.parents("ul").prepend('<li><img class="j_upload" src="'+window.qiniuDomain+r+'"></li>'),i.parents("ul").find("li").length>4&&(i.parents("ul").after("<ul></ul>"),i.parents("ul").next().append(i))}),this._registEvent()},_registEvent:function(){$("#i_commit").off("click",this._commit).on("click",{ctx:this},this._commit)},_commit:function(e){var r=new Array;$(".j_upload").each(function(e,t){r.push($(t).attr("src"))});var i={id:n.getQueryParameter("id"),picList:r};t.post("http://"+window.frontJSHost+"/order/complete",i,this,function(){window.location="success.html"})}};return i});
+</script>
+</html>

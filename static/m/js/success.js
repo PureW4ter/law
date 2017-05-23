@@ -1,1 +1,1 @@
-define('success',["ajaxhelper","utility"],function(e,t){var n={initialize:function(){}};return n});
+define('success',["ajaxhelper","utility"],function(e,t){var n={intervalId:null,count:3,initialize:function(){var e=this;e.intervalId&&clearInterval(e.intervalId),e.intervalId=setInterval(function(){e.count--,e.count==0&&(window.location="index.html"),e._updateTime(e.count)},1e3)},_updateTime:function(e){$("#i_time").text(e+"s")}};return n});
