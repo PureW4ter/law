@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.InvestOrderVo;
+import com.jfzy.mweb.vo.OrderCompleteVo;
 import com.jfzy.mweb.vo.OrderVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SearchOrderVo;
@@ -104,9 +105,8 @@ public class OrderController {
 	
 	@ResponseBody
 	@PostMapping(value = "/order/complete", consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseVo<Object> complete(int id, String comment, 
-			@RequestParam(value = "picList[]") String[] picList) {
-		orderService.complete(id, comment, picList);
+	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response, @RequestBody OrderCompleteVo vo) {
+		orderService.complete(vo.getId(), vo.getComment(), vo.getPicList());
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	

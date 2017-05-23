@@ -1,5 +1,6 @@
 package com.jfzy.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +17,13 @@ import com.jfzy.service.OrderService;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
 import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.OrderPhotoBo;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.PayWayEnum;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.po.OrderPhotoPo;
 import com.jfzy.service.po.OrderPo;
+import com.jfzy.service.repository.OrderPhotoRepository;
 import com.jfzy.service.repository.OrderRepository;
 
 @Service
@@ -28,6 +32,9 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRepository orderRepo;
 
+	@Autowired
+	private OrderPhotoRepository orderPhotoRepo;
+	
 	@Autowired
 	private LawyerService lawyerSerivce;
 
@@ -60,23 +67,45 @@ public class OrderServiceImpl implements OrderService {
 		//FIXED ME
 		OrderBo bo = getOrderById(id);
 		if(bo.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()){
-			orderRepo.updateStatus(OrderStatusEnum.NOT_COMPLETED.getId(), id);
+			orderRepo.updateStatus(OrderStatusEnum.NOT_COMPLETED.getId(), new Timestamp(System.currentTimeMillis()), id);
 		}else if(bo.getStatus() == OrderStatusEnum.NO_PAY.getId()){
-			orderRepo.updateStatus(OrderStatusEnum.NEED_PROCESS.getId(), id);
+			orderRepo.updateStatus(OrderStatusEnum.NEED_DISPATCH.getId(), new Timestamp(System.currentTimeMillis()), id);
 		}
-		orderRepo.updatePayWay(PayWayEnum.WEIXIN.getId(), id);
+		orderRepo.updatePayWay(PayWayEnum.WEIXIN.getId(), new Timestamp(System.currentTimeMillis()), id);
 		
 	}
 
 	@Override
 	public void cancel(int id) {
-		orderRepo.updateStatus(OrderStatusEnum.CANCELED.getId(), id);
+		orderRepo.updateStatus(OrderStatusEnum.CANCELED.getId(), new Timestamp(System.currentTimeMillis()), id);
 	}
-	
 
 	@Override
-	public void complete(int id, String comment, String[] picList) {
-		orderRepo.updateStatus(OrderStatusEnum.NEED_DISPATCH.getId(), id);
+	public void complete(int id, String memo, String[] picList) {
+		OrderPhotoBo bo = new OrderPhotoBo();
+		for(int i=0; i<picList.length; i++){
+			bo.setOrderId(id);
+			bo.setPhotoPath(picList[i]);
+			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			orderPhotoRepo.save(boToPo(bo));
+		}
+		orderRepo.updateMemo(memo, new Timestamp(System.currentTimeMillis()), id);
+		orderRepo.updateStatus(OrderStatusEnum.NEED_DISPATCH.getId(), new Timestamp(System.currentTimeMillis()), id);
+		
+		OrderBo obo =  getOrderById(id);
+		if(Constants.PRODUCT_CODE_ZIXUNP.equals(obo.getProductCode())){
+			orderRepo.setStartAndEndTime(
+					new Timestamp(System.currentTimeMillis()), 
+					new Timestamp(System.currentTimeMillis()+2*60*60*1000), 
+					new Timestamp(System.currentTimeMillis()), 
+					id);
+		}else if(Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())){
+			orderRepo.setStartAndEndTime(
+					new Timestamp(System.currentTimeMillis()), 
+					new Timestamp(System.currentTimeMillis()+24*60*60*1000), 
+					new Timestamp(System.currentTimeMillis()), 
+					id);
+		}
 	}
 	
 	@Override
@@ -166,6 +195,12 @@ public class OrderServiceImpl implements OrderService {
 		OrderBo bo = new OrderBo();
 		BeanUtils.copyProperties(po, bo);
 		return bo;
+	}
+	
+	private static OrderPhotoPo boToPo(OrderPhotoBo bo){
+		OrderPhotoPo po = new OrderPhotoPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
 	}
 
 }

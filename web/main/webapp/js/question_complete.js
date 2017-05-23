@@ -31,7 +31,7 @@ define(['component/header','ajaxhelper', 'utility', 'lib/qiniu/up_xiniu'],
 			};
 			ajaxHelper.post("http://" + window.frontJSHost + "/order/complete",
                 params, this, function(){
-                	window.location = "succsss.html";
+                	window.location = "success.html";
                 });
 		}
     };
