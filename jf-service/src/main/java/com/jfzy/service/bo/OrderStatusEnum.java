@@ -2,8 +2,9 @@ package com.jfzy.service.bo;
 
 public enum OrderStatusEnum {
 
-	NO_PAY(0), NO_PAY_NEED_COMPLETED(1), NOT_COMPLETED(2), NEED_PROCESS(3), 
-	NEED_DISPATCH(4), DISPATCHED(5), FINISHED(6), CANCELED(7);
+	//简单问问 就是process，其他的是dispatch
+	NO_PAY(0), NO_PAY_NEED_COMPLETED(1), NOT_COMPLETED(2), 
+	NEED_DISPATCH(3), DISPATCHED(4), FINISHED(5), CANCELED(6);
 	private int id;
 
 	private OrderStatusEnum(int id) {

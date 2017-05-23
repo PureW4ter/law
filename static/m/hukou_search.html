@@ -13,6 +13,7 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
+            <script type="text/template" id="i_tpl">
             <div>
                 <img src="img/index_banner.jpg">
                 <div class="phone_icon">
@@ -23,35 +24,45 @@
                 <div class="new_input_section">
                     <div class="new_input_box">
                         <label>产权人姓名</label>
-                        <input placeholder="请使用真实姓名" id="i_phone"/>
+                        <input placeholder="请使用真实姓名（必填）" id="i_name"/>
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
                         <label>房产地址</label>
-                        <input placeholder="所在城市" id="i_phone"/>
+                        <select id="i_city">
+                            <%_.each(result.r[4], function(item){%>
+                                <option value="<%=item.id%>"><%=item.name%></option>
+                            <%})%>
+                        </select>
                     </div>
                     <div class="new_input_box">
-                        <input placeholder="详细地址" id="i_phone"/>
+                        <input placeholder="详细地址（必填）" id="i_addr"/>
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box">
                         <label>邮件地址</label>
-                        <input placeholder="扫描件我们将通过邮件告知您" id="i_phone"/>
+                        <input placeholder="扫描件我们将通过邮件告知您" id="i_email"/>
+                    </div>
+                    <div class="new_input_box">
+                        <label>联系电话</label>
+                        <input placeholder="查询成功后通知您（必填）" id="i_phone"/>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="read_bottom_box">
-            <div class="read_bottom_info">
-                您需支付：<span class="money">￥10000</span>
+            <div class="read_bottom_box">
+                <div id="i_product" class="read_bottom_info" data-id="<%=result.r[3][3].id%>">
+                    您需支付：<span class="money">¥<%=result.r[3][3].price%></span>
+                </div>
+                <div class="read_bottom_btn" id="i_pay">确认</div>
             </div>
-            <div class="read_bottom_btn" id="i_pay">确认</div>
+            </script>
         </div>
+
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170417144807" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170523160123" type="text/javascript"></script>
 <script type="text/javascript">
-    define('hukou_search',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this._sendRequest()},_sendRequest:function(){this._render()},_render:function(){this._registEvent()},_registEvent:function(){$("#i_pay").off("click",this._pay).on("click",{ctx:this},this._pay)},_pay:function(e){window.location="success.html"}};return r});
+    define('hukou_search',["component/header","ajaxhelper","utility"],function(e,t,n){var r={cities:n.cities,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={};t.get("http://"+window.frontJSHost+"/ask/props",e,this,this._render,null)},_render:function(e){e.r.push(this.cities),this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){$("#i_pay").off("click",this._pay).on("click",{ctx:this},this._pay)},_pay:function(e){var r={userId:n.getUserId(),productId:$("#i_product").data("id"),ownerName:$("#i_name").val(),ownerPhone:$("#i_phone").val(),cityId:$("#i_city").val(),address:$("#i_addr").val(),email:$("#i_email").val()};t.post("http://"+window.frontJSHost+"/order/icreate",r,this,function(e){var n={id:e.r.id};t.get("http://"+window.frontJSHost+"/order/pay",n,this,function(){window.location="success.html"})},null)}};return r});
 </script>
 </html>

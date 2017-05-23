@@ -13,44 +13,39 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
-            <div class="read_list_box">
-                <div class="read_list_img_box">
-                    <img src="img/read_list_head.jpg">
-                    <div class="read_list_img_title">
-                        浦东小区房屋纠纷
-                    </div>
-                </div>
-                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
-                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
+            <script type="text/template" id="i_tpl">
+            <div class="read_list" id="i_info_list">
+                <ul>
+                    <%_.each(result.r,function(item){%>
+                        <li class="read_list_box" data-id="<%=item.id%>">
+                            <div class="read_list_img_box">
+                                <div class="read_head_wrap" style="background-image:url('<%=item.titleImgUrl%>')">
+                                </div>
+                                <div class="read_list_img_title">
+                                    <%=item.title%>
+                                </div>
+                            </div>
+                            <div class="read_list_content"><%=item.summary%></div>
+                            <div class="read_list_subtitle">
+                                <div>
+                                <%=item.createTime%>
+                                </div>
+                            </div>
+                        </li>
+                    <%})%>
+                    <dl id="i_refresh">
+                        <dt id="i_refresh_content" class="refresh_content">上拉刷新...</dt>
+                    </dl>
+                </ul>
+               
             </div>
-            <div class="read_list_box">
-                <div class="read_list_img_box">
-                    <img src="img/read_list_head.jpg">
-                    <div class="read_list_img_title">
-                        浦东小区房屋纠纷
-                    </div>
-                </div>
-                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
-                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
-            </div>
-            <div class="read_list_box">
-                <div class="read_list_img_box">
-                    <img src="img/read_list_head.jpg">
-                    <div class="read_list_img_title">
-                        浦东小区房屋纠纷
-                    </div>
-                </div>
-                <div class="read_list_content">在“保障农业转移人口合法权益,助力全体居民公平共享现代化建设成果”方面,意见要...</div>
-                <div class="read_list_subtitle"><div>2016年7月20日</div></div>
-            </div>
-            <div class="blk15"></div>
+            </script>
         </div>
-
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170417144807" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170523160123" type="text/javascript"></script>
 <script type="text/javascript">
-    define('answer_list',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this._sendRequest()},_sendRequest:function(){this._render()},_render:function(){this._registEvent()},_registEvent:function(){$("#i_one").off("click",this._go).on("click",{ctx:this},this._go)},_go:function(e){window.location=""}};return r});
+    define('answer_list',["component/header","ajaxhelper","utility","scroll"],function(e,t,n,r){var i={initialized:!1,pageNo:0,pageSize:5,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest(!1)},_sendRequest:function(e){var n={page:this.pageNo,size:this.pageSize};t.get("http://"+window.frontJSHost+"/article/listqa",n,this,this._render,null,e)},_render:function(e){this.pageNo++;if(!this.initialized)this.mainBox.html(this.tplfun({result:e})),this._registEvent(),this.initialized=!0,e.r.length==this.pageSize?r.initialize(this):$("#i_refresh").css("display","none");else{var t=$(this.tplfun({result:e})).find("#i_info_list li");t.insertBefore("#i_refresh"),e.r.length<this.pageSize?($("#i_refresh").css("display","none"),r.setDisabled()):r.setEnabled(),r.refresh(),this._registEvent()}},_registEvent:function(){$("#i_info_list").off("click","li",this._go).on("click","li",this._go)},_go:function(e){var t=$(e.currentTarget).data("id");window.location="answer_detail.html?id="+t},dragFresh:function(){r.setDisabled(),this._sendRequest(!0)}};return i});
 </script>
 </html>

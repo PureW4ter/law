@@ -46,6 +46,7 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 			$(".j_pay").off("click", this._pay).on("click", this._pay);
 			$(".j_complete").off("click", this._complete).on("click", this._complete);
 			$(".j_view").off("click", this._view).on("click", this._view);
+			$(".j_view_law").off("click", this._viewLayer).on("click", this._viewLayer);
 		},
 		//下拉刷新回调函数
 		dragFresh:function(){
@@ -90,7 +91,12 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 		_view:function(e){
 			var oid = $(e.target).parents(".j_result_item").data("id");
 			var productId = $(e.target).parents(".j_result_item").data("pid");
-			window.location = "lawyer_reply.html?id=" + id + "&pid=" + productId;
+			window.location = "invest_result.html?id=" + oid + "&pid=" + productId;
+		},
+		_viewLayer:function(e){
+			var oid = $(e.target).parents(".j_result_item").data("id");
+			var productId = $(e.target).parents(".j_result_item").data("pid");
+			window.location = "lawyer_reply.html?id=" + oid + "&pid=" + productId;
 		},
     };
     return MyQuestionList;

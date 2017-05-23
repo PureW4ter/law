@@ -2,3 +2,13 @@
 styles/main.css
 ----------------
 styles/main.css
+
+js/main.js
+----------------
+js/text.js
+text!component/header.html
+js/component/header.js
+js/utility.js
+js/ajaxhelper.js
+js/validate.js
+js/main.js

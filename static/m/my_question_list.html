@@ -13,115 +13,100 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
-            <div class="blk15"></div>
-            <div class="invest_result_box">
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">订单编号</div>
-                    <div class="invest_result_line_r">1111111111</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">问题描述</div>
-                    <div class="invest_result_line_r">怎么办啊</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">状态</div>
-                    <div class="invest_result_line_r">未支付</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">操作</div>
-                    <div class="invest_result_line_r">
-                        <span class="my_op_btn" id="i_pay">支付</span>&nbsp;&nbsp;<span class="my_op_btn">取消</span>
+            <script type="text/template" id="i_tpl">
+            <div id="i_order_list">
+                <%_.each(result.r, function(item){%>
+                    <div class="invest_result_box j_result_item" data-id="<%=item.id%>" data-pid="<%=item.productId%>">
+                        <div class="invest_result_line">
+                            <div class="invest_result_line_l">订单编号</div>
+                            <div class="invest_result_line_r"><%=item.id%></div>
+                        </div>
+                        <div class="invest_result_line">
+                            <div class="invest_result_line_l">订单类型</div>
+                            <div class="invest_result_line_r">
+                                <%=item.productName%>
+                            </div>
+                        </div>
+                        <%if(item.status == 0 || item.status == 1){%>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">状态</div>
+                                <div class="invest_result_line_r">未支付</div>
+                            </div>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">操作</div>
+                                <div class="invest_result_line_r">
+                                    <span class="my_op_btn j_pay">支付</span>&nbsp;&nbsp;<span class="my_op_btn j_cancel">取消</span>
+                                </div>
+                            </div>
+                         <%}else if(item.status == 2){%>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">状态</div>
+                                <div class="invest_result_line_r">已支付未提交</div>
+                            </div>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">操作</div>
+                                <div class="invest_result_line_r">
+                                    <span class="my_op_btn j_complete">补充</span>&nbsp;&nbsp;<span class="my_op_btn j_refund">退款</span>
+                                </div>
+                            </div>
+                        <%}else if(item.status == 3|| item.status == 4){%>
+                            <%if(item.productCode == "Y" || item.productCode == "YP"){%>
+                            <div class="invest_result_line">
+                                <span class="my_op_status">已提交</span>
+                                <span class="my_op_bar2"><span class="my_op_bar" style="width:<%=item.processPer%>"></span></span>
+                                <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn view j_view_law">查看</span></div>
+                                <div class="time_state">
+                                    <span><%=item.endTime%></span>
+                                    <span><%=item.startTime%></span>
+                                </div>
+                            </div>
+                            <%}else{%>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">操作</div>
+                                <div class="invest_result_line_r">
+                                    <span class="my_op_btn j_view">查看</span>
+                                </div>
+                            </div>
+                            <%}%>
+                        <%}else if(item.status == 5){%>
+                            <%if(item.productCode == "Y" || item.productCode == "YP"){%>
+                            <div class="invest_result_line">
+                                <span class="my_op_status">已完成</span>
+                                <span class="my_op_bar2"><span class="my_op_bar" style="width:<%=item.processPer%>"></span></span>
+                                <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn view j_view_law">查看</span></div>
+                                <div class="time_state">
+                                    <span><%=item.endTime%></span>
+                                    <span><%=item.startTime%></span>
+                                </div>
+                            </div>
+                            <%}else{%>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">操作</div>
+                                <div class="invest_result_line_r">
+                                    <span class="my_op_btn j_view">查看</span>
+                                </div>
+                            </div>
+                            <%}%>
+                        <%}else if(item.status == 6){%>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">状态</div>
+                                <div class="invest_result_line_r">已取消</div>
+                            </div>   
+                        <%}%>
                     </div>
-                </div>
+                <%})%>
+                <dl id="i_refresh">
+                    <dt id="i_refresh_content" class="refresh_content">上拉刷新...</dt>
+                </dl>
+                <div class="blk30"></div>
             </div>
-            <div class="blk15"></div>
-            <div class="invest_result_box">
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">订单编号</div>
-                    <div class="invest_result_line_r">1111111111</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">问题描述</div>
-                    <div class="invest_result_line_r">怎么办啊</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">状态</div>
-                    <div class="invest_result_line_r">已支付未提交</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">操作</div>
-                    <div class="invest_result_line_r">
-                        <span class="my_op_btn" id="i_complete">补充</span>&nbsp;&nbsp;<span class="my_op_btn">退款</span>
-                    </div>
-                </div>
-            </div>
-            <div class="blk15"></div>
-            <div class="invest_result_box">
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">订单编号</div>
-                    <div class="invest_result_line_r">1111111111</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">问题描述</div>
-                    <div class="invest_result_line_r">我的咨询</div>
-                </div>
-                <div class="invest_result_line">
-                    <span class="my_op_status">已提交</span>
-                    <span class="my_op_bar2"><span class="my_op_bar"></span></span>
-                    <div class="invest_result_line_r" id="i_view"><span class="my_op_btn">查看</span></div>
-                    <div class="time_state">
-                        <span>2017-03-21</span>
-                        <span>2017-03-27</span>
-                    </div>
-                </div>
-            </div>
-            <div class="blk15"></div>
-            <div class="invest_result_box">
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">订单编号</div>
-                    <div class="invest_result_line_r">1111111111</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">问题描述</div>
-                    <div class="invest_result_line_r">户口调查</div>
-                </div>
-                <div class="invest_result_line">
-                    <span class="my_op_status">已提交</span>
-                    <span class="my_op_bar2"><span class="my_op_bar"></span></span>
-                    <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn">查看</span></div>
-                    <div class="time_state">
-                        <span>2017-03-21</span>
-                        <span>2017-03-27</span>
-                    </div>
-                </div>
-            </div>
-            <div class="blk15"></div>
-            <div class="invest_result_box">
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">订单编号</div>
-                    <div class="invest_result_line_r">1111111111</div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">问题描述</div>
-                    <div class="invest_result_line_r">查封咨询</div>
-                </div>
-                <div class="invest_result_line">
-                    <span class="my_op_status">已提交</span>
-                    <span class="my_op_bar2"><span class="my_op_bar"></span></span>
-                    <div class="invest_result_line_r" id="i_view_ceil"><span class="my_op_btn">查看</span></div>
-                    <div class="time_state">
-                        <span>2017-03-21</span>
-                        <span>2017-03-27</span>
-                    </div>
-                </div>
-            </div>
-            <div class="blk15"></div>
+            </script>
         </div>
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170417144807" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170523160123" type="text/javascript"></script>
 <script type="text/javascript">
-    define('my_question_list',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this._sendRequest()},_sendRequest:function(){this._render()},_render:function(){this._registEvent()},_registEvent:function(){$("#i_pay").off("click",this._pay).on("click",{ctx:this},this._pay),$("#i_complete").off("click",this._complete).on("click",{ctx:this},this._complete),$("#i_view").off("click",this._view).on("click",{ctx:this},this._view),$("#i_view_hukou").off("click",this._viewHukou).on("click",{ctx:this},this._viewHukou),$("#i_view_ceil").off("click",this._viewCeil).on("click",{ctx:this},this._viewCeil)},_pay:function(e){window.location="nopay.html"},_complete:function(e){window.location="question_complete.html"},_view:function(e){window.location="lawyer_reply.html"},_viewHukou:function(e){window.location="invest_result_hukou.html"},_viewCeil:function(e){window.location="invest_result_ceil.html"}};return r});
+    define('my_question_list',["component/header","ajaxhelper","utility","scroll"],function(e,t,n,r){var i={initialized:!1,pageNo:0,pageSize:5,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest(!1)},_sendRequest:function(e){var r={userId:n.getUserId(),page:this.pageNo,size:this.pageSize};t.get("http://"+window.frontJSHost+"/order/listbyuser",r,this,this._render,null,e)},_render:function(e){this.pageNo++;if(!this.initialized)this.mainBox.html(this.tplfun({result:e})),this._registEvent(),this.initialized=!0,e.r.length==this.pageSize?r.initialize(this):$("#i_refresh").css("display","none");else{var t=$(this.tplfun({result:e})).find("#i_order_list .invest_result_box");t.insertBefore("#i_refresh"),e.r.length<this.pageSize?($("#i_refresh").css("display","none"),r.setDisabled()):r.setEnabled(),r.refresh(),this._registEvent()}},_registEvent:function(){$(".j_cancel").off("click",this._cancel).on("click",this._cancel),$(".j_pay").off("click",this._pay).on("click",this._pay),$(".j_complete").off("click",this._complete).on("click",this._complete),$(".j_view").off("click",this._view).on("click",this._view),$(".j_view_law").off("click",this._viewLayer).on("click",this._viewLayer)},dragFresh:function(){r.setDisabled(),this._sendRequest(!0)},_cancel:function(e){var r=$(e.target).parents(".j_result_item").data("id"),i=$(e.target).parents(".j_result_item").data("pid"),s={id:r};t.get("http://"+window.frontJSHost+"/order/cancel",s,this,function(){n.showToast("取消成功",function(){window.location="my_question_list.html"})})},_pay:function(e){var r=$(e.target).parents(".j_result_item").data("id"),i=$(e.target).parents(".j_result_item").data("pid"),s={id:r};t.get("http://"+window.frontJSHost+"/order/pay",s,this,function(){n.showToast("支付成功",function(){i==1||i==2?window.location="question_complete.html":window.location="my_question_list.html"})})},_complete:function(e){var t=$(e.target).parents(".j_result_item").data("id"),n=$(e.target).parents(".j_result_item").data("pid");window.location="question_complete.html?id="+t},_refund:function(e){},_view:function(e){var t=$(e.target).parents(".j_result_item").data("id"),n=$(e.target).parents(".j_result_item").data("pid");window.location="invest_result.html?id="+t+"&pid="+n},_viewLayer:function(e){var t=$(e.target).parents(".j_result_item").data("id"),n=$(e.target).parents(".j_result_item").data("pid");window.location="lawyer_reply.html?id="+t+"&pid="+n}};return i});
 </script>
 </html>

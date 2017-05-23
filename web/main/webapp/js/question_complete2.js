@@ -25,13 +25,12 @@ define(['component/header','ajaxhelper', 'utility', 'lib/qiniu/up_xiniu'],
 				picList.push($(item).attr("src"));
 			})
 			var params = {
-				"id": util.getQueryParameter("id"), 
-				"comment":$("#i_comment").val(),
+				"id": util.getQueryParameter("id"),
 				"picList": picList
 			};
 			ajaxHelper.post("http://" + window.frontJSHost + "/order/complete",
                 params, this, function(){
-                	window.location = "succsss.html";
+                	window.location = "success.html";
                 });
 		}
     };

@@ -9,7 +9,6 @@ define([],function(){
 		PRODUCT_CODE_JIANDANWEN:"J",
 		PRODUCT_CODE_HUKOU:"H",
 		PRODUCT_CODE_CHAFENG:"C",
-
 		getQueryParameter: function(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
 			var r = window.location.search.substr(1).match(reg);
@@ -188,7 +187,11 @@ define([],function(){
        	 	});
         },
         getUserId:function(){
-        	return 1;
+        	if(!this.getData("userInfo")){
+        		window.location = "regist.html";
+        	}
+        	var userInfo = JSON.parse(this.getData("userInfo"));
+        	return userInfo.id;
         }
 	};
 	return Utility;

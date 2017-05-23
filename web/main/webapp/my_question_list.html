@@ -49,27 +49,45 @@
                                     <span class="my_op_btn j_complete">补充</span>&nbsp;&nbsp;<span class="my_op_btn j_refund">退款</span>
                                 </div>
                             </div>
-                        <%}else if(item.status == 3|| item.status == 4|| item.status == 5){%>
+                        <%}else if(item.status == 3|| item.status == 4){%>
+                            <%if(item.productCode == "Y" || item.productCode == "YP"){%>
                             <div class="invest_result_line">
                                 <span class="my_op_status">已提交</span>
                                 <span class="my_op_bar2"><span class="my_op_bar" style="width:<%=item.processPer%>"></span></span>
-                                <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn view j_view">查看</span></div>
+                                <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn view j_view_law">查看</span></div>
                                 <div class="time_state">
                                     <span><%=item.endTime%></span>
                                     <span><%=item.startTime%></span>
                                 </div>
                             </div>
-                        <%}else if(item.status == 6){%>
+                            <%}else{%>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">操作</div>
+                                <div class="invest_result_line_r">
+                                    <span class="my_op_btn j_view">查看</span>
+                                </div>
+                            </div>
+                            <%}%>
+                        <%}else if(item.status == 5){%>
+                            <%if(item.productCode == "Y" || item.productCode == "YP"){%>
                             <div class="invest_result_line">
                                 <span class="my_op_status">已完成</span>
                                 <span class="my_op_bar2"><span class="my_op_bar" style="width:<%=item.processPer%>"></span></span>
-                                <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn view j_view">查看</span></div>
+                                <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn view j_view_law">查看</span></div>
                                 <div class="time_state">
                                     <span><%=item.endTime%></span>
                                     <span><%=item.startTime%></span>
                                 </div>
                             </div>
-                        <%}else if(item.status == 7){%>
+                            <%}else{%>
+                            <div class="invest_result_line">
+                                <div class="invest_result_line_l">操作</div>
+                                <div class="invest_result_line_r">
+                                    <span class="my_op_btn j_view">查看</span>
+                                </div>
+                            </div>
+                            <%}%>
+                        <%}else if(item.status == 6){%>
                             <div class="invest_result_line">
                                 <div class="invest_result_line_l">状态</div>
                                 <div class="invest_result_line_r">已取消</div>
