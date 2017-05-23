@@ -8,6 +8,7 @@ public class InvestOrderVo {
 	private Double originPrice;
 	private Double realPrice;
 	private String ownerName;
+	private String ownerPhone;
 	private String address;
 	private int cityId;
 	private String email;
@@ -71,6 +72,12 @@ public class InvestOrderVo {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getOwnerPhone() {
+		return ownerPhone;
+	}
+	public void setOwnerPhone(String ownerPhone) {
+		this.ownerPhone = ownerPhone;
 	}
 	
 }

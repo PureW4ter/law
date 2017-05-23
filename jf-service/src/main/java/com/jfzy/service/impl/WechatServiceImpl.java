@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.jfzf.core.Constants;
 import com.jfzf.core.HttpClientUtils;
 import com.jfzf.core.JsonUtils;
 import com.jfzy.service.UserService;
@@ -22,16 +23,15 @@ import com.jfzy.service.po.WechatUser;
 @Service
 public class WechatServiceImpl implements WechatService{
 	
-	private static String SECRET = "491313d383488b3d33d7a717f9c7a950";
-	private static String APP_ID = "wx79ad71f12e49251b";
+
 	
 	@Autowired
 	private UserService userService;
 	
 	 WechatTokenInfo getTokenByCode(String code) throws IOException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("https://api.weixin.qq.com/sns/oauth2/access_token?appid=").append(APP_ID);
-		sb.append("&secret=").append(SECRET);
+		sb.append("https://api.weixin.qq.com/sns/oauth2/access_token?appid=").append(Constants.APP_ID);
+		sb.append("&secret=").append(Constants.SECRET);
 		sb.append("&code=").append(code);
 		sb.append("&grant_type=authorization_code");
 		String result = HttpClientUtils.getResponseText(sb.toString());

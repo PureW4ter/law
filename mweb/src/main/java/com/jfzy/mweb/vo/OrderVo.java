@@ -14,6 +14,7 @@ public class OrderVo {
 	private String processorName;
 	private int productId;
 	private String productName;
+	private String productCode;
 	private Double originPrice;
 	private Double realPrice;
 	private int status;
@@ -30,7 +31,27 @@ public class OrderVo {
 	private String email;
 	private String address;
 	private String ownerName;
+	private String ownerAddress;
+	private String orderCode;
 	
+	public String getOrderCode() {
+		return orderCode;
+	}
+	public void setOrderCode(String orderCode) {
+		this.orderCode = orderCode;
+	}
+	public String getProductCode() {
+		return productCode;
+	}
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+	public String getOwnerAddress() {
+		return ownerAddress;
+	}
+	public void setOwnerAddress(String ownerAddress) {
+		this.ownerAddress = ownerAddress;
+	}
 	public int getId() {
 		return id;
 	}

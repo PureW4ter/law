@@ -20,6 +20,8 @@ public class ProductPo {
 	
 	private double price;
 	
+	private String code;
+	
 	@Column(name = "create_time")
 	private Timestamp createTime;
 	
@@ -76,5 +78,12 @@ public class ProductPo {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-	
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 }

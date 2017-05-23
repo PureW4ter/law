@@ -1,13 +1,19 @@
 define([],function(){
 	var Utility = {
-		pageSize:20,
+		pageSize:5,
 		//生产
-		appid: "wx79ad71f12e49251b",
+		appid: "wx3eb0212d543f4752",
 		cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
+		PRODUCT_CODE_ZIXUN:"Y",
+		PRODUCT_CODE_ZIXUNP:"YP",
+		PRODUCT_CODE_JIANDANWEN:"J",
+		PRODUCT_CODE_HUKOU:"H",
+		PRODUCT_CODE_CHAFENG:"C",
+
 		getQueryParameter: function(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
 			var r = window.location.search.substr(1).match(reg);
-			if (r!=null) 
+			if (r!=null)
 				return decodeURIComponent(r[2]);
 			return "";
 		},

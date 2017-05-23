@@ -52,6 +52,9 @@ public class OrderPo {
 	@Column(name = "product_name")
 	private String productName;
 
+	@Column(name = "product_code")
+	private String productCode;
+	
 	@Column(name = "origin_price")
 	private Double originPrice;
 
@@ -78,6 +81,36 @@ public class OrderPo {
 	@Column(name = "pay_way")
 	private int payWay;
 	
+	@Column(name = "owner_name")
+	private String ownerName;
+	
+	@Column(name = "owner_phone")
+	private String ownerPhone;
+	
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getOwnerPhone() {
+		return ownerPhone;
+	}
+
+	public void setOwnerPhone(String ownerPhone) {
+		this.ownerPhone = ownerPhone;
+	}
+
 	public int getPayWay() {
 		return payWay;
 	}

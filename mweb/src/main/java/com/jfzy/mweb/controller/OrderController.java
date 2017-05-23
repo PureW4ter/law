@@ -61,6 +61,7 @@ public class OrderController {
 		UserBo ubo = userService.getUser(vo.getUserId());
 		UserAccountBo uabo = userService.getUserAccountByUserId(vo.getUserId(), UserAccountTypeEnum.MOBILE.getId());
 		bo.setProductName(pbo.getName());
+		bo.setProductCode(pbo.getCode());
 		bo.setRealPrice(pbo.getPrice());
 		bo.setOriginPrice(pbo.getPrice());
 		bo.setUserName(ubo.getRealName());
@@ -78,6 +79,7 @@ public class OrderController {
 		UserBo ubo = userService.getUser(vo.getUserId());
 		UserAccountBo uabo = userService.getUserAccountByUserId(vo.getUserId(), UserAccountTypeEnum.MOBILE.getId());
 		bo.setProductName(pbo.getName());
+		bo.setProductCode(pbo.getCode());
 		bo.setRealPrice(pbo.getPrice());
 		bo.setOriginPrice(pbo.getPrice());
 		bo.setUserName(ubo.getRealName());
@@ -101,9 +103,8 @@ public class OrderController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "/order/complete")
-	public ResponseVo<Object> complete(@RequestParam(value = "id")int id, 
-			@RequestParam(value = "comment")String comment, 
+	@PostMapping(value = "/order/complete", consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<Object> complete(int id, String comment, 
 			@RequestParam(value = "picList[]") String[] picList) {
 		orderService.complete(id, comment, picList);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
@@ -140,8 +141,11 @@ public class OrderController {
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(bo, vo);
 		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat myFmt2=new SimpleDateFormat("yyyyMMdd");
 		if(bo.getCreateTime()!=null)
 			vo.setCreateTime(myFmt.format(bo.getCreateTime()));
+		//订单编号：时间+code+id
+		vo.setOrderCode(myFmt2.format(bo.getCreateTime())+bo.getProductCode()+bo.getId());
 		if(bo.getUpdateTime()!=null)
 			vo.setUpdateTime(myFmt.format(bo.getUpdateTime()));
 		if(bo.getStartTime()!=null)

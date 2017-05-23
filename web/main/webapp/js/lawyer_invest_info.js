@@ -30,7 +30,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			if($($(".product_info_selected")[0]).data("type") == 1){
 				window.location = "hukou_search.html";
 			}else{
-				window.location = "ask_free.html";
+				window.location = "sealup_search.html";
 			}
 		}
     };

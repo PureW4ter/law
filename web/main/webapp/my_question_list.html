@@ -22,9 +22,9 @@
                             <div class="invest_result_line_r"><%=item.id%></div>
                         </div>
                         <div class="invest_result_line">
-                            <div class="invest_result_line_l">问题描述</div>
+                            <div class="invest_result_line_l">订单类型</div>
                             <div class="invest_result_line_r">
-                                <%=item.memo?item.memo:item.productName%>
+                                <%=item.productName%>
                             </div>
                         </div>
                         <%if(item.status == 0 || item.status == 1){%>

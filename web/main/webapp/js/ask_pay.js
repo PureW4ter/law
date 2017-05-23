@@ -36,14 +36,11 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 					$("#i_trade_phase").append("<option value='"+ index + "'>"+ item.phase + "</option>"); 
 				}
 			);
-			$("#i_question_types ul").remove(); 
-			$("#i_question_types").append("<ul></ul>");
+
+			$("#i_question_types").find("option").remove();
 			e.data.ctx.propertis.r[2][index].phases[0].subPhases.forEach(
 				function(item, index){
-					$("#i_question_types ul").last().append("<li>"+ item.phase + "</li>");
-					if(index/3 == 2){
-						$("#i_question_types").append("<ul></ul>");
-					}
+					$("#i_question_types").append("<option>"+ item.phase + "</option>"); 
 				}
 			);
 			e.data.ctx._registEvent();
@@ -51,43 +48,32 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 		_changePhase:function(e){
 			var index = $(e.target).find("option").
 						not(function(){ return !this.selected }).val();
-			$("#i_question_types ul").remove(); 
-			$("#i_question_types").append("<ul></ul>");
+			$("#i_question_types").find("option").remove();
 			e.data.ctx.propertis.r[2][e.data.ctx.idIndex].phases[index].subPhases.forEach(
 				function(item, index){
-					$("#i_question_types ul").last().append("<li>"+ item.phase + "</li>");
-					if(index/3 == 2){
-						$("#i_question_types").append("<ul></ul>");
-					}
+					$("#i_question_types").append("<option>"+ item.phase + "</option>"); 
 				}
 			);
 			e.data.ctx._registEvent();
 		},
 		_pay:function(e){
-			var subPhases = "";
-			$(".subPhase_selected").forEach(
-				function(item, index){
-					subPhases = subPhases+ $(item).text() +",";
-				}
-			);
-			subPhases = subPhases.substring(0, subPhases.length-1);
 			var params = {
 				"userId": util.getUserId(),
 				"productId": $($(".question_pay_selected")[0]).data("id"),
 				"role": $("#i_identity option").not(function(){ return !this.selected }).text(),
 				"tradePhase": $("#i_trade_phase option").not(function(){ return !this.selected }).text(),
-				"tradeSubphase": subPhases,
+				"tradeSubphase": $("#i_question_types option").not(function(){ return !this.selected }).text(),
 				"sn": $("#i_sign option").not(function(){ return !this.selected }).text()
 			}
 			ajaxHelper.post("http://" + window.frontJSHost + "/order/screate",
-                params, this, function(){
+                params, this, function(data){
                 	var ps = {
                 		"id": data.r.id
                 	}
-                	ajaxHelper.post("http://" + window.frontJSHost + "/order/pay",  ps, 
-                		this, function(data){
+                	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
+                		this, function(){
                 			util.showToast("支付成功");
-                			//window.location = "question_complete.html";
+                			window.location = "question_complete.html?id=" + data.r.id;
                 		});
                 });
 		},

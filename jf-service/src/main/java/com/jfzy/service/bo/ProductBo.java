@@ -9,6 +9,7 @@ public class ProductBo {
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private boolean deleted;
+	private String code;
 	
 	public int getId() {
 		return id;
@@ -45,5 +46,11 @@ public class ProductBo {
 	}
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

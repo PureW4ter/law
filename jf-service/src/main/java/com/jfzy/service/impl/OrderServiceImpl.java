@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
 import org.springframework.stereotype.Service;
 
+import com.jfzf.core.Constants;
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.bo.LawyerBo;
@@ -32,7 +33,11 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderBo createSOrder(OrderBo bo) {
-		bo.setStatus(OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId());
+		if( Constants.PRODUCT_CODE_JIANDANWEN.equals(bo.getProductCode())){
+			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
+		}else{
+			bo.setStatus(OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId());
+		}
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
 		OrderPo po = orderRepo.save(boToPo(bo));
 		return poToBo(po);
@@ -40,7 +45,11 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderBo createIOrder(OrderBo bo) {
-		bo.setStatus(OrderStatusEnum.NO_PAY.getId());
+		if( Constants.PRODUCT_CODE_HUKOU.equals(bo.getProductCode())){
+			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
+		}else{
+			bo.setStatus(OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId());
+		}
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
 		OrderPo po = orderRepo.save(boToPo(bo));
 		return poToBo(po);
