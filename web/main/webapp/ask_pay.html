@@ -40,20 +40,13 @@
                         </select>
                     </div>
                     <div class="blk10"></div>
-                    <div class="new_input_box">
-                        <label>交易阶段</label>
-                        <div class="question_types" id="i_question_types">
-                            <ul>
-                                <%_.each(result.r[2][0].phases[0].subPhases,function(item, index){%>
-                                <li><%=item.phase%></li>
-                                <%if(index/3==2){%>
-                                    </ul>
-                                    <ul>
-                                <%}%>
-                                <%})%>
-                            </ul>
-                            
-                        </div>
+                    <div class="new_input_box arrow_down">
+                        <label>问题类型</label>
+                        <select id="i_question_types">
+                             <%_.each(result.r[2][0].phases[0].subPhases,function(item, index){%>
+                                <option value="<%=index%>"><%=item.phase%></option>
+                            <%})%>
+                        </select>
                     </div>
                     <div class="blk10"></div>
                     <div class="input_upper">

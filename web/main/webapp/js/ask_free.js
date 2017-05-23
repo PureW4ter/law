@@ -48,9 +48,9 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 	var ps = {
                 		"id": data.r.id
                 	}
-                	ajaxHelper.post("http://" + window.frontJSHost + "/order/pay",  ps, 
+                	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
                 		this, function(data){
-                			util.showToast("支付成功");
+                			window.location = "success.html"
                 		});
                 });
 		},

@@ -1,5 +1,5 @@
 define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
-    var HukouSearch = {
+    var SealupSearch = {
     	cities:util.cities,
         initialize :function(){
 			//body
@@ -38,10 +38,11 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 	}
                 	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
                 		this, function(){
-							window.location = "success.html";
+                			util.showToast("支付成功");
+                			window.location = "question_complete2.html?id=" + data.r.id;
                 		});
                 }, null);
 		}
     };
-    return HukouSearch;
+    return SealupSearch;
 });

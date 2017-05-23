@@ -9,7 +9,7 @@ define(['ajaxhelper', 'utility'], function(ajaxHelper, util) {
 			me.intervalId = setInterval(function() {
 				me.count--;
 				if(me.count == 0){
-					window.location = "my_question_list.html";
+					window.location = "index.html";
 				}
 				me._updateTime(me.count);
     		}, 1000);

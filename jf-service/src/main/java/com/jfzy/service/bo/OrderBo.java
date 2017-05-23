@@ -17,6 +17,7 @@ public class OrderBo {
 	private String processorName;
 	private int productId;
 	private String productName;
+	private String productCode;
 	private Double originPrice;
 	private Double realPrice;
 	private int status;
@@ -32,7 +33,20 @@ public class OrderBo {
 	private String email;
 	private String address;
 	private String ownerName;
+	private String ownerPhone;
 	
+	public String getProductCode() {
+		return productCode;
+	}
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+	public String getOwnerPhone() {
+		return ownerPhone;
+	}
+	public void setOwnerPhone(String ownerPhone) {
+		this.ownerPhone = ownerPhone;
+	}
 	public int getId() {
 		return id;
 	}
