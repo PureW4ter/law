@@ -48,7 +48,7 @@ public class WechatServiceImpl implements WechatService{
 		UserBo userBo = null;
 		
 		if (wechatUserInfo != null) {
-			//获取用户账号信息
+			//获取用户账号信息，account 存在必然 user 存在
 			userAccountBo = userService.getUserAccountByOpenid(wechatUserInfo.getOpenid());
 			if(userAccountBo !=null){
 				userBo = userService.getUser(userAccountBo.getUserId());
@@ -72,14 +72,14 @@ public class WechatServiceImpl implements WechatService{
 				userBo.setCity(wechatUser.getCountry() + "," + wechatUser.getProvince() + "," + wechatUser.getCity());
 				int sex = wechatUser.getSex();
 				userBo.setGender(sex == 1 ? GenderEnum.MEN.getId() : (sex == 2 ? GenderEnum.WOMEN.getId() : null));
-				int userId = userService.createOrUpdateUser(userBo);
+				userBo =  userService.createOrUpdateUser(userBo);
 
 				//create user account
 				userAccountBo = new UserAccountBo();
 				userAccountBo.setStatus(StatusEnum.ENABLED.getId());
 				userAccountBo.setType(UserAccountTypeEnum.WECHAT_OPENID.getId());
 				userAccountBo.setValue(wechatUser.getOpenid());
-				userAccountBo.setUserId(userId);
+				userAccountBo.setUserId(userBo.getId());
 				userAccountBo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 				userService.register(userAccountBo);
 				
@@ -88,7 +88,7 @@ public class WechatServiceImpl implements WechatService{
 					userAccountBo.setStatus(StatusEnum.ENABLED.getId());
 					userAccountBo.setType(UserAccountTypeEnum.WECHAT_UNIONID.getId());
 					userAccountBo.setValue(wechatUser.getUnionid());
-					userAccountBo.setUserId(userId);
+					userAccountBo.setUserId(userBo.getId());
 					userAccountBo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 					userService.register(userAccountBo);
 				}

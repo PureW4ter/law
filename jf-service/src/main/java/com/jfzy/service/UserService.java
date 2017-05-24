@@ -17,7 +17,7 @@ public interface UserService {
 	
 	UserAccountBo getUserAccountByUserId(int userId, int type);
 	
-	int createOrUpdateUser(UserBo user);
+	UserBo createOrUpdateUser(UserBo user);
 
 	void register(UserAccountBo ua);
 	

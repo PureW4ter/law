@@ -31,7 +31,7 @@ $("body").append('<div id="i_loading_content" class="loading_content"><div class
 window.frontJSVersion = "{front_version}";
 window.frontJSHost = "{frontJSHost}";
 
-//window.frontJSHost = "localhost:8080";
+window.frontJSHost = "localhost:8080/api";
 window.qiniuDomain = "http://7xlovk.com2.z0.glb.qiniucdn.com/";
 
 requirejs.config({

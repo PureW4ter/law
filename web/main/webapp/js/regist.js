@@ -35,7 +35,8 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
 			util.saveData('userInfo', JSON.stringify(this.user)); 
 
 			if(!!this.user.phone){
-				window.location = "read_list.html";
+				window.location = "index.html";
+				return;
 			}
 			this.mainBox.html(this.tplfun());
 			timeBtn.initialize("i_getcode_btn");

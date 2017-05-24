@@ -24,8 +24,6 @@ public class OssRoleServiceImpl implements OssRoleService {
 		return results;
 	}
 
-
-
 	private static RoleBo poToBo(RolePo po) {
 		RoleBo bo = new RoleBo();
 		BeanUtils.copyProperties(po, bo);

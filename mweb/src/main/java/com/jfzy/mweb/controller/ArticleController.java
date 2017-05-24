@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -117,53 +118,29 @@ public class ArticleController {
 	
 	private static ArticleBo voToBo(ArticleVo vo) {
 		ArticleBo bo = new ArticleBo();
-		bo.setId(vo.getId());
-		bo.setContent(vo.getContent());
-		bo.setSummary(vo.getSummary());
-		bo.setId(vo.getId());
+		BeanUtils.copyProperties(vo, bo);
 		bo.setTags(vo.getTagStr().split(","));
-		bo.setTitle(vo.getTitle());
-		bo.setTitleImgUrl(vo.getTitleImgUrl());
-		bo.setShareIconUrl(vo.getShareIconUrl());
 		bo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		bo.setCityId(vo.getCityId());
 		return bo;
 	}
 	
 	private static ArticleVo boToVo(ArticleBo bo) {
 		ArticleVo vo = new ArticleVo();
-		vo.setId(bo.getId());
-		vo.setContent(bo.getContent());
-		vo.setSummary(bo.getSummary());
-		vo.setId(bo.getId());
-		vo.setTags(bo.getTags());
-		vo.setTitle(bo.getTitle());
-		vo.setTitleImgUrl(bo.getTitleImgUrl());
-		vo.setShareIconUrl(bo.getShareIconUrl());
-		vo.setCreateTime(bo.getCreateTime());
-		vo.setCityId(bo.getCityId());
+		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
 
 	private static SimpleArticleVo boToSVo(ArticleBo bo) {
 		SimpleArticleVo vo = new SimpleArticleVo();
-		vo.setId(bo.getId());
-		vo.setTags(bo.getTags());
-		vo.setTitle(bo.getTitle());
-		vo.setTitleImgUrl(bo.getTitleImgUrl());
+		BeanUtils.copyProperties(bo, vo);
 		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
 		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
-		vo.setSummary(bo.getSummary());
-		vo.setCityId(bo.getCityId());
 		return vo;
 	}
 	
 	private static TagVo boToVo(TagBo bo) {
 		TagVo vo = new TagVo();
-		vo.setId(bo.getId());
-		vo.setName(bo.getName());
-		vo.setWeight(bo.getWeight());
+		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
-
 }

@@ -24,6 +24,7 @@ public class OssUserPo {
 	private String phoneNum;
 
 	private String password;
+	
 	private int status;
 
 	private String role;
@@ -77,6 +78,14 @@ public class OssUserPo {
 		this.status = status;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public int getCityId() {
 		return cityId;
 	}
@@ -100,13 +109,4 @@ public class OssUserPo {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 }
