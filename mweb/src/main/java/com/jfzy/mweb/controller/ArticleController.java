@@ -39,7 +39,7 @@ public class ArticleController {
 	private ArticleService articleService;
 
 	@ResponseBody
-	@GetMapping("/article/tag")
+	@GetMapping("/api/article/tag")
 	public ResponseVo<List<TagVo>> getTags() {
 
 		List<TagBo> tags = tagService.getAllTags();
@@ -52,7 +52,7 @@ public class ArticleController {
 	}
 
 	@ResponseBody
-	@GetMapping("/article/list")
+	@GetMapping("/api/article/list")
 	public ResponseVo<List<SimpleArticleVo>> getArticles(String tags, int page, int size) {
 		if (page < 0) {
 			page = 0;
@@ -67,7 +67,7 @@ public class ArticleController {
 	}
 
 	@ResponseBody
-	@GetMapping("/article/listqa")
+	@GetMapping("/api/article/listqa")
 	public ResponseVo<List<SimpleArticleVo>> getQAs(String tags, int page, int size) {
 		if (page < 0) {
 			page = 0;
@@ -82,7 +82,7 @@ public class ArticleController {
 	}
 	
 	@ResponseBody
-	@PostMapping(path="/article/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(path="/api/article/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody ArticleVo vo) {
 		/*try {
 			vo.setTagStr(new String(vo.getTagStr().getBytes("ISO-8859-1"),"UTF-8"));
@@ -98,7 +98,7 @@ public class ArticleController {
 	}
 	
 	@ResponseBody
-	@GetMapping(value = "/article/detail")
+	@GetMapping(value = "/api/article/detail")
 	public ResponseVo<ArticleVo> articleDetail(int id) {
 		ArticleBo bo = articleService.get(id);
 		if(bo!=null){
@@ -109,7 +109,7 @@ public class ArticleController {
 	}
 	
 	@ResponseBody
-	@GetMapping(value = "/article/delete")
+	@GetMapping(value = "/api/article/delete")
 	public ResponseVo<Object> articleDelete(int id) {
 		articleService.delete(id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);

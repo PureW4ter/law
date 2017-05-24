@@ -54,7 +54,7 @@ public class OrderController {
 	private UserService userService;
 	
 	@ResponseBody
-	@PostMapping(path="/order/screate",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(path="/api/order/screate",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<OrderBo> createSOrder(HttpServletRequest request, HttpServletResponse response, @RequestBody SearchOrderVo vo) {
 		OrderBo bo = svoToBo(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -72,7 +72,7 @@ public class OrderController {
 	}
 	
 	@ResponseBody
-	@PostMapping(path="/order/icreate",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(path="/api/order/icreate",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<OrderBo> createIOrder(HttpServletRequest request, HttpServletResponse response, @RequestBody InvestOrderVo vo) {
 		OrderBo bo = ivoToBo(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -90,28 +90,28 @@ public class OrderController {
 	}
 	
 	@ResponseBody
-	@GetMapping(value = "/order/pay")
+	@GetMapping(value = "/api/order/pay")
 	public ResponseVo<Object> pay(int id) {
 		orderService.pay(id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody
-	@GetMapping(value = "/order/cancel")
+	@GetMapping(value = "/api/order/cancel")
 	public ResponseVo<Object> cancel(int id) {
 		orderService.cancel(id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "/order/complete", consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/api/order/complete", consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response, @RequestBody OrderCompleteVo vo) {
 		orderService.complete(vo.getId(), vo.getComment(), vo.getPicList());
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody
-	@GetMapping("/order/listbyuser")
+	@GetMapping("/api/order/listbyuser")
 	public ResponseVo<List<OrderVo>> getOrders(int userId, int page, int size) {
 		if (page < 0) {
 			page = 0;
