@@ -31,7 +31,7 @@ public class AskController {
 	private ProductService productService;
 
 	@ResponseBody
-	@GetMapping("/ask/props")
+	@GetMapping("/api/ask/props")
 	public ResponseVo<List<Object>> getProps() {
 		List<PropertyBo> roleProps = propService.getPropertyByType(PropertyTypeEnum.ROLE.getId());
 		List<PropertyBo> signProps = propService.getPropertyByType(PropertyTypeEnum.SIGN.getId());

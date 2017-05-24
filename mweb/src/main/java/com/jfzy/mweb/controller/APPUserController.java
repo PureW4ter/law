@@ -33,7 +33,7 @@ public class APPUserController {
 	
 	
 	@ResponseBody
-	@GetMapping("/user/list")
+	@GetMapping("/api/user/list")
 	public ResponseVo<List<UserVo>> list(int page, int size) {
 		if (page < 0) {
 			page = 0;
@@ -48,7 +48,7 @@ public class APPUserController {
 	}
 	
 	@ResponseBody
-	@GetMapping(path="/user/wxlogin")
+	@GetMapping(path="/api/user/wxlogin")
 	public ResponseVo<UserVo> wxlogin(String code) {
 		try {
 			UserBo bo = wechatService.wxlogin(code);
@@ -63,21 +63,21 @@ public class APPUserController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/user/detail")
+	@GetMapping("/api/user/detail")
 	public ResponseVo<UserVo> detail(int id) {
 		UserBo bo = userService.getUser(id);
 		return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVoForUser(bo));
 	}
 	
 	@ResponseBody
-	@GetMapping("/user/bind")
+	@GetMapping("/api/user/bind")
 	public ResponseVo<Object> bind(String phone, String code, int userId) {
 		userService.bind(phone, userId);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody
-	@GetMapping("/user/unbind")
+	@GetMapping("/api/user/unbind")
 	public ResponseVo<Object> unbind(int userAccountId) {
 		userService.unbind(userAccountId);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);

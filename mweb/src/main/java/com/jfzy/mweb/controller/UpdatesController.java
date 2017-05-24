@@ -24,7 +24,7 @@ public class UpdatesController {
 	private UpdatesService updatesService;
 
 	@ResponseBody
-	@GetMapping("/updates/{type}/{pageNum}")
+	@GetMapping("/api/updates/{type}/{pageNum}")
 	public ResponseVo<List<UpdateVo>> getTags(@PathVariable("type") int type, @PathVariable("pageNum") int pageNum) {
 		Pageable page = new PageRequest(pageNum, 10);
 

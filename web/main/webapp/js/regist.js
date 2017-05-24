@@ -18,7 +18,7 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
 		},
 		_createWXUser :function(){
             var url = "https://open.weixin.qq.com/connect/oauth2/authorize?";
-            var redirect_uri = "http://m.weshare123.com/law/regist.html";
+            var redirect_uri = "http://wx.jf-zy.com/regist.html";
             var params = {};
             params["appid"] = util.appid;
             params["redirect_uri"] = encodeURIComponent(redirect_uri);
