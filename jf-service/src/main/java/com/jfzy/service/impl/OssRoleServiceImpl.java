@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.OssRoleService;
 import com.jfzy.service.bo.RoleBo;
 import com.jfzy.service.po.RolePo;
 import com.jfzy.service.repository.OssRoleRepository;
 
+@Service
 public class OssRoleServiceImpl implements OssRoleService {
 
 	@Autowired

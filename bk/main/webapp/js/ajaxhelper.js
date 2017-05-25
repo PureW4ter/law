@@ -43,8 +43,12 @@ define(["utility"], function(util) {
                 },
                 success: function(data) {
                     me._hideLoading();
-                    if (successFun && Object.prototype.toString.call(successFun) === '[object Function]')
-                        successFun.apply(ctx, [data]);
+                    if(data && data.s == 200){
+                        if (successFun && Object.prototype.toString.call(successFun) === '[object Function]')
+                            successFun.apply(ctx, [data]);
+                    }else{
+                        util.showToast("服务器出错，类型：" + data.s);
+                    }
                 },
                 error: function(xhr, type) {
                     me._hideLoading();

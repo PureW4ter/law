@@ -9,7 +9,7 @@ define(['text!./header.html'], function (tempHtml) {
             //使用完成后，删除
             $("#i_header_tpl").remove();
             var userData= $.parseJSON(localStorage.userInfo);
-            $("#" + divId).html(this.headertplfun({"nickName": userData.nickName, "title": title}));
+            $("#" + divId).html(this.headertplfun({"nickName": userData.name, "title": title}));
             this._registEvent();
         },
         _registEvent: function () {

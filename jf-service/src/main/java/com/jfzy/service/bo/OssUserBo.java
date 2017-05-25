@@ -9,7 +9,6 @@ public class OssUserBo {
 	private String phoneNum;
 	private String password;
 	private int status;
-
 	private String role;
 
 	public String getLoginName() {

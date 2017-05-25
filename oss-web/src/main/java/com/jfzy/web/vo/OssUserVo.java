@@ -8,6 +8,7 @@ public class OssUserVo {
 	private String phoneNum;
 	private String password;
 	private int status;
+	
 	public int getId() {
 		return id;
 	}

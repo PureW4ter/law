@@ -19,6 +19,8 @@ public class OssUserPo {
 
 	@Column(name = "login_name")
 	private String loginName;
+	
+	private String name;
 
 	@Column(name = "phone_num")
 	private String phoneNum;
@@ -52,6 +54,14 @@ public class OssUserPo {
 
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPhoneNum() {

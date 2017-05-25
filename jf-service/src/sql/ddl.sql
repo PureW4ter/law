@@ -96,8 +96,9 @@ CREATE TABLE `jf_oss_role` (
 DROP TABLE IF EXISTS `jf_oss_user`;
 CREATE TABLE `jf_oss_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cityId` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
   `login_name` varchar(200) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
   `phone_num` varchar(45) DEFAULT NULL,
   `password` varchar(200) DEFAULT NULL,
   `role` varchar(45) DEFAULT NULL,

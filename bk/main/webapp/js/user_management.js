@@ -9,11 +9,9 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._sendRequest();
         },
         _sendRequest: function () {
-            /*var params = {
-                type:2
-            };
-            ajaxHelper.post("http://" + window.frontJSHost + "/user/list",
-                params, this, this._render, null);*/
+
+            ajaxHelper.post("http://" + window.frontJSHost + "/api/user/list",
+                params, this, this._render, null);
             this._render();
         },
         _render: function (data) {

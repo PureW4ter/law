@@ -1,4 +1,4 @@
-package com.jfzy.mweb.vo;
+package com.jfzy.web.vo;
 
 public class OrderVo {
 	private int id;
