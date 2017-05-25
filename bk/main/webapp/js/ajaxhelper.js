@@ -43,7 +43,7 @@ define(["utility"], function(util) {
                 },
                 success: function(data) {
                     me._hideLoading();
-                    if(data && data.s == 200){
+                    if((data && data.s == 200) || !data || !data.s){
                         if (successFun && Object.prototype.toString.call(successFun) === '[object Function]')
                             successFun.apply(ctx, [data]);
                     }else{

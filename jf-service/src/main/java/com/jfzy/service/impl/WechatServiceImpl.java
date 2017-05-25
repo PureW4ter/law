@@ -17,6 +17,7 @@ import com.jfzy.service.bo.StatusEnum;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
+import com.jfzy.service.bo.UserLevelEnum;
 import com.jfzy.service.bo.WechatTokenInfo;
 import com.jfzy.service.po.WechatUser;
 
@@ -70,6 +71,7 @@ public class WechatServiceImpl implements WechatService{
 				userBo.setName(wechatUser.getNickname());
 				userBo.setRealName(wechatUser.getNickname());
 				userBo.setCity(wechatUser.getCountry() + "," + wechatUser.getProvince() + "," + wechatUser.getCity());
+				userBo.setLevel(UserLevelEnum.VISITOR.getId());
 				int sex = wechatUser.getSex();
 				userBo.setGender(sex == 1 ? GenderEnum.MEN.getId() : (sex == 2 ? GenderEnum.WOMEN.getId() : null));
 				userBo =  userService.createOrUpdateUser(userBo);

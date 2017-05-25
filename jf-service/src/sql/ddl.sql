@@ -105,6 +105,7 @@ CREATE TABLE `jf_oss_user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:启用,1:禁用',
+  `level` tinyint(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

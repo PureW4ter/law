@@ -18,6 +18,7 @@ public class UserVo {
 	private int gender;
 	private Timestamp createTime;
 	private String phone;
+	private int level;
 	
 	public int getId() {
 		return id;
@@ -96,5 +97,11 @@ public class UserVo {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }

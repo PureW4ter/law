@@ -14,14 +14,14 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             this._sendRequest();
         },
         _sendRequest: function () {
-            ajaxHelper.get("http://" + window.frontJSHost + "/article/tag",
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/article/tag",
                 {}, this, this._getArticle, null);
         },
         _getArticle: function(tags){
             if(!this.articleId){
                  this._render({"result":{"r":{}}, "tags":tags, "cities":this.cities, "artType":this.artType});
             }else{
-                ajaxHelper.get("http://" + window.frontJSHost + "/article/detail",
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/article/detail",
                     {id:this.articleId}, this, function(data){
                         for(var tt in data.r.tags){
                             for(var t in tags.r){
@@ -130,14 +130,14 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                 
                 if (e.data.ctx.articleId) { 
                     formJson.id=e.data.ctx.articleId;
-                    ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
+                    ajaxHelper.post("http://" + window.frontJSHost + "/api/article/create",
                         formJson, e.data.ctx, function(){
                             util.showToast("更新成功！", function(){
                                 window.location = "article_management.html";
                             })
                         });
                 } else {
-                    ajaxHelper.post("http://" + window.frontJSHost + "/article/create",
+                    ajaxHelper.post("http://" + window.frontJSHost + "/api/article/create",
                         formJson, e.data.ctx, function(){
                             util.showToast("保存成功！", function(){
                                 //window.location = "article_management.html";

@@ -9,8 +9,11 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._sendRequest();
         },
         _sendRequest: function () {
-
-            ajaxHelper.post("http://" + window.frontJSHost + "/api/user/list",
+            var params = {
+                "page": 0,
+                "size":20
+            };
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/user/list",
                 params, this, this._render, null);
             this._render();
         },

@@ -1,25 +1,35 @@
 package com.jfzy.web;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
 
+
+import com.jfzy.web.vo.ArticleVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
 import com.jfzy.web.vo.UserVo;
 import com.jfzy.service.UserService;
 import com.jfzy.service.WechatService;
+import com.jfzy.service.bo.ArticleBo;
 import com.jfzy.service.bo.UserBo;
 
 @RestController
@@ -53,6 +63,14 @@ public class APPUserController {
 		return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVoForUser(bo));
 	}
 	
+	@ResponseBody
+	@PostMapping(path="/api/user/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody UserVo vo) {
+		UserBo bo = voToBoForUser(vo);
+		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		userService.create(bo);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
 	
 	private static UserBo voToBoForUser(UserVo vo) {
 		UserBo bo = new UserBo();

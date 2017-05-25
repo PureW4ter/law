@@ -17,7 +17,14 @@ public class UserBo {
 	private String city;
 	private int gender;
 	private Timestamp createTime;
+	private int level;
 	
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	public int getId() {
 		return id;
 	}
