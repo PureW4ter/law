@@ -58,8 +58,8 @@ public class ArticleController {
 		if (page < 0) {
 			page = 0;
 		}
-//		Sort sort = new Sort(Direction.DESC, "createTime");
-		List<ArticleBo> values = articleService.searchByTags(tags, new PageRequest(page, size));
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		List<ArticleBo> values = articleService.searchByTags(tags, new PageRequest(page, size, sort));
 		List<SimpleArticleVo> resultArticles = new ArrayList<SimpleArticleVo>(values.size());
 		for (ArticleBo bo : values) {
 			resultArticles.add(boToSVo(bo));

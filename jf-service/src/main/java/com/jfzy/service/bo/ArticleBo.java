@@ -17,6 +17,7 @@ public class ArticleBo {
 	private String titleImgUrl;
 	private String shareIconUrl;
 	private String content;
+	@Field(type = FieldType.Date)
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private String summary;
@@ -34,8 +35,8 @@ public class ArticleBo {
 	@Field(type = FieldType.String, index = FieldIndex.not_analyzed)
 	private String[] tags;
 
-	public ArticleBo(int id, String title, String titleImgUrl, String content, String shareIconUrl, String summary, String[] tags, 
-			Timestamp createTime, Timestamp updateTime, int cityId, int type) {
+	public ArticleBo(int id, String title, String titleImgUrl, String content, String shareIconUrl, String summary,
+			String[] tags, Timestamp createTime, Timestamp updateTime, int cityId, int type) {
 		this.id = id;
 		this.title = title;
 		this.titleImgUrl = titleImgUrl;
@@ -131,5 +132,5 @@ public class ArticleBo {
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
-	
+
 }
