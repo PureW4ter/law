@@ -10,10 +10,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jfzy.service.UserService;
+import com.jfzy.service.bo.ArticleBo;
 import com.jfzy.service.bo.StatusEnum;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
+import com.jfzy.service.bo.UserLevelEnum;
+import com.jfzy.service.po.ArticlePo;
 import com.jfzy.service.po.UserAccountPo;
 import com.jfzy.service.po.UserPo;
 import com.jfzy.service.repository.UserAccountRepository;
@@ -39,6 +42,9 @@ public class UserServiceImpl implements UserService{
 	public void register(UserAccountBo ua){
 		UserAccountPo userAccountPo = bo2PoForUserAccount(ua);
 		userAccountRepo.save(userAccountPo);
+		UserBo bo = this.getUser(ua.getUserId());
+		bo.setLevel(UserLevelEnum.NORMAL.getId());
+		userRepo.save(bo2PoForUser(bo));
 	}
 
 
@@ -88,6 +94,11 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 	
+	@Override
+	public void create(UserBo bo) {
+		UserPo po = bo2PoForUser(bo);
+		userRepo.save(po);
+	}
 	private static UserPo bo2PoForUser(UserBo bo) {
 		UserPo po = new UserPo();
 		BeanUtils.copyProperties(bo, po);

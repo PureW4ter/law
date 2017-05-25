@@ -13,6 +13,8 @@ public interface UserService {
 	
 	UserBo getUser(int id);
 	
+	public void create(UserBo bo);
+	
 	UserAccountBo getUserAccountByOpenid(String openid);
 	
 	UserAccountBo getUserAccountByUserId(int userId, int type);

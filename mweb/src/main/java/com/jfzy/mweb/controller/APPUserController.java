@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.ResponseVo;
-import com.jfzy.mweb.vo.UserAccountVo;
 import com.jfzy.mweb.vo.UserVo;
 import com.jfzy.service.UserService;
 import com.jfzy.service.WechatService;
@@ -91,18 +90,6 @@ public class APPUserController {
 	
 	private static UserVo boToVoForUser(UserBo bo) {
 		UserVo vo = new UserVo();
-		BeanUtils.copyProperties(bo, vo);
-		return vo;
-	}
-	
-	private static UserAccountBo voToBoForUserAccount(UserAccountVo vo) {
-		UserAccountBo bo = new UserAccountBo();
-		BeanUtils.copyProperties(vo, bo);
-		return bo;
-	}
-	
-	private static UserAccountVo boToVoForUserAccount(UserAccountBo bo) {
-		UserAccountVo vo = new UserAccountVo();
 		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}

@@ -38,14 +38,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-id="">
-                                    <td>1</td>
-                                    <td><a href="user_info.html" class="blue_link">小王</a></td>
-                                    <td>王***</td>
-                                    <td>2017-04-11 11:24</td>
-                                    <td><a href="user_orders.html" class="blue_link">8</a></td>
+                                <%_.each(result.r,function(item){%>
+                                <tr>
+                                    <td><%=item.id%></td>
+                                    <td><a href="user_info.html?id=<%=item.id%>" class="blue_link"><%=item.name%></a></td>
+                                    <td><%=item.realName%></td>
+                                    <td><%=item.createTime%></td>
+                                    <td><a href="user_orders.html?id=<%=item.id%>" class="blue_link">8</a></td>
                                     <td>看客，普通，白金</td>
                                 </tr>
+                                <%})%>
                             </tbody>
                         </table>
                     </div>
