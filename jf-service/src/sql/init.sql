@@ -23,7 +23,9 @@ INSERT INTO `jf_property` (`id`, `type_id`, `name`)
 VALUES
 	(1,1,'买家'),
 	(2,1,'卖家'),
-	(3,1,'中介');	
+	(3,1,'中介'),
+	(4,2,'居间协议'),
+	(5,2,'买卖合同');
 	
 INSERT INTO `jf_phase` (`id`, `phase`, `parent_phase_id`, `role_id`)
 VALUES

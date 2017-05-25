@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -39,7 +40,7 @@ public class ArticleController {
 	private ArticleService articleService;
 
 	@ResponseBody
-	@GetMapping("/article/tag")
+	@GetMapping("/api/article/tag")
 	public ResponseVo<List<TagVo>> getTags() {
 
 		List<TagBo> tags = tagService.getAllTags();
@@ -52,7 +53,7 @@ public class ArticleController {
 	}
 
 	@ResponseBody
-	@GetMapping("/article/list")
+	@GetMapping("/api/article/list")
 	public ResponseVo<List<SimpleArticleVo>> getArticles(String tags, int page, int size) {
 		if (page < 0) {
 			page = 0;
@@ -67,7 +68,22 @@ public class ArticleController {
 	}
 
 	@ResponseBody
-	@PostMapping(path="/article/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping("/api/article/listqa")
+	public ResponseVo<List<SimpleArticleVo>> getQAs(String tags, int page, int size) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		List<ArticleBo> values = articleService.getQAs( new PageRequest(page, size, sort));
+		List<SimpleArticleVo> resultArticles = new ArrayList<SimpleArticleVo>(values.size());
+		for (ArticleBo bo : values) {
+			resultArticles.add(boToSVo(bo));
+		}
+		return new ResponseVo<List<SimpleArticleVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultArticles);
+	}
+	
+	@ResponseBody
+	@PostMapping(path="/api/article/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody ArticleVo vo) {
 		/*try {
 			vo.setTagStr(new String(vo.getTagStr().getBytes("ISO-8859-1"),"UTF-8"));
@@ -77,12 +93,13 @@ public class ArticleController {
 			e.printStackTrace();
 		}*/
 		ArticleBo bo = voToBo(vo);
+		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		articleService.create(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody
-	@GetMapping(value = "/article/detail")
+	@GetMapping(value = "/api/article/detail")
 	public ResponseVo<ArticleVo> articleDetail(int id) {
 		ArticleBo bo = articleService.get(id);
 		if(bo!=null){
@@ -93,7 +110,7 @@ public class ArticleController {
 	}
 	
 	@ResponseBody
-	@GetMapping(value = "/article/delete")
+	@GetMapping(value = "/api/article/delete")
 	public ResponseVo<Object> articleDelete(int id) {
 		articleService.delete(id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
@@ -101,54 +118,29 @@ public class ArticleController {
 	
 	private static ArticleBo voToBo(ArticleVo vo) {
 		ArticleBo bo = new ArticleBo();
-		bo.setId(vo.getId());
-		bo.setContent(vo.getContent());
-		bo.setSummary(vo.getSummary());
-		bo.setId(vo.getId());
+		BeanUtils.copyProperties(vo, bo);
 		bo.setTags(vo.getTagStr().split(","));
-		bo.setTitle(vo.getTitle());
-		bo.setTitleImgUrl(vo.getTitleImgUrl());
-		bo.setShareIconUrl(vo.getShareIconUrl());
 		bo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		bo.setCityId(vo.getCityId());
 		return bo;
 	}
 	
 	private static ArticleVo boToVo(ArticleBo bo) {
 		ArticleVo vo = new ArticleVo();
-		vo.setId(bo.getId());
-		vo.setContent(bo.getContent());
-		vo.setSummary(bo.getSummary());
-		vo.setId(bo.getId());
-		vo.setTags(bo.getTags());
-		vo.setTitle(bo.getTitle());
-		vo.setTitleImgUrl(bo.getTitleImgUrl());
-		vo.setShareIconUrl(bo.getShareIconUrl());
-		vo.setCreateTime(bo.getCreateTime());
-		vo.setCityId(bo.getCityId());
+		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
 
 	private static SimpleArticleVo boToSVo(ArticleBo bo) {
 		SimpleArticleVo vo = new SimpleArticleVo();
-		vo.setId(bo.getId());
-		vo.setTags(bo.getTags());
-		vo.setTitle(bo.getTitle());
-		vo.setTitleImgUrl(bo.getTitleImgUrl());
+		BeanUtils.copyProperties(bo, vo);
 		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
 		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
-		vo.setSummary(bo.getSummary());
-		vo.setCityId(bo.getCityId());
 		return vo;
 	}
 	
 	private static TagVo boToVo(TagBo bo) {
 		TagVo vo = new TagVo();
-		vo.setId(bo.getId());
-		vo.setName(bo.getName());
-		vo.setWeight(bo.getWeight());
+		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
-
 }

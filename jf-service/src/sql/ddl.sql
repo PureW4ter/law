@@ -86,10 +86,25 @@ DROP TABLE IF EXISTS `jf_oss_role`;
 CREATE TABLE `jf_oss_role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL DEFAULT '',
-  `desc` varchar(200) NOT NULL DEFAULT '',
+  `desc` varchar(2000) NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:启用,1:禁用',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `update_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS `jf_oss_user`;
+CREATE TABLE `jf_oss_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city_id` int(11) DEFAULT NULL,
+  `login_name` varchar(200) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `phone_num` varchar(45) DEFAULT NULL,
+  `password` varchar(200) DEFAULT NULL,
+  `role` varchar(45) DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:启用,1:禁用',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

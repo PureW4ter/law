@@ -20,6 +20,6 @@ public class OssWebApplication extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// registry.addInterceptor(new
 		// AuthInterceptor()).addPathPatterns("/**");
-		registry.addInterceptor(new AuthInterceptor());
+		//registry.addInterceptor(new AuthInterceptor());
 	}
 }

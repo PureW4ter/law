@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.po.OssUserPo;
 import com.jfzy.service.repository.OssUserRepository;
 
+@Service
 public class OssUserServiceImpl implements OssUserService {
 
 	@Autowired

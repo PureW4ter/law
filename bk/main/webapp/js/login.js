@@ -21,12 +21,11 @@ define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header
         },
         subIt: function (e) {
             var params = util.getFormValues('loginIt');
-            params.password = md5(params.password);
+            //params.password = md5(params.password);
             $('input').blur();
             if ($('.popover.in').length < 1) {
-                //ajaxHelper.post("http://" + window.frontJSHost + "/user/login", 
-                    //params, e.data.ctx, e.data.ctx.success, null);
-                e.data.ctx.success({"nickName": "哈哈"});
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/user/login", 
+                    params, e.data.ctx, e.data.ctx.success, null);
             }
         },
         bindEnter: function (e) {
@@ -37,7 +36,7 @@ define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header
         },
         success: function (data) {
             data.expires_time = new Date().getTime() + 3600 * 1000;
-            window.localStorage.setItem('userInfo', JSON.stringify(data));
+            window.localStorage.setItem('userInfo', JSON.stringify(data.r));
             window.location = "user_management.html";
         }
     };

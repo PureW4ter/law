@@ -19,11 +19,14 @@ public class OssUserPo {
 
 	@Column(name = "login_name")
 	private String loginName;
+	
+	private String name;
 
 	@Column(name = "phone_num")
 	private String phoneNum;
 
 	private String password;
+	
 	private int status;
 
 	private String role;
@@ -53,6 +56,14 @@ public class OssUserPo {
 		this.loginName = loginName;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getPhoneNum() {
 		return phoneNum;
 	}
@@ -75,6 +86,14 @@ public class OssUserPo {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public int getCityId() {
@@ -100,13 +119,4 @@ public class OssUserPo {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 }

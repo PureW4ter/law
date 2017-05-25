@@ -12,7 +12,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
         },
         _sendRequest: function () {
             var params = {"page": this.currentPage, "size": this.size};
-            ajaxHelper.get("http://" + window.frontJSHost + "/article/list",
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/article/list",
                 params, this, this._render, null);
         },
         _render: function (data) {

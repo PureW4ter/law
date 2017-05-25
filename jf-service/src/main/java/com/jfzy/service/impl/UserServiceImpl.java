@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,10 @@ public class UserServiceImpl implements UserService{
 	private UserAccountRepository userAccountRepo;
 
 	@Override
-	public int createOrUpdateUser(UserBo user) {
+	public UserBo createOrUpdateUser(UserBo user) {
 		UserPo userPo = bo2PoForUser(user);
 		UserPo po = userRepo.save(userPo);
-		return po.getId();
+		return po2BoForUser(po);
 	}
 	
 	@Override
@@ -89,53 +90,25 @@ public class UserServiceImpl implements UserService{
 	
 	private static UserPo bo2PoForUser(UserBo bo) {
 		UserPo po = new UserPo();
-		po.setId(bo.getId());
-		po.setAddress(bo.getAddress());
-		po.setCreateTime(bo.getCreateTime());
-		po.setHeadImg(bo.getHeadImg());
-		po.setMemo(bo.getMemo());
-		po.setName(bo.getName());
-		po.setPostcode(bo.getPostcode());
-		po.setRealName(bo.getRealName());
-		po.setStatus(bo.getStatus());
-		po.setGender(bo.getGender());
-		po.setCity(bo.getCity());
+		BeanUtils.copyProperties(bo, po);
 		return po;
 	}
 
 	private static UserBo po2BoForUser(UserPo po) {
-		UserBo result = new UserBo();
-		result.setId(po.getId());
-		result.setAddress(po.getAddress());
-		result.setCreateTime(po.getCreateTime());
-		result.setHeadImg(po.getHeadImg());
-		result.setMemo(po.getMemo());
-		result.setName(po.getName());
-		result.setPostcode(po.getPostcode());
-		result.setRealName(po.getRealName());
-		result.setStatus(po.getStatus());
-		result.setGender(po.getGender());
-		result.setCity(po.getCity());
-		return result;
+		UserBo bo = new UserBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
 	}
 	
 	private static UserAccountPo bo2PoForUserAccount(UserAccountBo bo) {
 		UserAccountPo po = new UserAccountPo();
-		po.setCreateTime(bo.getCreateTime());
-		po.setStatus(bo.getStatus());
-		po.setType(bo.getType());
-		po.setUserId(bo.getUserId());
-		po.setValue(bo.getValue());
+		BeanUtils.copyProperties(bo, po);
 		return po;
 	}
 
 	private static UserAccountBo po2BoForUserAccount(UserAccountPo po) {
 		UserAccountBo bo = new UserAccountBo();
-		bo.setCreateTime(po.getCreateTime());
-		bo.setStatus(po.getStatus());
-		bo.setType(po.getType());
-		bo.setUserId(po.getUserId());
-		bo.setValue(po.getValue());
+		BeanUtils.copyProperties(po, bo);
 		return bo;
 	}
 }
