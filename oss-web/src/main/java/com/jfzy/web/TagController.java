@@ -15,6 +15,7 @@ import com.jfzy.service.TagService;
 import com.jfzy.service.bo.TagBo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
+import com.jfzy.web.vo.SimpleResponseVo;
 import com.jfzy.web.vo.TagVo;
 
 @RestController
@@ -38,16 +39,16 @@ public class TagController {
 
 	@ResponseBody
 	@PutMapping("/tag")
-	public ResponseVo addTag(TagVo tag) {
+	public SimpleResponseVo addTag(TagVo tag) {
 
-		return new ResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), "");
 	}
 
 	@ResponseBody
 	@DeleteMapping("/tag/{id}")
-	public ResponseVo deleteTag(@PathVariable("id") int id) {
+	public SimpleResponseVo deleteTag(@PathVariable("id") int id) {
 		tagService.deleteTag(id);
-		return new ResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), "");
 	}
 
 	private static TagVo boToVo(TagBo bo) {
