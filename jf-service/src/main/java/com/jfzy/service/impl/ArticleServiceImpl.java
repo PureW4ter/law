@@ -21,9 +21,7 @@ import org.springframework.stereotype.Service;
 import com.jfzy.service.ArticleService;
 import com.jfzy.service.bo.ArticleBo;
 import com.jfzy.service.bo.ArticleTypeEnum;
-import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.po.ArticlePo;
-import com.jfzy.service.po.OrderPo;
 import com.jfzy.service.repository.ArticleElasticRepository;
 import com.jfzy.service.repository.ArticleRepository;
 
@@ -49,8 +47,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Scheduled(fixedRate = 60000)
 	public void retriveArticles() {
-		List<ArticlePo> articlePos = articleRepo.findNotDeleted(lastUpdatedTime,
-				ArticleTypeEnum.ARTICLE.getId());
+		List<ArticlePo> articlePos = articleRepo.findNotDeleted(lastUpdatedTime, ArticleTypeEnum.ARTICLE.getId());
 		Timestamp tmpTimestamp = lastUpdatedTime;
 		for (ArticlePo po : articlePos) {
 			if (po.getUpdateTime() != null && po.getUpdateTime().after(tmpTimestamp)) {
@@ -78,7 +75,6 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
-
 	@Override
 	public List<ArticleBo> getQAs(Pageable page) {
 		Page<ArticlePo> poPage = articleRepo.findByType(ArticleTypeEnum.QA.getId(), page);
@@ -88,32 +84,35 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		return results;
 	}
-	
+
 	@Override
 	public ArticleBo get(int id) {
 		ArticlePo po = articleRepo.getById(id);
 		return po2Bo(po);
 	}
-	
+
 	@Override
 	public void create(ArticleBo bo) {
 		ArticlePo po = bo2Po(bo);
 		articleRepo.save(po);
 	}
-	
+
 	@Override
 	public void delete(int id) {
 		articleRepo.updateDeleted(id);
 	}
+
 	private static ArticlePo bo2Po(ArticleBo bo) {
 		ArticlePo po = new ArticlePo();
 		BeanUtils.copyProperties(bo, po);
+		po.setTags(getTagString(bo.getTags()));
 		return po;
 	}
 
 	private static ArticleBo po2Bo(ArticlePo po) {
 		ArticleBo result = new ArticleBo();
 		BeanUtils.copyProperties(po, result);
+		result.setTags(getTags(po.getTags()));
 		return result;
 	}
 
