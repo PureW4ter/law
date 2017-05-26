@@ -13,6 +13,7 @@ public class UserVo {
 	private String postcode;
 	private int status;
 	private double money;
+	private String email;
 	private String headImg;
 	private String city;
 	private int gender;
@@ -67,6 +68,12 @@ public class UserVo {
 	}
 	public void setMoney(double money) {
 		this.money = money;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getHeadImg() {
 		return headImg;

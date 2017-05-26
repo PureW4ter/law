@@ -28,6 +28,8 @@ public class UserPo {
 
 	private String postcode;
 	
+	private String email;
+	
 	private int status;
 	
 	private double money;
@@ -43,14 +45,6 @@ public class UserPo {
 	private int gender;
 	
 	private int level;
-	
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
 
 	public int getId() {
 		return id;
@@ -100,6 +94,14 @@ public class UserPo {
 		this.postcode = postcode;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public int getStatus() {
 		return status;
 	}
@@ -147,5 +149,12 @@ public class UserPo {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
-	
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
 }

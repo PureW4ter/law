@@ -2,16 +2,13 @@ package com.jfzy.web.vo;
 
 import java.sql.Timestamp;
 
-public class OssUserVo {
+public class OssRoleVo {
 	private int id;
 	private String name;
-	private int cityId;
-	private String loginName;
-	private String phoneNum;
+	private String desc;
 	private int status;
 	private String createTime;
 	private Timestamp updateTime;
-	private String role;
 	
 	public int getId() {
 		return id;
@@ -25,23 +22,11 @@ public class OssUserVo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getCityId() {
-		return cityId;
+	public String getDesc() {
+		return desc;
 	}
-	public void setCityId(int cityId) {
-		this.cityId = cityId;
-	}
-	public String getLoginName() {
-		return loginName;
-	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-	public String getPhoneNum() {
-		return phoneNum;
-	}
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 	public int getStatus() {
 		return status;
@@ -60,11 +45,5 @@ public class OssUserVo {
 	}
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
-	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
 	}
 }

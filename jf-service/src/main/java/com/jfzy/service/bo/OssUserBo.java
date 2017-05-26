@@ -1,5 +1,7 @@
 package com.jfzy.service.bo;
 
+import java.sql.Timestamp;
+
 public class OssUserBo {
 
 	private int id;
@@ -10,6 +12,8 @@ public class OssUserBo {
 	private String password;
 	private int status;
 	private String role;
+	private Timestamp createTime;
+	private Timestamp updateTime;
 
 	public String getLoginName() {
 		return loginName;
@@ -73,5 +77,21 @@ public class OssUserBo {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	public Timestamp getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 }

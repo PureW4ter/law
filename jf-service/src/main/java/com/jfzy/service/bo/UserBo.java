@@ -11,6 +11,7 @@ public class UserBo {
 	private String memo;
 	private String address;
 	private String postcode;
+	private String email;
 	private int status;
 	private double money;
 	private String headImg;
@@ -19,12 +20,6 @@ public class UserBo {
 	private Timestamp createTime;
 	private int level;
 	
-	public int getLevel() {
-		return level;
-	}
-	public void setLevel(int level) {
-		this.level = level;
-	}
 	public int getId() {
 		return id;
 	}
@@ -61,6 +56,12 @@ public class UserBo {
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getStatus() {
 		return status;
 	}
@@ -79,12 +80,6 @@ public class UserBo {
 	public void setHeadImg(String headImg) {
 		this.headImg = headImg;
 	}
-	public Timestamp getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
 	public String getCity() {
 		return city;
 	}
@@ -97,5 +92,16 @@ public class UserBo {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
-	
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 }

@@ -2,6 +2,7 @@ package com.jfzy.web;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
+
+
 import com.jfzy.web.vo.ArticleVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
@@ -30,6 +33,8 @@ import com.jfzy.web.vo.UserVo;
 import com.jfzy.service.UserService;
 import com.jfzy.service.WechatService;
 import com.jfzy.service.bo.ArticleBo;
+import com.jfzy.service.bo.UserAccountBo;
+import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
 
 @RestController
@@ -60,12 +65,23 @@ public class APPUserController {
 	@GetMapping("/api/user/detail")
 	public ResponseVo<UserVo> detail(int id) {
 		UserBo bo = userService.getUser(id);
-		return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVoForUser(bo));
+		UserVo vo = boToVoForUser(bo);
+		UserAccountBo abo = userService.getUserAccountByUserId(bo.getId(), UserAccountTypeEnum.MOBILE.getId());
+		if(abo != null)
+			vo.setPhone(abo.getValue());
+		return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
+	}
+	
+	@ResponseBody
+	@PostMapping(path="/api/user/memo", consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<Object> memo(@RequestBody UserVo vo) {
+		userService.updateMemo(vo.getMemo(), vo.getId());
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
 	@ResponseBody
 	@PostMapping(path="/api/user/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody UserVo vo) {
+	public ResponseVo<Object> createArticle(@RequestBody UserVo vo) {
 		UserBo bo = voToBoForUser(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		userService.create(bo);
@@ -81,6 +97,8 @@ public class APPUserController {
 	private static UserVo boToVoForUser(UserBo bo) {
 		UserVo vo = new UserVo();
 		BeanUtils.copyProperties(bo, vo);
+		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
+		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		return vo;
 	}
 }

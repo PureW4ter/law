@@ -24,7 +24,7 @@
             <div class="row" id="i_header"></div>
             <div id="i_mainbox">
             <script type="text/template" id="i_tpl">
-                <div class="panel panel-default text-center album_list">
+                <div class="panel panel-default text-center">
                     <div class="panel-body">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -45,7 +45,15 @@
                                     <td><%=item.realName%></td>
                                     <td><%=item.createTime%></td>
                                     <td><a href="user_orders.html?id=<%=item.id%>" class="blue_link">8</a></td>
-                                    <td>看客，普通，白金</td>
+                                    <td>
+                                        <%if(item.level==0){%>
+                                            看客
+                                        <%}else if(item.level==1){%>
+                                            普通
+                                        <%}else if(item.level==2){%>
+                                            白金
+                                        <%}%>
+                                    </td>
                                 </tr>
                                 <%})%>
                             </tbody>

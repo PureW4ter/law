@@ -9,34 +9,32 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._sendRequest();
         },
         _sendRequest: function () {
-            /*var params = {
-                type:2
-            };
-            ajaxHelper.post("http://" + window.frontJSHost + "/user/list",
-                params, this, this._render, null);*/
-            /*var promise = new Promise(function(resolve, reject) {
-              if (true){
-                resolve(data);
-              } else {
-                reject();
-              }
-            });
-            promise.then(function(value) {
-              console.log("success");
-            }, function(error) {
-              console.log("fail");
-            });*/
-            this._render();
+            var params = {
+                id: util.getQueryParameter("id")
+            }
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/user/detail",
+                params, this, this._render, null);
         },
         _render: function (data) {
-            this.mainBox.html(this.tplFun());
+            this.mainBox.html(this.tplFun({"result":data}));
             this._registEvent();
         },
         _registEvent: function () {
-            $('#i_new').off("click", this._createUser).on("click", this._createUser);
+            $('#i_save').off("click", this._doSave).on("click", this._doSave);
+            $('#i_cancel').off("click", this._doCancel).on("click", this._doCancel);
         },
-        _createUser:function(e){
-            window.location = "new_user.html";
+        _doSave:function(e){
+            var params = {
+                id: util.getQueryParameter("id"),
+                memo: $("#i_memo").val()
+            }
+            ajaxHelper.post("http://" + window.frontJSHost + "/api/user/memo",
+                params, this, function(){
+                    util.showToast("更新成功");
+                });
+        },
+        _doCancel:function(e){
+            window.location = "user_management.html";
         }
     };
     return UserManagement;

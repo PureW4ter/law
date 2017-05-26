@@ -99,6 +99,12 @@ public class UserServiceImpl implements UserService{
 		UserPo po = bo2PoForUser(bo);
 		userRepo.save(po);
 	}
+
+	@Override
+	public void updateMemo(String memo, int id) {
+		userRepo.updateMemo(memo, id);
+	}
+	
 	private static UserPo bo2PoForUser(UserBo bo) {
 		UserPo po = new UserPo();
 		BeanUtils.copyProperties(bo, po);

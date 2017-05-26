@@ -19,6 +19,8 @@ public interface UserService {
 	
 	UserAccountBo getUserAccountByUserId(int userId, int type);
 	
+	public void updateMemo(String memo, int id);
+	
 	UserBo createOrUpdateUser(UserBo user);
 
 	void register(UserAccountBo ua);

@@ -36,7 +36,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                                 data.r.cityName = this.cities[c].name;
                             }
                         }
-                        this._render({"result":data, "tags":tags, "cities":this.cities});
+                        this._render({"result":data, "tags":tags, "cities":this.cities, "artType":this.artType});
                     }, null);
             }
         },
@@ -56,6 +56,9 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                     $(this).siblings(".img_load").css("display","none");
                 }
             });
+            if(data.result.r.type == 1){
+                $("#i_keys").hide();
+            }
         },
         _qiniuLoad:function(){
             var imgLoad = $(".img_load");
@@ -96,6 +99,11 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         _selArt:function(){
             var id = $(this).data("id");
             var text = $(this).text();
+            if(text == "问答"){
+                $("#i_keys").hide();
+            }else{
+                $("#i_keys").show();
+            }
             $(this).closest("ul").prev("button").data("id",id).find("span").eq(0).text(text);
         },
         _actChecked:function(){

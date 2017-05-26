@@ -62,13 +62,6 @@ public class APPUserController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/api/user/detail")
-	public ResponseVo<UserVo> detail(int id) {
-		UserBo bo = userService.getUser(id);
-		return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVoForUser(bo));
-	}
-	
-	@ResponseBody
 	@GetMapping("/api/user/bind")
 	public ResponseVo<Object> bind(String phone, String code, int userId) {
 		userService.bind(phone, userId);

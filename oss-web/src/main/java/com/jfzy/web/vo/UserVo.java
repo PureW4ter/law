@@ -11,12 +11,13 @@ public class UserVo {
 	private String memo;
 	private String address;
 	private String postcode;
+	private String email;
 	private int status;
 	private double money;
 	private String headImg;
 	private String city;
 	private int gender;
-	private Timestamp createTime;
+	private String createTime;
 	private String phone;
 	private int level;
 	
@@ -56,6 +57,12 @@ public class UserVo {
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getStatus() {
 		return status;
 	}
@@ -86,10 +93,10 @@ public class UserVo {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
-	public Timestamp getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 	public String getPhone() {
