@@ -14,6 +14,7 @@ public class ArticleVo {
 	private String tagStr;
 	private Timestamp createTime;
 	private int cityId;
+	private int type;
 
 	public int getId() {
 		return id;
@@ -93,6 +94,14 @@ public class ArticleVo {
 
 	public void setTagStr(String tagStr) {
 		this.tagStr = tagStr;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 	
 }

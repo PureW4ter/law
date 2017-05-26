@@ -15,18 +15,14 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             };
             ajaxHelper.get("http://" + window.frontJSHost + "/api/user/list",
                 params, this, this._render, null);
-            this._render();
         },
         _render: function (data) {
-            this.mainBox.html(this.tplFun());
+            this.mainBox.html(this.tplFun({"result":data}));
             this._registEvent();
         },
         _registEvent: function () {
             
         },
-        _createUser:function(e){
-            window.location = "new_user.html";
-        }
     };
     return UserManagement;
 });

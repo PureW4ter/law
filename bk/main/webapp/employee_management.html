@@ -27,31 +27,67 @@
             </div>
             <div id="i_mainbox">
             <script type="text/template" id="i_tpl">
-                <div class="panel panel-default text-center album_list">
+                <div class="panel panel-default text-center">
                     <div class="panel-body">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <td>工号</td>
                                     <td>真实姓名</td>
+                                    <td>登录账号</td>
                                     <td>电话</td>
+                                    <td>创建时间</td>
                                     <td>权限</td>
                                     <td>操作</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-id="">
-                                    <td>1</td>
-                                    <td>王二</td>
-                                    <td>158897898</td>
+                                <%_.each(result.r, function(item){%>
+                                <tr data-id="<%=item.id%>">
+                                    <td><%=item.id%></td>
+                                    <td><%=item.name%></td>
+                                    <td><%=item.loginName%></td>
+                                    <td><%=item.phoneNum%></td>
+                                    <td><%=item.createTime%></td>
                                     <td>
-                                        <select>
-                                            <option>ddd</option>
-                                            <option>eeee</option>
-                                        </select>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span>
+                                                    <%_.each(roles.r, function(roleItem){%>
+                                                        <%if(item.role == roleItem.name){%>
+                                                            <%=roleItem.desc%>
+                                                        <%}%>
+                                                    <%})%>
+                                                </span>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu j_selAuth">
+                                                <%_.each(roles.r, function(roleItem){%>
+                                                <li data-id="<%=roleItem.name%>"><%=roleItem.desc%></li>
+                                                <%})%>
+                                            </ul>
+                                        </div>
                                     </td>
-                                    <td>禁用/启用</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span>
+                                                    <%if(item.status == 0){%>
+                                                        启用
+                                                    <%}else{%>
+                                                        禁用
+                                                    <%}%>
+                                                </span>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu j_status">
+                                                <li data-id="0">启用</li>
+                                                <li data-id="1">禁用</li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
+                                <%})%>
                             </tbody>
                         </table>
                     </div>

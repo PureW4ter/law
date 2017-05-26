@@ -29,24 +29,32 @@
                             <form action="" class="form-horizontal" id="i_typeForm">
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">姓名:</label>
-                                    <label for="" class="col-sm-8  control-label "><p class="text-left">网二</p></label>
+                                    <label for="" class="col-sm-8  control-label "><p class="text-left"><%=result.r.realName%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">昵称:</label>
+                                    <label for="" class="col-sm-8  control-label "><p class="text-left"><%=result.r.name%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">创建时间:</label>
+                                    <label for="" class="col-sm-8  control-label "><p class="text-left"><%=result.r.createTime%></p></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">电话:</label>
-                                    <label for="" class="col-sm-8  control-label "><p class="text-left">158****1</p></label>
+                                    <label for="" class="col-sm-8  control-label "><p class="text-left"><%=result.r.phone%></p></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">邮箱:</label>
-                                    <label for="" class="col-sm-8  control-label "><p class="text-left">a@jianfa.com</p></label>
+                                    <label for="" class="col-sm-8  control-label "><p class="text-left"><%=result.r.email%></p></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">地址:</label>
-                                    <label for="" class="col-sm-8  control-label "><p class="text-left">上海市。。</p></label>
+                                    <label for="" class="col-sm-8  control-label "><p class="text-left"><%=result.r.address%></p></label>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">备注:</label>
                                     <div class="col-sm-6">
-                                        <textarea class="form-control j_commonSetting foreword"
+                                        <textarea class="form-control j_commonSetting foreword" id="i_memo"
                                             value="啊发发"
                                             maxlength="100"
                                             data-pattern="/.+/"
@@ -54,14 +62,14 @@
                                             data-toggle="popover" 
                                             data-placement="right"
                                             data-content="" 
-                                            data-keep="">大幅度</textarea>
+                                            data-keep=""><%=result.r.memo%></textarea>
                                     </div>
                                 </div>
                               </div>
                             </form>
                             <div class="col-sm-9 paddingtop30">
-                                <button class="btn btn-yel btn_big pull-right j_saveArtical">保存</button>
-                                <button class="btn btn-default btn_big pull-right marginR26">取消</button>
+                                <button class="btn btn-yel btn_big pull-right j_saveArtical" id="i_save">保存</button>
+                                <button class="btn btn-default btn_big pull-right marginR26" id="i_cancel">取消</button>
                             </div>
                         </script>
                     </div>

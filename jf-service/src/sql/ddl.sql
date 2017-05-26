@@ -100,12 +100,11 @@ CREATE TABLE `jf_oss_user` (
   `login_name` varchar(200) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
   `phone_num` varchar(45) DEFAULT NULL,
-  `password` varchar(200) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
   `role` varchar(45) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0:启用,1:禁用',
-  `level` tinyint(2) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -164,6 +163,8 @@ CREATE TABLE `jf_user` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `city` varchar(45) DEFAULT NULL,
   `gender` tinyint(1) DEFAULT NULL,
+  `level` tinyint(2) DEFAULT NULL,
+  `email` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

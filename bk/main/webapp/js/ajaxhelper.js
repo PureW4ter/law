@@ -3,26 +3,28 @@
 define(["utility"], function(util) {
     var AjaxHelper = {
         local: "LOCAL",
-        showLoading: true,
-        get: function(url, param, ctx, successFun, errorFun) {
-            this._send("GET", url, param, ctx, successFun, errorFun);
+        get: function(url, param, ctx, successFun, errorFun, isPaging, async) {
+            this._send("GET", url, param, ctx, successFun, errorFun, isPaging, async);
         },
-        post: function(url, param, ctx, successFun, errorFun, isPaging) {
-            this._send("POST", url, param, ctx, successFun, errorFun);
+        post: function(url, param, ctx, successFun, errorFun, isPaging, async) {
+            this._send("POST", url, param, ctx, successFun, errorFun, isPaging, async);
         },
-        put: function(url, param, ctx, successFun, errorFun) {
-            this._send("PUT", url, param, ctx, successFun, errorFun);
+        put: function(url, param, ctx, successFun, errorFun, isPaging, async) {
+            this._send("PUT", url, param, ctx, successFun, errorFun, isPaging, async);
         },
-        delete: function(url, param, ctx, successFun, errorFun) {
-            this._send("DELETE", url, param, ctx, successFun, errorFun);
+        delete: function(url, param, ctx, successFun, errorFun, isPaging, async) {
+            this._send("DELETE", url, param, ctx, successFun, errorFun, isPaging, async);
         },
-        _send: function(type, url, param, ctx, successFun, errorFun) {
+        _send: function(type, url, param, ctx, successFun, errorFun, isPaging, async) {
             //增加本地调试功能
             if (window.localStorage.DEBUG === this.local) {
                 this._loadJSONData(url, ctx, successFun);
                 return;
             }
             //逻辑代码开始
+            if(async == undefined){
+                async = true;
+            }
             //判断传输类型
             var contentType = "application/x-www-form-urlencoded; charset=utf-8";
             if (type === "POST" || type === "PUT") {
@@ -30,14 +32,16 @@ define(["utility"], function(util) {
                 param = JSON.stringify(param);
             }
             var me = this;
-            me._showLoading();
+            me.isPaging = isPaging;
+            if (!isPaging)
+                this._showLoading();
             $.ajax({
                 type: type,
                 url: url,
                 data: param,
                 dataType: 'json',
                 timeout: 600000,
-                async: true,
+                async: async,
                 contentType: contentType,
                 beforeSend: function(xhr, settings) {
                 },
@@ -59,12 +63,10 @@ define(["utility"], function(util) {
             });
         },
         _showLoading: function() {
-            if (this.showLoading)
-                util.showLoading();
+            util.showLoading();
         },
         _hideLoading: function() {
-            if (this.showLoading)
-                util.hideLoading();
+            util.hideLoading();
         },
         loadError: function(errorInfo) {
 

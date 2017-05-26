@@ -46,7 +46,7 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170524161221" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170526151717" type="text/javascript"></script>
 <script type="text/javascript">
     define('lawyer_consult_info',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){$("#i_detail2").hide(),this._sendRequest()},_sendRequest:function(){this._render()},_render:function(){this._registEvent()},_registEvent:function(){$(".j_tab").off("click",this._doselect).on("click",{ctx:this},this._doselect),$("#i_ok_btn").off("click",this._go).on("click",{ctx:this},this._go)},_doselect:function(e){$(".j_tab").removeClass("product_info_selected").addClass("product_info_onselected"),$(e.currentTarget).removeClass("product_info_onselected").addClass("product_info_selected"),$(e.currentTarget).data("type")==1?($("#i_detail1").show(),$("#i_detail2").hide()):($("#i_detail1").hide(),$("#i_detail2").show())},_go:function(e){$($(".product_info_selected")[0]).data("type")==1?window.location="ask_pay.html":window.location="ask_free.html"}};return r});
 </script>
