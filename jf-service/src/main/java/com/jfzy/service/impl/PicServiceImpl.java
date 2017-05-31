@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.jfzy.service.PicService;
@@ -19,18 +21,18 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 
+@Service
 public class PicServiceImpl implements PicService {
 
-	@Resource(name = "qiniu.accsekey")
+	@Value("qiniu.accessKey")
 	private String accessKey;
-	@Resource(name = "qiniu.secretkey")
+	@Value("qiniu.secretKey")
 	private String secretKey;
-	@Resource(name = "qiniu.bucket")
+	@Value("qiniu.bucket")
 	private String bucket;
-	@Resource(name = "qiniu.host.prefix")
+	@Value("qiniu.hostPrefix")
 	private String hostPrefix;
 
-	@Resource(name = "qiniu.token.expires")
 	private int expires;
 
 	private Auth auth;
