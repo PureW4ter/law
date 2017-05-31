@@ -17,6 +17,10 @@ public class JfApplicationRuntimeException extends RuntimeException {
 		super(message);
 	}
 
+	public JfApplicationRuntimeException(String message, Exception e) {
+		super(message, e);
+	}
+
 	public JfApplicationRuntimeException(int code, String message, Exception e) {
 		super(message, e);
 		this.code = code;

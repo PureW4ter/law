@@ -1,5 +1,8 @@
 package com.jfzy.service.impl;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
@@ -7,6 +10,7 @@ import javax.annotation.Resource;
 
 import com.google.gson.Gson;
 import com.jfzy.service.PicService;
+import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -23,6 +27,8 @@ public class PicServiceImpl implements PicService {
 	private String secretKey;
 	@Resource(name = "qiniu.bucket")
 	private String bucket;
+	@Resource(name = "qiniu.host.prefix")
+	private String hostPrefix;
 
 	@Resource(name = "qiniu.token.expires")
 	private int expires;
@@ -36,13 +42,18 @@ public class PicServiceImpl implements PicService {
 	}
 
 	public static void main(String[] args) throws IOException {
-		// File file = new File("/Users/hualei/git/law/static/bk/img/add.png");
-		// BufferedInputStream bis = new BufferedInputStream(new
-		// FileInputStream(file));
-		// byte[] bytes = new byte[(int) file.length()];
-		// bis.read(bytes);
-		// bis.close();
-		// new PicServiceImpl().uploadPic(bytes);
+		File file = new File("/Users/hualei/git/law/static/bk/img/add.png");
+		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+		byte[] bytes = new byte[(int) file.length()];
+		bis.read(bytes);
+		bis.close();
+		PicServiceImpl service = new PicServiceImpl();
+		service.accessKey = "6qd5GGyH2kNyyLLW0SW0GbFR2D3m-VeZ_9nziRKv";
+		service.bucket = "jfzy-hd-1";
+		service.expires = 3600;
+		service.hostPrefix = "oqtjthr3a.bkt.clouddn.com";
+		service.secretKey = "bUfuLrmXhFaslKNjk8bcfG0GIyBzYB7G3RslBU8X";
+		System.out.println(service.uploadPic(bytes));
 
 	}
 
@@ -57,19 +68,14 @@ public class PicServiceImpl implements PicService {
 			Response response = uploadManager.put(picStream, null, upToken);
 			// 解析上传成功的结果
 			DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-			System.out.println(putRet.key);
-			System.out.println(putRet.hash);
+			return getUrl(hostPrefix, putRet.key);
 		} catch (QiniuException ex) {
-			Response r = ex.response;
-			System.err.println(r.toString());
-			try {
-				System.err.println(r.bodyString());
-			} catch (QiniuException ex2) {
-				// ignore
-			}
+			throw new JfApplicationRuntimeException("上传图片失败", ex);
 		}
+	}
 
-		return "";
+	private static String getUrl(String prefix, String fileName) {
+		return String.format("http://%s/%s", prefix, fileName);
 	}
 
 	@Override
