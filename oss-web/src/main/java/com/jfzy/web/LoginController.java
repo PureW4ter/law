@@ -41,8 +41,7 @@ public class LoginController {
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户名/密码不能为空", null);
 		}
 
-		String abstracts = getMd5(password);
-		OssUserBo user = ossUserService.login(userName, abstracts);
+		OssUserBo user = ossUserService.login(userName, password);
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);
 			AuthInfo authInfo = new AuthInfo();
@@ -58,13 +57,4 @@ public class LoginController {
 		return vo;
 	}
 
-	private static String getMd5(String input) {
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(input.getBytes());
-			return new String(new BigInteger(1, md.digest()).toString());
-		} catch (NoSuchAlgorithmException e) {
-			throw new JfApplicationRuntimeException(404, "Failed in getMd5");
-		}
-	}
 }

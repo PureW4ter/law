@@ -10,4 +10,6 @@ public interface OssUserRepository extends JpaRepository<OssUserPo, Integer> {
 
 	List<OssUserPo> findByLoginNameAndPassword(String loginName, String password);
 
+	List<OssUserPo> findByLoginName(String loginName);
+
 }
