@@ -23,6 +23,7 @@ public class PicController {
 	@Autowired
 	private PicService picService;
 
+	// enctype="multipart/form-data"
 	@ResponseBody
 	@PostMapping("/api/pic/upload")
 	public ResponseVo<String> uploadPic(@RequestParam("pic") MultipartFile file) {
