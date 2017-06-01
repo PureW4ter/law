@@ -1,7 +1,5 @@
 package com.jfzy.web.vo;
 
-import java.sql.Timestamp;
-
 public class LawyerVo {
 
 	private int id;

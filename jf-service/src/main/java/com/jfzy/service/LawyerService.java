@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.jfzy.service.bo.LawyerBo;
-import com.jfzy.service.bo.OssUserBo;
 
 public interface LawyerService {
 

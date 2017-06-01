@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
-import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.po.LawyerPo;
-import com.jfzy.service.po.OssUserPo;
 import com.jfzy.service.repository.LawyerRepository;
 
 @Service
@@ -76,7 +74,6 @@ public class LawyerServiceImpl implements LawyerService {
 	private static LawyerPo boToPo(LawyerBo bo) {
 		LawyerPo po = new LawyerPo();
 		BeanUtils.copyProperties(bo, po);
-		po.setId(0);
 		return po;
 	}
 }
