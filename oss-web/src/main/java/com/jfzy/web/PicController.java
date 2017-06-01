@@ -1,10 +1,14 @@
 package com.jfzy.web;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jfzy.service.PicService;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
+import com.jfzy.web.vo.TagVo;
 
 @RestController
 public class PicController {
@@ -45,5 +50,11 @@ public class PicController {
 			return new ResponseVo<String>(ResponseStatusEnum.SERVER_ERROR.getCode(), "图片上传失败", null);
 		}
 	}
-
+	
+	@ResponseBody
+	@GetMapping("/api/pic/token")
+	public ResponseVo<String> getToken() {
+		String token = picService.getToken();
+		return new ResponseVo<String>(ResponseStatusEnum.SUCCESS.getCode(), "图片上传成功", token);
+	}
 }

@@ -37,40 +37,17 @@ define(['ajaxhelper',
 
 	upXiniu.prototype.count = 0;
 	upXiniu.prototype._sendRequest = function () {
-
 		if ((!window.localStorage.xiniuToken && !this.gettingToken) || !window.newToken) {
 			this.gettingToken = true;
-			var param2 = {
-				"backend.common.getCdnToken": {
-					"bucketName": ""
-				}
-			};
-			for (var key in param2) {
-				var paramArry = new Array();
-				param2[key]["apiKey"] = "android_client";
-				for (var subKey in param2[key]) {
-					if (Object.prototype.toString.call(param2[key][subKey]) == "[object Object]") {
-						param2[key][subKey] = JSON.stringify(param2[key][subKey]);
-					}
-					if (!!param2[key][subKey]) {
-						paramArry.push(subKey + "=" + param2[key][subKey]);
-					}
-				}
-				var str = paramArry.sort().join('&') + "&" + key + "&5b2e1c483b4cf67c87399e1de4554cf9";
-				var md5Key = md5(str);
-				param2[key]["token"] = md5Key;
-			}
-
+			var param2 = {};
 			var _this = this;
-			ajaxHelper.get("http://" + "api.weshare12.com" + "/api/v1/exchange/activity/getCdnToken?paramStr=" + JSON.stringify(param2)+ "&access_token=2hri2xzq4v11JI0gZinE6S",
-				null, this, function (data) {
-					window.localStorage["xiniuToken"] = JSON.parse(data)["backend.common.getCdnToken"].results.uptoken;
+			ajaxHelper.get("http://" + window.frontJSHost + "/api/pic/token",
+				param2, this, function (data) {
+					window.localStorage["xiniuToken"] = data.r;
 					window.newToken = true;
 					_this.gettingToken = false;
 				}, this.error, false, false);
 		}
-
-
 		return this._render();
 	};
 	upXiniu.prototype._render = function (data) {

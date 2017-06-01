@@ -12,6 +12,7 @@ public class OssUserVo {
 	private String createTime;
 	private Timestamp updateTime;
 	private String role;
+	private String password;
 	
 	public int getId() {
 		return id;
@@ -66,5 +67,11 @@ public class OssUserVo {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

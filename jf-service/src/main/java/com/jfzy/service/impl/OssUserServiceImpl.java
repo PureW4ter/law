@@ -1,12 +1,13 @@
 package com.jfzy.service.impl;
 
+import java.sql.Timestamp;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -44,6 +45,17 @@ public class OssUserServiceImpl implements OssUserService {
 		values.forEach(po -> results.add(poToBo(po)));
 		return results;
 	}
+	
+	@Override
+	public void updateStatus(int status, int id) {
+		ossUserRepo.updateStatus(status, new Timestamp(System.currentTimeMillis()), id);
+		
+	}
+
+	@Override
+	public void updateAuth(String role, int id) {
+		ossUserRepo.updateAuth(role, new Timestamp(System.currentTimeMillis()), id);
+	}
 
 	private static OssUserBo poToBo(OssUserPo po) {
 		OssUserBo bo = new OssUserBo();
@@ -58,7 +70,7 @@ public class OssUserServiceImpl implements OssUserService {
 	}
 
 	@Override
-	public void createUser(OssUserBo bo) {
+	public void create(OssUserBo bo) {
 		if (StringUtils.isBlank(bo.getLoginName()) || StringUtils.isBlank(bo.getPassword())) {
 			throw new JfApplicationRuntimeException("用户名或密码不能为空");
 		}

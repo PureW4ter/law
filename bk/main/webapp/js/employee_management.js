@@ -29,22 +29,40 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
         },
         _registEvent: function () {
             $(".j_selAuth li").off("click",this._selAuth).on("click",{ctx: this},this._selAuth);
-            $(".j_status li").off("click",this._status).on("click",{ctx: this},this.j_status);
+            $(".j_status li").off("click",this._status).on("click",{ctx: this},this._status);
             $('#i_new').off("click", this._createEmployee).on("click", this._createEmployee);
         },
         _selAuth:function(e){
-            var id = $(this).data("id");
+            var value = $(this).data("value");
             var userId = $($(this).parents("tr")).data("id");
             var text = $(this).text();
-            $(this).closest("ul").prev("button").data("id",id).find("span").eq(0).text(text);
+            $(this).closest("ul").prev("button").data("value", value).find("span").eq(0).text(text);
             
+            var params={
+                id: userId,
+                role: value,
+            };
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/ossuser/urole",
+                params, this, function(){
+                    util.showToast("更新成功");
+                });
+
         },
         _status:function(e){
-            var id = $(this).data("id");
+            var value = $(this).data("value");
             var text = $(this).text();
             var userId = $($(this).parents("tr")).data("id");
-            $(this).closest("ul").prev("button").data("id",id).find("span").eq(0).text(text);
+            $(this).closest("ul").prev("button").data("value", value).find("span").eq(0).text(text);
             
+            var params={
+                id: userId,
+                status: value,
+            };
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/ossuser/ustatus",
+                params, this, function(){
+                    util.showToast("更新成功");
+                });
+
         },
         _createEmployee:function(e){
             window.location = "new_employee.html";

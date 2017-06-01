@@ -1,16 +1,22 @@
 package com.jfzy.web;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +28,6 @@ import com.jfzy.web.vo.OssRoleVo;
 import com.jfzy.web.vo.OssUserVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
-import com.jfzy.web.vo.SimpleResponseVo;
 
 @RestController
 public class OssUserController {
@@ -55,18 +60,37 @@ public class OssUserController {
 		List<OssUserBo> values = ossUserService.getOssUsers(new PageRequest(page, size, sort));
 		List<OssUserVo> resultUsers = new ArrayList<OssUserVo>(values.size());
 		for (OssUserBo bo : values) {
+			//不显示密码
+			bo.setPassword("");
 			resultUsers.add(boToVo(bo));
 		}
 		return new ResponseVo<List<OssUserVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
-
+	
 	@ResponseBody
-	@PostMapping("/api/ossuser/create")
-	public SimpleResponseVo create(OssUserVo vo) {
-		OssUserBo bo = voToBo(vo);
-		ossUserService.createUser(bo);
+	@GetMapping("/api/ossuser/ustatus")
+	public ResponseVo<Object> updateStatus(int id, int status) {
+		ossUserService.updateStatus(status, id);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
+	
+	@ResponseBody
+	@GetMapping("/api/ossuser/urole")
+	public ResponseVo<Object> updateRole(int id, String role) {
+		ossUserService.updateAuth(role, id);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
+	
+	@ResponseBody
+	@PostMapping(path="/api/ossuser/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<Object> create(HttpServletRequest request, HttpServletResponse response, @RequestBody OssUserVo vo) {
 
-		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), "用户创建成功");
+		OssUserBo bo = voToBo(vo);
+		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		ossUserService.create(bo);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 
 	private static OssUserVo boToVo(OssUserBo bo) {
