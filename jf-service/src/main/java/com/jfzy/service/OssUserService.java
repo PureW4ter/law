@@ -10,5 +10,11 @@ public interface OssUserService {
 
 	OssUserBo login(String userName, String password);
 	
+	void updateStatus(int status, int id);
+
+	void updateAuth(String role, int id);
+
 	public List<OssUserBo> getOssUsers(Pageable page);
+	
+	void create(OssUserBo bo);
 }

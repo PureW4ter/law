@@ -1,5 +1,6 @@
 package com.jfzy.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
-import com.jfzy.service.bo.UserBo;
+import com.jfzy.service.po.ArticlePo;
 import com.jfzy.service.po.OssUserPo;
-import com.jfzy.service.po.UserPo;
 import com.jfzy.service.repository.OssUserRepository;
 
 @Service
@@ -40,9 +40,33 @@ public class OssUserServiceImpl implements OssUserService {
 		return results;
 	}
 	
+	@Override
+	public void updateStatus(int status, int id) {
+		ossUserPo.updateStatus(status, new Timestamp(System.currentTimeMillis()), id);
+		
+	}
+
+	@Override
+	public void updateAuth(String role, int id) {
+		ossUserPo.updateAuth(role, new Timestamp(System.currentTimeMillis()), id);
+	}
+	
+	@Override
+	public void create(OssUserBo bo) {
+		OssUserPo po = boToPo(bo);
+		ossUserPo.save(po);
+		
+	}
+	
 	private static OssUserBo poToBo(OssUserPo po) {
 		OssUserBo bo = new OssUserBo();
 		BeanUtils.copyProperties(po, bo);
 		return bo;
+	}
+	
+	private static OssUserPo boToPo(OssUserBo bo) {
+		OssUserPo po = new OssUserPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
 	}
 }

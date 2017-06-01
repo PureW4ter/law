@@ -55,6 +55,7 @@
                                                 <span>
                                                     <%_.each(roles.r, function(roleItem){%>
                                                         <%if(item.role == roleItem.name){%>
+                                                            <%console.log(item.role)%>
                                                             <%=roleItem.desc%>
                                                         <%}%>
                                                     <%})%>
@@ -63,7 +64,7 @@
                                             </button>
                                             <ul class="dropdown-menu j_selAuth">
                                                 <%_.each(roles.r, function(roleItem){%>
-                                                <li data-id="<%=roleItem.name%>"><%=roleItem.desc%></li>
+                                                <li data-value="<%=roleItem.name%>"><%=roleItem.desc%></li>
                                                 <%})%>
                                             </ul>
                                         </div>
@@ -81,8 +82,8 @@
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu j_status">
-                                                <li data-id="0">启用</li>
-                                                <li data-id="1">禁用</li>
+                                                <li data-value="0">启用</li>
+                                                <li data-value="1">禁用</li>
                                             </ul>
                                         </div>
                                     </td>
