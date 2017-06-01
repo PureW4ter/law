@@ -17,27 +17,34 @@ public class LawyerPo {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
+	@Column(name = "city_id")
 	private int cityId;
 
 	private int status;
 	
-	@Column(name = "oss_user_id")
-	private int ossUserId;
-
 	private String name;
 
+	@Column(name = "login_name")
+	private String loginName;
+	
 	@Column(name = "phone_num")
 	private String phoneNum;
 
+	private String password;
+	
 	private String memo;
 	
-	@Column(name = "creat_time")
-	private Timestamp creatTime;
+	@Column(name = "create_time")
+	private Timestamp createTime;
 	
 	@Column(name = "update_time")
 	private Timestamp updateTime;
 	
 	private double score;
+	
+	private int level;
+	
+	private double money;
 
 	public int getId() {
 		return id;
@@ -45,6 +52,14 @@ public class LawyerPo {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
 
 	public int getStatus() {
@@ -63,12 +78,28 @@ public class LawyerPo {
 		this.name = name;
 	}
 
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
 	public String getPhoneNum() {
 		return phoneNum;
 	}
 
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getMemo() {
@@ -79,28 +110,12 @@ public class LawyerPo {
 		this.memo = memo;
 	}
 
-	public int getCityId() {
-		return cityId;
+	public Timestamp getCreateTime() {
+		return createTime;
 	}
 
-	public void setCityId(int cityId) {
-		this.cityId = cityId;
-	}
-
-	public int getOssUserId() {
-		return ossUserId;
-	}
-
-	public void setOssUserId(int ossUserId) {
-		this.ossUserId = ossUserId;
-	}
-
-	public Timestamp getCreatTime() {
-		return creatTime;
-	}
-
-	public void setCreatTime(Timestamp creatTime) {
-		this.creatTime = creatTime;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 
 	public Timestamp getUpdateTime() {
@@ -117,5 +132,21 @@ public class LawyerPo {
 
 	public void setScore(double score) {
 		this.score = score;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
 	}
 }

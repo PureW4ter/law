@@ -40,7 +40,7 @@ define(['ajaxhelper',
 			this.gettingToken = true;
 			var param2 = {};
 			var _this = this;
-			ajaxHelper.get("http://" + window.frontJSHost + "/api/pic/token",
+			ajaxHelper.get("http://" + window.frontJSHost + "/pic/token",
 				param2, this, function (data) {
 					window.localStorage["xiniuToken"] = data.r;
 					window.newToken = true;

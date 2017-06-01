@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzf.core.Utils;
 import com.jfzy.base.AuthInfo;
 import com.jfzy.base.SessionConstants;
 import com.jfzy.service.OssUserService;
@@ -40,7 +41,8 @@ public class LoginController {
 		if (StringUtils.isBlank(userName) || StringUtils.isBlank(password)) {
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户名/密码不能为空", null);
 		}
-
+		
+		password = Utils.getMd5(password);
 		OssUserBo user = ossUserService.login(userName, password);
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);

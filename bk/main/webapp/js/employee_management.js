@@ -1,5 +1,5 @@
 define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], function (nav_bar, header, ajaxHelper, util) {
-    var UserManagement = {
+    var EmployeeManagement = {
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 3);
@@ -69,5 +69,5 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
         }
 
     };
-    return UserManagement;
+    return EmployeeManagement;
 });
