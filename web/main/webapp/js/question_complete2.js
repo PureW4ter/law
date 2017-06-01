@@ -5,7 +5,7 @@ define(['component/header','ajaxhelper', 'utility', 'lib/qiniu/up_xiniu'],
 			this._qiniuLoad();
 		},
 		_qiniuLoad:function(){
-            new qiniu($("#i_img_selector"),"/exchange/upload/order_img/",function(up, file, info){
+            new qiniu($("#i_img_selector"),"/order_img/",function(up, file, info){
                 var url = JSON.parse(info).key;
                 var selector = $("#i_img_selector");
                 selector.parents("ul").prepend('<li><img class="j_upload" src="'+ window.qiniuDomain+url + '"></li>')
