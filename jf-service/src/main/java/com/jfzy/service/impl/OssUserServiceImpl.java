@@ -30,7 +30,9 @@ public class OssUserServiceImpl implements OssUserService {
 		List<OssUserPo> users = ossUserRepo.findByLoginNameAndPassword(loginName, checksum);
 		if (users != null && users.size() == 1) {
 			OssUserPo po = users.get(0);
-			return poToBo(po);
+			OssUserBo bo = poToBo(po);
+			bo.setPassword("");
+			return bo;
 		} else {
 			return null;
 		}
@@ -43,11 +45,11 @@ public class OssUserServiceImpl implements OssUserService {
 		values.forEach(po -> results.add(poToBo(po)));
 		return results;
 	}
-	
+
 	@Override
 	public void updateStatus(int status, int id) {
 		ossUserRepo.updateStatus(status, new Timestamp(System.currentTimeMillis()), id);
-		
+
 	}
 
 	@Override
@@ -70,7 +72,7 @@ public class OssUserServiceImpl implements OssUserService {
 		OssUserPo po = boToPo(bo);
 		ossUserRepo.save(po);
 	}
-	
+
 	private static OssUserBo poToBo(OssUserPo po) {
 		OssUserBo bo = new OssUserBo();
 		BeanUtils.copyProperties(po, bo);
