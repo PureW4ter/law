@@ -1,5 +1,6 @@
 package com.jfzy.service.repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,10 +16,10 @@ public interface LawyerRepository extends JpaRepository<LawyerPo, Integer> {
 	List<LawyerPo> findByCityIdAndStatus(int cityId, int status);
 
 	List<LawyerPo> findByCityId(int cityId);
-
+	
 	@Transactional
 	@Modifying
-	@Query("UPDATE LawyerPo SET status=:status WHERE id=:id")
-	void updateStatus(int id, int status);
+	@Query("UPDATE LawyerPo SET status=?1, updateTime=?2 WHERE id=?3")
+	void updateStatus(int status, Timestamp updateTime, int id);
 
 }

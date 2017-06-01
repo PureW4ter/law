@@ -26,24 +26,48 @@
                 <div class="panel-body add_coupon paddingtop30">
                     <div class="col-sm-10 margintop24" id="i_mainbox">
                         <script type="text/template" id="i_tpl">
-                            <form action="" class="form-horizontal" id="i_typeForm">
+                           <form action="" class="form-horizontal" id="i_typeForm">
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">姓名:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="222" name="totalHouse" maxlength="10"
+                                        value="" id="i_name" maxlength="10"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
                                                  data-placement="right"
-                                                 data-content="请输入姓名！"/>
+                                                 data-content="请输入真实姓名！"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">登录账号:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="noIm form-control" 
+                                        value="" id="i_login_name" maxlength="10"
+                                                 data-pattern="/.+/"
+                                                 data-container="body"
+                                                 data-toggle="popover"
+                                                 data-placement="right"
+                                                 data-content="请输入登录账号！"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">登录密码:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="noIm form-control" 
+                                        value="" id="i_login_password" maxlength="10"
+                                                 data-pattern="/.+/"
+                                                 data-container="body"
+                                                 data-toggle="popover"
+                                                 data-placement="right"
+                                                 data-content="请输入登录密码！"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">电话:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="222" name="totalHouse" maxlength="10"
+                                        value="" id="i_phone" maxlength="10"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -51,51 +75,43 @@
                                                  data-content="请输入电话！"/>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="" class="col-sm-3 control-label">邮箱:</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="noIm form-control" 
-                                        value="222" name="totalHouse" maxlength="10"
-                                                 data-pattern="/.+/"
-                                                 data-container="body"
-                                                 data-toggle="popover"
-                                                 data-placement="right"
-                                                 data-content="请输入邮箱！"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="col-sm-3 control-label">备注:</label>
-                                    <div class="col-sm-6">
-                                        <textarea class="form-control j_commonSetting foreword"
-                                            value="啊发发"
-                                            maxlength="100"
-                                            data-pattern="/.+/"
-                                            data-container="body" 
-                                            data-toggle="popover" 
-                                            data-placement="right"
-                                            data-content="" 
-                                            data-keep=""></textarea>
+                                <div class="form-group clearfix">
+                                    <label class="control-label col-sm-3">城市:</label>
+                                    <div class="col-sm-6" id="">
+                                       <div class="btn-group" id="i_city" data-value="1">
+                                            <button type="button" class="btn btn-default">北京</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+
+                                            <ul class="dropdown-menu">
+                                                <%_.each(cities, function(item){%>
+                                                <li data-value="<%=item.id%>"><%=item.name%></li>
+                                                <%})%>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <label class="control-label col-sm-3">状态:</label>
+                                    <label class="control-label col-sm-3">权限:</label>
                                     <div class="col-sm-6" id="">
-                                       <div class="btn-group">
-                                            <button type="button" class="btn btn-default">启用</button>
+                                       <div class="btn-group" id="i_selAuth" data-value="super_admin">
+                                            <button type="button" class="btn btn-default">超级管理员</button>
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li data-value="0">启用</li>
-                                                <li data-value="1">禁用</li>
+                                                <%_.each(result.r, function(roleItem){%>
+                                                <li data-value="<%=roleItem.name%>"><%=roleItem.desc%></li>
+                                                <%})%>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                             <div class="col-sm-9 paddingtop30">
-                                <button class="btn btn-yel btn_big pull-right j_saveArtical">保存</button>
-                                <button class="btn btn-default btn_big pull-right marginR26">取消</button>
+                                <button class="btn btn-yel btn_big pull-right" id="i_save_btn">保存</button>
+                                <button class="btn btn-default btn_big pull-right marginR26" id="i_cancel_btn">取消</button>
                             </div>
                         </script>
                     </div>

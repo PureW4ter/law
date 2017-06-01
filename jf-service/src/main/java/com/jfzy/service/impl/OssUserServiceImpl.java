@@ -1,9 +1,6 @@
 package com.jfzy.service.impl;
 
 import java.sql.Timestamp;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.jfzf.core.Utils;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
@@ -27,7 +25,7 @@ public class OssUserServiceImpl implements OssUserService {
 
 	@Override
 	public OssUserBo login(String loginName, String password) {
-		String checksum = getMd5(password);
+		String checksum = Utils.getMd5(password);
 
 		List<OssUserPo> users = ossUserRepo.findByLoginNameAndPassword(loginName, checksum);
 		if (users != null && users.size() == 1) {
@@ -57,18 +55,6 @@ public class OssUserServiceImpl implements OssUserService {
 		ossUserRepo.updateAuth(role, new Timestamp(System.currentTimeMillis()), id);
 	}
 
-	private static OssUserBo poToBo(OssUserPo po) {
-		OssUserBo bo = new OssUserBo();
-		BeanUtils.copyProperties(po, bo);
-		return bo;
-	}
-
-	private static OssUserPo boToPo(OssUserBo bo) {
-		OssUserPo po = new OssUserPo();
-		BeanUtils.copyProperties(bo, po);
-		return po;
-	}
-
 	@Override
 	public void create(OssUserBo bo) {
 		if (StringUtils.isBlank(bo.getLoginName()) || StringUtils.isBlank(bo.getPassword())) {
@@ -80,18 +66,20 @@ public class OssUserServiceImpl implements OssUserService {
 			throw new JfApplicationRuntimeException("用户名已存在");
 		}
 
-		bo.setPassword(getMd5(bo.getPassword()));
+		bo.setPassword(Utils.getMd5(bo.getPassword()));
 		OssUserPo po = boToPo(bo);
 		ossUserRepo.save(po);
 	}
+	
+	private static OssUserBo poToBo(OssUserPo po) {
+		OssUserBo bo = new OssUserBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
+	}
 
-	private static String getMd5(String input) {
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(input.getBytes());
-			return new String(new BigInteger(1, md.digest()).toString());
-		} catch (NoSuchAlgorithmException e) {
-			throw new JfApplicationRuntimeException(404, "Failed in getMd5");
-		}
+	private static OssUserPo boToPo(OssUserBo bo) {
+		OssUserPo po = new OssUserPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
 	}
 }

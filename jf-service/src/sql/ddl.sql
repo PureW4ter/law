@@ -19,19 +19,21 @@ CREATE TABLE `jf_article` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
 DROP TABLE IF EXISTS `jf_lawyer`;
 CREATE TABLE `jf_lawyer` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `city_id` int(11) NOT NULL DEFAULT '0',
-  `oss_user_id` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL DEFAULT '',
+  `login_name` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
   `phone_num` varchar(50) NOT NULL DEFAULT '',
   `memo` varchar(200) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
   `score` double DEFAULT NULL,
+  `level` int(2) DEFAULT '0',
+  `money` double DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
