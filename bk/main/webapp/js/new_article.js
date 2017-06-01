@@ -7,7 +7,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 2);
-            header.initialize("i_header", "录入文章");
+            header.initialize("i_header", "文章管理");
             this.articleId = util.getQueryParameter("id");
             this.mainBox = $('#i_mainbox');
             this.tplFun = _.template($("#i_tpl").html());

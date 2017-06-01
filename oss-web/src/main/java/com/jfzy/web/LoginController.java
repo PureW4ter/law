@@ -1,8 +1,5 @@
 package com.jfzy.web;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +8,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +16,6 @@ import com.jfzy.base.AuthInfo;
 import com.jfzy.base.SessionConstants;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.web.vo.OssUserVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;

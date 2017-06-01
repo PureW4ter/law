@@ -28,10 +28,10 @@
                         <script type="text/template" id="i_tpl">
                            <form action="" class="form-horizontal" id="i_typeForm">
                                 <div class="form-group">
-                                    <label for="" class="col-sm-3 control-label">姓名:</label>
+                                    <label class="col-sm-3 control-label">姓名:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="" id="i_name" maxlength="10"
+                                        value="<%=result.r?result.r.name:''%>" id="i_name" maxlength="10"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -40,10 +40,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-sm-3 control-label">登录账号:</label>
+                                    <label class="col-sm-3 control-label">登录账号:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="" id="i_login_name" maxlength="10"
+                                        value="<%=result.r?result.r.loginName:''%>" id="i_login_name" maxlength="10"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-sm-3 control-label">登录密码:</label>
+                                    <label class="col-sm-3 control-label">登录密码:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
                                         value="" id="i_login_password" maxlength="10"
@@ -64,10 +64,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="" class="col-sm-3 control-label">电话:</label>
+                                    <label class="col-sm-3 control-label">电话:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="" id="i_phone" maxlength="10"
+                                        value="<%=result.r?result.r.phoneNum:''%>" id="i_phone" maxlength="18"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -78,8 +78,8 @@
                                 <div class="form-group clearfix">
                                     <label class="control-label col-sm-3">城市:</label>
                                     <div class="col-sm-6" id="">
-                                       <div class="btn-group" id="i_city" data-value="1">
-                                            <button type="button" class="btn btn-default">北京</button>
+                                       <div class="btn-group" id="i_city" data-value="<%=result.r?result.r.cityId:1%>">
+                                            <button type="button" class="btn btn-default"><%=result.r?result.r.cityName:'北京'%></button>
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                                 <span class="caret"></span>
                                             </button>
@@ -92,20 +92,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group clearfix">
-                                    <label class="control-label col-sm-3">权限:</label>
-                                    <div class="col-sm-6" id="">
-                                       <div class="btn-group" id="i_selAuth" data-value="super_admin">
-                                            <button type="button" class="btn btn-default">超级管理员</button>
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <%_.each(result.r, function(roleItem){%>
-                                                <li data-value="<%=roleItem.name%>"><%=roleItem.desc%></li>
-                                                <%})%>
-                                            </ul>
-                                        </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">备注:</label>
+                                    <div class="col-sm-6">
+                                        <textarea class="form-control j_commonSetting foreword" id="i_memo"
+                                            value=""
+                                            maxlength="100"
+                                            data-pattern="/.+/"
+                                            data-container="body" 
+                                            data-toggle="popover" 
+                                            data-placement="right"
+                                            data-content="" 
+                                            data-keep=""><%=result.r?result.r.memo:''%></textarea>
                                     </div>
                                 </div>
                             </form>
