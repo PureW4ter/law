@@ -25,7 +25,7 @@ public class TagController {
 	private TagService tagService;
 
 	@ResponseBody
-	@GetMapping("/tag")
+	@GetMapping("/api/tag")
 	public ResponseVo<List<TagVo>> getTags() {
 
 		List<TagBo> tags = tagService.getAllTags();
@@ -38,14 +38,7 @@ public class TagController {
 	}
 
 	@ResponseBody
-	@PutMapping("/tag")
-	public SimpleResponseVo addTag(TagVo tag) {
-
-		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), "");
-	}
-
-	@ResponseBody
-	@DeleteMapping("/tag/{id}")
+	@DeleteMapping("/api/tag/{id}")
 	public SimpleResponseVo deleteTag(@PathVariable("id") int id) {
 		tagService.deleteTag(id);
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), "");

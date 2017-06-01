@@ -31,13 +31,13 @@ import com.jfzy.web.vo.ResponseVo;
 
 @RestController
 public class OssUserController {
-	
+
 	@Autowired
 	private OssUserService ossUserService;
-	
+
 	@Autowired
 	private OssRoleService ossRoleService;
-	
+
 	@ResponseBody
 	@GetMapping("/api/ossuser/roles")
 	public ResponseVo<List<OssRoleVo>> roles() {
@@ -46,10 +46,10 @@ public class OssUserController {
 		for (RoleBo bo : values) {
 			resultUsers.add(boToVo(bo));
 		}
-		
+
 		return new ResponseVo<List<OssRoleVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/ossuser/list")
 	public ResponseVo<List<OssUserVo>> list(int page, int size) {
@@ -85,31 +85,32 @@ public class OssUserController {
 	
 	@ResponseBody
 	@PostMapping(path="/api/ossuser/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody OssUserVo vo) {
+	public ResponseVo<Object> create(HttpServletRequest request, HttpServletResponse response, @RequestBody OssUserVo vo) {
 
 		OssUserBo bo = voToBo(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		ossUserService.create(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
+
 	private static OssUserVo boToVo(OssUserBo bo) {
 		OssUserVo vo = new OssUserVo();
 		BeanUtils.copyProperties(bo, vo);
-		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
+		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy年MM月dd日");
 		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		return vo;
 	}
-	
+
 	private static OssUserBo voToBo(OssUserVo vo) {
 		OssUserBo bo = new OssUserBo();
 		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
-	
+
 	private static OssRoleVo boToVo(RoleBo bo) {
 		OssRoleVo vo = new OssRoleVo();
 		BeanUtils.copyProperties(bo, vo);
-		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
+		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy年MM月dd日");
 		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		return vo;
 	}

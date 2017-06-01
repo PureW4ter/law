@@ -27,4 +27,6 @@ public interface OssUserRepository extends JpaRepository<OssUserPo, Integer> {
 	@Query("UPDATE OssUserPo SET role=?1, updateTime=?2 WHERE id=?3")
 	void updateAuth(String role, Timestamp updateTime, int id);
 
+	List<OssUserPo> findByLoginName(String loginName);
+
 }

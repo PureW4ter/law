@@ -14,7 +14,8 @@ public interface OssUserService {
 
 	void updateAuth(String role, int id);
 
-	public List<OssUserBo> getOssUsers(Pageable page);
-	
 	void create(OssUserBo bo);
+
+	public List<OssUserBo> getOssUsers(Pageable page);
+
 }
