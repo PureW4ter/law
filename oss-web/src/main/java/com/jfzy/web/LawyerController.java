@@ -64,6 +64,14 @@ public class LawyerController {
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 
+	@ResponseBody
+	@GetMapping("/api/lawyer/detail")
+	public ResponseVo<LawyerVo> detail(int id) {
+		LawyerBo bo = lawyerService.getLawyerById(id);
+		LawyerVo vo = boToVo(bo);
+		return new ResponseVo<LawyerVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
+	}
+	
 	private static LawyerVo boToVo(LawyerBo bo) {
 		LawyerVo vo = new LawyerVo();
 		BeanUtils.copyProperties(bo, vo);

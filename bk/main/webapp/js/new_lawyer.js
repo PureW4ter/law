@@ -1,27 +1,43 @@
 define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], function (nav_bar, header, ajaxHelper, util) {
     var NewLawyer = {
+        lawyerId : "",
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 4);
-            header.initialize("i_header", "添加律师");
+            header.initialize("i_header", "律师管理");
+            this.lawyerId = util.getQueryParameter("id");
             this.mainBox = $('#i_mainbox');
             this.tplFun = _.template($("#i_tpl").html());
             this._sendRequest();
         },
 
         _sendRequest: function () {
-            var params={};
-            ajaxHelper.get("http://" + window.frontJSHost + "/api/ossuser/roles",
-                params, this, this._render, null);
+            if(!!this.lawyerId){
+                var params={
+                    "id": this.lawyerId
+                };
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/lawyer/detail",
+                    params, this, this._render, null);
+            }else{
+                this._render({});
+            }
+            
         },
         _render: function (data) {
+            if(data.r){
+                for(var c in util.cities){
+                    if(util.cities[c].id == data.r.cityId){
+                        data.r.cityName = util.cities[c].name;
+                    }
+                }
+            }
             this.mainBox.html(this.tplFun({"result":data, "cities": util.cities}));
             this._registEvent();
         },
         _registEvent: function () {
             $("#i_selAuth li").off("click",this._sel).on("click",{ctx: this},this._sel);
             $("#i_city li").off("click",this._sel).on("click",{ctx: this},this._sel);
-            $("#i_save_btn").off("click",this._doSave).on("click",{ctx: this},this._doSave);
+            $("#i_save_btn").off("click", this._doSave).on("click",{ctx: this}, this._doSave);
             $("#i_cancel_btn").off("click",this._doCancel).on("click",{ctx: this},this._doCancel);
             
             $("[data-toggle='popover']").off({
@@ -47,18 +63,31 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
                 formJson.password = $("#i_login_password").val();
                 formJson.phoneNum = $("#i_phone").val();
                 formJson.cityId = $("#i_city").data("value");
+                formJson.memo = $("#i_memo").val();
 
-                ajaxHelper.post("http://" + window.frontJSHost + "/api/ossuser/create",
-                    formJson, e.data.ctx, function(){
-                        util.showToast("保存成功！", function(){
-                            window.location = "employee_management.html";
-                        })
-                    });
+                if (e.data.ctx.lawyerId) { 
+                    formJson.id=e.data.ctx.lawyerId;
+                    ajaxHelper.post("http://" + window.frontJSHost + "/api/lawyer/create",
+                        formJson, e.data.ctx, function(){
+                            util.showToast("更新成功！", function(){
+                                window.location = "lawyer_management.html";
+                            })
+                        });
+                } else {
+                    ajaxHelper.post("http://" + window.frontJSHost + "/api/lawyer/create",
+                        formJson, e.data.ctx, function(){
+                            util.showToast("保存成功！", function(){
+                                window.location = "lawyer_management.html";
+                            })
+                        });
+                }
+
+                
             }
 
         },
         _doCancel:function(e){
-            window.location = "employee_management.html";
+            window.location = "lawyer_management.html";
         }
 
     };
