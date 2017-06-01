@@ -24,20 +24,15 @@ import com.qiniu.util.Auth;
 @Service
 public class PicServiceImpl implements PicService {
 
-	//@Value("qiniu.accessKey")
-	@Value("6qd5GGyH2kNyyLLW0SW0GbFR2D3m-VeZ_9nziRKv")
+	@Value("${qiniu.accessKey}")
 	private String accessKey;
-	@Value("bUfuLrmXhFaslKNjk8bcfG0GIyBzYB7G3RslBU8X")
-	//@Value("qiniu.secretKey")
+	@Value("${qiniu.secretKey}")
 	private String secretKey;
-	@Value("jfzy-hd-1")
-	//@Value("qiniu.bucket")
+	@Value("${qiniu.bucket}")
 	private String bucket;
-	@Value("oqtjthr3a.bkt.clouddn.com")
-	//@Value("qiniu.hostPrefix")
+	@Value("${qiniu.hostPrefix}")
 	private String hostPrefix;
-
-	@Value("3600")
+	@Value("${qiniu.expires}")
 	private int expires;
 
 	private Auth auth;
