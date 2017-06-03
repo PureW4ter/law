@@ -25,6 +25,7 @@ public class OrderBo {
 	private Timestamp updateTime;
 	private Timestamp startTime;
 	private Timestamp endTime;
+	private Timestamp phoneEndTime;
 	private String role;
 	private String tradePhase;
 	private String tradeSubphase;
@@ -274,6 +275,14 @@ public class OrderBo {
 
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
+	}
+	
+	public Timestamp getPhoneEndTime() {
+		return phoneEndTime;
+	}
+	
+	public void setPhoneEndTime(Timestamp phoneEndTime) {
+		this.phoneEndTime = phoneEndTime;
 	}
 
 	public int getPayStatus() {

@@ -101,7 +101,7 @@ public class OrderController {
 		UserSession user = (UserSession) session.getAttribute(UserSession.SESSION_KEY);
 
 		if (user != null) {
-			orderService.pay(id);
+			// orderService.pay(id);
 		}
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
@@ -166,13 +166,21 @@ public class OrderController {
 		if (bo.getStartTime() != null && bo.getEndTime() != null) {
 			if (new Date().getTime() >= bo.getEndTime().getTime()
 					|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
-				vo.setProcessPer("100%");
-			} else if (new Date().getTime() > bo.getStartTime().getTime()
-					&& new Date().getTime() < bo.getEndTime().getTime()) {
-				vo.setProcessPer(Math.round((new Date().getTime() - bo.getStartTime().getTime()) * 100
-						/ (bo.getEndTime().getTime() - bo.getStartTime().getTime())) + "%");
-			} else {
-				vo.setProcessPer("0%");
+				if (bo.getPhoneEndTime() != null)
+					vo.setPhoneEndTime(myFmt.format(bo.getPhoneEndTime()));
+				if (bo.getStartTime() != null && bo.getEndTime() != null) {
+					if (new Date().getTime() >= bo.getEndTime().getTime()
+							|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
+						vo.setProcessPer("100%");
+					} else if (new Date().getTime() > bo.getStartTime().getTime()
+							&& new Date().getTime() < bo.getEndTime().getTime()) {
+						vo.setProcessPer(Math.round((new Date().getTime() - bo.getStartTime().getTime()) * 100
+								/ (bo.getEndTime().getTime() - bo.getStartTime().getTime())) + "%");
+					} else {
+						vo.setProcessPer("0%");
+					}
+				}
+
 			}
 		}
 		return vo;

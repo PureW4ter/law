@@ -22,6 +22,7 @@ public class OrderVo {
 	private String updateTime;
 	private String startTime;
 	private String endTime;
+	private String phoneEndTime;
 	private String processPer;
 	private String role;
 	private String tradePhase;
@@ -225,6 +226,12 @@ public class OrderVo {
 	}
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
+	}
+	public String getPhoneEndTime() {
+		return phoneEndTime;
+	}
+	public void setPhoneEndTime(String phoneEndTime) {
+		this.phoneEndTime = phoneEndTime;
 	}
 
 }
