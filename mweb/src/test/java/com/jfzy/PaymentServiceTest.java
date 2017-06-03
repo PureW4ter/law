@@ -23,6 +23,6 @@ public class PaymentServiceTest {
 		order.setRealPrice(0.99);
 		order.setProductName("测试用");
 
-		service.unifiedOrder(order, "192.168.0.1", "1222");
+		service.unifiedOrder(order, "192.168.0.1", "o7oTkv-65f4uQUX3DY_X7GmwM90k");
 	}
 }

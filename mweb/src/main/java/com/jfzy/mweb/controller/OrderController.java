@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -22,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.mweb.base.BaseController;
 import com.jfzy.mweb.base.UserSession;
 import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.InvestOrderVo;
 import com.jfzy.mweb.vo.OrderCompleteVo;
 import com.jfzy.mweb.vo.OrderVo;
+import com.jfzy.mweb.vo.PrepayVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SearchOrderVo;
 import com.jfzy.service.OrderService;
@@ -38,9 +42,12 @@ import com.jfzy.service.bo.ProductBo;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
+import com.jfzy.service.bo.WxPayResponseDto;
 
 @RestController
-public class OrderController {
+public class OrderController extends BaseController {
+
+	private static Logger logger = LoggerFactory.getLogger(OrderController.class);
 
 	@Autowired
 	private OrderService orderService;
@@ -50,12 +57,6 @@ public class OrderController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private HttpSession session;
-
-	@Autowired
-	private HttpServletRequest request;
 
 	@ResponseBody
 	@PostMapping(path = "/api/order/screate", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -97,13 +98,25 @@ public class OrderController {
 
 	@ResponseBody
 	@GetMapping(value = "/api/order/pay")
-	public ResponseVo<Object> pay(int id) {
-		UserSession user = (UserSession) session.getAttribute(UserSession.SESSION_KEY);
+	public ResponseVo<PrepayVo> pay(int id) {
+		UserSession session = getUserSession();
 
-		if (user != null) {
-			// orderService.pay(id);
+		if (session != null) {
+			String openId = session.getOpenId();
+			if (StringUtils.isNotBlank(openId) || UserSession.EMPTY_USER_ID != session.getUserId()) {
+				WxPayResponseDto dto = orderService.pay(id, session.getUserId(), getClientIp(), openId);
+				if (StringUtils.equals("SUCCESS", dto.getReturnCode())
+						&& StringUtils.equals("SUCCESS", dto.getResultCode())) {
+					PrepayVo vo = dtoToVo(dto);
+					return new ResponseVo<PrepayVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
+				} else {
+					return new ResponseVo<PrepayVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "微信支付单生成失败", null);
+				}
+			}
 		}
-		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+
+		return new ResponseVo<PrepayVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "未登录", null);
+
 	}
 
 	@ResponseBody
@@ -183,6 +196,16 @@ public class OrderController {
 
 			}
 		}
+		return vo;
+	}
+
+	private static PrepayVo dtoToVo(WxPayResponseDto dto) {
+		PrepayVo vo = new PrepayVo();
+		vo.setAppId(dto.getAppId());
+		vo.setTimestamp(String.valueOf(System.currentTimeMillis() / 1000));
+		vo.setNonceStr(dto.getNonceStr());
+		vo.setPaySign(dto.getSign());
+		vo.setPaySign(String.format("prepaid_id=%s", dto.getPrepayId()));
 		return vo;
 	}
 }

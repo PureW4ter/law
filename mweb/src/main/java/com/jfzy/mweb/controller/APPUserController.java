@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.mweb.base.BaseController;
+import com.jfzy.mweb.base.UserSession;
 import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.UserVo;
@@ -23,14 +25,13 @@ import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
 
 @RestController
-public class APPUserController {
+public class APPUserController extends BaseController {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private WechatService wechatService;
-	
-	
+
 	@ResponseBody
 	@GetMapping("/api/user/list")
 	public ResponseVo<List<UserVo>> list(int page, int size) {
@@ -45,42 +46,52 @@ public class APPUserController {
 		}
 		return new ResponseVo<List<UserVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
-	
+
 	@ResponseBody
-	@GetMapping(path="/api/user/wxlogin")
+	@GetMapping(path = "/api/user/wxlogin")
 	public ResponseVo<UserVo> wxlogin(String code) {
 		try {
 			UserBo bo = wechatService.wxlogin(code);
 			UserAccountBo abo = userService.getUserAccountByUserId(bo.getId(), UserAccountTypeEnum.MOBILE.getId());
 			UserVo vo = boToVoForUser(bo);
-			if(abo != null)
+			if (abo != null)
 				vo.setPhone(abo.getValue());
+
+			// init session
+			UserAccountBo wxBo = userService.getUserAccountByUserId(bo.getId(),
+					UserAccountTypeEnum.WECHAT_OPENID.getId());
+
+			UserSession session = new UserSession();
+			session.setOpenId(wxBo.getValue());
+			session.setUserId(bo.getId());
+			this.setUserSession(session);
+
 			return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 		} catch (IOException e) {
 			return new ResponseVo<UserVo>(ResponseStatusEnum.SERVER_ERROR.getCode(), null, null);
 		}
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/user/bind")
 	public ResponseVo<Object> bind(String phone, String code, int userId) {
 		userService.bind(phone, userId);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/user/unbind")
 	public ResponseVo<Object> unbind(int userAccountId) {
 		userService.unbind(userAccountId);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	private static UserBo voToBoForUser(UserVo vo) {
 		UserBo bo = new UserBo();
 		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
-	
+
 	private static UserVo boToVoForUser(UserBo bo) {
 		UserVo vo = new UserVo();
 		BeanUtils.copyProperties(bo, vo);

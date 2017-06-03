@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.WxPayResponseDto;
 
 public interface OrderService {
 
@@ -15,7 +16,7 @@ public interface OrderService {
 
 	void assignOrder(int orderId, int lawyerId, int processorId, String processorName);
 
-	void pay(int id, int userId, String ip, String openId);
+	WxPayResponseDto pay(int id, int userId, String ip, String openId);
 
 	void cancel(int id);
 
@@ -32,7 +33,7 @@ public interface OrderService {
 	List<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page);
 
 	List<OrderBo> getUnprocessedOrdersByLawyer(int lawyerId, Pageable page);
-	
+
 	List<OrderBo> getSearchOrders(Pageable page);
 
 	List<OrderBo> getInvestOrders(Pageable page);

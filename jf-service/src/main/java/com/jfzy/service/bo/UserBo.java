@@ -1,10 +1,15 @@
 package com.jfzy.service.bo;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 
-public class UserBo {
+public class UserBo  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1941482731771885060L;
 	private int id;
 	private String name;
 	private String realName;

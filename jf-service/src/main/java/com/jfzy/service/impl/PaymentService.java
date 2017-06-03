@@ -13,6 +13,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.codec.binary.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,8 @@ import com.jfzy.service.exception.JfApplicationRuntimeException;
 
 @Service
 public class PaymentService {
+
+	private static Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
 	@Value("${wechat.pay.unify.url}")
 	private String PAY_URL;
@@ -84,13 +89,17 @@ public class PaymentService {
 		dto.setTradeType(Constants.TRADE_TYPE);
 		dto.setOpenId(openId);
 
-		sign(dto, Constants.SECRET);
+		sign(dto, Constants.PAY_SECRET);
 
 		String xmlStr = parseXml(dto);
 		String response;
 		try {
 			response = HttpClientUtils.post(PAY_URL, xmlStr);
 			WxPayResponseDto responseDto = fromXml(response);
+			if (!StringUtils.equals("SUCCESS", responseDto.getResultCode())
+					|| !StringUtils.equals("SUCCESS", responseDto.getReturnCode())) {
+				logger.error(String.format("Failed to do prepay response:%s", response));
+			}
 			return responseDto;
 		} catch (IOException e) {
 			throw new JfApplicationRuntimeException("获取支付单失败", e);

@@ -21,6 +21,7 @@ import com.jfzy.service.bo.OrderPayStatusEnum;
 import com.jfzy.service.bo.OrderPhotoBo;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.PayWayEnum;
+import com.jfzy.service.bo.WxPayResponseDto;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.OrderPhotoPo;
 import com.jfzy.service.po.OrderPo;
@@ -67,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void pay(int id, int userId, String ip, String openId) {
+	public WxPayResponseDto pay(int id, int userId, String ip, String openId) {
 		// FIXED ME
 		OrderPo po = orderRepo.findByUserIdAndId(userId, id);
 		if (po == null) {
@@ -77,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
 		} else if (po.getPayStatus() == OrderPayStatusEnum.REFUND.getId()) {
 			throw new JfApplicationRuntimeException("订单已退款");
 		} else {
-			paymentService.unifiedOrder(poToBo(po), ip, openId);
+			return paymentService.unifiedOrder(poToBo(po), ip, openId);
 		}
 	}
 
@@ -194,7 +195,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return results;
 	}
-	
+
 	@Override
 	public List<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
 		// TODO Auto-generated method stub
