@@ -27,5 +27,5 @@ public interface UserService {
 	
 	void unbind(int userAccountId);
 	
-	void bind(String phone, int userId);
+	UserBo bind(String phone, int userId);
 }

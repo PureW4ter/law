@@ -17,7 +17,7 @@ public class LawyerVo {
 	private double money;
 	private int process;
 	private int completed;
-	private int total;
+	private int totalTask;
 	
 	public int getId() {
 		return id;
@@ -103,11 +103,11 @@ public class LawyerVo {
 	public void setProcess(int process) {
 		this.process = process;
 	}
-	public int getTotal() {
-		return total;
+	public int getTotalTask() {
+		return totalTask;
 	}
-	public void setTotal(int total) {
-		this.total = total;
+	public void setTotalTask(int totalTask) {
+		this.totalTask = totalTask;
 	}
 	public int getCompleted() {
 		return completed;

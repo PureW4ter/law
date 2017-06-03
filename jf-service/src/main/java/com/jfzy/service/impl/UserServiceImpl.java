@@ -49,14 +49,18 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public void bind(String phone, int userId) {
-		UserAccountBo bo = new UserAccountBo();
-		bo.setUserId(userId);
-		bo.setStatus(StatusEnum.ENABLED.getId());
-		bo.setType(UserAccountTypeEnum.MOBILE.getId());
-		bo.setValue(phone);
-		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		this.register(bo);
+	public UserBo bind(String phone, int userId) {
+		UserBo bo = this.getUser(userId);
+		if(bo != null){
+			UserAccountBo abo = new UserAccountBo();
+			abo.setUserId(userId);
+			abo.setStatus(StatusEnum.ENABLED.getId());
+			abo.setType(UserAccountTypeEnum.MOBILE.getId());
+			abo.setValue(phone);
+			abo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			this.register(abo);
+		}
+		return bo;
 	}
 	
 	@Override
