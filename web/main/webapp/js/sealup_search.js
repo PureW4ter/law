@@ -38,8 +38,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 	}
                 	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
                 		this, function(){
-                			util.showToast("支付成功");
-                			window.location = "question_complete2.html?id=" + data.r.id;
+                			util.weixinPay(data.r, "question_complete2.html");
                 		});
                 }, null);
 		}

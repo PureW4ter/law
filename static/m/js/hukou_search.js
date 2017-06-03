@@ -38,8 +38,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 	}
                 	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
                 		this, function(data){
-                			util.weixinPay(data.r);
-							//window.location = "success.html";
+                			util.weixinPay(data.r, "success.html");
                 		});
                 }, null);
 		}
