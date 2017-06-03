@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +19,21 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.mweb.base.UserSession;
 import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.InvestOrderVo;
 import com.jfzy.mweb.vo.OrderCompleteVo;
 import com.jfzy.mweb.vo.OrderVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SearchOrderVo;
-import com.jfzy.mweb.vo.SimpleArticleVo;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.ProductService;
 import com.jfzy.service.UserService;
-import com.jfzy.service.bo.ArticleBo;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderStatusEnum;
-import com.jfzy.service.bo.PayWayEnum;
 import com.jfzy.service.bo.ProductBo;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
@@ -46,16 +44,23 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
+	@Autowired
+	private HttpSession session;
+
+	@Autowired
+	private HttpServletRequest request;
+
 	@ResponseBody
-	@PostMapping(path="/api/order/screate",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseVo<OrderBo> createSOrder(HttpServletRequest request, HttpServletResponse response, @RequestBody SearchOrderVo vo) {
+	@PostMapping(path = "/api/order/screate", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<OrderBo> createSOrder(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody SearchOrderVo vo) {
 		OrderBo bo = svoToBo(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		ProductBo pbo = productService.getProduct(vo.getProductId());
@@ -70,10 +75,11 @@ public class OrderController {
 		OrderBo newBo = orderService.createSOrder(bo);
 		return new ResponseVo<OrderBo>(ResponseStatusEnum.SUCCESS.getCode(), null, newBo);
 	}
-	
+
 	@ResponseBody
-	@PostMapping(path="/api/order/icreate",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseVo<OrderBo> createIOrder(HttpServletRequest request, HttpServletResponse response, @RequestBody InvestOrderVo vo) {
+	@PostMapping(path = "/api/order/icreate", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<OrderBo> createIOrder(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody InvestOrderVo vo) {
 		OrderBo bo = ivoToBo(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		ProductBo pbo = productService.getProduct(vo.getProductId());
@@ -88,28 +94,33 @@ public class OrderController {
 		OrderBo newBo = orderService.createIOrder(bo);
 		return new ResponseVo<OrderBo>(ResponseStatusEnum.SUCCESS.getCode(), null, newBo);
 	}
-	
+
 	@ResponseBody
 	@GetMapping(value = "/api/order/pay")
 	public ResponseVo<Object> pay(int id) {
-		orderService.pay(id);
+		UserSession user = (UserSession) session.getAttribute(UserSession.SESSION_KEY);
+
+		if (user != null) {
+			orderService.pay(id);
+		}
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	@ResponseBody
 	@GetMapping(value = "/api/order/cancel")
 	public ResponseVo<Object> cancel(int id) {
 		orderService.cancel(id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	@ResponseBody
-	@PostMapping(value = "/api/order/complete", consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response, @RequestBody OrderCompleteVo vo) {
+	@PostMapping(value = "/api/order/complete", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody OrderCompleteVo vo) {
 		orderService.complete(vo.getId(), vo.getComment(), vo.getPicList());
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/listbyuser")
 	public ResponseVo<List<OrderVo>> getOrders(int userId, int page, int size) {
@@ -124,42 +135,43 @@ public class OrderController {
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	private static OrderBo svoToBo(SearchOrderVo vo) {
 		OrderBo bo = new OrderBo();
 		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
-	
+
 	private static OrderBo ivoToBo(InvestOrderVo vo) {
 		OrderBo bo = new OrderBo();
 		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
-	
+
 	private static OrderVo boToVo(OrderBo bo) {
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(bo, vo);
-		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat myFmt2=new SimpleDateFormat("yyyyMMdd");
-		if(bo.getCreateTime()!=null)
+		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyyMMdd");
+		if (bo.getCreateTime() != null)
 			vo.setCreateTime(myFmt.format(bo.getCreateTime()));
-		//订单编号：时间+code+id
-		vo.setOrderCode(myFmt2.format(bo.getCreateTime())+bo.getProductCode()+bo.getId());
-		if(bo.getUpdateTime()!=null)
+		// 订单编号：时间+code+id
+		vo.setOrderCode(myFmt2.format(bo.getCreateTime()) + bo.getProductCode() + bo.getId());
+		if (bo.getUpdateTime() != null)
 			vo.setUpdateTime(myFmt.format(bo.getUpdateTime()));
-		if(bo.getStartTime()!=null)
+		if (bo.getStartTime() != null)
 			vo.setStartTime(myFmt.format(bo.getStartTime()));
-		if(bo.getEndTime()!=null)
+		if (bo.getEndTime() != null)
 			vo.setEndTime(myFmt.format(bo.getEndTime()));
-		if(bo.getStartTime()!=null && bo.getEndTime()!=null){
-			if(new Date().getTime()>=bo.getEndTime().getTime() || bo.getStatus()==OrderStatusEnum.FINISHED.getId()){
+		if (bo.getStartTime() != null && bo.getEndTime() != null) {
+			if (new Date().getTime() >= bo.getEndTime().getTime()
+					|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
 				vo.setProcessPer("100%");
-			}else if(new Date().getTime() > bo.getStartTime().getTime() && new Date().getTime()<bo.getEndTime().getTime()){
-				vo.setProcessPer(
-						Math.round((new Date().getTime() - bo.getStartTime().getTime())*100/(bo.getEndTime().getTime() - bo.getStartTime().getTime())) 
-						+ "%");
-			}else{
+			} else if (new Date().getTime() > bo.getStartTime().getTime()
+					&& new Date().getTime() < bo.getEndTime().getTime()) {
+				vo.setProcessPer(Math.round((new Date().getTime() - bo.getStartTime().getTime()) * 100
+						/ (bo.getEndTime().getTime() - bo.getStartTime().getTime())) + "%");
+			} else {
 				vo.setProcessPer("0%");
 			}
 		}
