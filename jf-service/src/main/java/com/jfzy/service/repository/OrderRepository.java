@@ -37,6 +37,12 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	void setStartAndEndTime(Timestamp startTime, Timestamp endTime, Timestamp updateTime, int id);
 
 	Page<OrderPo> findByUserId(int userId, Pageable page);
+	
+	@Query(value = "SELECT t FROM OrderPo t WHERE t.productCode='H' or t.productCode='C'")
+	Page<OrderPo> getSearchOrders(Pageable page);
+	
+	@Query(value =  "SELECT t FROM OrderPo t WHERE t.productCode='Y' or t.productCode='YP' or t.productCode='J'")
+	Page<OrderPo> getInvestOrders(Pageable page);
 
 	OrderPo findByUserIdAndId(int userId, int id);
 

@@ -18,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,14 +27,11 @@ import com.jfzy.mweb.vo.OrderCompleteVo;
 import com.jfzy.mweb.vo.OrderVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SearchOrderVo;
-import com.jfzy.mweb.vo.SimpleArticleVo;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.ProductService;
 import com.jfzy.service.UserService;
-import com.jfzy.service.bo.ArticleBo;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderStatusEnum;
-import com.jfzy.service.bo.PayWayEnum;
 import com.jfzy.service.bo.ProductBo;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
@@ -152,6 +148,8 @@ public class OrderController {
 			vo.setStartTime(myFmt.format(bo.getStartTime()));
 		if(bo.getEndTime()!=null)
 			vo.setEndTime(myFmt.format(bo.getEndTime()));
+		if(bo.getPhoneEndTime()!=null)
+			vo.setPhoneEndTime(myFmt.format(bo.getPhoneEndTime()));
 		if(bo.getStartTime()!=null && bo.getEndTime()!=null){
 			if(new Date().getTime()>=bo.getEndTime().getTime() || bo.getStatus()==OrderStatusEnum.FINISHED.getId()){
 				vo.setProcessPer("100%");

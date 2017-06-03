@@ -74,6 +74,9 @@ public class OrderPo {
 
 	@Column(name = "end_time")
 	private Timestamp endTime;
+	
+	@Column(name = "phone_end_time")
+	private Timestamp phoneEndTime;
 
 	@Column(name = "memo")
 	private String memo;
@@ -290,6 +293,14 @@ public class OrderPo {
 		this.memo = memo;
 	}
 
+	public Timestamp getPhoneEndTime() {
+		return phoneEndTime;
+	}
+
+	public void setPhoneEndTime(Timestamp phoneEndTime) {
+		this.phoneEndTime = phoneEndTime;
+	}
+	
 	public int getPayStatus() {
 		return payStatus;
 	}
@@ -297,5 +308,4 @@ public class OrderPo {
 	public void setPayStatus(int payStatus) {
 		this.payStatus = payStatus;
 	}
-
 }
