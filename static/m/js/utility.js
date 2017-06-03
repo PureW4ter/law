@@ -209,7 +209,7 @@ define([],function(){
             if (typeof window.WeixinJSBridge == "undefined") { 
                 $(document).off("WeixinJSBridgeReady", _onBridgeReady).on("WeixinJSBridgeReady", _onBridgeReady); 
             } else {
-                _onBridgeReady();
+                _onBridgeReady(payInfo);
             }
         },
         _getOpenId :function(oid, url){
