@@ -71,13 +71,11 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 			var params = {"id": oid};
 			ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",
                 params, this, function(){
-                	util.showToast("支付成功", function(){
-                		if(productId == 1 || productId == 2){
-                			window.location = "question_complete.html";
-                		}else{
-                			window.location = "my_question_list.html";
-                		}
-                	})
+                	if(productId == 1 || productId == 2){
+                		util.weixinPay(data.r, "question_complete.html");
+                	}else{
+                		util.weixinPay(data.r, "my_question_list.html");
+                	}
                 });
 		},
 		_complete:function(e){
