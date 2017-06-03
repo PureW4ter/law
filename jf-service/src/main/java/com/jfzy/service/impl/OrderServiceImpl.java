@@ -174,6 +174,26 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public List<OrderBo> getSearchOrders(Pageable page) {
+		Page<OrderPo> poPage = orderRepo.getSearchOrders(page);
+		List<OrderBo> results = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(poToBo(po)));
+		}
+		return results;
+	}
+
+	@Override
+	public List<OrderBo> getInvestOrders(Pageable page) {
+		Page<OrderPo> poPage = orderRepo.getInvestOrders(page);
+		List<OrderBo> results = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(poToBo(po)));
+		}
+		return results;
+	}
+	
+	@Override
 	public List<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
 		// TODO Auto-generated method stub
 		return null;

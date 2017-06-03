@@ -32,5 +32,8 @@ public interface OrderService {
 	List<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page);
 
 	List<OrderBo> getUnprocessedOrdersByLawyer(int lawyerId, Pageable page);
+	
+	List<OrderBo> getSearchOrders(Pageable page);
 
+	List<OrderBo> getInvestOrders(Pageable page);
 }

@@ -47,6 +47,20 @@ public class LawyerController {
 		}
 		return new ResponseVo<List<LawyerVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
+	
+	@ResponseBody
+	@GetMapping("/api/lawyer/listbycity")
+	public ResponseVo<List<LawyerVo>> listByCity(int cityId) {
+		List<LawyerBo> values = lawyerService.getLawyerByCity(cityId);
+		List<LawyerVo> result = new ArrayList<LawyerVo>(values.size());
+		for (LawyerBo bo : values) {
+			//不显示密码
+			bo.setPassword("");
+			result.add(boToVo(bo));
+		}
+		return new ResponseVo<List<LawyerVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
+	}
+	
 
 	@ResponseBody
 	@GetMapping("/api/lawyer/ustatus")

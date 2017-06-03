@@ -1,7 +1,6 @@
 define([],function(){
 	var Utility = {
 		pageSize:5,
-		//生产
 		appid: "wx3eb0212d543f4752",
 		cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
 		PRODUCT_CODE_ZIXUN:"Y",
@@ -185,6 +184,46 @@ define([],function(){
                     }
             	});
        	 	});
+        },
+        weixinPay:function(payInfo, successURL, oid){
+        	function _onBridgeReady() {
+                window.WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', {
+                        "appId": payInfo.appId, //公众号名称，由商户传入     
+                        "timeStamp": payInfo.timeStamp + "", //时间戳，自1970年以来的秒数   
+                        "nonceStr": payInfo.nonceStr, //随机串     
+                        "package":  payInfo.package,
+                        "signType": "MD5",   //微信签名方式
+                        "paySign": payInfo.sign
+                    },
+                    function(res) {
+                        if (res.err_msg == "get_brand_wcpay_request:ok") {
+                            window.location.href = successURL + "?id=" + oid;
+                            // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                        }
+                    }
+                );
+            }
+             //先判断是不是在微信中
+            if (typeof window.WeixinJSBridge == "undefined") { 
+                $(document).off("WeixinJSBridgeReady", _onBridgeReady).on("WeixinJSBridgeReady", _onBridgeReady); 
+            } else {
+                _onBridgeReady();
+            }
+        },
+        _getOpenId :function(oid, url){
+            var url = "https://open.weixin.qq.com/connect/oauth2/authorize?";
+            var redirect_uri = "http://" + window.UrlHost + url + "?id=" + oid;
+            var params = {};
+            params["appid"] = this.appid;
+            params["redirect_uri"] = encodeURIComponent(redirect_uri);
+            params["response_type"] = "code";
+            params["scope"] = "snsapi_base";
+            for(var i in params){
+                url += i + '=' + params[i] + '&';
+            }
+            url = url.substr(0, url.length-1);
+            window.location = url + "#wechat_redirect";
         },
         getUserId:function(){
         	if(!this.getData("userInfo")){
