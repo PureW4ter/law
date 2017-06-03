@@ -28,6 +28,11 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	@Transactional
 	@Modifying
+	@Query("UPDATE OrderPo SET pay_status=?1, status=?2 WHERE id=?3")
+	void updatePayStatusAndStatus(int payStatus, int status, int id);
+
+	@Transactional
+	@Modifying
 	@Query("UPDATE OrderPo SET memo=?1, updateTime=?2 WHERE id=?3")
 	void updateMemo(String memo, Timestamp updateTime, int id);
 
@@ -37,11 +42,11 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	void setStartAndEndTime(Timestamp startTime, Timestamp endTime, Timestamp updateTime, int id);
 
 	Page<OrderPo> findByUserId(int userId, Pageable page);
-	
+
 	@Query(value = "SELECT t FROM OrderPo t WHERE t.productCode='H' or t.productCode='C'")
 	Page<OrderPo> getSearchOrders(Pageable page);
-	
-	@Query(value =  "SELECT t FROM OrderPo t WHERE t.productCode='Y' or t.productCode='YP' or t.productCode='J'")
+
+	@Query(value = "SELECT t FROM OrderPo t WHERE t.productCode='Y' or t.productCode='YP' or t.productCode='J'")
 	Page<OrderPo> getInvestOrders(Pageable page);
 
 	OrderPo findByUserIdAndId(int userId, int id);

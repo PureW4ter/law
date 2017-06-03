@@ -36,6 +36,8 @@ import com.jfzy.mweb.vo.OrderVo;
 import com.jfzy.mweb.vo.PrepayVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SearchOrderVo;
+import com.jfzy.mweb.vo.WxPayCallbackDto;
+import com.jfzy.mweb.vo.WxPayCallbackRespDto;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.ProductService;
 import com.jfzy.service.UserService;
@@ -45,8 +47,10 @@ import com.jfzy.service.bo.ProductBo;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
+import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
 import com.jfzy.service.impl.Signature;
+import com.jfzy.service.impl.XmlUtil;
 
 @RestController
 public class OrderController extends BaseController {
@@ -61,6 +65,9 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private HttpServletRequest request;
 
 	@ResponseBody
 	@PostMapping(path = "/api/order/screate", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -98,6 +105,39 @@ public class OrderController extends BaseController {
 		bo.setUserPhoneNum(uabo.getValue());
 		OrderBo newBo = orderService.createIOrder(bo);
 		return new ResponseVo<OrderBo>(ResponseStatusEnum.SUCCESS.getCode(), null, newBo);
+	}
+
+	@ResponseBody
+	// @PostMapping(value = "/api/wxpay/callback", produces = {
+	// "application/xml;charset=UTF-8" }, consumes =
+	// MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(value = "/api/wxpay/callback", produces = { "application/xml" })
+	public WxPayCallbackRespDto callback(@RequestBody String reqStr) {
+		logger.error(reqStr);
+		WxPayCallbackDto dto = (WxPayCallbackDto) XmlUtil.fromXml(reqStr, WxPayCallbackDto.class);
+		WxPayEventBo event = dtoToBo(dto);
+		// check sign
+		if (checkSign(dto)) {
+			UserAccountBo user = userService.getUserAccountByOpenid(event.getOpenId());
+			if (user == null) {
+				logger.error("could not find openid");
+			} else {
+				orderService.markPayed(event, user.getUserId());
+			}
+		} else {
+			logger.error("check sign failed");
+		}
+
+		WxPayCallbackRespDto result = new WxPayCallbackRespDto();
+		result.setReturnCode("SUCCESS");
+		result.setReturnMsg("OK");
+		return result;
+	}
+
+	private static WxPayEventBo dtoToBo(WxPayCallbackDto dto) {
+		WxPayEventBo bo = new WxPayEventBo();
+		BeanUtils.copyProperties(dto, bo);
+		return bo;
 	}
 
 	@ResponseBody
@@ -220,6 +260,39 @@ public class OrderController extends BaseController {
 		paramMap.put("nonceStr", vo.getNonceStr());
 		paramMap.put("package", vo.getPkg());
 		paramMap.put("signType", vo.getSignType());
+		return paramMap;
+	}
+
+	private static boolean checkSign(WxPayCallbackDto dto) {
+		Map<String, String> paramMap = toCallbackParamMap(dto);
+		return Signature.checkSign(paramMap, Constants.PAY_SECRET, dto.getSign());
+	}
+
+	private static Map<String, String> toCallbackParamMap(WxPayCallbackDto dto) {
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("return_code", dto.getReturnCode());
+		paramMap.put("return_msg", dto.getReturnMsg());
+		paramMap.put("appid", dto.getAppId());
+		paramMap.put("mch_id", dto.getMchId());
+		paramMap.put("device_info", dto.getDeviceInfo());
+		paramMap.put("nonce_str", dto.getNonceStr());
+		paramMap.put("sign_type", dto.getSignType());
+		paramMap.put("result_code", dto.getResultCode());
+		paramMap.put("err_code", dto.getErrCode());
+		paramMap.put("err_code_des", dto.getReturnMsg());
+		paramMap.put("openid", dto.getOpenId());
+		paramMap.put("is_subscribe", dto.getIsSubscribe());
+		paramMap.put("trade_type", dto.getTradeType());
+		paramMap.put("bank_type", dto.getBankType());
+		paramMap.put("total_fee", dto.getTotalFee());
+		paramMap.put("settlement_total_fee", dto.getSettlementTotalFee());
+		paramMap.put("fee_type", dto.getFeeType());
+		paramMap.put("transaction_id", dto.getTransactionId());
+		paramMap.put("out_trade_no", dto.getOutTradeNo());
+		paramMap.put("attach", dto.getAttach());
+		paramMap.put("time_end", dto.getTimeEnd());
+		paramMap.put("cash_fee", dto.getCashFee());
+
 		return paramMap;
 	}
 }

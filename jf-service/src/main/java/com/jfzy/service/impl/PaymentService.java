@@ -37,41 +37,6 @@ public class PaymentService {
 	@Value("${wechat.pay.notify.url}")
 	private String NOTIFY_URL;
 
-	private static String parseXml(Object obj) {
-
-		StringWriter sw = new StringWriter();
-		try {
-			JAXBContext context = JAXBContext.newInstance(obj.getClass());
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_ENCODING, "utf-8");
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
-			marshaller.marshal(obj, sw);
-			return sw.toString();
-		} catch (JAXBException e) {
-			throw new JfApplicationRuntimeException("Malformed vo of parseXml", e);
-		} finally {
-			try {
-				sw.close();
-			} catch (IOException e) {
-			}
-		}
-	}
-
-	private static WxPayResponseDto fromXml(String xml) {
-		StringReader sr = new StringReader(xml);
-		try {
-			JAXBContext context = JAXBContext.newInstance(WxPayResponseDto.class);
-
-			Unmarshaller unmarshaller = context.createUnmarshaller();
-			return (WxPayResponseDto) unmarshaller.unmarshal(sr);
-		} catch (JAXBException e) {
-			throw new JfApplicationRuntimeException("Malformed vo of parseXml", e);
-		} finally {
-			sr.close();
-		}
-	}
-
 	public static void main(String[] args) throws IOException {
 
 	}
@@ -81,7 +46,7 @@ public class PaymentService {
 		dto.setAppId(Constants.APP_ID);
 		dto.setNonceStr(UUID.randomUUID().toString().replace("-", ""));
 		dto.setMchId(Constants.MCH_ID);
-		dto.setBody(order.getProductName());
+		dto.setBody(String.format("简法二手房-%s", order.getProductName()));
 		dto.setOutTradeNo(String.valueOf(order.getId()));
 		dto.setTotalFee(getTotalFee(order.getRealPrice()));
 		dto.setSpbillCreateIp(ip);
@@ -91,11 +56,11 @@ public class PaymentService {
 
 		sign(dto, Constants.PAY_SECRET);
 
-		String xmlStr = parseXml(dto);
+		String xmlStr = XmlUtil.parseXml(dto);
 		String response;
 		try {
 			response = HttpClientUtils.post(PAY_URL, xmlStr);
-			WxPayResponseDto responseDto = fromXml(response);
+			WxPayResponseDto responseDto = (WxPayResponseDto) XmlUtil.fromXml(response, WxPayResponseDto.class);
 			if (!StringUtils.equals("SUCCESS", responseDto.getResultCode())
 					|| !StringUtils.equals("SUCCESS", responseDto.getReturnCode())) {
 				logger.error(String.format("Failed to do prepay request:%s", xmlStr));

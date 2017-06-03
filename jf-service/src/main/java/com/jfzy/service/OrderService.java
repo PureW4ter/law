@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
 
 public interface OrderService {
@@ -17,6 +18,8 @@ public interface OrderService {
 	void assignOrder(int orderId, int lawyerId, int processorId, String processorName);
 
 	WxPayResponseDto pay(int id, int userId, String ip, String openId);
+
+	void markPayed(WxPayEventBo bo, int userId);
 
 	void cancel(int id);
 

@@ -1,9 +1,12 @@
 package com.jfzy.service.impl;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ import com.jfzy.service.bo.OrderPayStatusEnum;
 import com.jfzy.service.bo.OrderPhotoBo;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.PayWayEnum;
+import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.OrderPhotoPo;
@@ -53,6 +57,16 @@ public class OrderServiceImpl implements OrderService {
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
 		OrderPo po = orderRepo.save(boToPo(bo));
 		return poToBo(po);
+	}
+
+	private static String generateSn() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSS");
+
+		return sdf.format(new Date());
+	}
+
+	public static void main(String[] args) {
+
 	}
 
 	@Override
@@ -224,6 +238,26 @@ public class OrderServiceImpl implements OrderService {
 		OrderPhotoPo po = new OrderPhotoPo();
 		BeanUtils.copyProperties(bo, po);
 		return po;
+	}
+
+	@Override
+	public void markPayed(WxPayEventBo bo, int userId) {
+		if (StringUtils.isNumeric(bo.getOutTradeNo())) {
+			OrderPo po = orderRepo.findOne(Integer.valueOf(bo.getOutTradeNo()));
+			if (po != null && userId == po.getUserId()) {
+				if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
+					orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
+							OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
+				}
+			} else if (po == null) {
+
+			} else {
+				// userid not match
+			}
+		} else {
+			// order id error
+			
+		}
 	}
 
 }
