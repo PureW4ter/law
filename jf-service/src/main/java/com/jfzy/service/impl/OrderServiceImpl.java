@@ -17,6 +17,7 @@ import com.jfzy.service.OrderService;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
 import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.OrderPayStatusEnum;
 import com.jfzy.service.bo.OrderPhotoBo;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.PayWayEnum;
@@ -34,15 +35,18 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderPhotoRepository orderPhotoRepo;
-	
+
 	@Autowired
 	private LawyerService lawyerSerivce;
 
+	@Autowired
+	private PaymentService paymentService;
+
 	@Override
 	public OrderBo createSOrder(OrderBo bo) {
-		if( Constants.PRODUCT_CODE_JIANDANWEN.equals(bo.getProductCode())){
+		if (Constants.PRODUCT_CODE_JIANDANWEN.equals(bo.getProductCode())) {
 			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
-		}else{
+		} else {
 			bo.setStatus(OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId());
 		}
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
@@ -52,27 +56,29 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderBo createIOrder(OrderBo bo) {
-		if( Constants.PRODUCT_CODE_HUKOU.equals(bo.getProductCode())){
+		if (Constants.PRODUCT_CODE_HUKOU.equals(bo.getProductCode())) {
 			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
-		}else{
+		} else {
 			bo.setStatus(OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId());
 		}
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
 		OrderPo po = orderRepo.save(boToPo(bo));
 		return poToBo(po);
 	}
-	
+
 	@Override
-	public void pay(int id) {
-		//FIXED ME
-		OrderBo bo = getOrderById(id);
-		if(bo.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()){
-			orderRepo.updateStatus(OrderStatusEnum.NOT_COMPLETED.getId(), new Timestamp(System.currentTimeMillis()), id);
-		}else if(bo.getStatus() == OrderStatusEnum.NO_PAY.getId()){
-			orderRepo.updateStatus(OrderStatusEnum.NEED_DISPATCH.getId(), new Timestamp(System.currentTimeMillis()), id);
+	public void pay(int id, int userId, String ip, String openId) {
+		// FIXED ME
+		OrderPo po = orderRepo.findByUserIdAndId(userId, id);
+		if (po == null) {
+			throw new JfApplicationRuntimeException("订单不存在");
+		} else if (po.getPayStatus() == OrderPayStatusEnum.PAYED.getId()) {
+			throw new JfApplicationRuntimeException("订单已支付");
+		} else if (po.getPayStatus() == OrderPayStatusEnum.REFUND.getId()) {
+			throw new JfApplicationRuntimeException("订单已退款");
+		} else {
+			paymentService.unifiedOrder(poToBo(po), ip, openId);
 		}
-		orderRepo.updatePayWay(PayWayEnum.WEIXIN.getId(), new Timestamp(System.currentTimeMillis()), id);
-		
 	}
 
 	@Override
@@ -83,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void complete(int id, String memo, String[] picList) {
 		OrderPhotoBo bo = new OrderPhotoBo();
-		for(int i=0; i<picList.length; i++){
+		for (int i = 0; i < picList.length; i++) {
 			bo.setOrderId(id);
 			bo.setPhotoPath(picList[i]);
 			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -91,23 +97,19 @@ public class OrderServiceImpl implements OrderService {
 		}
 		orderRepo.updateMemo(memo, new Timestamp(System.currentTimeMillis()), id);
 		orderRepo.updateStatus(OrderStatusEnum.NEED_DISPATCH.getId(), new Timestamp(System.currentTimeMillis()), id);
-		
-		OrderBo obo =  getOrderById(id);
-		if(Constants.PRODUCT_CODE_ZIXUNP.equals(obo.getProductCode())){
-			orderRepo.setStartAndEndTime(
-					new Timestamp(System.currentTimeMillis()), 
-					new Timestamp(System.currentTimeMillis()+2*60*60*1000), 
-					new Timestamp(System.currentTimeMillis()), 
-					id);
-		}else if(Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())){
-			orderRepo.setStartAndEndTime(
-					new Timestamp(System.currentTimeMillis()), 
-					new Timestamp(System.currentTimeMillis()+24*60*60*1000), 
-					new Timestamp(System.currentTimeMillis()), 
-					id);
+
+		OrderBo obo = getOrderById(id);
+		if (Constants.PRODUCT_CODE_ZIXUNP.equals(obo.getProductCode())) {
+			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
+					new Timestamp(System.currentTimeMillis() + 2 * 60 * 60 * 1000),
+					new Timestamp(System.currentTimeMillis()), id);
+		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())) {
+			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
+					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
+					new Timestamp(System.currentTimeMillis()), id);
 		}
 	}
-	
+
 	@Override
 	public void assignOrder(int orderId, int lawyerId, int processorId, String processorName) {
 
@@ -204,7 +206,7 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	private static OrderPo boToPo(OrderBo bo) {
 		OrderPo po = new OrderPo();
 		BeanUtils.copyProperties(bo, po);
@@ -216,8 +218,8 @@ public class OrderServiceImpl implements OrderService {
 		BeanUtils.copyProperties(po, bo);
 		return bo;
 	}
-	
-	private static OrderPhotoPo boToPo(OrderPhotoBo bo){
+
+	private static OrderPhotoPo boToPo(OrderPhotoBo bo) {
 		OrderPhotoPo po = new OrderPhotoPo();
 		BeanUtils.copyProperties(bo, po);
 		return po;

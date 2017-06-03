@@ -61,6 +61,7 @@ CREATE TABLE `jf_order` (
   `update_time` timestamp NULL DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '0',
   `pay_way` int(1) DEFAULT NULL,
+  `pay_status` int(1) NOT NULL DEFAULT '0',
   `type` int(1) DEFAULT NULL,
   `trade_phase` varchar(45) DEFAULT NULL,
   `trade_subphase` varchar(45) DEFAULT NULL,

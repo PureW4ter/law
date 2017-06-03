@@ -12,20 +12,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "jf_order")
 public class OrderPo {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(name = "order_sn")
 	private String sn;
-	
+
 	@Column(name = "city_id")
 	private int cityId;
-	
+
 	@Column(name = "user_id")
 	private int userId;
-	
+
 	@Column(name = "user_name")
 	private String userName;
 
@@ -54,7 +54,7 @@ public class OrderPo {
 
 	@Column(name = "product_code")
 	private String productCode;
-	
+
 	@Column(name = "origin_price")
 	private Double originPrice;
 
@@ -71,25 +71,28 @@ public class OrderPo {
 
 	@Column(name = "start_time")
 	private Timestamp startTime;
-	
+
 	@Column(name = "end_time")
 	private Timestamp endTime;
 	
 	@Column(name = "phone_end_time")
 	private Timestamp phoneEndTime;
-	
+
 	@Column(name = "memo")
 	private String memo;
 
 	@Column(name = "pay_way")
 	private int payWay;
-	
+
+	@Column(name = "pay_status")
+	private int payStatus;
+
 	@Column(name = "owner_name")
 	private String ownerName;
-	
+
 	@Column(name = "owner_phone")
 	private String ownerPhone;
-	
+
 	public String getProductCode() {
 		return productCode;
 	}
@@ -298,4 +301,11 @@ public class OrderPo {
 		this.phoneEndTime = phoneEndTime;
 	}
 	
+	public int getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(int payStatus) {
+		this.payStatus = payStatus;
+	}
 }

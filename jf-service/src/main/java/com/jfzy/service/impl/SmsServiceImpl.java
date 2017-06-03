@@ -16,7 +16,7 @@ import com.jfzy.service.SmsService;
 @Service
 public class SmsServiceImpl implements SmsService {
 
-	private static final String TEMPLATE_REGISTER = "SMS_66790004";
+	private static final String TEMPLATE_REGISTER = "SMS_69015764";
 	private static final String PARAM_CODE = "code";
 	private static final String PARAM_PRODUCT = "product";
 	private static final String VALUE_PRODUCT = "简法二手房";
