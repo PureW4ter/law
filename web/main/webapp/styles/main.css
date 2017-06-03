@@ -818,81 +818,32 @@ header h1 {
     border-radius: 20px;
     letter-spacing: 2px;
 }
-.read_keys{
+
+.read_keys ul {
     position: relative;
+    overflow: hidden;
+    padding: 10px 0 10px 10px;
+    font-size: 12px;
+    color: #666666;
 }
-.read_keys>.small{
-    position: absolute;
-    border: 1px solid #999999;
-    border-radius: 50%;
-    color: #999999;
-    width: 70px;
-    height: 70px;
+
+.read_keys ul>li {
+    position: relative;
+    float: left;
+    width: 33.333333%;
+}
+
+.read_keys ul>li>div {
+    margin-right: 10px;
+    height: 30px;
+    line-height: 30px;
     text-align: center;
-    line-height: 70px;
-    font-size: 14px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
 }
-.read_keys>.middle{
-    position: absolute;
-    border: 1px solid #999999;
-    border-radius: 50%;
-    color: #999999;
-    width: 90px;
-    height: 90px;
-    text-align: center;
-    line-height: 90px;
-    font-size: 18;
-}
-.read_keys>.big{
-    position: absolute;
-    border: 1px solid #999999;
-    border-radius: 50%;
-    color: #999999;
-    width: 120px;
-    height: 120px;
-    text-align: center;
-    line-height: 120px;
-    font-size: 20px;
-}
-.read_keys>.law{
-    left: 27px;
-    top: 27px;
-}
-.read_keys>.house{
-    left: 101px;
-    top: 59px;
-}
-.read_keys>.estate{
-    right: 43px;
-    top: 55px;
-}
-.read_keys>.divorce{
-    left: 15px;
-    top: 176px;
-}
-.read_keys>.tax{
-    left: 150px;
-    top: 183px;
-}
-.read_keys>.property{
-    right: 38px;
-    top: 213px;
-}
-.read_keys>.hukou{
-    left: 129px;
-    top: 268px;
-}
-.read_keys>.contact{
-    left: 30px;
-    top: 355px
-}
-.read_keys>.rule{
-    left: 141px;
-    top: 338px;
-}
-.read_keys>.huji{
-    right: 23px;
-    top: 354px;
+
+.key_selected{
+    border: 2px solid #be9564 !important;
 }
 /*阅读列表*/
 .read_list {

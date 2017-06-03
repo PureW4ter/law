@@ -13,38 +13,33 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
+            <script type="text/template" id="i_tpl">
             <div class="read_title_box">
                 <div class="read_title1">您对什么感兴趣？</div>
                 <div class="read_title2">选择想看到的内容吧</div>
             </div>
-            <div class="read_keys">
-                <span class="small law">律师</span>
-                <span class="middle house">房屋纠纷</span>
-                <span class="big estate">房产</span>
-                <span class="big divorce">离婚</span>
-                <span class="small tax">税费承担</span>
-                <span class="middle property">户口问题</span>
-                <span class="small hukou">财产</span>
-                <span class="middle contact">合同</span>
-                <span class="big rule">政策变动</span>
-                <span class="small huji">户籍</span>
+            <div class="read_keys" id="i_read_keys">
+               <ul>
+                    <%_.each(result.r, function(item, index){%>
+                        <li data-name="<%=item.name%>"><div><%=item.name%></div></li>
+                        <%if(index%3 == 2){%>
+                        </ul>
+                        <ul> 
+                        <%}%>
+                    <%})%>
+                    
+               </ul>
             </div>
-            <!--div class="read_bottom_box">
-                <div class="read_bottom_info">
-                    <input name="i_save" type="checkbox" class="regular_checkbox"/>
-                    <label for="i_save">记录我的选择</label>
-                </div>
-                <div class="read_bottom_btn" id="i_go">确认</div>
-            </div-->
             <div class="read_bottom_box">
                 <div class="read_bottom_btn" id="i_go">确认</div>
             </div>
+            </script>
         </div>
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170526151717" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170603143236" type="text/javascript"></script>
 <script type="text/javascript">
-    define('read_keys',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this._sendRequest()},_sendRequest:function(){this._render()},_render:function(){this._registEvent()},_registEvent:function(){$("#i_go").off("click",this._go).on("click",{ctx:this},this._go)},_go:function(e){window.location="read_list.html"}};return r});
+    define('read_keys',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={};t.get("http://"+window.frontJSHost+"/article/tag",e,this,this._render)},_render:function(e){this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){$("#i_read_keys").off("click","li",this._select).on("click","li",{ctx:this},this._select),$("#i_go").off("click",this._go).on("click",{ctx:this},this._go)},_go:function(e){var t=new Array;$(".key_selected").forEach(function(e,n){t.push($(e).data("name"))}),window.location="read_list.html"},_select:function(e){$(e.currentTarget).find("div").toggleClass("key_selected")}};return r});
 </script>
 </html>
