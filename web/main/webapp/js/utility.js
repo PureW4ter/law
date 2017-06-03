@@ -185,8 +185,9 @@ define([],function(){
             	});
        	 	});
         },
-        weixinPay:function(payInfo, successURL, oid){
-        	alert(JSON.stringify(payInfo));
+        weixinPay:function(payInfoObj, successURL, oid){
+        	alert(JSON.stringify(payInfoObj));
+        	var payInfo = payInfoObj;
         	function _onBridgeReady() {
                 window.WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {
@@ -209,7 +210,7 @@ define([],function(){
             if (typeof window.WeixinJSBridge == "undefined") { 
                 $(document).off("WeixinJSBridgeReady", _onBridgeReady).on("WeixinJSBridgeReady", _onBridgeReady); 
             } else {
-                _onBridgeReady(payInfo);
+                _onBridgeReady();
             }
         },
         _getOpenId :function(oid, url){

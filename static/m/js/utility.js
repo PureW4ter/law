@@ -185,8 +185,9 @@ define([],function(){
             	});
        	 	});
         },
-        weixinPay:function(payInfo, successURL, oid){
-        	alert(JSON.stringify(payInfo));
+        weixinPay:function(payInfoObj, successURL, oid){
+        	alert(JSON.stringify(payInfoObj));
+        	var payInfo = payInfoObj;
         	function _onBridgeReady() {
                 window.WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {
