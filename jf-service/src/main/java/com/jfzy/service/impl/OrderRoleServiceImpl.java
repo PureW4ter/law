@@ -1,7 +1,6 @@
 package com.jfzy.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +66,9 @@ public class OrderRoleServiceImpl implements OrderRoleService {
 				if (self != null && parent != null) {
 					if (parent.getSubPhases() == null) {
 						parent.setSubPhases(new ArrayList<PhaseBo>());
+						parent.getSubPhases().add(self);
+					}
+					else{
 						parent.getSubPhases().add(self);
 					}
 				}
