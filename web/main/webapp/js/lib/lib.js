@@ -32,7 +32,7 @@ window.frontJSVersion = "{front_version}";
 window.UrlHost = "{UrlHost}";
 window.frontJSHost = "{frontJSHost}";
 
-window.frontJSHost = "wx.jf-zy.com/api";
+window.frontJSHost = "localhost:8080/api";
 window.UrlHost = "wx.jf-zy.com";
 
 window.qiniuDomain = "http://oqtjthr3a.bkt.clouddn.com/";

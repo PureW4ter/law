@@ -45,7 +45,14 @@ public class LawyerPo {
 	private int level;
 	
 	private double money;
+	
+	private int completed;
+	
+	private int process;
 
+	@Column(name = "total_task")
+	private int totalTask;
+	
 	public int getId() {
 		return id;
 	}
@@ -149,4 +156,29 @@ public class LawyerPo {
 	public void setMoney(double money) {
 		this.money = money;
 	}
+
+	public int getCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(int completed) {
+		this.completed = completed;
+	}
+
+	public int getProcess() {
+		return process;
+	}
+
+	public void setProcess(int process) {
+		this.process = process;
+	}
+
+	public int getTotalTask() {
+		return totalTask;
+	}
+
+	public void setTotalTask(int totalTask) {
+		this.totalTask = totalTask;
+	}
+	
 }

@@ -228,7 +228,7 @@ define([],function(){
             window.location = url + "#wechat_redirect";
         },
         getUserId:function(){
-        	if(!this.getData("userInfo") || !JSON.parse(this.getData("userInfo")).phone){
+        	if(!this.getData("userInfo")){
         		window.location = "regist.html";
         	}
         	var userInfo = JSON.parse(this.getData("userInfo"));

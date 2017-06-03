@@ -14,7 +14,14 @@ define(['component/header', 'ajaxhelper', 'utility', 'scroll'],function(header, 
 			this._sendRequest(false);
 		},
 		_sendRequest :function(isPaging){
-			var params = {"page": this.pageNo, "size":this.pageSize};
+			var readKeys = JSON.parse(util.getData("readKeys"));
+			if(readKeys){
+			}
+			var params = {
+				"tags": (readKeys?readKeys.join(","):""),
+				"page": this.pageNo, 
+				"size":this.pageSize
+			};
 			ajaxHelper.get("http://" + window.frontJSHost + "/article/list",
                 params, this, this._render, null, isPaging);
 		},

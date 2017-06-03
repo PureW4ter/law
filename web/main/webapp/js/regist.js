@@ -32,9 +32,8 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
         },
 		_render:function(user){
 			this.user = user.r;
-			util.saveData('userInfo', JSON.stringify(this.user)); 
-
 			if(!!this.user.phone){
+				util.saveData('userInfo', JSON.stringify(this.user));
 				window.location = "index.html";
 				return;
 			}
@@ -56,7 +55,8 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
 				"userId": e.data.ctx.user.id
 			}
 			ajaxHelper.get("http://" + window.frontJSHost + "/user/bind",
-                params, this, function(){
+                params, this, function(data){
+                	util.saveData('userInfo', JSON.stringify(data.r));
                 	window.location = "index.html";
                 });
 		} 
