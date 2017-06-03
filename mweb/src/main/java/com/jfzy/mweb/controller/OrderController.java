@@ -208,7 +208,7 @@ public class OrderController extends BaseController {
 		vo.setAppId(dto.getAppId());
 		vo.setTimestamp(String.valueOf(System.currentTimeMillis() / 1000));
 		vo.setNonceStr(dto.getNonceStr());
-		vo.setPkg(String.format("prepaid_id=%s", dto.getPrepayId()));
+		vo.setPkg(String.format("prepay_id=%s", dto.getPrepayId()));
 		vo.setPaySign(Signature.getSign(toh5ParamMap(vo), Constants.PAY_SECRET));
 		return vo;
 	}
