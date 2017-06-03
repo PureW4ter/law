@@ -186,14 +186,15 @@ define([],function(){
        	 	});
         },
         weixinPay:function(payInfo, successURL, oid){
+        	alert(JSON.stringify(payInfo));
         	function _onBridgeReady() {
                 window.WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {
                         "appId": payInfo.appId, //公众号名称，由商户传入     
                         "timeStamp": payInfo.timeStamp + "", //时间戳，自1970年以来的秒数   
                         "nonceStr": payInfo.nonceStr, //随机串     
-                        "package":  payInfo.package,
-                        "signType": "MD5",   //微信签名方式
+                        "package":  payInfo.pkg,
+                        "signType": payInfo.signType,   //微信签名方式
                         "paySign": payInfo.sign
                     },
                     function(res) {
@@ -226,7 +227,7 @@ define([],function(){
             window.location = url + "#wechat_redirect";
         },
         getUserId:function(){
-        	if(!this.getData("userInfo")){
+        	if(!this.getData("userInfo") || !JSON.parse(this.getData("userInfo")).phone){
         		window.location = "regist.html";
         	}
         	var userInfo = JSON.parse(this.getData("userInfo"));

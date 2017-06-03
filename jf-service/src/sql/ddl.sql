@@ -58,6 +58,7 @@ CREATE TABLE `jf_order` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
+  `phone_end_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '0',
   `pay_way` int(1) DEFAULT NULL,
