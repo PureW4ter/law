@@ -188,7 +188,7 @@ define([],function(){
         weixinPay:function(payInfoObj, successURL, oid){
         	var payInfo = payInfoObj;
         	function _onBridgeReady() {
-        		alert(JSON.stringify(payInfoObj));
+        		alert(JSON.stringify(payInfoObj)+"--");
                 window.WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {
                         "appId": payInfo.appId, //公众号名称，由商户传入     
