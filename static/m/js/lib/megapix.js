@@ -8,5 +8,254 @@
  * Copyright (c) 2012 Shinichi Tomita <shinichi.tomita@gmail.com>
  * Released under the MIT license
  */
+(function() {
 
-(function(){function e(e){var t=e.naturalWidth,n=e.naturalHeight;if(t*n>1048576){var r=document.createElement("canvas");r.width=r.height=1;var i=r.getContext("2d");return i.drawImage(e,-t+1,0),i.getImageData(0,0,1,1).data[3]===0}return!1}function t(e,t,n){var r=document.createElement("canvas");r.width=1,r.height=n;var i=r.getContext("2d");i.drawImage(e,0,0);var s=i.getImageData(0,0,1,n).data,o=0,u=n,a=n;while(a>o){var f=s[(a-1)*4+3];f===0?u=a:o=a,a=u+o>>1}var l=a/n;return l===0?1:l}function n(e,t,n){var i=document.createElement("canvas");return r(e,i,t,n),i.toDataURL("image/jpeg",t.quality||.8)}function r(n,r,s,o){var u=n.naturalWidth,a=n.naturalHeight;if(!(u+a))return;var f=s.width,l=s.height,c=r.getContext("2d");c.save(),i(r,c,f,l,s.orientation);var h=e(n);h&&(u/=2,a/=2);var p=1024,d=document.createElement("canvas");d.width=d.height=p;var v=d.getContext("2d"),m=o?t(n,u,a):1,g=Math.ceil(p*f/u),y=Math.ceil(p*l/a/m),b=0,w=0;while(b<a){var E=0,S=0;while(E<u)v.clearRect(0,0,p,p),v.drawImage(n,-E,-b),c.drawImage(d,0,0,p,p,S,w,g,y),E+=p,S+=g;b+=p,w+=y}c.restore(),d=v=null}function i(e,t,n,r,i){switch(i){case 5:case 6:case 7:case 8:e.width=r,e.height=n;break;default:e.width=n,e.height=r}switch(i){case 2:t.translate(n,0),t.scale(-1,1);break;case 3:t.translate(n,r),t.rotate(Math.PI);break;case 4:t.translate(0,r),t.scale(1,-1);break;case 5:t.rotate(.5*Math.PI),t.scale(1,-1);break;case 6:t.rotate(.5*Math.PI),t.translate(0,-r);break;case 7:t.rotate(.5*Math.PI),t.translate(n,-r),t.scale(-1,1);break;case 8:t.rotate(-0.5*Math.PI),t.translate(-n,0);break;default:}}function o(e){if(window.Blob&&e instanceof Blob){if(!s)throw Error("No createObjectURL function found to create blob url");var t=new Image;t.src=s.createObjectURL(e),this.blob=e,e=t}if(!e.naturalWidth&&!e.naturalHeight){var n=this;e.onload=e.onerror=function(){var e=n.imageLoadListeners;if(e){n.imageLoadListeners=null;for(var t=0,r=e.length;t<r;t++)e[t]()}},this.imageLoadListeners=[]}this.srcImage=e}var s=window.URL&&window.URL.createObjectURL?window.URL:window.webkitURL&&window.webkitURL.createObjectURL?window.webkitURL:null;o.prototype.render=function(e,t,i){if(this.imageLoadListeners){var o=this;this.imageLoadListeners.push(function(){o.render(e,t,i)});return}t=t||{};var u=this.srcImage.naturalWidth,a=this.srcImage.naturalHeight,f=t.width,l=t.height,c=t.maxWidth,h=t.maxHeight,p=!this.blob||this.blob.type==="image/jpeg";f&&!l?l=a*f/u<<0:l&&!f?f=u*l/a<<0:(f=u,l=a),c&&f>c&&(f=c,l=a*f/u<<0),h&&l>h&&(l=h,f=u*l/a<<0);var d={width:f,height:l};for(var v in t)d[v]=t[v];var m=e.tagName.toLowerCase();m==="img"?e.src=n(this.srcImage,d,p):m==="canvas"&&r(this.srcImage,e,d,p),typeof this.onrender=="function"&&this.onrender(e),i&&i(),this.blob&&(this.blob=null,s.revokeObjectURL(this.srcImage.src))},typeof define=="function"&&define.amd?define([],function(){return o}):this.MegaPixImage=o})();
+  /**
+   * Detect subsampling in loaded image.
+   * In iOS, larger images than 2M pixels may be subsampled in rendering.
+   */
+  function detectSubsampling(img) {
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    if (iw * ih > 1024 * 1024) { // subsampling may happen over megapixel image
+      var canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, -iw + 1, 0);
+      // subsampled image becomes half smaller in rendering size.
+      // check alpha channel value to confirm image is covering edge pixel or not.
+      // if alpha value is 0 image is not covering, hence subsampled.
+      return ctx.getImageData(0, 0, 1, 1).data[3] === 0;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Detecting vertical squash in loaded image.
+   * Fixes a bug which squash image vertically while drawing into canvas for some images.
+   */
+  function detectVerticalSquash(img, iw, ih) {
+    var canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = ih;
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    var data = ctx.getImageData(0, 0, 1, ih).data;
+    // search image edge pixel position in case it is squashed vertically.
+    var sy = 0;
+    var ey = ih;
+    var py = ih;
+    while (py > sy) {
+      var alpha = data[(py - 1) * 4 + 3];
+      if (alpha === 0) {
+        ey = py;
+      } else {
+        sy = py;
+      }
+      py = (ey + sy) >> 1;
+    }
+    var ratio = (py / ih);
+    return (ratio===0)?1:ratio;
+  }
+
+  /**
+   * Rendering image element (with resizing) and get its data URL
+   */
+  function renderImageToDataURL(img, options, doSquash) {
+    var canvas = document.createElement('canvas');
+    renderImageToCanvas(img, canvas, options, doSquash);
+    return canvas.toDataURL("image/jpeg", options.quality || 0.8);
+  }
+
+  /**
+   * Rendering image element (with resizing) into the canvas element
+   */
+  function renderImageToCanvas(img, canvas, options, doSquash) {
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    if (!(iw+ih)) return;
+    var width = options.width, height = options.height;
+    var ctx = canvas.getContext('2d');
+    ctx.save();
+    transformCoordinate(canvas, ctx, width, height, options.orientation);
+    var subsampled = detectSubsampling(img);
+    if (subsampled) {
+      iw /= 2;
+      ih /= 2;
+    }
+    var d = 1024; // size of tiling canvas
+    var tmpCanvas = document.createElement('canvas');
+    tmpCanvas.width = tmpCanvas.height = d;
+    var tmpCtx = tmpCanvas.getContext('2d');
+    var vertSquashRatio = doSquash ? detectVerticalSquash(img, iw, ih) : 1;
+    var dw = Math.ceil(d * width / iw);
+    var dh = Math.ceil(d * height / ih / vertSquashRatio);
+    var sy = 0;
+    var dy = 0;
+    while (sy < ih) {
+      var sx = 0;
+      var dx = 0;
+      while (sx < iw) {
+        tmpCtx.clearRect(0, 0, d, d);
+        tmpCtx.drawImage(img, -sx, -sy);
+        ctx.drawImage(tmpCanvas, 0, 0, d, d, dx, dy, dw, dh);
+        sx += d;
+        dx += dw;
+      }
+      sy += d;
+      dy += dh;
+    }
+    ctx.restore();
+    tmpCanvas = tmpCtx = null;
+  }
+
+  /**
+   * Transform canvas coordination according to specified frame size and orientation
+   * Orientation value is from EXIF tag
+   */
+  function transformCoordinate(canvas, ctx, width, height, orientation) {
+    switch (orientation) {
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+        canvas.width = height;
+        canvas.height = width;
+        break;
+      default:
+        canvas.width = width;
+        canvas.height = height;
+    }
+    switch (orientation) {
+      case 2:
+        // horizontal flip
+        ctx.translate(width, 0);
+        ctx.scale(-1, 1);
+        break;
+      case 3:
+        // 180 rotate left
+        ctx.translate(width, height);
+        ctx.rotate(Math.PI);
+        break;
+      case 4:
+        // vertical flip
+        ctx.translate(0, height);
+        ctx.scale(1, -1);
+        break;
+      case 5:
+        // vertical flip + 90 rotate right
+        ctx.rotate(0.5 * Math.PI);
+        ctx.scale(1, -1);
+        break;
+      case 6:
+        // 90 rotate right
+        ctx.rotate(0.5 * Math.PI);
+        ctx.translate(0, -height);
+        break;
+      case 7:
+        // horizontal flip + 90 rotate right
+        ctx.rotate(0.5 * Math.PI);
+        ctx.translate(width, -height);
+        ctx.scale(-1, 1);
+        break;
+      case 8:
+        // 90 rotate left
+        ctx.rotate(-0.5 * Math.PI);
+        ctx.translate(-width, 0);
+        break;
+      default:
+        break;
+    }
+  }
+
+  var URL = window.URL && window.URL.createObjectURL ? window.URL :
+            window.webkitURL && window.webkitURL.createObjectURL ? window.webkitURL :
+            null;
+
+  /**
+   * MegaPixImage class
+   */
+  function MegaPixImage(srcImage) {
+    if (window.Blob && srcImage instanceof Blob) {
+      if (!URL) { throw Error("No createObjectURL function found to create blob url"); }
+      var img = new Image();
+      img.src = URL.createObjectURL(srcImage);
+      this.blob = srcImage;
+      srcImage = img;
+    }
+    if (!srcImage.naturalWidth && !srcImage.naturalHeight) {
+      var _this = this;
+      srcImage.onload = srcImage.onerror = function() {
+        var listeners = _this.imageLoadListeners;
+        if (listeners) {
+          _this.imageLoadListeners = null;
+          for (var i=0, len=listeners.length; i<len; i++) {
+            listeners[i]();
+          }
+        }
+      };
+      this.imageLoadListeners = [];
+    }
+    this.srcImage = srcImage;
+  }
+
+  /**
+   * Rendering megapix image into specified target element
+   */
+  MegaPixImage.prototype.render = function(target, options, callback) {
+    if (this.imageLoadListeners) {
+      var _this = this;
+      this.imageLoadListeners.push(function() { _this.render(target, options, callback); });
+      return;
+    }
+    options = options || {};
+    var imgWidth = this.srcImage.naturalWidth, imgHeight = this.srcImage.naturalHeight,
+        width = options.width, height = options.height,
+        maxWidth = options.maxWidth, maxHeight = options.maxHeight,
+        doSquash = !this.blob || this.blob.type === 'image/jpeg';
+    if (width && !height) {
+      height = (imgHeight * width / imgWidth) << 0;
+    } else if (height && !width) {
+      width = (imgWidth * height / imgHeight) << 0;
+    } else {
+      width = imgWidth;
+      height = imgHeight;
+    }
+    if (maxWidth && width > maxWidth) {
+      width = maxWidth;
+      height = (imgHeight * width / imgWidth) << 0;
+    }
+    if (maxHeight && height > maxHeight) {
+      height = maxHeight;
+      width = (imgWidth * height / imgHeight) << 0;
+    }
+    var opt = { width : width, height : height };
+    for (var k in options) opt[k] = options[k];
+
+    var tagName = target.tagName.toLowerCase();
+    if (tagName === 'img') {
+      target.src = renderImageToDataURL(this.srcImage, opt, doSquash);
+    } else if (tagName === 'canvas') {
+      renderImageToCanvas(this.srcImage, target, opt, doSquash);
+    }
+    if (typeof this.onrender === 'function') {
+      this.onrender(target);
+    }
+    if (callback) {
+      callback();
+    }
+    if (this.blob) {
+      this.blob = null;
+      URL.revokeObjectURL(this.srcImage.src);
+    }
+  };
+
+  /**
+   * Export class to global
+   */
+  if (typeof define === 'function' && define.amd) {
+    define([], function() { return MegaPixImage; }); // for AMD loader
+  } else {
+    this.MegaPixImage = MegaPixImage;
+  }
+
+})();

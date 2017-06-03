@@ -1,1 +1,59 @@
-define('ask_free',["component/header","ajaxhelper","utility"],function(e,t,n){var r={ipropertis:null,idIndex:0,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={};t.get("http://"+window.frontJSHost+"/ask/props",e,this,this._render,null)},_render:function(e){this.propertis=e,this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){$("#i_pay").off("click",this._pay).on("click",{ctx:this},this._pay),$("#i_identity").off("change",this._changeIdentity).on("change",{ctx:this},this._changeIdentity)},_changeIdentity:function(e){var t=$(e.target).find("option").not(function(){return!this.selected}).val();e.data.ctx.idIndex=t,$("#i_trade_phase").find("option").remove(),e.data.ctx.propertis.r[2][t].phases.forEach(function(e,t){$("#i_trade_phase").append("<option value='"+t+"'>"+e.phase+"</option>")}),e.data.ctx._registEvent()},_pay:function(e){var r={userId:n.getUserId(),productId:$("#i_product").data("id"),role:$("#i_identity option").not(function(){return!this.selected}).text(),tradePhase:$("#i_trade_phase option").not(function(){return!this.selected}).text(),memo:$("#i_memo").val()};t.post("http://"+window.frontJSHost+"/order/screate",r,this,function(e){var n={id:e.r.id};t.get("http://"+window.frontJSHost+"/order/pay",n,this,function(e){window.location="success.html"})})}};return r});
+define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
+    var AskFree = {
+        ipropertis: null,
+    	idIndex: 0,
+        initialize :function(){
+        	//body
+			this.mainBox = $('#i_mainbox');
+			this.tplfun = _.template($("#i_tpl").html());
+			//request
+			this._sendRequest();
+		},
+		_sendRequest :function(){
+			var params = {};
+			ajaxHelper.get("http://" + window.frontJSHost + "/ask/props",
+                params, this, this._render, null);
+		},
+		_render:function(data){
+			this.propertis = data;
+			this.mainBox.html(this.tplfun({"result": data}));
+			this._registEvent();
+		},
+		_registEvent:function(){
+			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
+			$("#i_identity").off("change", this._changeIdentity).on("change", {ctx: this}, this._changeIdentity);
+		},
+		_changeIdentity:function(e){
+			var index = $(e.target).find("option").
+						not(function(){ return !this.selected }).val();
+			e.data.ctx.idIndex = index;
+			$("#i_trade_phase").find("option").remove();
+			e.data.ctx.propertis.r[2][index].phases.forEach(
+				function(item, index){
+					$("#i_trade_phase").append("<option value='"+ index + "'>"+ item.phase + "</option>"); 
+				}
+			);
+			e.data.ctx._registEvent();
+		},
+		_pay:function(e){
+			var params = {
+				"userId": util.getUserId(),
+				"productId": $("#i_product").data("id"),
+				"role": $("#i_identity option").not(function(){ return !this.selected }).text(),
+				"tradePhase": $("#i_trade_phase option").not(function(){ return !this.selected }).text(),
+				"memo": $("#i_memo").val()
+			}
+			ajaxHelper.post("http://" + window.frontJSHost + "/order/screate",
+                params, this, function(data){
+                	var ps = {
+                		"id": data.r.id
+                	}
+                	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
+                		this, function(data){
+                			window.location = "success.html"
+                		});
+                });
+		},
+    };
+    return AskFree;
+});

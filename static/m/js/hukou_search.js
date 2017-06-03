@@ -1,1 +1,48 @@
-define('hukou_search',["component/header","ajaxhelper","utility"],function(e,t,n){var r={cities:n.cities,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={};t.get("http://"+window.frontJSHost+"/ask/props",e,this,this._render,null)},_render:function(e){e.r.push(this.cities),this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){$("#i_pay").off("click",this._pay).on("click",{ctx:this},this._pay)},_pay:function(e){var r={userId:n.getUserId(),productId:$("#i_product").data("id"),ownerName:$("#i_name").val(),ownerPhone:$("#i_phone").val(),cityId:$("#i_city").val(),address:$("#i_addr").val(),email:$("#i_email").val()};t.post("http://"+window.frontJSHost+"/order/icreate",r,this,function(e){var r={id:e.r.id};t.get("http://"+window.frontJSHost+"/order/pay",r,this,function(e){n.weixinPay(e.r)})},null)}};return r});
+define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
+    var HukouSearch = {
+    	cities:util.cities,
+        initialize :function(){
+			//body
+			this.mainBox = $('#i_mainbox');
+			this.tplfun = _.template($("#i_tpl").html());
+			//request
+			this._sendRequest();
+		},
+		_sendRequest :function(){
+			var params = {};
+			ajaxHelper.get("http://" + window.frontJSHost + "/ask/props",
+                params, this, this._render, null);
+		},
+		_render:function(data){
+			data.r.push(this.cities);
+			this.mainBox.html(this.tplfun({"result": data}));
+			this._registEvent();
+		},
+		_registEvent:function(){
+			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
+		},
+		_pay:function(e){
+			var params = {
+				"userId": util.getUserId(),
+				"productId": $("#i_product").data("id"),
+				"ownerName": $("#i_name").val(),
+				"ownerPhone": $("#i_phone").val(),
+				"cityId": $("#i_city").val(),
+				"address": $("#i_addr").val(),
+				"email": $("#i_email").val(),
+			}
+			ajaxHelper.post("http://" + window.frontJSHost + "/order/icreate",
+                params, this, function(data){
+                	var ps = {
+                		"id": data.r.id
+                	}
+                	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
+                		this, function(data){
+                			util.weixinPay(data.r);
+							//window.location = "success.html";
+                		});
+                }, null);
+		}
+    };
+    return HukouSearch;
+});

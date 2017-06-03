@@ -1,1 +1,65 @@
-define('regist',["ajaxhelper","utility","component/time_button"],function(e,t,n){var r={user:null,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),t.getQueryParameter("code")?this._sendRequest():this._createWXUser()},_sendRequest:function(){var n={code:t.getQueryParameter("code")};e.get("http://"+window.frontJSHost+"/user/wxlogin",n,this,this._render)},_createWXUser:function(){var e="https://open.weixin.qq.com/connect/oauth2/authorize?",n="http://wx.jf-zy.com/regist.html",r={};r.appid=t.appid,r.redirect_uri=encodeURIComponent(n),r.response_type="code",r.scope="snsapi_userinfo";for(var i in r)e+=i+"="+r[i]+"&";e=e.substr(0,e.length-1),window.location=e+"#wechat_redirect"},_render:function(e){this.user=e.r,t.saveData("userInfo",JSON.stringify(this.user));if(!!this.user.phone){window.location="index.html";return}this.mainBox.html(this.tplfun()),n.initialize("i_getcode_btn"),this._registEvent()},_registEvent:function(){$("#i_regist_btn").off("click",this._bind).on("click",{ctx:this},this._bind),n.registBtnEvent(this.getCode)},getCode:function(){},_bind:function(t){var n={phone:$("#i_phone").val(),code:$("#i_input_code").val(),userId:t.data.ctx.user.id};e.get("http://"+window.frontJSHost+"/user/bind",n,this,function(){window.location="index.html"})}};return r});
+define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, util, timeBtn) {
+    var Regist = {
+    	user:null,
+        initialize: function() {
+        	//body
+			this.mainBox = $('#i_mainbox');
+			this.tplfun = _.template($("#i_tpl").html());
+            if(!util.getQueryParameter("code")){
+           		this._createWXUser();
+            }else{
+           		this._sendRequest();
+            }
+        },
+		_sendRequest :function(){
+			var params = {code: util.getQueryParameter("code")};
+			ajaxHelper.get("http://" + window.frontJSHost + "/user/wxlogin",
+                params, this, this._render);
+		},
+		_createWXUser :function(){
+            var url = "https://open.weixin.qq.com/connect/oauth2/authorize?";
+            var redirect_uri = "http://wx.jf-zy.com/regist.html";
+            var params = {};
+            params["appid"] = util.appid;
+            params["redirect_uri"] = encodeURIComponent(redirect_uri);
+            params["response_type"] = "code";
+            params["scope"] = "snsapi_userinfo";
+            for(var i in params){
+                url += i + '=' + params[i] + '&';
+            }
+            url = url.substr(0, url.length-1);
+            window.location = url + "#wechat_redirect"
+        },
+		_render:function(user){
+			this.user = user.r;
+			util.saveData('userInfo', JSON.stringify(this.user)); 
+
+			if(!!this.user.phone){
+				window.location = "index.html";
+				return;
+			}
+			this.mainBox.html(this.tplfun());
+			timeBtn.initialize("i_getcode_btn");
+			this._registEvent();
+		},
+		_registEvent:function(){
+			$("#i_regist_btn").off("click", this._bind).on("click", {ctx: this}, this._bind);
+			timeBtn.registBtnEvent(this.getCode);
+		},
+		getCode:function(){
+
+		},
+		_bind:function(e){
+			var params = {
+				"phone": $("#i_phone").val(),
+				"code": $("#i_input_code").val(),
+				"userId": e.data.ctx.user.id
+			}
+			ajaxHelper.get("http://" + window.frontJSHost + "/user/bind",
+                params, this, function(){
+                	window.location = "index.html";
+                });
+		} 
+    };
+    return Regist;
+});
