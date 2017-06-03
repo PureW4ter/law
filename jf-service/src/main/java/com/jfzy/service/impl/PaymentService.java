@@ -82,7 +82,7 @@ public class PaymentService {
 		dto.setNonceStr(UUID.randomUUID().toString().replace("-", ""));
 		dto.setMchId(Constants.MCH_ID);
 		dto.setBody(order.getProductName());
-		dto.setOutTradeNo(String.valueOf(order.getId()));
+		dto.setOutTradeNo(order.getSn());
 		dto.setTotalFee(getTotalFee(order.getRealPrice()));
 		dto.setSpbillCreateIp(ip);
 		dto.setNotifyUrl(NOTIFY_URL);
