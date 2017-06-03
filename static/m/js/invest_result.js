@@ -1,1 +1,9 @@
-define('invest_result',["ajaxhelper","utility"],function(e,t){var n={initialize:function(){}};return n});
+define(['ajaxhelper', 'utility'], function(ajaxHelper, util) {
+    var InvestResult = {
+        initialize: function() {
+           
+
+        },
+    };
+    return InvestResult;
+});

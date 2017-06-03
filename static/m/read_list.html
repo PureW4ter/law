@@ -44,8 +44,8 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170603143236" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver={front_version}" type="text/javascript"></script>
 <script type="text/javascript">
-    define('read_list',["component/header","ajaxhelper","utility","scroll"],function(e,t,n,r){var i={initialized:!1,pageNo:0,pageSize:5,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest(!1)},_sendRequest:function(e){var n={page:this.pageNo,size:this.pageSize};t.get("http://"+window.frontJSHost+"/article/list",n,this,this._render,null,e)},_render:function(e){this.pageNo++;if(!this.initialized)this.mainBox.html(this.tplfun({result:e})),this._registEvent(),this.initialized=!0,e.r.length==this.pageSize?r.initialize(this):$("#i_refresh").css("display","none");else{var t=$(this.tplfun({result:e})).find("#i_info_list li");t.insertBefore("#i_refresh"),e.r.length<this.pageSize?($("#i_refresh").css("display","none"),r.setDisabled()):r.setEnabled(),r.refresh(),this._registEvent()}},_registEvent:function(){$("#i_info_list").off("click","li",this._go).on("click","li",this._go)},_go:function(e){var t=$(e.currentTarget).data("id");window.location="read_detail.html?id="+t},dragFresh:function(){r.setDisabled(),this._sendRequest(!0)}};return i});
+    //jscontent//
 </script>
 </html>

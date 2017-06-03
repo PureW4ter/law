@@ -32,7 +32,9 @@ window.frontJSVersion = "{front_version}";
 window.UrlHost = "{UrlHost}";
 window.frontJSHost = "{frontJSHost}";
 
-//window.frontJSHost = "localhost:8080/api";
+window.frontJSHost = "wx.jf-zy.com/api";
+window.UrlHost = "wx.jf-zy.com";
+
 window.qiniuDomain = "http://oqtjthr3a.bkt.clouddn.com/";
 
 requirejs.config({

@@ -1,1 +1,22 @@
-define('success',["ajaxhelper","utility"],function(e,t){var n={intervalId:null,count:3,initialize:function(){var e=this;e.intervalId&&clearInterval(e.intervalId),e.intervalId=setInterval(function(){e.count--,e.count==0&&(window.location="index.html"),e._updateTime(e.count)},1e3)},_updateTime:function(e){$("#i_time").text(e+"s")}};return n});
+define(['ajaxhelper', 'utility'], function(ajaxHelper, util) {
+    var CompleteSuccess = {
+    	intervalId: null,
+    	count: 3,
+        initialize: function() {
+        	var me = this;
+			if(me.intervalId)
+				clearInterval(me.intervalId);
+			me.intervalId = setInterval(function() {
+				me.count--;
+				if(me.count == 0){
+					window.location = "index.html";
+				}
+				me._updateTime(me.count);
+    		}, 1000);
+        },
+        _updateTime:function(count){
+			$("#i_time").text(count + "s");
+		}
+    };
+    return CompleteSuccess;
+});
