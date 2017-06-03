@@ -4,7 +4,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzf.core.Constants;
 import com.jfzy.mweb.base.BaseController;
 import com.jfzy.mweb.base.UserSession;
 import com.jfzy.mweb.util.ResponseStatusEnum;
@@ -43,6 +46,7 @@ import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
 import com.jfzy.service.bo.WxPayResponseDto;
+import com.jfzy.service.impl.Signature;
 
 @RestController
 public class OrderController extends BaseController {
@@ -204,8 +208,18 @@ public class OrderController extends BaseController {
 		vo.setAppId(dto.getAppId());
 		vo.setTimestamp(String.valueOf(System.currentTimeMillis() / 1000));
 		vo.setNonceStr(dto.getNonceStr());
-		vo.setPaySign(dto.getSign());
 		vo.setPkg(String.format("prepaid_id=%s", dto.getPrepayId()));
+		vo.setPaySign(Signature.getSign(toh5ParamMap(vo), Constants.PAY_SECRET));
 		return vo;
+	}
+
+	private static Map<String, String> toh5ParamMap(PrepayVo vo) {
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("appId", vo.getAppId());
+		paramMap.put("timeStamp", vo.getTimestamp());
+		paramMap.put("nonceStr", vo.getNonceStr());
+		paramMap.put("package", vo.getPkg());
+		paramMap.put("signType", vo.getSignType());
+		return paramMap;
 	}
 }
