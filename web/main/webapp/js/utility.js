@@ -192,11 +192,11 @@ define([],function(){
                 window.WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {
                         "appId": payInfo.appId, //公众号名称，由商户传入     
-                        "timeStamp": payInfo.timeStamp + "", //时间戳，自1970年以来的秒数   
+                        "timeStamp": payInfo.timestamp + "", //时间戳，自1970年以来的秒数   
                         "nonceStr": payInfo.nonceStr, //随机串     
                         "package":  payInfo.pkg,
                         "signType": payInfo.signType,   //微信签名方式
-                        "paySign": payInfo.sign
+                        "paySign": payInfo.paySign
                     },
                     function(res) {
                         if (res.err_msg == "get_brand_wcpay_request:ok") {
