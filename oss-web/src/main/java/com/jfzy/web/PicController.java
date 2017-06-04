@@ -2,7 +2,6 @@ package com.jfzy.web;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -18,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jfzy.service.PicService;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
-import com.jfzy.web.vo.TagVo;
 
 @RestController
 public class PicController {
@@ -58,6 +56,6 @@ public class PicController {
 	@GetMapping("/api/pic/token")
 	public ResponseVo<String> getToken() {
 		String token = picService.getToken();
-		return new ResponseVo<String>(ResponseStatusEnum.SUCCESS.getCode(), "图片上传成功", token);
+		return new ResponseVo<String>(ResponseStatusEnum.SUCCESS.getCode(), "", token);
 	}
 }

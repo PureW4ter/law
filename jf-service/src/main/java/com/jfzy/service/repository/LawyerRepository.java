@@ -21,5 +21,7 @@ public interface LawyerRepository extends JpaRepository<LawyerPo, Integer> {
 	@Modifying
 	@Query("UPDATE LawyerPo SET status=?1, updateTime=?2 WHERE id=?3")
 	void updateStatus(int status, Timestamp updateTime, int id);
+	
+	List<LawyerPo> findByPhoneNum(String phoneNum);
 
 }
