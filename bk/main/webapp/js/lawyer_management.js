@@ -3,7 +3,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
         initialize: function () {
             //nav_bar
             nav_bar.initialize("i_navbar", 4);
-            header.initialize("i_header", "员工管理");
+            header.initialize("i_header", "律师管理");
             this.mainBox = $('#i_mainbox');
             this.tplFun = _.template($("#i_tpl").html());
             this._sendRequest();

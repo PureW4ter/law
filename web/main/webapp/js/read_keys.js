@@ -15,8 +15,8 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 params, this, this._render);
 		},
 		_render:function(data){
-			var readKeys = JSON.parse(util.getData("readKeys"));
-			if(readKeys){
+			if(util.getData("readKeys")){
+				var readKeys = JSON.parse(util.getData("readKeys"));
 				data.r.forEach(
 					function(item, index){
 						for(var i=0; i<readKeys.length; i++){
