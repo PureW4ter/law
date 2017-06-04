@@ -41,8 +41,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             }
         },
         _xheditor: function(){
-            var url="http://upload.do";
-            this.editor = $('#elm1').xheditor({width:'100%',height:1000, html5Upload:true, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
+            var url="http://" + window.frontJSHost + "/api/pic/upload";
+            this.editor = $('#elm1').xheditor({width:'100%',height:1000, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
         },
         _render: function (data) {
             this.mainBox.html(this.tplFun(data));

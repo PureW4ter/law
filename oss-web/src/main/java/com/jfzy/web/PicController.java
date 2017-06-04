@@ -31,7 +31,7 @@ public class PicController {
 	// enctype="multipart/form-data"
 	@ResponseBody
 	@PostMapping("/api/pic/upload")
-	public ResponseVo<String> uploadPic(@RequestParam("pic") MultipartFile file) {
+	public Object uploadPic(@RequestParam("filedata") MultipartFile file) {
 		try {
 			if (file == null || file.getBytes() == null || file.getBytes().length == 0) {
 				return new ResponseVo<String>(ResponseStatusEnum.BAD_REQUEST.getCode(), "图片参数有误", null);
@@ -44,7 +44,10 @@ public class PicController {
 		try {
 			byte[] bytes = file.getBytes();
 			String fileName = picService.uploadPic(bytes);
-			return new ResponseVo<String>(ResponseStatusEnum.SUCCESS.getCode(), "图片上传成功", fileName);
+			Map<String, String> result = new HashMap<String, String>();
+			result.put("err", "");
+			result.put("msg", fileName);
+			return result;
 		} catch (IOException e) {
 			logger.error("Failed in uploadPic.", e);
 			return new ResponseVo<String>(ResponseStatusEnum.SERVER_ERROR.getCode(), "图片上传失败", null);
