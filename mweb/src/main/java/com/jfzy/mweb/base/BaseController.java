@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class BaseController {
 
 	@Autowired
-	private HttpSession session;
+	protected HttpSession session;
 
 	@Autowired
-	private HttpServletRequest request;
+	protected HttpServletRequest request;
 
 	protected String getClientIp() {
 		return request == null ? "" : request.getRemoteAddr();

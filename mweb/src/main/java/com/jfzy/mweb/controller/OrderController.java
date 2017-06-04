@@ -66,9 +66,6 @@ public class OrderController extends BaseController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private HttpServletRequest request;
-
 	@ResponseBody
 	@PostMapping(path = "/api/order/screate", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<OrderBo> createSOrder(HttpServletRequest request, HttpServletResponse response,
@@ -108,9 +105,6 @@ public class OrderController extends BaseController {
 	}
 
 	@ResponseBody
-	// @PostMapping(value = "/api/wxpay/callback", produces = {
-	// "application/xml;charset=UTF-8" }, consumes =
-	// MediaType.APPLICATION_XML_VALUE)
 	@PostMapping(value = "/api/wxpay/callback", produces = { "application/xml" })
 	public WxPayCallbackRespDto callback(@RequestBody String reqStr) {
 		logger.error(reqStr);
@@ -181,6 +175,11 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	@GetMapping("/api/order/listbyuser")
 	public ResponseVo<List<OrderVo>> getOrders(int userId, int page, int size) {
+		if (this.request != null && this.request.getRequestedSessionId() != null) {
+			logger.error(
+					String.format("======Session id for user %s is %s", userId, this.request.getRequestedSessionId()));
+		}
+
 		if (page < 0) {
 			page = 0;
 		}
