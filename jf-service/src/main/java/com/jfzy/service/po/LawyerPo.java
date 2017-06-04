@@ -23,15 +23,10 @@ public class LawyerPo {
 	private int status;
 	
 	private String name;
-
-	@Column(name = "login_name")
-	private String loginName;
 	
 	@Column(name = "phone_num")
 	private String phoneNum;
 
-	private String password;
-	
 	private String memo;
 	
 	@Column(name = "create_time")
@@ -85,28 +80,12 @@ public class LawyerPo {
 		this.name = name;
 	}
 
-	public String getLoginName() {
-		return loginName;
-	}
-
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
-
 	public String getPhoneNum() {
 		return phoneNum;
 	}
 
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getMemo() {

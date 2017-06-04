@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
+import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.LawyerPo;
 import com.jfzy.service.repository.LawyerRepository;
 
@@ -29,8 +30,7 @@ public class LawyerServiceImpl implements LawyerService {
 		return results;
 
 	}
-
-
+	
 	@Override
 	public List<LawyerBo> getLawyerByCity(int cityId) {
 
@@ -43,6 +43,10 @@ public class LawyerServiceImpl implements LawyerService {
 
 	@Override
 	public void create(LawyerBo bo) {
+		List<LawyerPo> pos = lawyerRepo.findByPhoneNum(bo.getPhoneNum());
+		if (pos != null && pos.size() > 0) {
+			throw new JfApplicationRuntimeException("律师手机已存在");
+		}		
 		lawyerRepo.save(boToPo(bo));
 	}
 

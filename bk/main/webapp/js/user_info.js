@@ -30,7 +30,9 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             }
             ajaxHelper.post("http://" + window.frontJSHost + "/api/user/memo",
                 params, this, function(){
-                    util.showToast("更新成功");
+                    util.showToast("更新成功", function(){
+                        window.location = "user_management.html";
+                    });
                 });
         },
         _doCancel:function(e){

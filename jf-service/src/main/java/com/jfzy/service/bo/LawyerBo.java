@@ -10,9 +10,7 @@ public class LawyerBo {
 	private int cityId;
 	private int status;
 	private String name;
-	private String loginName;
 	private String phoneNum;
-	private String password;
 	private String memo;
 	private Timestamp createTime;
 	private Timestamp updateTime;
@@ -47,23 +45,11 @@ public class LawyerBo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getLoginName() {
-		return loginName;
-	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
 	public String getPhoneNum() {
 		return phoneNum;
 	}
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public String getMemo() {
 		return memo;

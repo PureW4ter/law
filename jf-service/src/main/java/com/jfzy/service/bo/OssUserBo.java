@@ -7,21 +7,11 @@ public class OssUserBo {
 	private int id;
 	private String name;
 	private int cityId;
-	private String loginName;
 	private String phoneNum;
-	private String password;
 	private int status;
 	private String role;
 	private Timestamp createTime;
 	private Timestamp updateTime;
-
-	public String getLoginName() {
-		return loginName;
-	}
-
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
 
 	public String getPhoneNum() {
 		return phoneNum;
@@ -29,14 +19,6 @@ public class OssUserBo {
 
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public int getStatus() {

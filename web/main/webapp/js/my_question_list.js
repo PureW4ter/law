@@ -42,11 +42,11 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 			}
 		},
 		_registEvent:function(){
-			$(".j_cancel").off("click", this._cancel).on("click", this._cancel);
-			$(".j_pay").off("click", this._pay).on("click", this._pay);
-			$(".j_complete").off("click", this._complete).on("click", this._complete);
+			$(".j_cancel").off("click", this._cancel).on("click", {ctx: this}, this._cancel);
+			$(".j_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
+			$(".j_complete").off("click", this._complete).on("click", {ctx: this}, this._complete);
 			$(".j_view").off("click", this._view).on("click", this._view);
-			$(".j_view_law").off("click", this._viewLayer).on("click", this._viewLayer);
+			$(".j_view_law").off("click", this._viewLayer).on("click", {ctx: this}, this._viewLayer);
 		},
 		//下拉刷新回调函数
 		dragFresh:function(){
@@ -59,7 +59,7 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 			var productId = $(e.target).parents(".j_result_item").data("pid");
 			var params = {"id": oid};
 			ajaxHelper.get("http://" + window.frontJSHost + "/order/cancel",
-                params, this, function(){
+                params, e.data.ctx, function(){
                 	util.showToast("取消成功", function(){
                 		window.location = "my_question_list.html";
                 	})
@@ -70,7 +70,7 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 			var productId = $(e.target).parents(".j_result_item").data("pid");
 			var params = {"id": oid};
 			ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",
-                params, this, function(){
+                params, e.data.ctx, function(data){
                 	if(productId == 1 || productId == 2){
                 		util.weixinPay(data.r, "question_complete.html");
                 	}else{

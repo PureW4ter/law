@@ -35,6 +35,7 @@
                                     <td>标题</td>
                                     <td>关键字</td>
                                     <td>摘要</td>
+                                    <td>创建时间</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,6 +44,7 @@
                                     <td><a href="new_article.html?id=<%=item.id%>" class="blue_link"><%=item.title%></a></td>
                                     <td><%=item.tags.join(",")%></td>
                                     <td class="ar_summry"><%=item.summary%></td>
+                                    <td class="ar_summry"><%=item.createTime%></td>
                                 </tr>
                                 <%})%>
                             </tbody>

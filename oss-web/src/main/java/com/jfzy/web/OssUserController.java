@@ -60,8 +60,6 @@ public class OssUserController {
 		List<OssUserBo> values = ossUserService.getOssUsers(new PageRequest(page, size, sort));
 		List<OssUserVo> resultUsers = new ArrayList<OssUserVo>(values.size());
 		for (OssUserBo bo : values) {
-			//不显示密码
-			bo.setPassword("");
 			resultUsers.add(boToVo(bo));
 		}
 		return new ResponseVo<List<OssUserVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
