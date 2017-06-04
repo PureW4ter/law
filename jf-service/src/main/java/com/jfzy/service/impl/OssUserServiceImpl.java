@@ -25,7 +25,7 @@ public class OssUserServiceImpl implements OssUserService {
 
 	@Override
 	public OssUserBo login(String loginName, String password) {
-		String checksum = Utils.getMd5(password);
+		String checksum = MD5.MD5Encode(password);
 
 		List<OssUserPo> users = ossUserRepo.findByLoginNameAndPassword(loginName, checksum);
 		if (users != null && users.size() == 1) {
@@ -68,7 +68,7 @@ public class OssUserServiceImpl implements OssUserService {
 			throw new JfApplicationRuntimeException("用户名已存在");
 		}
 
-		bo.setPassword(Utils.getMd5(bo.getPassword()));
+		bo.setPassword(MD5.MD5Encode(bo.getPassword()));
 		OssUserPo po = boToPo(bo);
 		ossUserRepo.save(po);
 	}
@@ -83,5 +83,9 @@ public class OssUserServiceImpl implements OssUserService {
 		OssUserPo po = new OssUserPo();
 		BeanUtils.copyProperties(bo, po);
 		return po;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(MD5.MD5Encode("123456789."));
 	}
 }

@@ -13,16 +13,16 @@ import com.jfzy.service.impl.PaymentService;
 @SpringBootTest
 public class PaymentServiceTest {
 
-	@Autowired
-	private PaymentService service;
-
-	@Test
-	public void m1() {
-		OrderBo order = new OrderBo();
-		order.setSn("12345454958495");
-		order.setRealPrice(0.99);
-		order.setProductName("测试用");
-
-		service.unifiedOrder(order, "192.168.0.1", "o7oTkv-65f4uQUX3DY_X7GmwM90k");
-	}
+//	@Autowired
+//	private PaymentService service;
+//
+//	@Test
+//	public void m1() {
+//		OrderBo order = new OrderBo();
+//		order.setSn("12345454958495");
+//		order.setRealPrice(0.99);
+//		order.setProductName("代查户口");
+//
+//		service.unifiedOrder(order, "127.0.0.1", "o7oTkv8dhqO5bj52gp35CTxRmuqk");
+//	}
 }
