@@ -37,7 +37,6 @@ public class LoginController {
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户名/密码不能为空", null);
 		}
 		
-		password = Utils.getMd5(password);
 		OssUserBo user = ossUserService.login(userName, password);
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);
