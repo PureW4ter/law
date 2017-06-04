@@ -34,9 +34,9 @@ CREATE TABLE `jf_lawyer` (
   `score` double DEFAULT NULL,
   `level` int(2) DEFAULT '0',
   `money` double DEFAULT '0',
-  `completed` int(4) DEFAULT '0',
-  `process` int(4) DEFAULT '0',
-  `total_task` int(4) DEFAULT '0',
+  `completed` int(4) NOT NULL DEFAULT '0',
+  `process` int(4) NOT NULL DEFAULT '0',
+  `total_task` int(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

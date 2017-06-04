@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jfzf.core.Utils;
 import com.jfzy.base.AuthInfo;
 import com.jfzy.base.SessionConstants;
 import com.jfzy.service.OssUserService;

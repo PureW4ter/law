@@ -18,12 +18,6 @@ VALUES
 	(3,'order_admin','订单管理员',0),
 	(4,'lawyer','律师',0);
 	
-INSERT INTO `jf_oss_role` (`id`, `name`, `desc`, `status`, `create_time`, `update_time`)
-VALUES 
-(1,'super_admin','特别管理员',0,'2017-05-24 09:58:58','2017-05-24 09:58:58'),
-(2,'admin','一般管理员',0,'2017-05-24 09:58:58','2017-05-24 09:58:58'),
-(3,'order_admin','订单管理员',0,'2017-05-24 09:58:58','2017-05-24 09:58:58'),
-(4,'lawyer','律师',0,'2017-05-24 09:58:58','2017-05-24 09:58:58');
 
 INSERT INTO `jf_property` (`id`, `type_id`, `name`)
 VALUES
