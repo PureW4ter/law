@@ -42,7 +42,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
         },
         _xheditor: function(){
             var url="http://" + window.frontJSHost + "/api/pic/upload";
-            this.editor = $('#elm1').xheditor({width:'100%',height:1000, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
+            this.editor = $('#elm1').xheditor({width:'100%',height:1000, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png", sourceMode:true});
         },
         _render: function (data) {
             this.mainBox.html(this.tplFun(data));
@@ -148,7 +148,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                     ajaxHelper.post("http://" + window.frontJSHost + "/api/article/create",
                         formJson, e.data.ctx, function(){
                             util.showToast("保存成功！", function(){
-                                //window.location = "article_management.html";
+                                window.location = "article_management.html";
                             })
                         });
                 }

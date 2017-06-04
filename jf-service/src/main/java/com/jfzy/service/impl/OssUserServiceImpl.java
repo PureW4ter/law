@@ -4,13 +4,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.jfzf.core.Utils;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
@@ -24,14 +22,11 @@ public class OssUserServiceImpl implements OssUserService {
 	private OssUserRepository ossUserRepo;
 
 	@Override
-	public OssUserBo login(String loginName, String password) {
-		String checksum = MD5.MD5Encode(password);
-
-		List<OssUserPo> users = ossUserRepo.findByLoginNameAndPassword(loginName, checksum);
+	public OssUserBo login(String phoneNum) {
+		List<OssUserPo> users = ossUserRepo.findByPhoneNum(phoneNum);
 		if (users != null && users.size() == 1) {
 			OssUserPo po = users.get(0);
 			OssUserBo bo = poToBo(po);
-			bo.setPassword("");
 			return bo;
 		} else {
 			return null;
@@ -59,16 +54,11 @@ public class OssUserServiceImpl implements OssUserService {
 
 	@Override
 	public void create(OssUserBo bo) {
-		if (StringUtils.isBlank(bo.getLoginName()) || StringUtils.isBlank(bo.getPassword())) {
-			throw new JfApplicationRuntimeException("用户名或密码不能为空");
-		}
 
-		List<OssUserPo> pos = ossUserRepo.findByLoginName(bo.getLoginName());
+		List<OssUserPo> pos = ossUserRepo.findByPhoneNum(bo.getPhoneNum());
 		if (pos != null && pos.size() > 0) {
-			throw new JfApplicationRuntimeException("用户名已存在");
+			throw new JfApplicationRuntimeException("用户手机已存在");
 		}
-
-		bo.setPassword(MD5.MD5Encode(bo.getPassword()));
 		OssUserPo po = boToPo(bo);
 		ossUserRepo.save(po);
 	}

@@ -41,8 +41,6 @@ public class LawyerController {
 		List<LawyerBo> values = lawyerService.getLawyers(new PageRequest(page, size, sort));
 		List<LawyerVo> resultUsers = new ArrayList<LawyerVo>(values.size());
 		for (LawyerBo bo : values) {
-			//不显示密码
-			bo.setPassword("");
 			resultUsers.add(boToVo(bo));
 		}
 		return new ResponseVo<List<LawyerVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
@@ -54,8 +52,6 @@ public class LawyerController {
 		List<LawyerBo> values = lawyerService.getLawyerByCity(cityId);
 		List<LawyerVo> result = new ArrayList<LawyerVo>(values.size());
 		for (LawyerBo bo : values) {
-			//不显示密码
-			bo.setPassword("");
 			result.add(boToVo(bo));
 		}
 		return new ResponseVo<List<LawyerVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);

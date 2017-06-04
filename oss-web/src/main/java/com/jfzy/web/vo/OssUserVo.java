@@ -6,13 +6,11 @@ public class OssUserVo {
 	private int id;
 	private String name;
 	private int cityId;
-	private String loginName;
 	private String phoneNum;
 	private int status;
 	private String createTime;
 	private Timestamp updateTime;
 	private String role;
-	private String password;
 	
 	public int getId() {
 		return id;
@@ -31,12 +29,6 @@ public class OssUserVo {
 	}
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
-	}
-	public String getLoginName() {
-		return loginName;
-	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
 	}
 	public String getPhoneNum() {
 		return phoneNum;
@@ -67,11 +59,5 @@ public class OssUserVo {
 	}
 	public void setRole(String role) {
 		this.role = role;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 }

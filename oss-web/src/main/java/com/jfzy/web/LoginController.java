@@ -30,20 +30,20 @@ public class LoginController {
 
 	@ResponseBody
 	@GetMapping("/api/user/login")
-	public ResponseVo<OssUserVo> login(String userName, String password) {
+	public ResponseVo<OssUserVo> login(String phone, String code) {
 		// do some check
-		if (StringUtils.isBlank(userName) || StringUtils.isBlank(password)) {
-			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户名/密码不能为空", null);
+		if (StringUtils.isBlank(phone) || StringUtils.isBlank(code)) {
+			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "电话或验证码不能为空", null);
 		}
 		
-		OssUserBo user = ossUserService.login(userName, password);
+		OssUserBo user = ossUserService.login(phone);
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);
 			AuthInfo authInfo = new AuthInfo();
 			authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user));
 		}
-		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户名或密码错", null);
+		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在", null);
 	}
 
 	private static OssUserVo boToVo(OssUserBo bo) {

@@ -13,20 +13,16 @@ import com.jfzy.service.po.OssUserPo;
 
 public interface OssUserRepository extends JpaRepository<OssUserPo, Integer> {
 
-	List<OssUserPo> findByLoginNameAndPassword(String loginName, String password);
-	
 	@Transactional
 	@Modifying
 	@Query("UPDATE OssUserPo SET status=?1, updateTime=?2 WHERE id=?3")
 	void updateStatus(int status, Timestamp updateTime, int id);
 
-	
-	
 	@Transactional
 	@Modifying
 	@Query("UPDATE OssUserPo SET role=?1, updateTime=?2 WHERE id=?3")
 	void updateAuth(String role, Timestamp updateTime, int id);
-
-	List<OssUserPo> findByLoginName(String loginName);
+	
+	List<OssUserPo> findByPhoneNum(String phoneNum);
 
 }
