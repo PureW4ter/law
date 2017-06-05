@@ -15,7 +15,19 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 params, this, this._render);
 		},
 		_render:function(data){
-			this.mainBox.html(this.tplfun({"result": data}));
+			if(util.getData("readKeys")){
+				var readKeys = JSON.parse(util.getData("readKeys"));
+				data.r.forEach(
+					function(item, index){
+						for(var i=0; i<readKeys.length; i++){
+							if(item.name == readKeys[i]){
+								item.selected = true;
+							}
+						}
+					}
+				);
+			}
+			this.mainBox.html(this.tplfun({"result": data, "readKeys": readKeys}));
 			this._registEvent();
 		},
 		_registEvent:function(){
@@ -26,9 +38,10 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			var keys = new Array();
 			$(".key_selected").forEach(
 				function(item, index){
-					keys.push($(item).data("name"));
+					keys.push($(item).parents("li").data("name"));
 				}
 			);
+			util.saveData('readKeys', JSON.stringify(keys));
 			window.location = "read_list.html";
 		},
 		_select:function(e){

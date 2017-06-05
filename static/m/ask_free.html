@@ -23,7 +23,7 @@
             <div style="position:relative">
                 <div class="new_input_section">
                     <div class="new_input_box arrow_down">
-                        <label>您的身份</label>
+                        <label>您的身份<span class="red_start">*</span></label>
                         <select id="i_identity">
                             <%_.each(result.r[2],function(item, index){%>
                             <option value="<%=index%>"><%=item.role%></option>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
-                        <label>目前所处的交易阶段</label>
+                        <label>目前所处的交易阶段<span class="red_start">*</span></label>
                         <select id="i_trade_phase">
                              <%_.each(result.r[2][0].phases,function(item, index){%>
                                 <option value="<%=index%>"><%=item.phase%></option>
@@ -44,10 +44,11 @@
                         <textarea rows="6" id="i_memo" placeholder="交易情况、问题及您的诉求"></textarea>
                     </div>
                     <div class="blk10"></div>
-                    <div class="free_ask_intro">律师将会在1-3天内进行本周免费咨询的筛选。您的问题可能不会被选中，请尽可能的完善您的答案，答案公布会在下周的互动问答中，您的问题将会显示，公开，对于部分涉及姓名，地址等个人信息我们将使用化名及更改。如想获得专业即时的回答，我们推荐您进行付费咨询。</div>
+                    <div class="free_ask_intro"></div>
                     <div id="i_product" class="product_price" data-id="<%=result.r[3][2].id%>">
                         您需支付：<span class="money">¥<%=result.r[3][2].price%></span>
                     </div>
+                    <div class="blk15"></div>
                 </div>
             </div>
             <div class="read_bottom_box">

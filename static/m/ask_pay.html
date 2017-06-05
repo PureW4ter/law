@@ -23,7 +23,7 @@
             <div style="position:relative">
                 <div class="new_input_section">
                     <div class="new_input_box arrow_down">
-                        <label>您的身份</label>
+                        <label>您的身份<span class="red_start">*</span></label>
                         <select id="i_identity">
                             <%_.each(result.r[2],function(item, index){%>
                             <option value="<%=index%>"><%=item.role%></option>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
-                        <label>目前所处的交易阶段</label>
+                        <label>目前所处的交易阶段<span class="red_start">*</span></label>
                         <select id="i_trade_phase">
                              <%_.each(result.r[2][0].phases,function(item, index){%>
                                 <option value="<%=index%>"><%=item.phase%></option>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
-                        <label>问题类型</label>
+                        <label>问题类型<span class="red_start">*</span></label>
                         <select id="i_question_types">
                              <%_.each(result.r[2][0].phases[0].subPhases,function(item, index){%>
                                 <option value="<%=index%>"><%=item.phase%></option>
@@ -53,7 +53,7 @@
                         上传合同文本，可以帮助律师做出准确判断
                     </div>
                     <div class="new_input_box arrow_down">
-                        <label>我已经签署了</label>
+                        <label>我已经签署了<span class="red_start">*</span></label>
                         <select id="i_sign">
                             <%_.each(result.r[1],function(item){%>
                             <option value="<%=item.id%>"><%=item.name%></option>

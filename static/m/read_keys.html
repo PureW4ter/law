@@ -21,7 +21,7 @@
             <div class="read_keys" id="i_read_keys">
                <ul>
                     <%_.each(result.r, function(item, index){%>
-                        <li data-name="<%=item.name%>"><div><%=item.name%></div></li>
+                        <li data-name="<%=item.name%>"><div class="<%=item.selected?'key_selected':''%>"><%=item.name%></div></li>
                         <%if(index%3 == 2){%>
                         </ul>
                         <ul> 
