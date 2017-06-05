@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.mweb.base.BaseController;
+import com.jfzy.mweb.base.MWebConstants;
 import com.jfzy.mweb.base.Token;
 import com.jfzy.mweb.base.TokenUtil;
 import com.jfzy.mweb.base.UserSession;
@@ -83,15 +85,17 @@ public class APPUserController extends BaseController {
 	@ResponseBody
 	@GetMapping("/api/user/bind")
 	public ResponseVo<UserVo> bind(String phone, String code, int userId) {
-		//FIXME
-		// check code
-		UserBo bo = userService.bind(phone, userId);
-		UserVo vo = null;
-		if (bo != null) {
-			vo = boToVoForUser(bo);
-			vo.setPhone(phone);
+		if (!checkSmsCode(code)) {
+			return new ResponseVo<UserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "短信验证码错误", null);
+		} else {
+			UserBo bo = userService.bind(phone, userId);
+			UserVo vo = null;
+			if (bo != null) {
+				vo = boToVoForUser(bo);
+				vo.setPhone(phone);
+			}
+			return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 		}
-		return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 	}
 
 	@ResponseBody
@@ -112,6 +116,11 @@ public class APPUserController extends BaseController {
 		BeanUtils.copyProperties(bo, vo);
 		vo.setToken(token);
 		return vo;
+	}
+
+	private boolean checkSmsCode(String smsCode) {
+		String sessionSms = (String) session.getAttribute(MWebConstants.SESSION_KEY_SMS);
+		return StringUtils.equals(smsCode, sessionSms);
 	}
 
 }
