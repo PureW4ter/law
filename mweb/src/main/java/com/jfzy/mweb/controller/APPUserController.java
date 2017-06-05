@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.mweb.base.BaseController;
+import com.jfzy.mweb.base.Token;
+import com.jfzy.mweb.base.TokenUtil;
 import com.jfzy.mweb.base.UserSession;
 import com.jfzy.mweb.util.ResponseStatusEnum;
+import com.jfzy.mweb.vo.AuthUserVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.UserVo;
 import com.jfzy.service.UserService;
@@ -49,26 +52,31 @@ public class APPUserController extends BaseController {
 
 	@ResponseBody
 	@GetMapping(path = "/api/user/wxlogin")
-	public ResponseVo<UserVo> wxlogin(String code) {
+	public ResponseVo<AuthUserVo> wxlogin(String code) {
 		try {
 			UserBo bo = wechatService.wxlogin(code);
 			UserAccountBo abo = userService.getUserAccountByUserId(bo.getId(), UserAccountTypeEnum.MOBILE.getId());
-			UserVo vo = boToVoForUser(bo);
-			if (abo != null)
-				vo.setPhone(abo.getValue());
 
 			// init session
 			UserAccountBo wxBo = userService.getUserAccountByUserId(bo.getId(),
 					UserAccountTypeEnum.WECHAT_OPENID.getId());
+			Token t = new Token();
+			t.setUserId(bo.getId());
+			t.setOpenId(wxBo.getValue());
+			t.setTimestamp(System.currentTimeMillis());
+			String token = TokenUtil.generateTokenString(t);
+			AuthUserVo vo = boToAuthUserVo(bo, token);
+			if (abo != null)
+				vo.setPhone(abo.getValue());
 
 			UserSession session = new UserSession();
 			session.setOpenId(wxBo.getValue());
 			session.setUserId(bo.getId());
 			this.setUserSession(session);
 
-			return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
+			return new ResponseVo<AuthUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 		} catch (IOException e) {
-			return new ResponseVo<UserVo>(ResponseStatusEnum.SERVER_ERROR.getCode(), null, null);
+			return new ResponseVo<AuthUserVo>(ResponseStatusEnum.SERVER_ERROR.getCode(), null, null);
 		}
 	}
 
@@ -77,7 +85,7 @@ public class APPUserController extends BaseController {
 	public ResponseVo<UserVo> bind(String phone, String code, int userId) {
 		UserBo bo = userService.bind(phone, userId);
 		UserVo vo = null;
-		if(bo!=null){
+		if (bo != null) {
 			vo = boToVoForUser(bo);
 			vo.setPhone(phone);
 		}
@@ -91,15 +99,17 @@ public class APPUserController extends BaseController {
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 
-	private static UserBo voToBoForUser(UserVo vo) {
-		UserBo bo = new UserBo();
-		BeanUtils.copyProperties(vo, bo);
-		return bo;
-	}
-
 	private static UserVo boToVoForUser(UserBo bo) {
 		UserVo vo = new UserVo();
 		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
+
+	private static AuthUserVo boToAuthUserVo(UserBo bo, String token) {
+		AuthUserVo vo = new AuthUserVo();
+		BeanUtils.copyProperties(bo, vo);
+		vo.setToken(token);
+		return vo;
+	}
+
 }
