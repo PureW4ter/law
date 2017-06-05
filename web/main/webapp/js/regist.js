@@ -1,7 +1,11 @@
-define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, util, timeBtn) {
+define(['ajaxhelper', 'utility', 'validate', 'component/time_button'], 
+	function(ajaxHelper, util, validate, timeBtn) {
     var Regist = {
     	user:null,
         initialize: function() {
+        	//清除登录缓存
+            window.localStorage.removeItem("userInfo");
+
         	//body
 			this.mainBox = $('#i_mainbox');
 			this.tplfun = _.template($("#i_tpl").html());
@@ -46,9 +50,26 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
 			timeBtn.registBtnEvent(this.getCode);
 		},
 		getCode:function(){
-
+			var phone = $("#i_phone").val();
+            if(!phone){
+                util.showToast("请先输入手机号码");
+                return;
+            }
+            if(!validate.isMobile(phone)){
+                util.showToast("请输入正确的手机号码");
+                return;
+            }
+            var params = {
+            	"phoneNum":phone
+            }
+            ajaxHelper.get("http://" + window.frontJSHost + "/ssm/code",
+                params, this, function(){});
+            timeBtn.startCount();
 		},
 		_bind:function(e){
+			if(!this.validate()){
+                return;
+            };
 			var params = {
 				"phone": $("#i_phone").val(),
 				"code": $("#i_input_code").val(),
@@ -59,7 +80,28 @@ define(['ajaxhelper', 'utility', 'component/time_button'], function(ajaxHelper, 
                 	util.saveData('userInfo', JSON.stringify(data.r));
                 	window.location = "index.html";
                 });
-		} 
+		},
+		validate:function(){
+            var pass = true;
+            var phone = $("#i_phone").val();
+            if(!phone){
+                util.showToast("手机号码不能为空");
+                pass = false;
+                return pass;
+            }
+            if(!validate.isMobile(phone)){
+                util.showToast("请输入正确的手机号码");
+                pass = false;
+                return pass;
+            }
+            var code = $("#i_input_code").val();
+            if(!code){
+                util.showToast("验证码不能为空");
+                pass = false;
+                return pass;
+            }
+            return pass;
+        },
     };
     return Regist;
 });

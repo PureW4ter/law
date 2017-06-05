@@ -10,6 +10,7 @@ public class SimpleArticleVo {
 	private String summary;
 	private String[] tags;
 	private String createTime;
+	private String updateTime;
 
 	public int getId() {
 		return id;
@@ -65,6 +66,14 @@ public class SimpleArticleVo {
 
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
+	}
+
+	public String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 }

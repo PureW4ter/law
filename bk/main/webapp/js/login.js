@@ -1,4 +1,5 @@
-define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header, ajaxHelper, util, md5) {
+define(['component/header', 'ajaxhelper', 'utility', 'component/time_button'], 
+    function (header, ajaxHelper, util, timeBtn) {
     var Login = {
         initialize: function () {
             //body
@@ -12,16 +13,29 @@ define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header
         },
         _render: function (data) {
             this.mainBox.html(this.logontplfun());
+            timeBtn.initialize("i_getcode_btn");
             this._registEvent();
         },
         _registEvent: function () {
             $("[data-toggle='popover']").bind({'focus': p_destroy, 'blur': input_check});
             $('.submit').off('click', this.subIt).on('click', {ctx: this}, this.subIt);
-            $('input').off('keydown', this.bindEnter).on('keydown', {ctx: this}, this.bindEnter);
+            timeBtn.registBtnEvent(this.getCode);
+        },
+        getCode:function(){
+            var phone = $("#i_phone").val();
+            if(!phone){
+                util.showToast("请先输入手机号码");
+                return;
+            }
+            var params = {
+                "phoneNum":phone
+            }
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/ssm/code",
+                params, this, function(){});
+            timeBtn.startCount();
         },
         subIt: function (e) {
             var params = util.getFormValues('loginIt');
-            //params.password = md5(params.password);
             $('input').blur();
             if ($('.popover.in').length < 1) {
                 ajaxHelper.get("http://" + window.frontJSHost + "/api/user/login", 

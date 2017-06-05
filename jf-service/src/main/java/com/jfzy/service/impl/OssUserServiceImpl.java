@@ -22,7 +22,9 @@ public class OssUserServiceImpl implements OssUserService {
 	private OssUserRepository ossUserRepo;
 
 	@Override
-	public OssUserBo login(String phoneNum) {
+	public OssUserBo login(String phoneNum, String code) {
+		//FIXME 
+		// code check
 		List<OssUserPo> users = ossUserRepo.findByPhoneNum(phoneNum);
 		if (users != null && users.size() == 1) {
 			OssUserPo po = users.get(0);

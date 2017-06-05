@@ -1,5 +1,6 @@
 define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
     var LawyerConsultInfo = {
+    	myScroll:"",
         initialize :function(){
         	$("#i_detail2").hide();
 			//request
@@ -9,6 +10,11 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			this._render();
 		},
 		_render:function(){
+			this.myScroll=new iScroll("i_detail_box",{
+	                useTransition : true,
+	                topOffset : 0,
+	                hScroll: false
+	        });
 			this._registEvent();
 		},
 		_registEvent:function(){
@@ -25,6 +31,8 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 				$("#i_detail1").hide();
 				$("#i_detail2").show();
 			}
+			e.data.ctx.myScroll.refresh();
+			e.data.ctx.myScroll.scrollTo(0, 0);
 		},
 		_go:function(e){
 			if($($(".product_info_selected")[0]).data("type") == 1){

@@ -30,13 +30,13 @@ public class LoginController {
 
 	@ResponseBody
 	@GetMapping("/api/user/login")
-	public ResponseVo<OssUserVo> login(String phone, String code) {
+	public ResponseVo<OssUserVo> login(String phoneNum, String code) {
 		// do some check
-		if (StringUtils.isBlank(phone) || StringUtils.isBlank(code)) {
+		if (StringUtils.isBlank(phoneNum) || StringUtils.isBlank(code)) {
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "电话或验证码不能为空", null);
 		}
 		
-		OssUserBo user = ossUserService.login(phone);
+		OssUserBo user = ossUserService.login(phoneNum, code);
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);
 			AuthInfo authInfo = new AuthInfo();

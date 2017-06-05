@@ -1,4 +1,5 @@
-define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper, util) {
+define(['component/header','ajaxhelper', 'utility', 'validate'], 
+	function(header, ajaxHelper, util, validate) {
     var SealupSearch = {
     	cities:util.cities,
         initialize :function(){
@@ -22,6 +23,9 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
 		},
 		_pay:function(e){
+			if(!e.data.ctx.validate()){
+                return;
+            };
 			var params = {
 				"userId": util.getUserId(),
 				"productId": $("#i_product").data("id"),
@@ -41,7 +45,35 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 			util.weixinPay(data.r, "question_complete2.html");
                 		});
                 }, null);
-		}
+		},
+		validate:function(){
+            var pass = true;
+            var name = $("#i_name").val();
+            if(!name){
+                util.showToast("产权人不能为空");
+                pass = false;
+                return pass;
+            }
+            var address = $("#i_addr").val();
+            if(!address){
+                util.showToast("详细地址不能为空");
+                pass = false;
+                return pass;
+            }
+            var phone = $("#i_phone").val();
+            if(!phone){
+                util.showToast("联系电话不能为空");
+                pass = false;
+                return pass;
+            }
+            if(!validate.isMobile(phone)){
+                util.showToast("请输入正确的手机号码");
+                pass = false;
+                return pass;
+            }
+            
+            return pass;
+        }
     };
     return SealupSearch;
 });

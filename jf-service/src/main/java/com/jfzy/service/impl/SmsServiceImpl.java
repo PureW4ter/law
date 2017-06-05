@@ -41,6 +41,7 @@ public class SmsServiceImpl implements SmsService {
 
 	@Override
 	public void sendRegisterCode(String phoneNum, String code) {
+		
 		MNSClient client = account.getMNSClient();
 		CloudTopic topic = client.getTopicRef(TOPIC_NAME);
 		RawTopicMessage msg = new RawTopicMessage();
@@ -71,5 +72,4 @@ public class SmsServiceImpl implements SmsService {
 			client.close();
 		}
 	}
-
 }

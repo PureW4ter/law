@@ -42,12 +42,30 @@
                                     <td><%=item.orderCode%></td>
                                     <td><%=item.createTime%></td>
                                     <td><%=item.productName%></td>
-                                    <td><%=item.status%></td>
                                     <td>
-                                        <%if(!!item.lawyerName){%>
-                                            <a class="blue_link j_assign" data-city="<%=item.cityId%>"><%=item.lawyerName%></a>
-                                        <%}else{%>
-                                            <a class="blue_link j_assign" data-city="<%=item.cityId%>">指派</a>
+                                        <%if(item.status==0){%>
+                                            待支付
+                                        <%}else if(item.status==1){%>
+                                            待支付
+                                        <%}else if(item.status==2){%>
+                                            待补充
+                                        <%}else if(item.status==3){%>
+                                            待指派
+                                        <%}else if(item.status==4){%>
+                                            已指派
+                                        <%}else if(item.status==5){%>
+                                            已完成
+                                        <%}else if(item.status==6){%>
+                                            已取消
+                                        <%}%> 
+                                    </td>
+                                    <td>
+                                        <%if(item.status==3 || item.status==4){%>
+                                            <%if(!!item.lawyerName){%>
+                                                <a class="blue_link j_assign" data-city="<%=item.cityId%>"><%=item.lawyerName%></a>
+                                            <%}else{%>
+                                                <a class="blue_link j_assign" data-city="<%=item.cityId%>">指派</a>
+                                            <%}%>
                                         <%}%>
                                     </td>
                                 </tr>
@@ -69,10 +87,11 @@
                 </div>
                 <div class="modal-body clearfix" id="i_modal_body">
                     <script type="text/template" id="i_modal_tpl">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover text-center">
                             <thead>
                                 <tr>
                                     <td>律师名称</td>
+                                    <td>手机</td>
                                     <td>操作</td>
                                 </tr>
                             </thead>
@@ -80,6 +99,7 @@
                                 <%_.each(result.r, function(item){%>
                                 <tr data-id="<%=item.id%>">
                                     <td><%=item.name%></td>
+                                    <td><%=item.phoneNum%></td>
                                     <td><div class="j_do_assign btn btn-default">指派</div></td>
                                 </tr>
                                 <%})%>

@@ -83,6 +83,8 @@ public class APPUserController extends BaseController {
 	@ResponseBody
 	@GetMapping("/api/user/bind")
 	public ResponseVo<UserVo> bind(String phone, String code, int userId) {
+		//FIXME
+		// check code
 		UserBo bo = userService.bind(phone, userId);
 		UserVo vo = null;
 		if (bo != null) {

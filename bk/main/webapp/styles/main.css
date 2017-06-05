@@ -754,3 +754,25 @@ textarea.foreword{
 .ar_summry{
     text-align: left;
 }
+/*倒计时*/
+.code_input {
+    padding-right: 120px;
+}
+.getCodeBtn {
+    position: absolute;
+    z-index: 9;
+    right: 6px;
+    top: 6px;
+    display: inline-block;
+    line-height: 36px;
+    font-size: 12px;
+    color: #ffffff;
+    width: 90px;
+    cursor: pointer;
+    background-color: #f0ad4e;
+    text-align: center;
+    border-radius: 3px;
+}
+.getCodeBtn.time_button_disable {
+    color: #cccccc;
+}
