@@ -23,7 +23,7 @@
             <div style="position:relative">
                 <div class="new_input_section">
                     <div class="new_input_box arrow_down">
-                        <label>您的身份</label>
+                        <label>您的身份<span class="red_start">*</span></label>
                         <select id="i_identity">
                             <%_.each(result.r[2],function(item, index){%>
                             <option value="<%=index%>"><%=item.role%></option>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
-                        <label>目前所处的交易阶段</label>
+                        <label>目前所处的交易阶段<span class="red_start">*</span></label>
                         <select id="i_trade_phase">
                              <%_.each(result.r[2][0].phases,function(item, index){%>
                                 <option value="<%=index%>"><%=item.phase%></option>

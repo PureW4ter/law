@@ -135,6 +135,9 @@ public class ArticleController {
 		BeanUtils.copyProperties(bo, vo);
 		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
 		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
+		if(bo.getUpdateTime()!=null){
+			vo.setUpdateTime(myFmt.format(bo.getUpdateTime()));
+		}
 		return vo;
 	}
 	

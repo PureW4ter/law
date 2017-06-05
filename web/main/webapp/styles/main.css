@@ -618,7 +618,14 @@ header h1 {
     -o-transform: rotate(135deg);
     transform: rotate(135deg);
 }
-
+.red_start{
+    color: red;
+    display: inline-block;
+    width: 10px;
+    text-align: center;
+    position: absolute;
+    top: 15px;
+}
 /*首页*/
 .index_botton_box{
     position: absolute;
