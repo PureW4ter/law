@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
     <meta name="format-detection" content="telephone=no" />
     <title>后台管理系统</title>
-    <link href="styles/bootstrap.css?ver=20170526151052" rel="stylesheet" />
-    <link href="styles/main.css?ver=20170526151052" rel="stylesheet" />
+    <link href="styles/bootstrap.css?ver={front_version}" rel="stylesheet" />
+    <link href="styles/main.css?ver={front_version}" rel="stylesheet" />
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -33,30 +33,47 @@
                             <thead>
                                 <tr>
                                     <td>编号</td>
-                                    <td>名称</td>
+                                    <td>姓名</td>
                                     <td>电话</td>
                                     <td>评分</td>
                                     <td>待办</td>
                                     <td>已完成</td>
                                     <td>总任务量</td>
-                                    <td>剩余任务量</td>
                                     <td>财富</td>
                                     <td>操作</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-id="">
-                                    <td>1</td>
-                                    <td><a href="lawyer_info.html" class="blue_link">王二</a></td>
-                                    <td>158********9</td>
-                                    <td>4分</td>
-                                    <td><a href="" class="blue_link">4</a></td>
-                                    <td><a href="" class="blue_link">22</a></td>
-                                    <td>8</td>
-                                    <td>0</td>
-                                    <td>9000</td>
-                                    <td>禁用/启用</td>
+                                <%_.each(result.r, function(item){%>
+                                <tr data-id="<%=item.id%>">
+                                    <td><%=item.id%></td>
+                                    <td><a class="blue_link" href="new_lawyer.html?id=<%=item.id%>"><%=item.name%></a></td>
+                                    <td><%=item.phoneNum%></td>
+                                    <td><%=item.score%></td>
+                                    <td><%=item.process%></td>
+                                    <td><%=item.completed%></td>
+                                    <td><%=item.totalTask%></td>
+                                    <td><%=item.money%></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <span>
+                                                    <%if(item.status == 0){%>
+                                                        启用
+                                                    <%}else{%>
+                                                        禁用
+                                                    <%}%>
+                                                </span>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu j_status">
+                                                <li data-value="0">启用</li>
+                                                <li data-value="1">禁用</li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
+                                <%})%>
                             </tbody>
                         </table>
                     </div>
@@ -65,7 +82,7 @@
             </div>
         </div>
     </div>
-    <script src="js/include.js?ver=20170526151052" type="text/javascript"></script>
+    <script src="js/include.js?ver={front_version}" type="text/javascript"></script>
 </body>
 
 </html>

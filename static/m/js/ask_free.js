@@ -36,6 +36,9 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			e.data.ctx._registEvent();
 		},
 		_pay:function(e){
+			if(!e.data.ctx.validate()){
+                return;
+            };
 			var params = {
 				"userId": util.getUserId(),
 				"productId": $("#i_product").data("id"),
@@ -54,6 +57,26 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 		});
                 });
 		},
+		validate:function(){
+            var pass = true;
+            if(!$("#i_save").attr("checked")){
+            	util.showToast("必须同意协议");
+                pass = false;
+                return pass;
+            }
+            var memo = $("#i_memo").val();
+            if(!memo){
+                util.showToast("交易情况，诉求不能为空");
+                pass = false;
+                return pass;
+            }
+            if(memo.length>5){
+            	util.showToast("最多不可以超过500字");
+                pass = false;
+                return pass;
+            }
+            return pass;
+        }
     };
     return AskFree;
 });
