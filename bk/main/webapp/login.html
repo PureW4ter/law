@@ -18,21 +18,23 @@
                 <div class="login_body">
                     <div class="jumbotron">
                         <h3>简法后台管理系统</h3>
-
                         <form role="form" id="loginIt">
                             <div class="input-group">
                                 <span class="input-group-addon glyphicon glyphicon-user"></span>
-                                <input type="text" class="form-control" data-pattern="/[a-zA-Z0-9]{1,16}/ "
-                                       placeholder="请输入名称" maxlength="20" value="" name="userName"
+                                <input type="text" class="form-control" data-pattern="/[0-9]{11}/ "
+                                       placeholder="请输入手机号码" maxlength="20" value="" name="phoneNum"
                                        data-container="body" data-toggle="popover" data-placement="right"
-                                       data-content="用户名格式错误！" data-keep="用户名格式错误！">
+                                       data-content="手机号码格式错误！" data-keep="手机号码格式错误！"
+                                       id="i_phone">
+                                
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon glyphicon glyphicon-credit-card"></span>
-                                <input type="password" class="form-control" data-pattern="/[a-zA-Z0-9]{3,16}/ "
-                                       placeholder="请输入密码" maxlength="30" value="" name="password"
+                                <input class="form-control code_input" data-pattern="/[0-9]{4}/ "
+                                       placeholder="请输入四位验证码" maxlength="30" value="" name="code"
                                        data-container="body" data-toggle="popover" data-placement="right"
-                                       data-content="密码格式错误！" data-keep="密码格式错误！">
+                                       data-content="验证码格式错误！" data-keep="验证码格式错误！" >
+                                <span id="i_getcode_btn"></span>
                             </div>
                             <p class="text-right">&nbsp;</p>
 
