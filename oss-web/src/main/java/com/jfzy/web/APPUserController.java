@@ -1,13 +1,9 @@
 package com.jfzy.web;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
-
-
-
-import com.jfzy.web.vo.ArticleVo;
-import com.jfzy.web.vo.ResponseStatusEnum;
-import com.jfzy.web.vo.ResponseVo;
-import com.jfzy.web.vo.UserVo;
 import com.jfzy.service.UserService;
 import com.jfzy.service.WechatService;
-import com.jfzy.service.bo.ArticleBo;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
+import com.jfzy.web.vo.ResponseStatusEnum;
+import com.jfzy.web.vo.ResponseVo;
+import com.jfzy.web.vo.UserVo;
 
 @RestController
 public class APPUserController {

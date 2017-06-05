@@ -12,6 +12,7 @@ import com.aliyun.mns.model.MessageAttributes;
 import com.aliyun.mns.model.RawTopicMessage;
 import com.aliyun.mns.model.TopicMessage;
 import com.jfzy.service.SmsService;
+import com.jfzy.service.exception.JfApplicationRuntimeException;
 
 @Service
 public class SmsServiceImpl implements SmsService {
@@ -41,7 +42,7 @@ public class SmsServiceImpl implements SmsService {
 
 	@Override
 	public void sendRegisterCode(String phoneNum, String code) {
-		
+
 		MNSClient client = account.getMNSClient();
 		CloudTopic topic = client.getTopicRef(TOPIC_NAME);
 		RawTopicMessage msg = new RawTopicMessage();
@@ -68,8 +69,8 @@ public class SmsServiceImpl implements SmsService {
 			 */
 			TopicMessage ret = topic.publishMessage(msg, messageAttributes);
 
-		} finally {
-			client.close();
+		} catch (RuntimeException e) {
+			throw new JfApplicationRuntimeException("短信验证码发送失败");
 		}
 	}
 }
