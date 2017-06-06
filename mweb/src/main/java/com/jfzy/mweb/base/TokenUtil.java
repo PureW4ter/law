@@ -7,17 +7,16 @@ import org.springframework.security.crypto.keygen.KeyGenerators;
 
 public class TokenUtil {
 
-	public static String generateTokenString(Token token) {
-		// TextEncryptor encryptor = Encryptors.text("rlIc4MPlKFpR",
-		// KeyGenerators.string().generateKey());
-		String rawData = String.format("%s|%s|%s", token.getUserId(), token.getOpenId(), token.getTimestamp());
-		// return encryptor.encrypt(rawData);
+	private static TextEncryptor encryptor = Encryptors.delux("rlIc4MPlKFpR", "991239bab013");
 
-		return rawData;
+	public static String generateTokenString(Token token) {
+		String rawData = String.format("%s|%s|%s", token.getUserId(), token.getOpenId(), token.getTimestamp());
+		return encryptor.encrypt(rawData);
+
+		// return rawData;
 	}
 
 	public static Token extractToken(String tokenString) {
-		TextEncryptor encryptor = Encryptors.delux("rlIc4MPlKFpR", KeyGenerators.string().generateKey());
 
 		String rawData = encryptor.decrypt(tokenString);
 
@@ -36,13 +35,13 @@ public class TokenUtil {
 
 	public static void main(String[] args) {
 
-		//
-		//
-		//
-		// Token t = new Token();
-		// t.setUserId(123);
-		// t.setOpenId("E012JF");
-		// t.setTimestamp(12345L);
-		// System.out.println(generateTokenString(t));
+		Token t = new Token();
+		t.setUserId(123);
+		t.setOpenId("E012JF3r33453456ggrgrgkfjakjfkadjfakdjfkajdfkja");
+		t.setTimestamp(12345L);
+		String token = generateTokenString(t);
+		System.out.println(token.length());
+
+		System.out.println(extractToken(token).getOpenId());
 	}
 }

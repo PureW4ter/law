@@ -84,7 +84,7 @@ CREATE TABLE `jf_order_photo` (
   `order_id` int(11) NOT NULL,
   `type` tinyint(1) DEFAULT NULL,
   `photo_path` varchar(2000) NOT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -189,7 +189,7 @@ CREATE TABLE `jf_lawyer_reply` (
   `order_id` int(11) DEFAULT NULL,
   `lawyer_id` int(11) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `product_code` varchar(45) DEFAULT NULL,
   `simple_reply` longtext,
   `xingwei` longtext,
