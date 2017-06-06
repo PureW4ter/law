@@ -196,5 +196,6 @@ CREATE TABLE `jf_lawyer_reply` (
   `yupan` longtext,
   `buzhou` longtext,
   `tishi` longtext,
+  `score` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
