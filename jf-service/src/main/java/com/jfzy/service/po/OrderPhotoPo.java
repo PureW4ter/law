@@ -24,6 +24,8 @@ public class OrderPhotoPo {
 	
 	@Column(name = "create_time")
 	private Timestamp createTime;
+	
+	private int type;
 
 	public int getId() {
 		return id;
@@ -56,4 +58,13 @@ public class OrderPhotoPo {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 }
