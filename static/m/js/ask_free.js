@@ -59,18 +59,13 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 		},
 		validate:function(){
             var pass = true;
-            if(!$("#i_save").attr("checked")){
-            	util.showToast("必须同意协议");
-                pass = false;
-                return pass;
-            }
             var memo = $("#i_memo").val();
             if(!memo){
                 util.showToast("交易情况，诉求不能为空");
                 pass = false;
                 return pass;
             }
-            if(memo.length>5){
+            if(memo.length>500){
             	util.showToast("最多不可以超过500字");
                 pass = false;
                 return pass;
