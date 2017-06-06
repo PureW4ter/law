@@ -20,6 +20,9 @@ define(['component/header','ajaxhelper', 'utility', 'lib/qiniu/up_xiniu'],
 			$("#i_commit").off("click", this._commit).on("click", {ctx: this}, this._commit);
 		},
 		_commit:function(e){
+			if(!e.data.ctx.validate()){
+                return;
+            };
 			var picList = new Array();
 			$(".j_upload").each(function(index, item){
 				picList.push($(item).attr("src"));
@@ -32,7 +35,16 @@ define(['component/header','ajaxhelper', 'utility', 'lib/qiniu/up_xiniu'],
                 params, this, function(){
                 	window.location = "success.html";
                 });
-		}
+		},
+		validate:function(){
+            var pass = true;
+            if($(".j_upload").length<=0){
+            	util.showToast("至少上传一张图片");
+                pass = false;
+                return pass;
+            }
+            return pass;
+        }
     };
     return QuestionCompltete;
 });
