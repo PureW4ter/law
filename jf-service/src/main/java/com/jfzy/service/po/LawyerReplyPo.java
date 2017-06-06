@@ -43,6 +43,9 @@ public class LawyerReplyPo {
 	private String buzhou;
 	//特别提示
 	private String tishi;
+	
+	private double score;
+	
 	public int getId() {
 		return id;
 	}
@@ -108,6 +111,12 @@ public class LawyerReplyPo {
 	}
 	public void setTishi(String tishi) {
 		this.tishi = tishi;
+	}
+	public double getScore() {
+		return score;
+	}
+	public void setScore(double score) {
+		this.score = score;
 	}
 	
 }
