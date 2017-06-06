@@ -22,6 +22,7 @@ import com.jfzy.service.bo.LawyerStatusEnum;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderPayStatusEnum;
 import com.jfzy.service.bo.OrderPhotoBo;
+import com.jfzy.service.bo.OrderPhotoTypeEnum;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.PayWayEnum;
 import com.jfzy.service.bo.WxPayEventBo;
@@ -108,6 +109,7 @@ public class OrderServiceImpl implements OrderService {
 			bo.setOrderId(id);
 			bo.setPhotoPath(picList[i]);
 			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			bo.setType(OrderPhotoTypeEnum.ORDER.getId());
 			orderPhotoRepo.save(boToPo(bo));
 		}
 		orderRepo.updateMemo(memo, new Timestamp(System.currentTimeMillis()), id);

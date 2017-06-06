@@ -82,6 +82,7 @@ DROP TABLE IF EXISTS `jf_order_photo`;
 CREATE TABLE `jf_order_photo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
+  `type` tinyint(1) DEFAULT NULL,
   `photo_path` varchar(2000) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -181,3 +182,19 @@ CREATE TABLE `jf_user_account` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='比如两个微信号，那么就是两个user对应同一个user_account';
+
+DROP TABLE IF EXISTS `jf_lawyer_reply`;
+CREATE TABLE `jf_lawyer_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `lawyer_id` int(11) DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL,
+  `product_code` varchar(45) DEFAULT NULL,
+  `simple_reply` longtext,
+  `xingwei` longtext,
+  `yupan` longtext,
+  `buzhou` longtext,
+  `tishi` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
