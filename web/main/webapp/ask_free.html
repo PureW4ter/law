@@ -45,16 +45,13 @@
                     </div>
                     <div class="blk10"></div>
                     <div class="free_ask_intro"></div>
-                    <div id="i_product" class="product_price" data-id="<%=result.r[3][2].id%>">
-                        您需支付：<span class="money">¥<%=result.r[3][2].price%></span>
-                    </div>
+                    
                     <div class="blk15"></div>
                 </div>
             </div>
             <div class="read_bottom_box">
-                <div class="read_bottom_info">
-                    <input id="i_save" type="checkbox" class="regular_checkbox"/>
-                    <label for="i_save">我已经阅读以上信息，并且同意</label>
+                <div id="i_product" class="product_price" data-id="<%=result.r[3][2].id%>">
+                    您需支付：<span class="money">¥<%=result.r[3][2].price%></span>
                 </div>
                 <div class="read_bottom_btn" id="i_pay">确认</div>
             </div>
