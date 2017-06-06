@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS `jf_order_photo`;
 CREATE TABLE `jf_order_photo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `type` tinyint(1) DEFAULT NULL,
+  `type` tinyint(1) NOT NULL DEFAULT '0',
   `photo_path` varchar(2000) NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
