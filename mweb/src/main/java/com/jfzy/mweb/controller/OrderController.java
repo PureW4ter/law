@@ -107,7 +107,7 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	@PostMapping(value = "/api/wxpay/callback", produces = { "application/xml" })
 	public WxPayCallbackRespDto callback(@RequestBody String reqStr) {
-		logger.error(reqStr);
+		logger.info(reqStr);
 		WxPayCallbackDto dto = (WxPayCallbackDto) XmlUtil.fromXml(reqStr, WxPayCallbackDto.class);
 		WxPayEventBo event = dtoToBo(dto);
 		// check sign
@@ -175,10 +175,6 @@ public class OrderController extends BaseController {
 	@ResponseBody
 	@GetMapping("/api/order/listbyuser")
 	public ResponseVo<List<OrderVo>> getOrders(int userId, int page, int size) {
-		if (this.request != null && this.request.getRequestedSessionId() != null) {
-			logger.error(
-					String.format("======Session id for user %s is %s", userId, this.request.getRequestedSessionId()));
-		}
 
 		if (page < 0) {
 			page = 0;

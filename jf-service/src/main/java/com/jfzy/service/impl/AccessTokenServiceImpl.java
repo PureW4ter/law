@@ -27,7 +27,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 	private static final int EXPIRE_INTERVAL = 120000;
 
 	@Autowired
-	private RedisRepository<String> redisRepo;
+	private RedisRepository redisRepo;
 
 	private AccessToken token;
 
@@ -59,7 +59,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 	public void refreshAccessToken() {
 		AccessToken tmpToken = this.token;
 		if (tmpToken == null) {
-			String tokenString = redisRepo.get(REDIS_KEY_TOKEN);
+			String tokenString = (String) redisRepo.get(REDIS_KEY_TOKEN);
 			if (StringUtils.isNoneBlank(tokenString)) {
 				tmpToken = AccessToken.fromString(tokenString);
 			}
