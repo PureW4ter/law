@@ -2,7 +2,7 @@ package com.jfzy.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,7 +35,7 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		if (po == null) {
 			throw new JfApplicationRuntimeException("律师回复不存在");
 		} else {
-			if (StringUtils.isNoneBlank(bo.getBuzhou())) {
+			if (StringUtils.isNotBlank(bo.getBuzhou())) {
 				po.setBuzhou(bo.getBuzhou());
 			}
 			if (StringUtils.isNotBlank(bo.getSimpleReply())) {
