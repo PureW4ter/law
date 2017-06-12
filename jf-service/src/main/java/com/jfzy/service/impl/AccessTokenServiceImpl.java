@@ -2,14 +2,11 @@ package com.jfzy.service.impl;
 
 import java.io.IOException;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +27,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 	private static final int EXPIRE_INTERVAL = 120000;
 
 	@Autowired
-	private RedisRepository redisRepo;
+	private RedisRepository<String> redisRepo;
 
 	private AccessToken token;
 
