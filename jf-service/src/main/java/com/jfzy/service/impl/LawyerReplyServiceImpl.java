@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.bo.LawyerReplyBo;
+import com.jfzy.service.bo.LawyerReplyStatusEnum;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.LawyerReplyPo;
 import com.jfzy.service.repository.LawyerReplyRepository;
@@ -74,6 +75,11 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		LawyerReplyPo po = new LawyerReplyPo();
 		BeanUtils.copyProperties(bo, po);
 		return po;
+	}
+
+	@Override
+	public void scoreReply(int replyId, int score) {
+		replyRepo.updateScore(LawyerReplyStatusEnum.SCORED.getId(), score, replyId);
 	}
 
 }

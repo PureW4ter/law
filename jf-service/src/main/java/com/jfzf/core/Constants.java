@@ -18,5 +18,10 @@ public class Constants {
 	public static String PRODUCT_CODE_HUKOU = "H";
 	public static String PRODUCT_CODE_CHAFENG = "C";
 
+	public static final String ENCODING_AES_KEY = "H8brc7y62mQ7gkW4F27sR6f5R9MAZdBW0EJ5LTaLlCm";
+
 	public static final int PAY_ORDER_EXPIRE_INTERVAL = 3 * 3600 * 1000;
+
+	public static final String ACCESS_TOKEN_API = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
+
 }
