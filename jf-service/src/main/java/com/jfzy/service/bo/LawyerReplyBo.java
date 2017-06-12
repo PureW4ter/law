@@ -14,7 +14,8 @@ public class LawyerReplyBo {
 	private String yupan;
 	private String buzhou;
 	private String tishi;
-	private double score;
+	private int score;
+	private int status;
 	
 	public int getId() {
 		return id;
@@ -67,10 +68,10 @@ public class LawyerReplyBo {
 	public String getYupan() {
 		return yupan;
 	}
-	public double getScore() {
+	public int getScore() {
 		return score;
 	}
-	public void setScore(double score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 	public void setYupan(String yupan) {
@@ -87,6 +88,12 @@ public class LawyerReplyBo {
 	}
 	public void setTishi(String tishi) {
 		this.tishi = tishi;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 }
