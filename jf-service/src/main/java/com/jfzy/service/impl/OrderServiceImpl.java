@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +37,8 @@ import com.jfzy.service.repository.OrderRepository;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+	private static Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
 	@Autowired
 	private OrderRepository orderRepo;
@@ -87,6 +91,7 @@ public class OrderServiceImpl implements OrderService {
 		// FIXED ME
 		OrderPo po = orderRepo.findByUserIdAndId(userId, id);
 		if (po == null) {
+			logger.error(String.format("Order not found : userId %s, orderId %s", id, userId));
 			throw new JfApplicationRuntimeException("订单不存在");
 		} else if (po.getPayStatus() == OrderPayStatusEnum.PAYED.getId()) {
 			throw new JfApplicationRuntimeException("订单已支付");
@@ -265,7 +270,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 		} else {
 			// order id error
-			
+
 		}
 	}
 

@@ -24,4 +24,6 @@ public class Constants {
 
 	public static final String ACCESS_TOKEN_API = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
 
+	public static final String ACCESS_TOKEN_URL = String.format(ACCESS_TOKEN_API, APP_ID, SECRET);
+
 }
