@@ -12,6 +12,7 @@ public class SearchOrderVo {
 	private String tradePhase;
 	private String tradeSubphase;
 	private String memo;
+	private String ownerPhone;
 	
 	public int getId() {
 		return id;
@@ -72,5 +73,11 @@ public class SearchOrderVo {
 	}
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+	public String getOwnerPhone() {
+		return ownerPhone;
+	}
+	public void setOwnerPhone(String ownerPhone) {
+		this.ownerPhone = ownerPhone;
 	}
 }

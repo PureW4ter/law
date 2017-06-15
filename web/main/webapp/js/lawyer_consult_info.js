@@ -18,7 +18,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			$("#i_all_mask").off("click", this._hide).on("click", {ctx: this}, this._hide);
 		},
 		_doCall:function(){
-			window.location="tel://15800763802";
+			window.location="tel://" + util.phone;
 		},
 		_under1:function(){
 			$("#i_all_mask").show();

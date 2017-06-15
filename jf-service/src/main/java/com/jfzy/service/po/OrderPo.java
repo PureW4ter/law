@@ -92,38 +92,18 @@ public class OrderPo {
 
 	@Column(name = "owner_phone")
 	private String ownerPhone;
+	
+	private String email;
+	
+	private String address;
 
-	public String getProductCode() {
-		return productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
-
-	public String getOwnerName() {
-		return ownerName;
-	}
-
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
-	}
-
-	public String getOwnerPhone() {
-		return ownerPhone;
-	}
-
-	public void setOwnerPhone(String ownerPhone) {
-		this.ownerPhone = ownerPhone;
-	}
-
-	public int getPayWay() {
-		return payWay;
-	}
-
-	public void setPayWay(int payWay) {
-		this.payWay = payWay;
-	}
+	private String role;
+	
+	@Column(name = "trade_phase")
+	private String tradePhase;
+	
+	@Column(name = "trade_subphase")
+	private String tradeSubphase;
 
 	public int getId() {
 		return id;
@@ -229,6 +209,14 @@ public class OrderPo {
 		this.productName = productName;
 	}
 
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
 	public Double getOriginPrice() {
 		return originPrice;
 	}
@@ -285,6 +273,14 @@ public class OrderPo {
 		this.endTime = endTime;
 	}
 
+	public Timestamp getPhoneEndTime() {
+		return phoneEndTime;
+	}
+
+	public void setPhoneEndTime(Timestamp phoneEndTime) {
+		this.phoneEndTime = phoneEndTime;
+	}
+
 	public String getMemo() {
 		return memo;
 	}
@@ -293,14 +289,14 @@ public class OrderPo {
 		this.memo = memo;
 	}
 
-	public Timestamp getPhoneEndTime() {
-		return phoneEndTime;
+	public int getPayWay() {
+		return payWay;
 	}
 
-	public void setPhoneEndTime(Timestamp phoneEndTime) {
-		this.phoneEndTime = phoneEndTime;
+	public void setPayWay(int payWay) {
+		this.payWay = payWay;
 	}
-	
+
 	public int getPayStatus() {
 		return payStatus;
 	}
@@ -308,4 +304,61 @@ public class OrderPo {
 	public void setPayStatus(int payStatus) {
 		this.payStatus = payStatus;
 	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getOwnerPhone() {
+		return ownerPhone;
+	}
+
+	public void setOwnerPhone(String ownerPhone) {
+		this.ownerPhone = ownerPhone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getTradePhase() {
+		return tradePhase;
+	}
+
+	public void setTradePhase(String tradePhase) {
+		this.tradePhase = tradePhase;
+	}
+
+	public String getTradeSubphase() {
+		return tradeSubphase;
+	}
+
+	public void setTradeSubphase(String tradeSubphase) {
+		this.tradeSubphase = tradeSubphase;
+	}
+
 }

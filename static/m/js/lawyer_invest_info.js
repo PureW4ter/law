@@ -15,7 +15,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			$("#i_go2").off("click", this._go2).on("click", {ctx: this}, this._go2);
 		},
 		_doCall:function(){
-			window.location="tel://15800763802";
+			window.location="tel://" + util.phone;
 		},
 		_go1:function(){
 			window.location = "hukou_search.html";

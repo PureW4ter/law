@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
     <link href="styles/main.css" rel="stylesheet" />
-    <title>代查户口</title>
+    <title>户口代查</title>
 </head>
 <body>
     <div id="i_main">
@@ -16,7 +16,7 @@
             <script type="text/template" id="i_tpl">
             <div>
                 <img src="img/index_banner.jpg">
-                <div class="phone_icon">
+                <div class="phone_icon" id="i_help">
                     <img src="img/phone.png">
                 </div>
             </div>
@@ -49,12 +49,26 @@
                     </div>
                 </div>
             </div>
-            <div class="read_bottom_box">
-                <div id="i_product" class="read_bottom_info" data-id="<%=result.r[3][3].id%>">
-                    您需支付：<span class="money">¥<%=result.r[3][3].price%></span>
-                </div>
-                <div class="read_bottom_btn" id="i_pay">确认</div>
+            <div class="blk10"></div>
+            <div class="question_pay" id="i_pay_way">
+                <ul>
+                    <li class="question_pay_selected j_tab" data-id="<%=result.r[3][3].id%>">
+                        <div class="question_pay_box">
+                            <div class="question_pay_title1">普通房产代查</div>
+                            <div class="question_pay_title3">¥<%=result.r[3][3].price%></div>
+                        </div>
+                    </li>
+                    <li class="j_tab" data-id="<%=result.r[3][5].id%>">
+                        <div class="question_pay_box">
+                            <div class="question_pay_title1">学区房代查</div>
+                            <div class="question_pay_title3">¥<%=result.r[3][5].price%></div>
+                        </div>
+                    </li>
+                </ul>
             </div>
+            <div class="blk10"></div>
+                <div class="pay_btn" id="i_pay">去支付</div>
+                <div class="blk15"></div>
             </script>
         </div>
 

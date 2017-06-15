@@ -631,7 +631,7 @@ header h1 {
     position: absolute;
     left: 15px;
     right: 15px;
-    top: -50px;
+    top: -27px;
 }
 .index_botton_box ul{
     position: relative;
@@ -1412,6 +1412,7 @@ header h1 {
     float: right;
     font-size: 14px;
     color: #999999;
+    z-index: 9;
 }
 .invest_result_words{
     padding: 13px 0 15px 80px;
@@ -1573,6 +1574,7 @@ header h1 {
     padding: 10px 15px;
     background-color: #f7f7f7;
     font-size: 16px;
+    border: 1px solid #dddddd;
 }
 .price{
     display: inline-block;
@@ -1583,8 +1585,8 @@ header h1 {
     position: relative;
     float: right;
     display: inline-block;
-    height: 38px;
-    line-height: 38px;
+    height: 36px;
+    line-height: 39px;
     color: #c98b3e;
     border: 1px solid #ffffff;
     padding: 0 10px;
@@ -1619,7 +1621,7 @@ header h1 {
     top: 0;
     left: 0;
     z-index: 1001;
-    background-color: rgba(0, 0, 0, .4);
+    background-color: rgba(0, 0, 0, 0.8);
     display: none;
 }
 .all_mask img{

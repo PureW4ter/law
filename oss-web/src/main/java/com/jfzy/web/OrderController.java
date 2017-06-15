@@ -82,41 +82,47 @@ public class OrderController extends BaseController {
 	@GetMapping("/api/order/assignment")
 	public SimpleResponseVo assignOrder(int lawyerId, int orderId) {
 		OssUserBo ossUser = getOssUser();
-		/*if (ossUser != null) {
+		if (ossUser != null) {
 			orderService.assignOrder(orderId, lawyerId, ossUser.getId(), ossUser.getName());
-		}*/
-		
-		orderService.assignOrder(orderId, lawyerId, 101, "崔哥哥");
-		
+		}
+		//orderService.assignOrder(orderId, lawyerId, 101, "崔哥哥");
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
 
 	private static OrderVo boToVo(OrderBo bo) {
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(bo, vo);
-		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat myFmt2=new SimpleDateFormat("yyyyMMdd");
-		if(bo.getCreateTime()!=null)
+		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat myFmt3 = new SimpleDateFormat("yyyyMMdd");
+		if (bo.getCreateTime() != null)
 			vo.setCreateTime(myFmt.format(bo.getCreateTime()));
-		//订单编号：时间+code+id
-		vo.setOrderCode(myFmt2.format(bo.getCreateTime())+bo.getProductCode()+bo.getId());
-		if(bo.getUpdateTime()!=null)
-			vo.setUpdateTime(myFmt.format(bo.getUpdateTime()));
-		if(bo.getStartTime()!=null)
-			vo.setStartTime(myFmt.format(bo.getStartTime()));
-		if(bo.getEndTime()!=null)
-			vo.setEndTime(myFmt.format(bo.getEndTime()));
-		if(bo.getPhoneEndTime()!=null)
-			vo.setPhoneEndTime(myFmt.format(bo.getPhoneEndTime()));
-		if(bo.getStartTime()!=null && bo.getEndTime()!=null){
-			if(new Date().getTime()>=bo.getEndTime().getTime() || bo.getStatus()==OrderStatusEnum.FINISHED.getId()){
-				vo.setProcessPer("100%");
-			}else if(new Date().getTime() > bo.getStartTime().getTime() && new Date().getTime()<bo.getEndTime().getTime()){
-				vo.setProcessPer(
-						Math.round((new Date().getTime() - bo.getStartTime().getTime())*100/(bo.getEndTime().getTime() - bo.getStartTime().getTime())) 
-						+ "%");
-			}else{
-				vo.setProcessPer("0%");
+		// 订单编号：时间+code+id
+		vo.setOrderCode(myFmt3.format(bo.getCreateTime()) + bo.getProductCode() + bo.getId());
+		if (bo.getUpdateTime() != null)
+			vo.setUpdateTime(myFmt2.format(bo.getUpdateTime()));
+		if (bo.getStartTime() != null)
+			vo.setStartTime(myFmt2.format(bo.getStartTime()));
+		if (bo.getEndTime() != null)
+			vo.setEndTime(myFmt2.format(bo.getEndTime()));
+		if (bo.getStartTime() != null && bo.getEndTime() != null) {
+			if (new Date().getTime() >= bo.getEndTime().getTime()
+					|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
+				if (bo.getPhoneEndTime() != null)
+					vo.setPhoneEndTime(myFmt2.format(bo.getPhoneEndTime()));
+				if (bo.getStartTime() != null && bo.getEndTime() != null) {
+					if (new Date().getTime() >= bo.getEndTime().getTime()
+							|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
+						vo.setProcessPer("100%");
+					} else if (new Date().getTime() > bo.getStartTime().getTime()
+							&& new Date().getTime() < bo.getEndTime().getTime()) {
+						vo.setProcessPer(Math.round((new Date().getTime() - bo.getStartTime().getTime()) * 100
+								/ (bo.getEndTime().getTime() - bo.getStartTime().getTime())) + "%");
+					} else {
+						vo.setProcessPer("0%");
+					}
+				}
+
 			}
 		}
 		return vo;
