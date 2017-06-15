@@ -31,16 +31,20 @@ import com.jfzy.mweb.base.BaseController;
 import com.jfzy.mweb.base.UserSession;
 import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.InvestOrderVo;
+import com.jfzy.mweb.vo.LawyerReplyVo;
 import com.jfzy.mweb.vo.OrderCompleteVo;
 import com.jfzy.mweb.vo.OrderVo;
+import com.jfzy.mweb.vo.OrderWithReplyVo;
 import com.jfzy.mweb.vo.PrepayVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SearchOrderVo;
 import com.jfzy.mweb.vo.WxPayCallbackDto;
 import com.jfzy.mweb.vo.WxPayCallbackRespDto;
+import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.ProductService;
 import com.jfzy.service.UserService;
+import com.jfzy.service.bo.LawyerReplyBo;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.ProductBo;
@@ -60,6 +64,9 @@ public class OrderController extends BaseController {
 	@Autowired
 	private OrderService orderService;
 
+	@Autowired
+	private LawyerReplyService lawyerReplyService;
+	
 	@Autowired
 	private ProductService productService;
 
@@ -165,6 +172,16 @@ public class OrderController extends BaseController {
 	}
 
 	@ResponseBody
+	@GetMapping(value = "/api/order/getreply")
+	public ResponseVo<OrderWithReplyVo> getReply(int id) {
+		LawyerReplyBo rbo = lawyerReplyService.getReply(id);
+		OrderBo obo = orderService.getOrderById(id);
+		OrderWithReplyVo vo = boToVo(obo, rbo);
+		
+		return new ResponseVo<OrderWithReplyVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
+	}
+	
+	@ResponseBody
 	@PostMapping(value = "/api/order/complete", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody OrderCompleteVo vo) {
@@ -207,23 +224,24 @@ public class OrderController extends BaseController {
 	private static OrderVo boToVo(OrderBo bo) {
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(bo, vo);
-		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat myFmt3 = new SimpleDateFormat("yyyyMMdd");
 		if (bo.getCreateTime() != null)
 			vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		// 订单编号：时间+code+id
-		vo.setOrderCode(myFmt2.format(bo.getCreateTime()) + bo.getProductCode() + bo.getId());
+		vo.setOrderCode(myFmt3.format(bo.getCreateTime()) + bo.getProductCode() + bo.getId());
 		if (bo.getUpdateTime() != null)
-			vo.setUpdateTime(myFmt.format(bo.getUpdateTime()));
+			vo.setUpdateTime(myFmt2.format(bo.getUpdateTime()));
 		if (bo.getStartTime() != null)
-			vo.setStartTime(myFmt.format(bo.getStartTime()));
+			vo.setStartTime(myFmt2.format(bo.getStartTime()));
 		if (bo.getEndTime() != null)
-			vo.setEndTime(myFmt.format(bo.getEndTime()));
+			vo.setEndTime(myFmt2.format(bo.getEndTime()));
 		if (bo.getStartTime() != null && bo.getEndTime() != null) {
 			if (new Date().getTime() >= bo.getEndTime().getTime()
 					|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
 				if (bo.getPhoneEndTime() != null)
-					vo.setPhoneEndTime(myFmt.format(bo.getPhoneEndTime()));
+					vo.setPhoneEndTime(myFmt2.format(bo.getPhoneEndTime()));
 				if (bo.getStartTime() != null && bo.getEndTime() != null) {
 					if (new Date().getTime() >= bo.getEndTime().getTime()
 							|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
@@ -293,5 +311,26 @@ public class OrderController extends BaseController {
 		paramMap.put("cash_fee", dto.getCashFee());
 
 		return paramMap;
+	}
+	
+	private static LawyerReplyBo voToBo(LawyerReplyVo vo) {
+		LawyerReplyBo bo = new LawyerReplyBo();
+		BeanUtils.copyProperties(vo, bo);
+		return bo;
+	}
+	
+	private static LawyerReplyVo boToVo(LawyerReplyBo bo) {
+		if(bo == null)
+			return null;
+		LawyerReplyVo vo = new LawyerReplyVo();
+		BeanUtils.copyProperties(bo, vo);
+		return vo;
+	}
+	
+	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo) {
+		OrderWithReplyVo vo = new OrderWithReplyVo();
+		vo.setLawyerReplyVo(boToVo(rbo));
+		vo.setOrderVo(boToVo(obo));
+		return vo;
 	}
 }

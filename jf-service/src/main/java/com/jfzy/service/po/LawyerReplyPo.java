@@ -22,11 +22,11 @@ public class LawyerReplyPo {
 	@Column(name = "lawyer_id")
 	private int lawyerId;
 	
-	@Column(name = "createTime")
-	private Timestamp create_time;
+	@Column(name = "create_time")
+	private Timestamp createTime;
 	
-	@Column(name = "updateTime")
-	private Timestamp update_time;
+	@Column(name = "update_time")
+	private Timestamp updateTime;
 	
 	@Column(name = "product_code")
 	private String productCode;
@@ -35,88 +35,106 @@ public class LawyerReplyPo {
 	@Column(name = "simple_reply")
 	private String simpleReply;
 	
-	//行为指引
-	private String xingwei;
-	//结果预判
-	private String yupan;
-	//具体步骤
-	private String buzhou;
-	//特别提示
-	private String tishi;
+	//实质
+	@Column(name = "reply_summary")
+	private String replySummary;
 	
-	private double score;
+	//律师建议
+	@Column(name = "reply_suggests")
+	private String replySuggests;
 	
+	//法律法规
+	@Column(name = "reply_rules")
+	private String replyRules;
+	
+	@Column(name = "has_hukou")
+	private int hasHukou;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public int getOrderId() {
 		return orderId;
 	}
+
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
+
 	public int getLawyerId() {
 		return lawyerId;
 	}
+
 	public void setLawyerId(int lawyerId) {
 		this.lawyerId = lawyerId;
 	}
-	public Timestamp getCreate_time() {
-		return create_time;
+
+	public Timestamp getCreateTime() {
+		return createTime;
 	}
-	public void setCreate_time(Timestamp create_time) {
-		this.create_time = create_time;
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
-	public Timestamp getUpdate_time() {
-		return update_time;
+
+	public Timestamp getUpdateTime() {
+		return updateTime;
 	}
-	public void setUpdate_time(Timestamp update_time) {
-		this.update_time = update_time;
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
+
 	public String getProductCode() {
 		return productCode;
 	}
+
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
+
 	public String getSimpleReply() {
 		return simpleReply;
 	}
+
 	public void setSimpleReply(String simpleReply) {
 		this.simpleReply = simpleReply;
 	}
-	public String getXingwei() {
-		return xingwei;
+
+	public String getReplySummary() {
+		return replySummary;
 	}
-	public void setXingwei(String xingwei) {
-		this.xingwei = xingwei;
+
+	public void setReplySummary(String replySummary) {
+		this.replySummary = replySummary;
 	}
-	public String getYupan() {
-		return yupan;
+
+	public String getReplySuggests() {
+		return replySuggests;
 	}
-	public void setYupan(String yupan) {
-		this.yupan = yupan;
+
+	public void setReplySuggests(String replySuggests) {
+		this.replySuggests = replySuggests;
 	}
-	public String getBuzhou() {
-		return buzhou;
+
+	public String getReplyRules() {
+		return replyRules;
 	}
-	public void setBuzhou(String buzhou) {
-		this.buzhou = buzhou;
+
+	public void setReplyRules(String replyRules) {
+		this.replyRules = replyRules;
 	}
-	public String getTishi() {
-		return tishi;
+
+	public int getHasHukou() {
+		return hasHukou;
 	}
-	public void setTishi(String tishi) {
-		this.tishi = tishi;
+
+	public void setHasHukou(int hasHukou) {
+		this.hasHukou = hasHukou;
 	}
-	public double getScore() {
-		return score;
-	}
-	public void setScore(double score) {
-		this.score = score;
-	}
-	
 }

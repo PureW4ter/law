@@ -16,10 +16,14 @@
             <script type="text/template" id="i_tpl">
             <div id="i_order_list">
                 <%_.each(result.r, function(item){%>
-                    <div class="invest_result_box j_result_item" data-id="<%=item.id%>" data-pid="<%=item.productId%>">
+                    <div class="invest_result_box j_result_item" data-id="<%=item.id%>" data-pid="<%=item.productId%>" data-pcode="<%=item.productCode%>">
                         <div class="invest_result_line">
                             <div class="invest_result_line_l">订单编号</div>
                             <div class="invest_result_line_r"><%=item.id%></div>
+                        </div>
+                        <div class="invest_result_line">
+                            <div class="invest_result_line_l">创建时间</div>
+                            <div class="invest_result_line_r"><%=item.createTime%></div>
                         </div>
                         <div class="invest_result_line">
                             <div class="invest_result_line_l">订单类型</div>
@@ -54,7 +58,9 @@
                             <div class="invest_result_line">
                                 <span class="my_op_status">已提交</span>
                                 <span class="my_op_bar2"><span class="my_op_bar" style="width:<%=item.processPer%>"></span></span>
-                                <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn view j_view_law">查看</span></div>
+                                <div class="invest_result_line_r">
+                                    <span class="my_op_btn view j_view">查看</span>
+                                </div>
                                 <div class="time_state">
                                     <span><%=item.endTime%></span>
                                     <span><%=item.startTime%></span>
@@ -73,7 +79,9 @@
                             <div class="invest_result_line">
                                 <span class="my_op_status">已完成</span>
                                 <span class="my_op_bar2"><span class="my_op_bar" style="width:<%=item.processPer%>"></span></span>
-                                <div class="invest_result_line_r" id="i_view_hukou"><span class="my_op_btn view j_view_law">查看</span></div>
+                                <div class="invest_result_line_r">
+                                    <span class="my_op_btn view j_view">查看</span>
+                                </div>
                                 <div class="time_state">
                                     <span><%=item.endTime%></span>
                                     <span><%=item.startTime%></span>

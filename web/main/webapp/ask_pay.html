@@ -16,7 +16,7 @@
             <script type="text/template" id="i_tpl">
             <div>
                 <img src="img/index_banner.jpg">
-                <div class="phone_icon">
+                <div class="phone_icon" id="i_help">
                     <img src="img/phone.png">
                 </div>
             </div>
@@ -63,17 +63,22 @@
                     <div class="input_bottom">
                         提示：根据选择的合同类型做提示说明
                     </div>
+                    <div class="blk10"></div>
+                    <div class="new_input_box" id="i_phone_box">
+                        <label>联系电话<span class="red_start">*</span></label>
+                        <input placeholder="查询成功后通知您（必填）" id="i_phone"/>
+                    </div>
                     <div class="quesiton_count_title">提交后进入回复倒计时</div>
                     <div class="question_pay" id="i_pay_way">
                         <ul>
-                            <li class="question_pay_selected j_tab" data-id="<%=result.r[3][1].id%>">
+                            <li class="question_pay_selected j_tab" data-id="<%=result.r[3][1].id%>" data-show="1">
                                 <div class="question_pay_box">
                                     <div class="question_pay_title1">2小时内电话回复</div>
                                     <div class="question_pay_title2">24小时内书面回复</div>
                                     <div class="question_pay_title3">¥<%=result.r[3][1].price%></div>
                                 </div>
                             </li>
-                            <li class="j_tab" data-id="<%=result.r[3][0].id%>">
+                            <li class="j_tab" data-id="<%=result.r[3][0].id%>" data-show="0">
                                 <div class="question_pay_box">
                                     <div class="question_pay_title1">24小时内书面回复</div>
                                     <div class="question_pay_title2">&nbsp;</div>

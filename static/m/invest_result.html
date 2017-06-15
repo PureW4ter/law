@@ -13,43 +13,45 @@
         </div>
         <!--body-->
         <div id="i_mainbox">
-            
+            <script type="text/template" id="i_tpl">
             <div class="invest_result_tab">
                 <div class="invest_result_tab_btn">订单信息</div>
             </div>
             <div class="invest_result_box">
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">订单编号</div>
-                    <div class="invest_result_line_r">1111111111</div>
+                    <div class="invest_result_line_r"><%=result.r.orderVo.id%></div>
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">产权人</div>
-                    <div class="invest_result_line_r">减法</div>
+                    <div class="invest_result_line_r"><%=result.r.orderVo.ownerName%></div>
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">房产地址</div>
-                    <div class="invest_result_line_r">上海市长宁区绍华路</div>
+                    <div class="invest_result_line_r"><%=result.r.orderVo.address%></div>
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">调查事项</div>
-                    <div class="invest_result_line_r">户口/查询信息</div>
+                    <div class="invest_result_line_r"><%=result.r.orderVo.productName%></div>
                 </div>
             </div>
             <div class="invest_result_tab">
                 <div class="invest_result_tab_btn">调查结果</div>
             </div>
+
+            <%if(result.r.orderVo.productCode=="C"){%>
             <div class="invest_result_box">
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">查封性质</div>
-                    <div class="invest_result_line_r">有户口</div>
+                    <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.ceilType%></div>
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">查封时间</div>
-                    <div class="invest_result_line_r">2017年3月5日</div>
+                    <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.ceilTime%></div>
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">查封法院</div>
-                    <div class="invest_result_line_r">长宁区法院</div>
+                    <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.ceilCourt%></div>
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">附件</div>
@@ -70,11 +72,11 @@
                     </div>
                 </div>
             </div>
-
+            <%}else{%>
             <div class="invest_result_box">
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">户口状况</div>
-                    <div class="invest_result_line_r">有户口</div>
+                    <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.hasHukou%></div>
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">附件</div>
@@ -99,7 +101,8 @@
                     </div>
                 </div>
             </div>
-            
+            <%}%>
+            </script>
         </div>
     </div>
 </body>

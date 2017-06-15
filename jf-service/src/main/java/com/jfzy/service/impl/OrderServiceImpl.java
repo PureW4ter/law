@@ -248,8 +248,15 @@ public class OrderServiceImpl implements OrderService {
 			OrderPo po = orderRepo.findOne(Integer.valueOf(bo.getOutTradeNo()));
 			if (po != null && userId == po.getUserId()) {
 				if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
-					orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
-							OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
+					
+					if(po.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()){
+						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
+								OrderStatusEnum.NOT_COMPLETED.getId(), po.getId());
+					}else{
+						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
+								OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
+					}
+					
 				}
 			} else if (po == null) {
 
