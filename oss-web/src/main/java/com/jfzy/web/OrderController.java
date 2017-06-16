@@ -79,6 +79,21 @@ public class OrderController extends BaseController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/api/order/lawyer")
+	public ResponseVo<List<OrderVo>> getOrderByLawyer(int lawyerId, int page, int size) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "phoneEndTime");
+		Page<OrderBo> values = orderService.getOrdresByLawyer(lawyerId, new PageRequest(page, size, sort));
+		List<OrderVo> result = new ArrayList<OrderVo>();
+		for (OrderBo bo : values) {
+			result.add(boToVo(bo));
+		}
+		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
+	}
+	
+	@ResponseBody
 	@GetMapping("/api/order/assignment")
 	public SimpleResponseVo assignOrder(int lawyerId, int orderId) {
 		OssUserBo ossUser = getOssUser();

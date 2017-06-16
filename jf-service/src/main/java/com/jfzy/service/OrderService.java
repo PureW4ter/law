@@ -33,7 +33,7 @@ public interface OrderService {
 
 	List<OrderBo> getOrdersByUser(int userId, Pageable page);
 
-	List<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page);
+	Page<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page);
 
 	List<OrderBo> getUnprocessedOrdersByLawyer(int lawyerId, Pageable page);
 
