@@ -1,9 +1,13 @@
 package com.jfzy.web;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +16,26 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.OrderService;
+import com.jfzy.service.bo.LawyerReplyBo;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.OssUserBo;
+import com.jfzy.service.bo.ProductBo;
+import com.jfzy.service.bo.UserAccountBo;
+import com.jfzy.service.bo.UserAccountTypeEnum;
+import com.jfzy.service.bo.UserBo;
+import com.jfzy.web.vo.LawyerReplyVo;
 import com.jfzy.web.vo.OrderVo;
+import com.jfzy.web.vo.OrderWithReplyVo;
 import com.jfzy.web.vo.PageResponseVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
@@ -32,6 +47,9 @@ public class OrderController extends BaseController {
 	@Autowired
 	private OrderService orderService;
 
+	@Autowired
+	private LawyerReplyService lawyerReplyService;
+	
 	@ResponseBody
 	@GetMapping("/api/order/find")
 	public PageResponseVo<List<OrderVo>> getOrdersByCityIdAndStatus(int cityId, int status, int pageNo,
@@ -104,6 +122,33 @@ public class OrderController extends BaseController {
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
 
+	@ResponseBody
+	@GetMapping(value = "/api/order/getreply")
+	public ResponseVo<OrderWithReplyVo> getReply(int id) {
+		LawyerReplyBo rbo = lawyerReplyService.getReply(id);
+		OrderBo obo = orderService.getOrderById(id);
+		OrderWithReplyVo vo = boToVo(obo, rbo);
+		
+		return new ResponseVo<OrderWithReplyVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
+	}
+	
+	@ResponseBody
+	@PostMapping(path = "/api/order/reply", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<Object> reply(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody LawyerReplyVo vo) {
+		LawyerReplyBo bo = voToBo(vo);
+		OrderBo obo = orderService.getOrderById(vo.getOrderId());
+		bo.setProductCode(obo.getProductCode());
+		bo.setLawyerId(obo.getLawyerId());
+		if(bo.getId()>0){
+			bo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		}else{
+			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		}
+		lawyerReplyService.createReply(bo);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
 	private static OrderVo boToVo(OrderBo bo) {
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(bo, vo);
@@ -137,10 +182,31 @@ public class OrderController extends BaseController {
 						vo.setProcessPer("0%");
 					}
 				}
-
 			}
 		}
 		return vo;
 	}
-
+	
+	private static LawyerReplyBo voToBo(LawyerReplyVo vo) {
+		if(vo == null)
+			return null;
+		LawyerReplyBo bo = new LawyerReplyBo();
+		BeanUtils.copyProperties(vo, bo);
+		return bo;
+	}
+	
+	private static LawyerReplyVo boToVo(LawyerReplyBo bo) {
+		if(bo == null)
+			return null;
+		LawyerReplyVo vo = new LawyerReplyVo();
+		BeanUtils.copyProperties(bo, vo);
+		return vo;
+	}
+	
+	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo) {
+		OrderWithReplyVo vo = new OrderWithReplyVo();
+		vo.setLawyerReplyVo(boToVo(rbo));
+		vo.setOrderVo(boToVo(obo));
+		return vo;
+	}
 }

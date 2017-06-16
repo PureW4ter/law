@@ -94,12 +94,11 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 			var oid = $(e.target).parents(".j_result_item").data("id");
 			var productId = $(e.target).parents(".j_result_item").data("pid");
 			var productCode = $(e.target).parents(".j_result_item").data("pcode");
-			if(productCode == util.PRODUCT_CODE_HUKOU || productCode == util.PRODUCT_CODE_CHAFENG){
+			if(productCode == util.PRODUCT_CODE_HUKOU || productCode == util.PRODUCT_CODE_CHAFENG || productCode == util.PRODUCT_CODE_HUKOU_XQ){
 				window.location = "invest_result.html?id=" + oid + "&pid=" + productId;
 			}else{
 				window.location = "lawyer_reply.html?id=" + oid + "&pid=" + productId;
 			}
-			
 		}
     };
     return MyQuestionList;

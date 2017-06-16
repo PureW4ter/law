@@ -25,10 +25,17 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._registEvent();
         },
         _registEvent: function () {
-            $('#i_new').off("click", this._createArticle).on("click", this._createArticle);
+            $('.j_reply').off("click", this._goReply).on("click", this._goReply);
         },
-        _createArticle:function(e){
-            window.location = "new_article.html";
+        _goReply:function(e){
+            var oid = $(e.target).parents("tr").data("id");
+            var productId = $(e.target).parents("tr").data("pid");
+            var productCode = $(e.target).parents("tr").data("pcode");
+            if(productCode == util.PRODUCT_CODE_HUKOU || productCode == util.PRODUCT_CODE_CHAFENG || productCode == util.PRODUCT_CODE_HUKOU_XQ){
+                window.location = "diaocha_reply.html?id=" + oid;
+            }else{
+                window.location = "zixun_reply.html?id=" + oid;
+            }
         }
     };
     return LawyerHome;

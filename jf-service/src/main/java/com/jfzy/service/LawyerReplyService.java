@@ -6,8 +6,6 @@ public interface LawyerReplyService {
 
 	void createReply(LawyerReplyBo bo);
 
-	void updateReply(LawyerReplyBo bo);
-
 	LawyerReplyBo getReply(int orderId);
 
 	void scoreReply(int replyId, int score);
