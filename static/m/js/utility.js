@@ -7,6 +7,7 @@ define([],function(){
 		PRODUCT_CODE_ZIXUNP:"YP",
 		PRODUCT_CODE_JIANDANWEN:"J",
 		PRODUCT_CODE_HUKOU:"H",
+		PRODUCT_CODE_HUKOU_XQ:"HX",
 		PRODUCT_CODE_CHAFENG:"C",
 		phone: "17602105663",
 		getQueryParameter: function(name) {

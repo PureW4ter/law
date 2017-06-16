@@ -1636,3 +1636,7 @@ header h1 {
     color: #d29f65;
     background-color: #f7f7f7;
 }
+.result_content{
+    padding: 15px;
+    border-bottom: 1px solid #eeeeee;
+}

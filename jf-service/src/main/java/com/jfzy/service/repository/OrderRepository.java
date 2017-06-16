@@ -15,6 +15,8 @@ import com.jfzy.service.po.OrderPo;
 public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	Page<OrderPo> findByCityIdAndStatus(int cityId, int status, Pageable page);
+	
+	Page<OrderPo> findByLawyerId(int lawyerId, Pageable page);
 
 	@Transactional
 	@Modifying

@@ -19,7 +19,7 @@
                     <div class="invest_result_box j_result_item" data-id="<%=item.id%>" data-pid="<%=item.productId%>" data-pcode="<%=item.productCode%>">
                         <div class="invest_result_line">
                             <div class="invest_result_line_l">订单编号</div>
-                            <div class="invest_result_line_r"><%=item.id%></div>
+                            <div class="invest_result_line_r"><%=item.orderCode%></div>
                         </div>
                         <div class="invest_result_line">
                             <div class="invest_result_line_l">创建时间</div>
@@ -50,7 +50,7 @@
                             <div class="invest_result_line">
                                 <div class="invest_result_line_l">操作</div>
                                 <div class="invest_result_line_r">
-                                    <span class="my_op_btn j_complete">补充</span>&nbsp;&nbsp;<span class="my_op_btn j_refund">退款</span>
+                                    <span class="my_op_btn j_complete">补充</span>
                                 </div>
                             </div>
                         <%}else if(item.status == 3|| item.status == 4){%>
