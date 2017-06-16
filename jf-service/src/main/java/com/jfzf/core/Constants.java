@@ -26,4 +26,6 @@ public class Constants {
 
 	public static final String ACCESS_TOKEN_URL = String.format(ACCESS_TOKEN_API, APP_ID, SECRET);
 
+	public static final String REDIS_PREFIX_SHORT_URL = "SU--";
+
 }

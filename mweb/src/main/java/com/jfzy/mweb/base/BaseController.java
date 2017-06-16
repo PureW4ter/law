@@ -6,16 +6,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jfzy.mweb.controller.OrderController;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.repository.RedisRepository;
 
 public class BaseController {
+
+	private static Logger logger = LoggerFactory.getLogger(BaseController.class);
 
 	@Autowired
 	protected HttpSession session;
@@ -36,6 +41,8 @@ public class BaseController {
 		} else {
 			if (session.getAttribute(UserSession.SESSION_KEY) == null) {
 				String sessionString = redisRepo.get(String.format("US|%s", request.getRequestedSessionId()));
+				logger.error(
+						String.format("session from redis %s ,  %s", sessionString, request.getRequestedSessionId()));
 				UserSession tmpSession = (UserSession) fromJson(sessionString);
 
 				if (tmpSession != null) {
@@ -51,7 +58,9 @@ public class BaseController {
 
 	protected void setUserSession(UserSession userSession) {
 		session.setAttribute(UserSession.SESSION_KEY, userSession);
-		redisRepo.set(String.format("US|%s", request.getRequestedSessionId()), toJson(userSession));
+		String jsonStr = toJson(userSession);
+		logger.error(String.format("session to redis : %s   ,   %s", jsonStr, request.getRequestedSessionId()));
+		redisRepo.set(String.format("US|%s", request.getRequestedSessionId()), jsonStr);
 	}
 
 	private static UserSession fromJson(String jsonString) {

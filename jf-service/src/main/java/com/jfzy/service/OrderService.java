@@ -40,4 +40,6 @@ public interface OrderService {
 	List<OrderBo> getSearchOrders(Pageable page);
 
 	List<OrderBo> getInvestOrders(Pageable page);
+
+	void acceptorOrder(int lawyerId, int orderId);
 }

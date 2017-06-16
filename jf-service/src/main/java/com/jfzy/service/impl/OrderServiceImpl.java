@@ -91,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
 		// FIXED ME
 		OrderPo po = orderRepo.findByUserIdAndId(userId, id);
 		if (po == null) {
-			logger.error(String.format("Order not found : userId %s, orderId %s", id, userId));
+			logger.error(String.format("Order not found : userId %s, orderId %s", userId, id));
 			throw new JfApplicationRuntimeException("订单不存在");
 		} else if (po.getPayStatus() == OrderPayStatusEnum.PAYED.getId()) {
 			throw new JfApplicationRuntimeException("订单已支付");
@@ -264,6 +264,20 @@ public class OrderServiceImpl implements OrderService {
 		} else {
 			// order id error
 
+		}
+	}
+
+	@Override
+	public void acceptorOrder(int lawyerId, int orderId) {
+		LawyerBo lawyer = lawyerSerivce.getLawyerById(lawyerId);
+		if (lawyer == null) {
+			logger.error(String.format("AcceptorOrder failed, unable to find lawyer with id %s", lawyerId));
+			throw new JfApplicationRuntimeException("律师不存在");
+		}
+		OrderPo order = orderRepo.getOne(orderId);
+		if (order == null) {
+			logger.error(String.format("AcceptorOrder failed, unable to find order with id %s", orderId));
+			throw new JfApplicationRuntimeException("订单不存在");
 		}
 	}
 

@@ -140,17 +140,24 @@ public class OrderController extends BaseController {
 		UserSession session = getUserSession();
 
 		if (session != null) {
-			String openId = session.getOpenId();
-			if (StringUtils.isNotBlank(openId) || UserSession.EMPTY_USER_ID != session.getUserId()) {
-				WxPayResponseDto dto = orderService.pay(id, session.getUserId(), getClientIp(), openId);
-				if (StringUtils.equals("SUCCESS", dto.getReturnCode())
-						&& StringUtils.equals("SUCCESS", dto.getResultCode())) {
-					PrepayVo vo = dtoToVo(dto);
-					return new ResponseVo<PrepayVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
-				} else {
-					return new ResponseVo<PrepayVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "微信支付单生成失败", null);
+			logger.error(String.format("session :%s", session.getUserId()));
+			UserAccountBo openIdBo = userService.getUserAccountByUserId(session.getUserId(),
+					UserAccountTypeEnum.WECHAT_OPENID.getId());
+
+			if (openIdBo != null) {
+				String openId = openIdBo.getValue();
+				if (StringUtils.isNotBlank(openId) || UserSession.EMPTY_USER_ID != session.getUserId()) {
+					WxPayResponseDto dto = orderService.pay(id, session.getUserId(), getClientIp(), openId);
+					if (StringUtils.equals("SUCCESS", dto.getReturnCode())
+							&& StringUtils.equals("SUCCESS", dto.getResultCode())) {
+						PrepayVo vo = dtoToVo(dto);
+						return new ResponseVo<PrepayVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
+					} else {
+						return new ResponseVo<PrepayVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "微信支付单生成失败", null);
+					}
 				}
 			}
+
 		}
 
 		return new ResponseVo<PrepayVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "未登录", null);

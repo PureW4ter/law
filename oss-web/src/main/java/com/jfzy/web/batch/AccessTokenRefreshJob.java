@@ -1,4 +1,4 @@
-package com.jfzy.web.service.impl;
+package com.jfzy.web.batch;
 
 import javax.annotation.PostConstruct;
 
@@ -13,9 +13,9 @@ import com.jfzy.service.AccessTokenService;
 
 @EnableScheduling
 @Service
-public class AccessTokenStarter {
+public class AccessTokenRefreshJob {
 
-	private static Logger logger = LoggerFactory.getLogger(AccessTokenStarter.class);
+	private static Logger logger = LoggerFactory.getLogger(AccessTokenRefreshJob.class);
 
 	@Autowired
 	private AccessTokenService service;

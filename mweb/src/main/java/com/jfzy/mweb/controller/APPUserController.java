@@ -60,11 +60,8 @@ public class APPUserController extends BaseController {
 			UserAccountBo abo = userService.getUserAccountByUserId(bo.getId(), UserAccountTypeEnum.MOBILE.getId());
 
 			// init session
-			UserAccountBo wxBo = userService.getUserAccountByUserId(bo.getId(),
-					UserAccountTypeEnum.WECHAT_OPENID.getId());
 			Token t = new Token();
 			t.setUserId(bo.getId());
-			t.setOpenId(wxBo.getValue());
 			t.setTimestamp(System.currentTimeMillis());
 			String token = TokenUtil.generateTokenString(t);
 			AuthUserVo vo = boToAuthUserVo(bo, token);
@@ -72,7 +69,6 @@ public class APPUserController extends BaseController {
 				vo.setPhone(abo.getValue());
 
 			UserSession session = new UserSession();
-			session.setOpenId(wxBo.getValue());
 			session.setUserId(bo.getId());
 			this.setUserSession(session);
 

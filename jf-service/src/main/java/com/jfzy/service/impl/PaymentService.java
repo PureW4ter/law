@@ -57,9 +57,11 @@ public class PaymentService {
 		sign(dto, Constants.PAY_SECRET);
 
 		String xmlStr = XmlUtil.parseXml(dto);
+		logger.error(xmlStr);
 		String response;
 		try {
 			response = HttpClientUtils.post(PAY_URL, xmlStr);
+			logger.error(response);
 			WxPayResponseDto responseDto = (WxPayResponseDto) XmlUtil.fromXml(response, WxPayResponseDto.class);
 			if (!StringUtils.equals("SUCCESS", responseDto.getResultCode())
 					|| !StringUtils.equals("SUCCESS", responseDto.getReturnCode())) {

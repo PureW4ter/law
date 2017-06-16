@@ -12,16 +12,6 @@ public class UserSession implements Serializable {
 	public static final int EMPTY_USER_ID = 0;
 
 	private int userId;
-	private String openId;
-
-
-	public String getOpenId() {
-		return this.openId;
-	}
-
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
 
 	public int getUserId() {
 		return userId;
