@@ -1,14 +1,11 @@
-package com.jfzy.service.bo;
+package com.jfzy.mweb.vo;
 
-import java.sql.Timestamp;
-
-public class LawyerReplyBo {
-
+public class LawyerReplyVo {
 	private int id;
 	private int orderId;
 	private int lawyerId;
-	private Timestamp createTime;
-	private Timestamp updateTime;
+	private String createTime;
+	private String updateTime;
 	private String productCode;
 	private String simpleReply;
 	private String replySummary;
@@ -34,16 +31,16 @@ public class LawyerReplyBo {
 	public void setLawyerId(int lawyerId) {
 		this.lawyerId = lawyerId;
 	}
-	public Timestamp getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public Timestamp getUpdateTime() {
+	public String getUpdateTime() {
 		return updateTime;
 	}
-	public void setUpdateTime(Timestamp updateTime) {
+	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
 	}
 	public String getProductCode() {
@@ -83,4 +80,3 @@ public class LawyerReplyBo {
 		this.hasHukou = hasHukou;
 	}
 }
-

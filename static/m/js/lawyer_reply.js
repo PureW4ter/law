@@ -16,6 +16,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 		_view:function(e){
 			window.location = "view_reply.html";
 		},
+		
     };
     return LawyerReply;
 });

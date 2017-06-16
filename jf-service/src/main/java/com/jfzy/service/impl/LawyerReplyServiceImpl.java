@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.bo.LawyerReplyBo;
@@ -13,6 +14,7 @@ import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.LawyerReplyPo;
 import com.jfzy.service.repository.LawyerReplyRepository;
 
+@Service
 public class LawyerReplyServiceImpl implements LawyerReplyService {
 
 	@Autowired
@@ -35,22 +37,20 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		if (po == null) {
 			throw new JfApplicationRuntimeException("律师回复不存在");
 		} else {
-			if (StringUtils.isNotBlank(bo.getBuzhou())) {
-				po.setBuzhou(bo.getBuzhou());
-			}
 			if (StringUtils.isNotBlank(bo.getSimpleReply())) {
 				po.setSimpleReply(bo.getSimpleReply());
 			}
-			if (StringUtils.isNotBlank(bo.getTishi())) {
-				po.setTishi(bo.getTishi());
+			if (StringUtils.isNotBlank(bo.getReplySummary())) {
+				po.setReplySummary(bo.getReplySummary());
 			}
-			if (StringUtils.isNotBlank(bo.getXingwei())) {
-				po.setXingwei(bo.getXingwei());
+			
+			if (StringUtils.isNotBlank(bo.getReplyRules())) {
+				po.setReplyRules(bo.getReplyRules());
 			}
-			if (StringUtils.isNotBlank(bo.getYupan())) {
-				po.setYupan(bo.getYupan());
+			
+			if (StringUtils.isNotBlank(bo.getReplySuggests())) {
+				po.setReplySuggests(bo.getReplySuggests());
 			}
-
 			replyRepo.save(po);
 		}
 	}
@@ -58,7 +58,7 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 	@Override
 	public LawyerReplyBo getReply(int orderId) {
 		List<LawyerReplyPo> pos = replyRepo.findByOrderId(orderId);
-		if (pos != null) {
+		if (pos != null && pos.size()>0) {
 			return poToBo(pos.get(0));
 		} else {
 			return null;

@@ -32,7 +32,7 @@ public class OrderVo {
 	private String email;
 	private String address;
 	private String ownerName;
-	private String ownerAddress;
+	private String ownerPhone;
 	private String orderCode;
 	
 	public String getOrderCode() {
@@ -47,11 +47,11 @@ public class OrderVo {
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
-	public String getOwnerAddress() {
-		return ownerAddress;
+	public String getOwnerPhone() {
+		return ownerPhone;
 	}
-	public void setOwnerAddress(String ownerAddress) {
-		this.ownerAddress = ownerAddress;
+	public void setOwnerPhone(String ownerPhone) {
+		this.ownerPhone = ownerPhone;
 	}
 	public int getId() {
 		return id;

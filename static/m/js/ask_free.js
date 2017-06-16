@@ -20,6 +20,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 			this._registEvent();
 		},
 		_registEvent:function(){
+			$("#i_help").off("click", this._doCall).on("click", {ctx: this}, this._doCall);
 			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
 			$("#i_identity").off("change", this._changeIdentity).on("change", {ctx: this}, this._changeIdentity);
 		},
@@ -34,6 +35,9 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 				}
 			);
 			e.data.ctx._registEvent();
+		},
+		_doCall:function(){
+			window.location="tel://" + util.phone;
 		},
 		_pay:function(e){
 			if(!e.data.ctx.validate()){

@@ -20,15 +20,24 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
 			this._registEvent();
 		},
 		_registEvent:function(){
+            $("#i_help").off("click", this._doCall).on("click", {ctx: this}, this._doCall);
+            $("#i_pay_way li").off("click", this._selectPayWay).on("click", {ctx: this}, this._selectPayWay);
 			$("#i_pay").off("click", this._pay).on("click", {ctx: this}, this._pay);
 		},
+        _doCall:function(){
+            window.location="tel://" + util.phone;
+        },
+        _selectPayWay:function(e){
+            $(".j_tab").removeClass("question_pay_selected");
+            $(e.currentTarget).addClass("question_pay_selected");
+        },
 		_pay:function(e){
 			if(!e.data.ctx.validate()){
                 return;
             };
 			var params = {
 				"userId": util.getUserId(),
-				"productId": $("#i_product").data("id"),
+				"productId": $($(".question_pay_selected")[0]).data("id"),
 				"ownerName": $("#i_name").val(),
 				"ownerPhone": $("#i_phone").val(),
 				"cityId": $("#i_city").val(),
