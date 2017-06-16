@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>后台管理系统</title>
+    <link href="styles/bootstrap.css?ver={front_version}" rel="stylesheet" />
+    <link href="styles/main.css?ver={front_version}" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="container-fluid" id="main">
+        <div class="col-sm-2 j_tree_con">
+            <div id="i_navbar">
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div class="row" id="i_header"></div>
+            <div class="panel panel-default">
+                <div class="panel-body add_coupon paddingtop30">
+                    <div class="col-sm-10 margintop24" id="i_mainbox">
+                        <script type="text/template" id="i_tpl">
+                            <form action="" class="form-horizontal" id="i_typeForm">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">订单编号:</label>
+                                    <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.orderCode%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">创建时间:</label>
+                                    <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.createTime%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">用户身份:</label>
+                                    <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.role%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">交易阶段:</label>
+                                    <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.tradePhase%></p></label>
+                                </div>
+                                <%if(result.r.orderVo.productCode=="J"){%>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">问题描述:</label>
+                                    <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.memo%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">回复:</label>
+                                    <div class="col-sm-9">
+                                        <textarea id="i_reply" rows="5" class="xheditor"><%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.simpleReply:""%></textarea>
+                                    </div>
+                                </div>
+                                <%}else{%>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">问题类型:</label>
+                                    <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.tradeSubphase%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">已签署:</label>
+                                    <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.sn%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">实质:</label>
+                                    <div class="col-sm-9">
+                                        <textarea id="i_shizhi" rows="5" class="xheditor"><%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.replySummary:""%></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">律师建议:</label>
+                                    <div class="col-sm-9">
+                                        <textarea id="i_suggest" rows="5" class="xheditor"><%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.replySuggests:""%></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">法律法规:</label>
+                                    <div class="col-sm-9">
+                                        <textarea id="i_rules" rows="5" class="xheditor"><%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.replyRules:""%></textarea>
+                                    </div>
+                                </div>
+                                <%}%>
+
+                            </form>
+                            <div class="col-sm-9 paddingtop30">
+                                <button class="btn btn-yel btn_big pull-right j_saveArtical" id="i_save">保存</button>
+                                <button class="btn btn-default btn_big pull-right marginR26" id="i_cancel">取消</button>
+                            </div>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="js/include.js?ver={front_version}" type="text/javascript"></script>
+    <script type="text/javascript" src="js/lib/xheditor/xheditor.min.js"></script>
+    <script type="text/javascript" src="js/lib/xheditor/xheditor_lang/zh-cn.js"></script>
+</html>
