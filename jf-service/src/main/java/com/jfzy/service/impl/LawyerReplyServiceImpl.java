@@ -22,37 +22,8 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 
 	@Override
 	public void createReply(LawyerReplyBo bo) {
-		List<LawyerReplyPo> pos = replyRepo.findByOrderId(bo.getOrderId());
-		if (pos != null && pos.size() > 0) {
-			throw new JfApplicationRuntimeException("律师回复已经存在");
-		} else {
-			LawyerReplyPo po = boToPo(bo);
-			replyRepo.save(po);
-		}
-	}
-
-	@Override
-	public void updateReply(LawyerReplyBo bo) {
-		LawyerReplyPo po = replyRepo.getOne(bo.getId());
-		if (po == null) {
-			throw new JfApplicationRuntimeException("律师回复不存在");
-		} else {
-			if (StringUtils.isNotBlank(bo.getSimpleReply())) {
-				po.setSimpleReply(bo.getSimpleReply());
-			}
-			if (StringUtils.isNotBlank(bo.getReplySummary())) {
-				po.setReplySummary(bo.getReplySummary());
-			}
-			
-			if (StringUtils.isNotBlank(bo.getReplyRules())) {
-				po.setReplyRules(bo.getReplyRules());
-			}
-			
-			if (StringUtils.isNotBlank(bo.getReplySuggests())) {
-				po.setReplySuggests(bo.getReplySuggests());
-			}
-			replyRepo.save(po);
-		}
+		LawyerReplyPo po = boToPo(bo);
+		replyRepo.save(po);
 	}
 
 	@Override

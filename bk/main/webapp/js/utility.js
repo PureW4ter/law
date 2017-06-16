@@ -2,6 +2,12 @@ define([],function(){
 	var Utility = {
 		pageSize:10,
 		cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
+		PRODUCT_CODE_ZIXUN:"Y",
+		PRODUCT_CODE_ZIXUNP:"YP",
+		PRODUCT_CODE_JIANDANWEN:"J",
+		PRODUCT_CODE_HUKOU:"H",
+		PRODUCT_CODE_HUKOU_XQ:"HX",
+		PRODUCT_CODE_CHAFENG:"C",
 		getQueryParameter: function(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
 			var r = window.location.search.substr(1).match(reg);
