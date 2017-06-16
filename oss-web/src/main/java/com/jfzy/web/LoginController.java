@@ -2,6 +2,7 @@ package com.jfzy.web;
 
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -30,17 +31,20 @@ public class LoginController {
 
 	@ResponseBody
 	@GetMapping("/api/user/login")
-	public ResponseVo<OssUserVo> login(String phoneNum, String code) {
+	public ResponseVo<OssUserVo> login(HttpServletResponse response, String phoneNum, String code) {
 		// do some check
 		if (StringUtils.isBlank(phoneNum) || StringUtils.isBlank(code)) {
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "电话或验证码不能为空", null);
 		}
-		
+
 		OssUserBo user = ossUserService.login(phoneNum, code);
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);
 			AuthInfo authInfo = new AuthInfo();
 			authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
+
+			
+
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user));
 		}
 		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在", null);
