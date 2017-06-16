@@ -64,16 +64,6 @@ public class OrderServiceImpl implements OrderService {
 		return poToBo(po);
 	}
 
-	private static String generateSn() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSS");
-
-		return sdf.format(new Date());
-	}
-
-	public static void main(String[] args) {
-
-	}
-
 	@Override
 	public OrderBo createIOrder(OrderBo bo) {
 		if (Constants.PRODUCT_CODE_HUKOU.equals(bo.getProductCode())) {
@@ -218,9 +208,15 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
+		Page<OrderPo> poPage = orderRepo.findByLawyerId(lawyerId, page);
+		List<OrderBo> bos = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> bos.add(poToBo(po)));
+		}
+		Page<OrderBo> resultPage = new AggregatedPageImpl<OrderBo>(bos, page, poPage.getTotalElements());
+
+		return resultPage;
 	}
 
 	@Override

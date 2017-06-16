@@ -20,7 +20,11 @@
             <div class="invest_result_box">
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">订单编号</div>
-                    <div class="invest_result_line_r"><%=result.r.orderVo.id%></div>
+                    <div class="invest_result_line_r"><%=result.r.orderVo.orderCode%></div>
+                </div>
+                <div class="invest_result_line">
+                    <div class="invest_result_line_l">创建时间</div>
+                    <div class="invest_result_line_r"><%=result.r.orderVo.createTime%></div>
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">产权人</div>
@@ -41,28 +45,7 @@
 
             <%if(result.r.orderVo.productCode=="C"){%>
             <div class="invest_result_box">
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">查封性质</div>
-                    <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.ceilType%></div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">查封时间</div>
-                    <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.ceilTime%></div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">查封法院</div>
-                    <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.ceilCourt%></div>
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">附件</div>
-                    <div class="invest_result_pics">
-                        <ul>
-                            <li><img src="img/add.png"></li>
-                            <li><img src="img/add.png"></li>
-                            <li><img src="img/add.png"></li>
-                        </ul>
-                    </div>
-                </div>
+                <div class="result_content"><%=result.r.lawyerReplyVo.simpleReply%></div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
                     <div class="invest_result_line_r">
@@ -88,9 +71,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="invest_result_line arrow_down">
-                    <div class="invest_result_line_l">是否需要原件</div>
-                    <div class="invest_result_line_r">是</div>
+                <div class="invest_result_line">
+                    如需原件请拨打客服电话
                 </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>

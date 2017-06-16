@@ -80,7 +80,12 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 		_complete:function(e){
 			var oid = $(e.target).parents(".j_result_item").data("id");
 			var productId = $(e.target).parents(".j_result_item").data("pid");
-			window.location = "question_complete.html?id=" + oid;
+			var productCode = $(e.target).parents(".j_result_item").data("pcode");
+			if(productCode == util.PRODUCT_CODE_CHAFENG){
+				window.location = "question_complete2.html?id=" + oid;
+			}else{
+				window.location = "question_complete.html?id=" + oid;window.location = "question_complete.html?id=" + oid;
+			}
 		},
 		_refund:function(e){
 
