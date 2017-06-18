@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +15,6 @@ import com.jfzy.service.AccessTokenService;
 import com.jfzy.service.bo.AccessTokenRespDto;
 import com.jfzy.service.repository.RedisRepository;
 
-@EnableScheduling
 @Service
 public class AccessTokenServiceImpl implements AccessTokenService {
 
@@ -85,7 +83,6 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 				logger.error("QUERY ACCESS TOKEN FAILED:", e);
 			}
 		}
-
 	}
 
 	@Override

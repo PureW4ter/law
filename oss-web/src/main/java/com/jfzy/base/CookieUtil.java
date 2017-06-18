@@ -32,7 +32,7 @@ public class CookieUtil {
 		}
 	}
 
-	public void addAuthCookie(Token token, HttpServletResponse resp) {
+	public static void addAuthCookie(Token token, HttpServletResponse resp) {
 		String tokenStr = generateTokenString(token);
 
 		Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, tokenStr);
@@ -40,7 +40,7 @@ public class CookieUtil {
 		resp.addCookie(cookie);
 	}
 
-	public Token getAuthFromCookie(HttpServletRequest request) {
+	public static Token getAuthFromCookie(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null && cookies.length > 0) {
 			for (int i = 0; i < cookies.length; ++i) {

@@ -23,7 +23,7 @@ public class OssUserServiceImpl implements OssUserService {
 
 	@Override
 	public OssUserBo login(String phoneNum, String code) {
-		//FIXME 
+		// FIXME
 		// code check
 		List<OssUserPo> users = ossUserRepo.findByPhoneNum(phoneNum);
 		if (users != null && users.size() == 1) {
@@ -79,5 +79,12 @@ public class OssUserServiceImpl implements OssUserService {
 
 	public static void main(String[] args) {
 		System.out.println(MD5.MD5Encode("123456789."));
+	}
+
+	@Override
+	public OssUserBo getUserById(int id) {
+		OssUserPo po = ossUserRepo.getOne(id);
+		OssUserBo bo = poToBo(po);
+		return bo;
 	}
 }
