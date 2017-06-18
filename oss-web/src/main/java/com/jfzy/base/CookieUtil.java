@@ -19,16 +19,20 @@ public class CookieUtil {
 		return encryptor.encrypt(rawData);
 	}
 
-	public static int extractToken(String tokenString) {
+	public static Token extractToken(String tokenString) {
 
 		String rawData = encryptor.decrypt(tokenString);
 
 		String[] params = StringUtils.split(rawData, '|');
 		if (params != null && params.length == 2 && StringUtils.isNumeric(params[0])
 				&& StringUtils.isNumeric(params[1])) {
-			return Integer.valueOf(params[0]);
+			Token t = new Token();
+			t.setUserId(Integer.valueOf(params[0]));
+			t.setTimestamp(Long.valueOf(params[1]));
+
+			return t;
 		} else {
-			return 0;
+			return null;
 		}
 	}
 
@@ -46,8 +50,8 @@ public class CookieUtil {
 			for (int i = 0; i < cookies.length; ++i) {
 				Cookie cookie = cookies[i];
 				if (cookie != null && StringUtils.equals(cookie.getName(), COOKIE_NAME_TOKEN)) {
-
-					return null;
+					Token t = extractToken(cookie.getValue());
+					return t;
 				}
 			}
 		}
