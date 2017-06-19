@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.NotificationService;
@@ -12,6 +13,7 @@ import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderStatusEnum;
 
+@Service
 public class NotificationServiceImpl implements NotificationService {
 
 	private static final int PAGE_SIZE = 20;

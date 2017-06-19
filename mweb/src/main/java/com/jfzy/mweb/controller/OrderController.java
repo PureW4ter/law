@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzf.core.Constants;
+import com.jfzy.mweb.base.AuthCheck;
 import com.jfzy.mweb.base.BaseController;
 import com.jfzy.mweb.base.UserSession;
 import com.jfzy.mweb.util.ResponseStatusEnum;
@@ -57,8 +58,8 @@ import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
 import com.jfzy.service.impl.Signature;
 import com.jfzy.service.impl.XmlUtil;
-import com.jfzy.service.po.OrderPhotoPo;
 
+@AuthCheck
 @RestController
 public class OrderController extends BaseController {
 
@@ -69,7 +70,7 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	private LawyerReplyService lawyerReplyService;
-	
+
 	@Autowired
 	private ProductService productService;
 
@@ -112,36 +113,6 @@ public class OrderController extends BaseController {
 		bo.setUserPhoneNum(uabo.getValue());
 		OrderBo newBo = orderService.createIOrder(bo);
 		return new ResponseVo<OrderBo>(ResponseStatusEnum.SUCCESS.getCode(), null, newBo);
-	}
-
-	@ResponseBody
-	@PostMapping(value = "/api/wxpay/callback", produces = { "application/xml" })
-	public WxPayCallbackRespDto callback(@RequestBody String reqStr) {
-		logger.info(reqStr);
-		WxPayCallbackDto dto = (WxPayCallbackDto) XmlUtil.fromXml(reqStr, WxPayCallbackDto.class);
-		WxPayEventBo event = dtoToBo(dto);
-		// check sign
-		if (checkSign(dto)) {
-			UserAccountBo user = userService.getUserAccountByOpenid(event.getOpenId());
-			if (user == null) {
-				logger.error("could not find openid");
-			} else {
-				orderService.markPayed(event, user.getUserId());
-			}
-		} else {
-			logger.error("check sign failed");
-		}
-
-		WxPayCallbackRespDto result = new WxPayCallbackRespDto();
-		result.setReturnCode("SUCCESS");
-		result.setReturnMsg("OK");
-		return result;
-	}
-
-	private static WxPayEventBo dtoToBo(WxPayCallbackDto dto) {
-		WxPayEventBo bo = new WxPayEventBo();
-		BeanUtils.copyProperties(dto, bo);
-		return bo;
 	}
 
 	@ResponseBody
@@ -189,10 +160,10 @@ public class OrderController extends BaseController {
 		List<OrderPhotoBo> orderPhotoList = orderService.getOrderPhotos(id);
 		List<OrderPhotoBo> replyPhotoList = orderService.getReplyPhotos(id);
 		OrderWithReplyVo vo = boToVo(obo, rbo, orderPhotoList, replyPhotoList);
-		
+
 		return new ResponseVo<OrderWithReplyVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "/api/order/complete", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response,
@@ -288,45 +259,12 @@ public class OrderController extends BaseController {
 		return paramMap;
 	}
 
-	private static boolean checkSign(WxPayCallbackDto dto) {
-		Map<String, String> paramMap = toCallbackParamMap(dto);
-		return Signature.checkSign(paramMap, Constants.PAY_SECRET, dto.getSign());
-	}
-
-	private static Map<String, String> toCallbackParamMap(WxPayCallbackDto dto) {
-		Map<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("return_code", dto.getReturnCode());
-		paramMap.put("return_msg", dto.getReturnMsg());
-		paramMap.put("appid", dto.getAppId());
-		paramMap.put("mch_id", dto.getMchId());
-		paramMap.put("device_info", dto.getDeviceInfo());
-		paramMap.put("nonce_str", dto.getNonceStr());
-		paramMap.put("sign_type", dto.getSignType());
-		paramMap.put("result_code", dto.getResultCode());
-		paramMap.put("err_code", dto.getErrCode());
-		paramMap.put("err_code_des", dto.getReturnMsg());
-		paramMap.put("openid", dto.getOpenId());
-		paramMap.put("is_subscribe", dto.getIsSubscribe());
-		paramMap.put("trade_type", dto.getTradeType());
-		paramMap.put("bank_type", dto.getBankType());
-		paramMap.put("total_fee", dto.getTotalFee());
-		paramMap.put("settlement_total_fee", dto.getSettlementTotalFee());
-		paramMap.put("fee_type", dto.getFeeType());
-		paramMap.put("transaction_id", dto.getTransactionId());
-		paramMap.put("out_trade_no", dto.getOutTradeNo());
-		paramMap.put("attach", dto.getAttach());
-		paramMap.put("time_end", dto.getTimeEnd());
-		paramMap.put("cash_fee", dto.getCashFee());
-
-		return paramMap;
-	}
-	
 	private static LawyerReplyBo voToBo(LawyerReplyVo vo) {
 		LawyerReplyBo bo = new LawyerReplyBo();
 		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
-	
+
 	private static OrderPhotoVo boToVo(OrderPhotoBo bo) {
 		OrderPhotoVo vo = new OrderPhotoVo();
 		BeanUtils.copyProperties(bo, vo);
@@ -334,26 +272,26 @@ public class OrderController extends BaseController {
 	}
 
 	private static LawyerReplyVo boToVo(LawyerReplyBo bo) {
-		if(bo == null)
+		if (bo == null)
 			return null;
 		LawyerReplyVo vo = new LawyerReplyVo();
 		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
-	
-	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo, 
-			List<OrderPhotoBo> orderPhotoList, List<OrderPhotoBo> replyPhotoList) {
+
+	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo, List<OrderPhotoBo> orderPhotoList,
+			List<OrderPhotoBo> replyPhotoList) {
 		OrderWithReplyVo vo = new OrderWithReplyVo();
 		vo.setLawyerReplyVo(boToVo(rbo));
 		vo.setOrderVo(boToVo(obo));
-		if(orderPhotoList!=null){
+		if (orderPhotoList != null) {
 			List<OrderPhotoVo> result = new ArrayList<OrderPhotoVo>(orderPhotoList.size());
 			for (OrderPhotoBo bo : orderPhotoList) {
 				result.add(boToVo(bo));
 			}
 			vo.setOrderPhotoList(result);
 		}
-		if(replyPhotoList!=null){
+		if (replyPhotoList != null) {
 			List<OrderPhotoVo> result = new ArrayList<OrderPhotoVo>(replyPhotoList.size());
 			for (OrderPhotoBo bo : replyPhotoList) {
 				result.add(boToVo(bo));
