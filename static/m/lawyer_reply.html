@@ -34,12 +34,13 @@
                     <div class="invest_result_line_l">交易阶段</div>
                     <div class="invest_result_line_r"><%=result.r.orderVo.tradePhase%></div>
                 </div>
-                <%if(result.r.orderVo.productCode=="J"){%>
+            <%if(result.r.orderVo.productCode=="J"){%>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">问题描述</div>
                     <div class="invest_result_line_r"><%=result.r.orderVo.memo%></div>
                 </div>
-                <%}else{%>
+            </div> 
+            <%}else{%>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">问题类型</div>
                     <div class="invest_result_line_r"><%=result.r.orderVo.tradeSubphase%></div>
@@ -48,40 +49,68 @@
                     <div class="invest_result_line_l">已签署</div>
                     <div class="invest_result_line_r"><%=result.r.orderVo.sn%></div>
                 </div>
-                <%}%>
             </div>
             <div class="invest_result_tab">
-                <div class="invest_result_tab_btn">调查结果</div>
+                <div class="invest_result_tab_btn">补充内容</div>
             </div>
             <div class="invest_result_box">
-                <%if(result.r.orderVo.productCode=="J"){%>
-                    <div class="invest_result_line">
-                        <div class="result_content"><%=result.r.lawyerReplyVo.simpleReply%></div>
-                    </div>
-                <%}else{%>
-                    <div class="invest_result_line">实质：</div>
-                    <div class="invest_result_line">
-                        <%=result.r.lawyerReplyVo.replySummary%>
-                    </div>
-                    <div class="invest_result_line">律师建议：</div>
-                    <div class="invest_result_line">
-                        <%=result.r.lawyerReplyVo.replySuggests%>
-                    </div>
-                    <div class="invest_result_line">法律法规：</div>
-                    <div class="invest_result_line">
-                        <%=result.r.lawyerReplyVo.replyRules%>
-                    </div>
-                <%}%>
                 <div class="invest_result_line">
-                    <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
-                    <div class="invest_result_line_r">
-                        <div class="star_bg">
-                            <div class="star_over"></div>
-                        </div>
+                    <div class="invest_result_line_l">问题描述</div>
+                    <div class="invest_result_line_r"><%=result.r.orderVo.memo%></div>
+                </div>
+                <div class="invest_result_line">
+                    <div class="invest_result_line_l">附件</div>
+                    <div class="invest_result_pics">
+                        <%if(result.r.orderPhotoList){%>
+                        <ul>
+                            <%_.each(result.r.orderPhotoList, function(item, index){%>
+                            <li><img src="<%=item.photoPath%>"></li>
+                                <%if(index%3==2){%>
+                        </ul>
+                        <ul>
+                                <%}%>
+                            <%})%>
+                        </ul>
+                        <%}%>
                     </div>
                 </div>
             </div>
-            <div class="blk15"></div>
+            <%}%>
+
+            <%if(result.r.lawyerReplyVo){%>
+                <div class="invest_result_tab">
+                    <div class="invest_result_tab_btn">调查结果</div>
+                </div>
+                <div class="invest_result_box">
+                    <%if(result.r.orderVo.productCode=="J"){%>
+                        <div class="invest_result_line">
+                            <div class="result_content"><%=result.r.lawyerReplyVo.simpleReply%></div>
+                        </div>
+                    <%}else{%>
+                        <div class="invest_result_line">实质：</div>
+                        <div class="invest_result_line">
+                            <%=result.r.lawyerReplyVo.replySummary%>
+                        </div>
+                        <div class="invest_result_line">律师建议：</div>
+                        <div class="invest_result_line">
+                            <%=result.r.lawyerReplyVo.replySuggests%>
+                        </div>
+                        <div class="invest_result_line">法律法规：</div>
+                        <div class="invest_result_line">
+                            <%=result.r.lawyerReplyVo.replyRules%>
+                        </div>
+                    <%}%>
+                    <div class="invest_result_line">
+                        <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
+                        <div class="invest_result_line_r">
+                            <div class="star_bg">
+                                <div class="star_over"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blk15"></div>
+            <%}%>
             </script>
         </div>
     </div>
