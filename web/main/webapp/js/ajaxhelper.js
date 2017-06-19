@@ -38,19 +38,27 @@ define(["utility"], function(util) {
                 this._showLoading();
             $.ajax({
                 type: type,
-                url: url.indexOf("?")>0?(url+"&token="+token):(url+"?token="+token),,
+                url: url.indexOf("?")>0?(url+"&tk="+token):(url+"?tk="+token),
                 data: param,
                 dataType: 'json',
                 timeout: 600000,
                 async: async,
                 contentType: contentType,
                 beforeSend: function(xhr, settings) {
-                  xhr.setRequestHeader("Authorization", "Bearer " + token);
+                  xhr.setRequestHeader("tk", token);
                 },
                 success: function(data) {
                     me._hideLoading();
-                    if (successFun && Object.prototype.toString.call(successFun) === '[object Function]')
-                        successFun.apply(ctx, [data]);
+                    if((data && data.s == 200) || !data || !data.s){
+                        if (successFun && Object.prototype.toString.call(successFun) === '[object Function]')
+                            successFun.apply(ctx, [data]);
+                    }else{
+                        if(data && data.s == 401){
+                            window.location = "regist.html";
+                        }else{
+                            util.showToast("服务器出错，类型：" + data.s);
+                        }
+                    }
                 },
                 error: function(xhr, type) {
                     if (xhr.status === 401) {

@@ -39,50 +39,81 @@
                     <div class="invest_result_line_r"><%=result.r.orderVo.productName%></div>
                 </div>
             </div>
-            <div class="invest_result_tab">
-                <div class="invest_result_tab_btn">调查结果</div>
-            </div>
-
             <%if(result.r.orderVo.productCode=="C"){%>
-            <div class="invest_result_box">
-                <div class="result_content"><%=result.r.lawyerReplyVo.simpleReply%></div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
-                    <div class="invest_result_line_r">
-                        <div class="star_bg">
-                            <div class="star_over"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="invest_result_tab">
+                <div class="invest_result_tab_btn">补充内容</div>
             </div>
-            <%}else{%>
             <div class="invest_result_box">
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">户口状况</div>
-                    <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.hasHukou%></div>
-                </div>
                 <div class="invest_result_line">
                     <div class="invest_result_line_l">附件</div>
                     <div class="invest_result_pics">
+                        <%if(result.r.orderPhotoList){%>
                         <ul>
-                            <li><img src="img/add.png"></li>
-                            <li><img src="img/add.png"></li>
-                            <li><img src="img/add.png"></li>
+                            <%_.each(result.r.orderPhotoList, function(item, index){%>
+                            <li><img src="<%=item.photoPath%>"></li>
+                                <%if(index%3==2){%>
                         </ul>
-                    </div>
-                </div>
-                <div class="invest_result_line">
-                    如需原件请拨打客服电话
-                </div>
-                <div class="invest_result_line">
-                    <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
-                    <div class="invest_result_line_r">
-                        <div class="star_bg">
-                            <div class="star_over"></div>
-                        </div>
+                        <ul>
+                                <%}%>
+                            <%})%>
+                        </ul>
+                        <%}%>
                     </div>
                 </div>
             </div>
+            <%}%>
+            <%if(result.r.lawyerReplyVo){%>
+                <div class="invest_result_tab">
+                    <div class="invest_result_tab_btn">调查结果</div>
+                </div>
+
+                <%if(result.r.orderVo.productCode=="C"){%>
+                <div class="invest_result_box">
+                    <div class="result_content"><%=result.r.lawyerReplyVo.simpleReply%></div>
+                    <div class="invest_result_line">
+                        <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
+                        <div class="invest_result_line_r">
+                            <div class="star_bg">
+                                <div class="star_over"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%}else{%>
+                <div class="invest_result_box">
+                    <div class="invest_result_line">
+                        <div class="invest_result_line_l">户口状况</div>
+                        <div class="invest_result_line_r"><%=result.r.lawyerReplyVo.hasHukou%></div>
+                    </div>
+                    <div class="invest_result_line">
+                        <div class="invest_result_line_l">附件</div>
+                        <div class="invest_result_pics">
+                            <%if(result.r.replyPhotoList){%>
+                            <ul>
+                                <%_.each(result.r.replyPhotoList, function(item, index){%>
+                                <li><img src="<%=item.photoPath%>"></li>
+                                    <%if(index%3==2){%>
+                            </ul>
+                            <ul>
+                                    <%}%>
+                                <%})%>
+                            </ul>
+                            <%}%>
+                        </div>
+                    </div>
+                    <div class="invest_result_line">
+                        如需原件请拨打客服电话
+                    </div>
+                    <div class="invest_result_line">
+                        <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
+                        <div class="invest_result_line_r">
+                            <div class="star_bg">
+                                <div class="star_over"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
             <%}%>
             </script>
         </div>
