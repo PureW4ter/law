@@ -45,7 +45,7 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE OrderPo SET status=?3 WHERE id=?! AND status=?2")
+	@Query("UPDATE OrderPo SET status=?3 WHERE id=?1 AND status=?2")
 	int updateStatus(int id, int oldStatus, int newStatus);
 
 	Page<OrderPo> findByUserId(int userId, Pageable page);
