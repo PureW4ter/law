@@ -63,7 +63,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private static UserSession buildSessionFromRequest(HttpServletRequest request) {
-		String tokenStr = request.getHeader("TOKEN");
+		String tokenStr = (String) request.getAttribute("tk");
 		if (StringUtils.isNotBlank(tokenStr)) {
 			try {
 				Token t = TokenUtil.extractToken(tokenStr);
