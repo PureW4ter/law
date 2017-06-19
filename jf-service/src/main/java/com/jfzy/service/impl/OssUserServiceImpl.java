@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.po.LawyerPo;
 import com.jfzy.service.po.OssUserPo;
+import com.jfzy.service.repository.LawyerRepository;
 import com.jfzy.service.repository.OssUserRepository;
 
 @Service
@@ -21,16 +23,27 @@ public class OssUserServiceImpl implements OssUserService {
 	@Autowired
 	private OssUserRepository ossUserRepo;
 
+
+	@Autowired
+	private LawyerRepository lawyerRepo;
+	
+	
 	@Override
 	public OssUserBo login(String phoneNum, String code) {
 		//FIXME 
 		// code check
 		List<OssUserPo> users = ossUserRepo.findByPhoneNum(phoneNum);
+		List<LawyerPo> lawyers = lawyerRepo.findByPhoneNum(phoneNum);
+		
 		if (users != null && users.size() == 1) {
 			OssUserPo po = users.get(0);
 			OssUserBo bo = poToBo(po);
 			return bo;
-		} else {
+		} else if(lawyers != null && lawyers.size() == 1){
+			LawyerPo po = lawyers.get(0);
+			OssUserBo bo = poToBo(po);
+			return bo;
+		}else {
 			return null;
 		}
 	}
@@ -71,6 +84,12 @@ public class OssUserServiceImpl implements OssUserService {
 		return bo;
 	}
 
+	private static OssUserBo poToBo(LawyerPo po) {
+		OssUserBo bo = new OssUserBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
+	}
+	
 	private static OssUserPo boToPo(OssUserBo bo) {
 		OssUserPo po = new OssUserPo();
 		BeanUtils.copyProperties(bo, po);

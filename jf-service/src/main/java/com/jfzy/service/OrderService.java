@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.OrderPhotoBo;
 import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
 
@@ -42,4 +43,8 @@ public interface OrderService {
 	List<OrderBo> getInvestOrders(Pageable page);
 
 	void acceptorOrder(int lawyerId, int orderId);
+	
+	List<OrderPhotoBo> getOrderPhotos(int orderId);
+	
+	List<OrderPhotoBo> getReplyPhotos(int orderId);
 }

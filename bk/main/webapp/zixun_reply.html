@@ -64,6 +64,26 @@
                                     <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.sn%></p></label>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-3 control-label">补充内容:</label>
+                                    <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.memo%></p></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">附件:</label>
+                                    <div class="col-sm-9 invest_result_pics">
+                                        <%if(result.r.orderPhotoList){%>
+                                        <ul>
+                                            <%_.each(result.r.orderPhotoList, function(item, index){%>
+                                            <li><img src="<%=item.photoPath%>"></li>
+                                                <%if(index%3==2){%>
+                                        </ul>
+                                        <ul>
+                                                <%}%>
+                                            <%})%>
+                                        </ul>
+                                        <%}%>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">实质:</label>
                                     <div class="col-sm-9">
                                         <textarea id="i_shizhi" rows="5" class="xheditor"><%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.replySummary:""%></textarea>
@@ -82,7 +102,6 @@
                                     </div>
                                 </div>
                                 <%}%>
-
                             </form>
                             <div class="col-sm-9 paddingtop30">
                                 <button class="btn btn-yel btn_big pull-right j_saveArtical" id="i_save">保存</button>

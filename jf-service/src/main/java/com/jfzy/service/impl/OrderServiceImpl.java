@@ -1,9 +1,7 @@
 package com.jfzy.service.impl;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -225,23 +223,7 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
-	private static OrderPo boToPo(OrderBo bo) {
-		OrderPo po = new OrderPo();
-		BeanUtils.copyProperties(bo, po);
-		return po;
-	}
 
-	private static OrderBo poToBo(OrderPo po) {
-		OrderBo bo = new OrderBo();
-		BeanUtils.copyProperties(po, bo);
-		return bo;
-	}
-
-	private static OrderPhotoPo boToPo(OrderPhotoBo bo) {
-		OrderPhotoPo po = new OrderPhotoPo();
-		BeanUtils.copyProperties(bo, po);
-		return po;
-	}
 
 	@Override
 	public void markPayed(WxPayEventBo bo, int userId) {
@@ -284,4 +266,43 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
+	@Override
+	public List<OrderPhotoBo> getOrderPhotos(int orderId) {
+		List<OrderPhotoPo> pos = orderPhotoRepo.findByOrderIdAndType(orderId, OrderPhotoTypeEnum.ORDER.getId());
+		List<OrderPhotoBo> results = new ArrayList<OrderPhotoBo>(pos.size());
+		pos.forEach(po -> results.add(poToBo(po)));
+		return results;
+	}
+
+	@Override
+	public List<OrderPhotoBo> getReplyPhotos(int orderId) {
+		List<OrderPhotoPo> pos = orderPhotoRepo.findByOrderIdAndType(orderId, OrderPhotoTypeEnum.REPLY.getId());
+		List<OrderPhotoBo> results = new ArrayList<OrderPhotoBo>(pos.size());
+		pos.forEach(po -> results.add(poToBo(po)));
+		return results;
+	}
+	
+	private static OrderPo boToPo(OrderBo bo) {
+		OrderPo po = new OrderPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
+	}
+
+	private static OrderBo poToBo(OrderPo po) {
+		OrderBo bo = new OrderBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
+	}
+
+	private static OrderPhotoPo boToPo(OrderPhotoBo bo) {
+		OrderPhotoPo po = new OrderPhotoPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
+	}
+
+	private static OrderPhotoBo poToBo(OrderPhotoPo po) {
+		OrderPhotoBo bo = new OrderPhotoBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
+	}
 }
