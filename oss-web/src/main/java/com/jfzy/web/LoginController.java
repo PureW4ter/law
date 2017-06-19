@@ -2,6 +2,7 @@ package com.jfzy.web;
 
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.base.AuthInfo;
 import com.jfzy.base.CookieUtil;
+import com.jfzy.base.OssWebConstants;
 import com.jfzy.base.SessionConstants;
 import com.jfzy.base.Token;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
+import com.jfzy.service.repository.RedisRepository;
 import com.jfzy.web.vo.OssUserVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
@@ -31,12 +34,23 @@ public class LoginController {
 	@Autowired
 	private OssUserService ossUserService;
 
+	@Autowired
+	private RedisRepository redisRepo;
+
 	@ResponseBody
 	@GetMapping("/api/user/login")
-	public ResponseVo<OssUserVo> login(HttpServletResponse response, String phoneNum, String code) {
+	public ResponseVo<OssUserVo> login(HttpServletRequest request, HttpServletResponse response, String phoneNum,
+			String code) {
 		// do some check
 		if (StringUtils.isBlank(phoneNum) || StringUtils.isBlank(code)) {
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "电话或验证码不能为空", null);
+		}
+
+		String codeInRedis = redisRepo
+				.get(String.format(OssWebConstants.REDIS_PREFIX_VERIFY_CODE, request.getRequestedSessionId()));
+
+		if (!StringUtils.equals(code, codeInRedis)) {
+			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "验证码错误", null);
 		}
 
 		OssUserBo user = ossUserService.login(phoneNum, code);
