@@ -1,11 +1,14 @@
 package com.jfzy.base;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -13,16 +16,24 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jfzy.service.OssUserService;
+import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.web.vo.SimpleResponseVo;
 
+@Controller
 public class AuthInterceptor extends HandlerInterceptorAdapter {
+
+	@Autowired
+	private OssUserService ossUserService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+
 		if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
+
+			processCookie(request);
 
 			AuthCheck authCheck = handlerMethod.getMethodAnnotation(AuthCheck.class);
 
@@ -61,6 +72,24 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 		return true;
 
+	}
+
+	private void processCookie(HttpServletRequest request) {
+		if (request.getSession() != null) {
+			HttpSession session = request.getSession();
+			AuthInfo info = (AuthInfo) session.getAttribute(SessionConstants.SESSION_KEY_AUTH_INFO);
+			if (info == null) {
+				// recover
+				Token t = CookieUtil.getAuthFromCookie(request);
+				if (t != null) {
+					int userId = t.getUserId();
+					OssUserBo user = ossUserService.getUserById(userId);
+					AuthInfo authInfo = new AuthInfo();
+					authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
+					session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
+				}
+			}
+		}
 	}
 
 	private AuthInfo getInfo(HttpServletRequest request) {

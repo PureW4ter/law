@@ -22,9 +22,14 @@ public class OssWebApplication extends WebMvcConfigurerAdapter {
 		SpringApplication.run(OssWebApplication.class, args);
 	}
 
+	@Bean
+	public AuthInterceptor authInterceptor() {
+		return new AuthInterceptor();
+	}
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new AuthInterceptor());
+		registry.addInterceptor(authInterceptor());
 	}
 
 	@Bean

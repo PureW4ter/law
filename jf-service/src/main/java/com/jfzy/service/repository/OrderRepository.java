@@ -15,7 +15,7 @@ import com.jfzy.service.po.OrderPo;
 public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	Page<OrderPo> findByCityIdAndStatus(int cityId, int status, Pageable page);
-	
+
 	Page<OrderPo> findByLawyerId(int lawyerId, Pageable page);
 
 	@Transactional
@@ -43,6 +43,11 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	@Query("UPDATE OrderPo SET startTime=?1, endTime=?2 , updateTime=?3 WHERE id=?4")
 	void setStartAndEndTime(Timestamp startTime, Timestamp endTime, Timestamp updateTime, int id);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE OrderPo SET status=?3 WHERE id=?! AND status=?2")
+	int updateStatus(int id, int oldStatus, int newStatus);
+
 	Page<OrderPo> findByUserId(int userId, Pageable page);
 
 	@Query(value = "SELECT t FROM OrderPo t WHERE t.productCode='H' or t.productCode='C'")
@@ -52,5 +57,9 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	Page<OrderPo> getInvestOrders(Pageable page);
 
 	OrderPo findByUserIdAndId(int userId, int id);
+
+	int countByCityIdAndStatus(int cityId, int status);
+
+	Page<OrderPo> findByStatus(int status, Pageable page);
 
 }
