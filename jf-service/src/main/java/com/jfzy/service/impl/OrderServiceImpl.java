@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
 import org.springframework.stereotype.Service;
@@ -224,23 +223,7 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
-	private static OrderPo boToPo(OrderBo bo) {
-		OrderPo po = new OrderPo();
-		BeanUtils.copyProperties(bo, po);
-		return po;
-	}
 
-	private static OrderBo poToBo(OrderPo po) {
-		OrderBo bo = new OrderBo();
-		BeanUtils.copyProperties(po, bo);
-		return bo;
-	}
-
-	private static OrderPhotoPo boToPo(OrderPhotoBo bo) {
-		OrderPhotoPo po = new OrderPhotoPo();
-		BeanUtils.copyProperties(bo, po);
-		return po;
-	}
 
 	@Override
 	public void markPayed(WxPayEventBo bo, int userId) {
@@ -248,15 +231,15 @@ public class OrderServiceImpl implements OrderService {
 			OrderPo po = orderRepo.findOne(Integer.valueOf(bo.getOutTradeNo()));
 			if (po != null && userId == po.getUserId()) {
 				if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
-
-					if (po.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()) {
+					
+					if(po.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()){
 						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
 								OrderStatusEnum.NOT_COMPLETED.getId(), po.getId());
-					} else {
+					}else{
 						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
 								OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
 					}
-
+					
 				}
 			} else if (po == null) {
 
@@ -284,24 +267,42 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int getNumbersOfUnAssignedOrdersByCity(int city) {
-		return orderRepo.countByCityIdAndStatus(city, OrderStatusEnum.NEED_DISPATCH.getId());
-	}
-
-	@Override
-	public List<OrderBo> getUnconfirmedOrders(int size) {
-		PageRequest page = new PageRequest(1, size);
-		Page<OrderPo> pos = orderRepo.findByStatus(OrderStatusEnum.DISPATCHED.getId(), page);
-
-		List<OrderBo> results = new ArrayList<OrderBo>(20);
-		if (pos != null) {
-			pos.forEach(po -> results.add(poToBo(po)));
-		}
+	public List<OrderPhotoBo> getOrderPhotos(int orderId) {
+		List<OrderPhotoPo> pos = orderPhotoRepo.findByOrderIdAndType(orderId, OrderPhotoTypeEnum.ORDER.getId());
+		List<OrderPhotoBo> results = new ArrayList<OrderPhotoBo>(pos.size());
+		pos.forEach(po -> results.add(poToBo(po)));
 		return results;
 	}
 
 	@Override
-	public void updateOrderStatus(int orderId, int previousStatus, int newStatus) {
-		orderRepo.updateStatus(orderId, previousStatus, newStatus);
+	public List<OrderPhotoBo> getReplyPhotos(int orderId) {
+		List<OrderPhotoPo> pos = orderPhotoRepo.findByOrderIdAndType(orderId, OrderPhotoTypeEnum.REPLY.getId());
+		List<OrderPhotoBo> results = new ArrayList<OrderPhotoBo>(pos.size());
+		pos.forEach(po -> results.add(poToBo(po)));
+		return results;
+	}
+	
+	private static OrderPo boToPo(OrderBo bo) {
+		OrderPo po = new OrderPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
+	}
+
+	private static OrderBo poToBo(OrderPo po) {
+		OrderBo bo = new OrderBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
+	}
+
+	private static OrderPhotoPo boToPo(OrderPhotoBo bo) {
+		OrderPhotoPo po = new OrderPhotoPo();
+		BeanUtils.copyProperties(bo, po);
+		return po;
+	}
+
+	private static OrderPhotoBo poToBo(OrderPhotoPo po) {
+		OrderPhotoBo bo = new OrderPhotoBo();
+		BeanUtils.copyProperties(po, bo);
+		return bo;
 	}
 }

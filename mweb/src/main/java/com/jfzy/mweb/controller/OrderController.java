@@ -33,6 +33,7 @@ import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.InvestOrderVo;
 import com.jfzy.mweb.vo.LawyerReplyVo;
 import com.jfzy.mweb.vo.OrderCompleteVo;
+import com.jfzy.mweb.vo.OrderPhotoVo;
 import com.jfzy.mweb.vo.OrderVo;
 import com.jfzy.mweb.vo.OrderWithReplyVo;
 import com.jfzy.mweb.vo.PrepayVo;
@@ -46,6 +47,7 @@ import com.jfzy.service.ProductService;
 import com.jfzy.service.UserService;
 import com.jfzy.service.bo.LawyerReplyBo;
 import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.OrderPhotoBo;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.ProductBo;
 import com.jfzy.service.bo.UserAccountBo;
@@ -55,6 +57,7 @@ import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
 import com.jfzy.service.impl.Signature;
 import com.jfzy.service.impl.XmlUtil;
+import com.jfzy.service.po.OrderPhotoPo;
 
 @RestController
 public class OrderController extends BaseController {
@@ -183,7 +186,9 @@ public class OrderController extends BaseController {
 	public ResponseVo<OrderWithReplyVo> getReply(int id) {
 		LawyerReplyBo rbo = lawyerReplyService.getReply(id);
 		OrderBo obo = orderService.getOrderById(id);
-		OrderWithReplyVo vo = boToVo(obo, rbo);
+		List<OrderPhotoBo> orderPhotoList = orderService.getOrderPhotos(id);
+		List<OrderPhotoBo> replyPhotoList = orderService.getReplyPhotos(id);
+		OrderWithReplyVo vo = boToVo(obo, rbo, orderPhotoList, replyPhotoList);
 		
 		return new ResponseVo<OrderWithReplyVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 	}
@@ -322,6 +327,12 @@ public class OrderController extends BaseController {
 		return bo;
 	}
 	
+	private static OrderPhotoVo boToVo(OrderPhotoBo bo) {
+		OrderPhotoVo vo = new OrderPhotoVo();
+		BeanUtils.copyProperties(bo, vo);
+		return vo;
+	}
+
 	private static LawyerReplyVo boToVo(LawyerReplyBo bo) {
 		if(bo == null)
 			return null;
@@ -330,10 +341,25 @@ public class OrderController extends BaseController {
 		return vo;
 	}
 	
-	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo) {
+	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo, 
+			List<OrderPhotoBo> orderPhotoList, List<OrderPhotoBo> replyPhotoList) {
 		OrderWithReplyVo vo = new OrderWithReplyVo();
 		vo.setLawyerReplyVo(boToVo(rbo));
 		vo.setOrderVo(boToVo(obo));
+		if(orderPhotoList!=null){
+			List<OrderPhotoVo> result = new ArrayList<OrderPhotoVo>(orderPhotoList.size());
+			for (OrderPhotoBo bo : orderPhotoList) {
+				result.add(boToVo(bo));
+			}
+			vo.setOrderPhotoList(result);
+		}
+		if(replyPhotoList!=null){
+			List<OrderPhotoVo> result = new ArrayList<OrderPhotoVo>(replyPhotoList.size());
+			for (OrderPhotoBo bo : replyPhotoList) {
+				result.add(boToVo(bo));
+			}
+			vo.setReplyPhotoList(result);
+		}
 		return vo;
 	}
 }

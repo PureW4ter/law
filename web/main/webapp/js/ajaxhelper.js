@@ -32,18 +32,20 @@ define(["utility"], function(util) {
                 param = JSON.stringify(param);
             }
             var me = this;
+            var token = "";
             me.isPaging = isPaging;
             if (!isPaging)
                 this._showLoading();
             $.ajax({
                 type: type,
-                url: url,
+                url: url.indexOf("?")>0?(url+"&token="+token):(url+"?token="+token),,
                 data: param,
                 dataType: 'json',
                 timeout: 600000,
                 async: async,
                 contentType: contentType,
                 beforeSend: function(xhr, settings) {
+                  xhr.setRequestHeader("Authorization", "Bearer " + token);
                 },
                 success: function(data) {
                     me._hideLoading();
@@ -51,6 +53,9 @@ define(["utility"], function(util) {
                         successFun.apply(ctx, [data]);
                 },
                 error: function(xhr, type) {
+                    if (xhr.status === 401) {
+                        window.location = "regsit.html"
+                    }
                     me._hideLoading();
                     util.showToast("服务器出错，类型：" + type);
                     if (errorFun && Object.prototype.toString.call(errorFun) === '[object Function]')

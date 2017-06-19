@@ -1,8 +1,12 @@
 package com.jfzy.mweb.vo;
 
+import java.util.List;
+
 public class OrderWithReplyVo {
 	private OrderVo orderVo;
 	private LawyerReplyVo lawyerReplyVo;
+	private List<OrderPhotoVo> orderPhotoList;
+	private List<OrderPhotoVo> replyPhotoList;
 	
 	public OrderVo getOrderVo() {
 		return orderVo;
@@ -15,5 +19,17 @@ public class OrderWithReplyVo {
 	}
 	public void setLawyerReplyVo(LawyerReplyVo lawyerReplyVo) {
 		this.lawyerReplyVo = lawyerReplyVo;
+	}
+	public List<OrderPhotoVo> getOrderPhotoList() {
+		return orderPhotoList;
+	}
+	public void setOrderPhotoList(List<OrderPhotoVo> orderPhotoList) {
+		this.orderPhotoList = orderPhotoList;
+	}
+	public List<OrderPhotoVo> getReplyPhotoList() {
+		return replyPhotoList;
+	}
+	public void setReplyPhotoList(List<OrderPhotoVo> replyPhotoList) {
+		this.replyPhotoList = replyPhotoList;
 	}
 }
