@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
 import org.springframework.stereotype.Service;
@@ -282,6 +283,28 @@ public class OrderServiceImpl implements OrderService {
 		return results;
 	}
 	
+	@Override
+	public void updateOrderStatus(int orderId, int previousStatus, int newStatus) {
+		orderRepo.updateStatus(orderId, previousStatus, newStatus);
+	}
+	
+	@Override
+	public List<OrderBo> getUnconfirmedOrders(int size) {
+		PageRequest page = new PageRequest(1, size);
+		Page<OrderPo> pos = orderRepo.findByStatus(OrderStatusEnum.DISPATCHED.getId(), page);
+		
+	 	List<OrderBo> results = new ArrayList<OrderBo>(20);
+	 	if (pos != null) {
+	 		pos.forEach(po -> results.add(poToBo(po)));
+	 	}
+	 	return results;
+	}
+	
+	@Override
+	 public int getNumbersOfUnAssignedOrdersByCity(int city) {
+		return orderRepo.countByCityIdAndStatus(city, OrderStatusEnum.NEED_DISPATCH.getId());
+	}
+	 
 	private static OrderPo boToPo(OrderBo bo) {
 		OrderPo po = new OrderPo();
 		BeanUtils.copyProperties(bo, po);
