@@ -20,7 +20,7 @@ public interface OrderService {
 
 	WxPayResponseDto pay(int id, int userId, String ip, String openId);
 
-	void markPayed(WxPayEventBo bo, int userId);
+	void markPayed(WxPayEventBo bo, int userId); 
 
 	void cancel(int id);
 
@@ -47,4 +47,10 @@ public interface OrderService {
 	List<OrderPhotoBo> getOrderPhotos(int orderId);
 	
 	List<OrderPhotoBo> getReplyPhotos(int orderId);
+	
+	int getNumbersOfUnAssignedOrdersByCity(int city);
+
+	List<OrderBo> getUnconfirmedOrders(int size);
+
+	void updateOrderStatus(int orderId, int previousStatus, int newStatus);
 }
