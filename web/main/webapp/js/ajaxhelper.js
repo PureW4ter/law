@@ -33,8 +33,8 @@ define(["utility"], function(util) {
             }
             var me = this;
             var token = "";
-            if(this.getData("userInfo")){
-                var userInfo = JSON.parse(this.getData("userInfo"));
+            if(util.getData("userInfo")){
+                var userInfo = JSON.parse(util.getData("userInfo"));
                 token = userInfo.token;
             }
             me.isPaging = isPaging;
@@ -60,7 +60,7 @@ define(["utility"], function(util) {
                         if(data && data.s == 401){
                             window.location = "regist.html";
                         }else{
-                            util.showToast("服务器出错，类型：" + data.s);
+                            util.showToast(data.m);
                         }
                     }
                 },
