@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -50,10 +51,30 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		if (session != null) {
 			UserSession info = (UserSession) session.getAttribute(UserSession.SESSION_KEY);
+			if (info == null) {
+				info = buildSessionFromRequest(request);
+				session.setAttribute(UserSession.SESSION_KEY, info);
+			}
+
 			return info;
 		} else {
 			return null;
 		}
+	}
+
+	private static UserSession buildSessionFromRequest(HttpServletRequest request) {
+		String tokenStr = request.getHeader("TOKEN");
+		if (StringUtils.isNotBlank(tokenStr)) {
+			try {
+				Token t = TokenUtil.extractToken(tokenStr);
+				UserSession s = new UserSession();
+				s.setUserId(t.getUserId());
+				return s;
+			} catch (RuntimeException e) {
+				return null;
+			}
+		}
+		return null;
 	}
 
 	@Override
