@@ -40,8 +40,6 @@ import com.jfzy.mweb.vo.OrderWithReplyVo;
 import com.jfzy.mweb.vo.PrepayVo;
 import com.jfzy.mweb.vo.ResponseVo;
 import com.jfzy.mweb.vo.SearchOrderVo;
-import com.jfzy.mweb.vo.WxPayCallbackDto;
-import com.jfzy.mweb.vo.WxPayCallbackRespDto;
 import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.ProductService;
@@ -54,10 +52,8 @@ import com.jfzy.service.bo.ProductBo;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
-import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
 import com.jfzy.service.impl.Signature;
-import com.jfzy.service.impl.XmlUtil;
 
 @AuthCheck
 @RestController
@@ -77,6 +73,7 @@ public class OrderController extends BaseController {
 	@Autowired
 	private UserService userService;
 
+	@AuthCheck
 	@ResponseBody
 	@PostMapping(path = "/api/order/screate", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<OrderBo> createSOrder(HttpServletRequest request, HttpServletResponse response,
@@ -96,6 +93,7 @@ public class OrderController extends BaseController {
 		return new ResponseVo<OrderBo>(ResponseStatusEnum.SUCCESS.getCode(), null, newBo);
 	}
 
+	@AuthCheck
 	@ResponseBody
 	@PostMapping(path = "/api/order/icreate", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<OrderBo> createIOrder(HttpServletRequest request, HttpServletResponse response,
@@ -115,6 +113,7 @@ public class OrderController extends BaseController {
 		return new ResponseVo<OrderBo>(ResponseStatusEnum.SUCCESS.getCode(), null, newBo);
 	}
 
+	@AuthCheck
 	@ResponseBody
 	@GetMapping(value = "/api/order/pay")
 	public ResponseVo<PrepayVo> pay(int id) {
@@ -145,6 +144,7 @@ public class OrderController extends BaseController {
 
 	}
 
+	@AuthCheck
 	@ResponseBody
 	@GetMapping(value = "/api/order/cancel")
 	public ResponseVo<Object> cancel(int id) {

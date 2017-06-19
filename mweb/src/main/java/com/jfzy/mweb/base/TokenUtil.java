@@ -9,7 +9,7 @@ public class TokenUtil {
 	private static TextEncryptor encryptor = Encryptors.delux("rlIc4MPlKFpR", "991239bab013");
 
 	public static String generateTokenString(Token token) {
-		String rawData = String.format("%s|%s|%s", token.getUserId(), "", token.getTimestamp());
+		String rawData = String.format("%s|%s|%s", token.getUserId(), "-", token.getTimestamp());
 		return encryptor.encrypt(rawData);
 	}
 

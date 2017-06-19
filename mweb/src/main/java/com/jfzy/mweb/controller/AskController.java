@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.mweb.base.AuthCheck;
 import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.PropertyVo;
 import com.jfzy.mweb.vo.ResponseVo;
@@ -17,7 +18,6 @@ import com.jfzy.service.PropertyService;
 import com.jfzy.service.bo.PropertyBo;
 import com.jfzy.service.bo.PropertyTypeEnum;
 
-
 @RestController
 public class AskController {
 
@@ -26,10 +26,11 @@ public class AskController {
 
 	@Autowired
 	private OrderRoleService roleService;
-	
+
 	@Autowired
 	private ProductService productService;
 
+	@AuthCheck
 	@ResponseBody
 	@GetMapping("/api/ask/props")
 	public ResponseVo<List<Object>> getProps() {

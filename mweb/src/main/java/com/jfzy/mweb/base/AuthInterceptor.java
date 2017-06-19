@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfzy.mweb.vo.SimpleResponseVo;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
+
+	private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -63,14 +67,20 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private static UserSession buildSessionFromRequest(HttpServletRequest request) {
-		String tokenStr = (String) request.getAttribute("tk");
+		String tokenStr = (String) request.getParameter("tk");
 		if (StringUtils.isNotBlank(tokenStr)) {
 			try {
+				logger.info("Recover token");
 				Token t = TokenUtil.extractToken(tokenStr);
-				UserSession s = new UserSession();
-				s.setUserId(t.getUserId());
-				return s;
+				if (t != null) {
+					UserSession s = new UserSession();
+					s.setUserId(t.getUserId());
+					return s;
+				} else {
+					return null;
+				}
 			} catch (RuntimeException e) {
+				logger.error("Failed in extract token", e);
 				return null;
 			}
 		}
