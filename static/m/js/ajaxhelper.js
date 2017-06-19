@@ -32,12 +32,11 @@ define(["utility"], function(util) {
                 param = JSON.stringify(param);
             }
             var me = this;
-
-            if(!this.getData("userInfo")){
-                window.location = "regist.html";
+            var token = "";
+            if(this.getData("userInfo")){
+                var userInfo = JSON.parse(this.getData("userInfo"));
+                token = userInfo.token;
             }
-            var userInfo = JSON.parse(this.getData("userInfo"));
-            var token = userInfo.token;
             me.isPaging = isPaging;
             if (!isPaging)
                 this._showLoading();
