@@ -42,4 +42,10 @@ public interface OrderService {
 	List<OrderBo> getInvestOrders(Pageable page);
 
 	void acceptorOrder(int lawyerId, int orderId);
+
+	int getNumbersOfUnAssignedOrdersByCity(int city);
+
+	List<OrderBo> getUnconfirmedOrders(int size);
+
+	void updateOrderStatus(int orderId, int previousStatus, int newStatus);
 }

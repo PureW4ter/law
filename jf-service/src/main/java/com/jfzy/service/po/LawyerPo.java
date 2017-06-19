@@ -21,33 +21,36 @@ public class LawyerPo {
 	private int cityId;
 
 	private int status;
-	
+
 	private String name;
-	
+
 	@Column(name = "phone_num")
 	private String phoneNum;
 
 	private String memo;
-	
+
 	@Column(name = "create_time")
 	private Timestamp createTime;
-	
+
 	@Column(name = "update_time")
 	private Timestamp updateTime;
-	
+
 	private double score;
-	
+
 	private int level;
-	
+
 	private double money;
-	
+
 	private int completed;
-	
+
 	private int process;
 
 	@Column(name = "total_task")
 	private int totalTask;
-	
+
+	@Column(name = "open_id")
+	private String openId;
+
 	public int getId() {
 		return id;
 	}
@@ -159,5 +162,5 @@ public class LawyerPo {
 	public void setTotalTask(int totalTask) {
 		this.totalTask = totalTask;
 	}
-	
+
 }

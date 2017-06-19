@@ -25,6 +25,8 @@ CREATE TABLE `jf_lawyer` (
   `city_id` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL DEFAULT '',
+  `login_name` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
   `phone_num` varchar(50) NOT NULL DEFAULT '',
   `memo` varchar(200) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -34,6 +36,7 @@ CREATE TABLE `jf_lawyer` (
   `money` double DEFAULT '0',
   `completed` int(4) NOT NULL DEFAULT '0',
   `process` int(4) NOT NULL DEFAULT '0',
+  `open_id` varchar(500) DEFAULT NULL,
   `total_task` int(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
