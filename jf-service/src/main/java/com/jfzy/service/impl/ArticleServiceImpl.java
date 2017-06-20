@@ -12,7 +12,10 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -57,7 +60,11 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleBo> searchByTags(String tags, Pageable page) {
+	public List<ArticleBo> searchByTags(String tags, int pageIndex, int size) {
+
+		Sort sort = new Sort(Direction.DESC, "_score");
+		sort.and(new Sort(Direction.DESC, "createTime"));
+		Pageable page = new PageRequest(pageIndex, size, sort);
 
 		if (tags != null && tags.length() > 0) {
 			QueryBuilder qb = QueryBuilders.termsQuery("tags", tags.split(","));

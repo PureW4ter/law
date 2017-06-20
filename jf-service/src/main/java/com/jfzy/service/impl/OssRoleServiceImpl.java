@@ -34,16 +34,16 @@ public class OssRoleServiceImpl implements OssRoleService {
 	public void init() {
 		List<RolePo> rolePos = roleRepo.findAll();
 		List<OssPermissionPo> permPos = permRepo.findAll();
-		Map<Integer, RoleBo> roleMap = new HashMap<Integer, RoleBo>();
+		Map<String, RoleBo> roleMap = new HashMap<String, RoleBo>();
 		if (rolePos != null) {
 			rolePos.forEach(po -> {
 				RoleBo bo = poToBo(po);
-				roleMap.put(Integer.valueOf(bo.getId()), bo);
+				roleMap.put(bo.getName(), bo);
 			});
 		}
 		if (permPos != null) {
 			permPos.forEach(po -> {
-				RoleBo bo = roleMap.get(Integer.valueOf(po.getRoleId()));
+				RoleBo bo = roleMap.get(po.getRole());
 				if (bo != null) {
 					if (bo.getPermissons() == null) {
 						bo.setPermissons(new ArrayList<String>());

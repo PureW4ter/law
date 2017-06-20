@@ -58,8 +58,7 @@ public class ArticleController {
 		if (page < 0) {
 			page = 0;
 		}
-		Sort sort = new Sort(Direction.DESC, "createTime");
-		List<ArticleBo> values = articleService.searchByTags(tags, new PageRequest(page, size, sort));
+		List<ArticleBo> values = articleService.searchByTags(tags, page, size);
 		List<SimpleArticleVo> resultArticles = new ArrayList<SimpleArticleVo>(values.size());
 		for (ArticleBo bo : values) {
 			resultArticles.add(boToSVo(bo));
@@ -74,48 +73,51 @@ public class ArticleController {
 			page = 0;
 		}
 		Sort sort = new Sort(Direction.DESC, "createTime");
-		List<ArticleBo> values = articleService.getQAs( new PageRequest(page, size, sort));
+		List<ArticleBo> values = articleService.getQAs(new PageRequest(page, size, sort));
 		List<SimpleArticleVo> resultArticles = new ArrayList<SimpleArticleVo>(values.size());
 		for (ArticleBo bo : values) {
 			resultArticles.add(boToSVo(bo));
 		}
 		return new ResponseVo<List<SimpleArticleVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultArticles);
 	}
-	
+
 	@ResponseBody
-	@PostMapping(path="/api/article/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response, @RequestBody ArticleVo vo) {
-		/*try {
-			vo.setTagStr(new String(vo.getTagStr().getBytes("ISO-8859-1"),"UTF-8"));
-			vo.setSummary(new String(vo.getSummary().getBytes("ISO-8859-1"),"UTF-8"));
-			vo.setContent(new String(vo.getContent().getBytes("ISO-8859-1"),"UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}*/
+	@PostMapping(path = "/api/article/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<Object> createArticle(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody ArticleVo vo) {
+		/*
+		 * try { vo.setTagStr(new
+		 * String(vo.getTagStr().getBytes("ISO-8859-1"),"UTF-8"));
+		 * vo.setSummary(new
+		 * String(vo.getSummary().getBytes("ISO-8859-1"),"UTF-8"));
+		 * vo.setContent(new
+		 * String(vo.getContent().getBytes("ISO-8859-1"),"UTF-8")); } catch
+		 * (UnsupportedEncodingException e) { e.printStackTrace(); }
+		 */
 		ArticleBo bo = voToBo(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		articleService.create(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	@ResponseBody
 	@GetMapping(value = "/api/article/detail")
 	public ResponseVo<ArticleVo> articleDetail(int id) {
 		ArticleBo bo = articleService.get(id);
-		if(bo!=null){
+		if (bo != null) {
 			return new ResponseVo<ArticleVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(bo));
-		}else{
+		} else {
 			return new ResponseVo<ArticleVo>(ResponseStatusEnum.SERVER_ERROR.getCode(), null, null);
 		}
 	}
-	
+
 	@ResponseBody
 	@GetMapping(value = "/api/article/delete")
 	public ResponseVo<Object> articleDelete(int id) {
 		articleService.delete(id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	private static ArticleBo voToBo(ArticleVo vo) {
 		ArticleBo bo = new ArticleBo();
 		BeanUtils.copyProperties(vo, bo);
@@ -123,7 +125,7 @@ public class ArticleController {
 		bo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		return bo;
 	}
-	
+
 	private static ArticleVo boToVo(ArticleBo bo) {
 		ArticleVo vo = new ArticleVo();
 		BeanUtils.copyProperties(bo, vo);
@@ -133,14 +135,14 @@ public class ArticleController {
 	private static SimpleArticleVo boToSVo(ArticleBo bo) {
 		SimpleArticleVo vo = new SimpleArticleVo();
 		BeanUtils.copyProperties(bo, vo);
-		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
+		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy年MM月dd日");
 		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
-		if(bo.getUpdateTime()!=null){
+		if (bo.getUpdateTime() != null) {
 			vo.setUpdateTime(myFmt.format(bo.getUpdateTime()));
 		}
 		return vo;
 	}
-	
+
 	private static TagVo boToVo(TagBo bo) {
 		TagVo vo = new TagVo();
 		BeanUtils.copyProperties(bo, vo);
