@@ -108,18 +108,18 @@ VALUES
 	(6,'代查户口(学区房)',999,'2017-05-24 09:58:58',NULL,0,'HX');
 	
 	
-INSERT INTO `jf_oss_permission` (`id`, `role_id`, `permission`)
+INSERT INTO `jf_oss_permission` (`id`, `role`, `permission`)
 VALUES
-	(1,1,'user'),
-	(2,1,'ossuser'),
-	(3,1,'article'),
-	(4,1,'lawyer'),
-	(5,1,'corder'),
-	(6,1,'iorder'),
-	(7,2,'article'),
-	(8,2,'lawyer'),
-	(9,2,'user'),
-	(10,2,'corder'),
-	(11,2,'iorder'),
-	(12,3,'corder'),
-	(13,3,'iorder');
+	(1,'super_admin','user'),
+	(2,'super_admin','ossuser'),
+	(3,'super_admin','article'),
+	(4,'super_admin','lawyer'),
+	(5,'super_admin','corder'),
+	(6,'super_admin','iorder'),
+	(7,'admin','article'),
+	(8,'admin','lawyer'),
+	(9,'admin','user'),
+	(10,'admin','corder'),
+	(11,'admin','iorder'),
+	(12,'order_admin','corder'),
+	(13,'order_admin','iorder');

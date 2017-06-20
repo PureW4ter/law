@@ -206,7 +206,7 @@ CREATE TABLE `jf_lawyer_reply` (
 DROP TABLE IF EXISTS `jf_oss_permission`;
 CREATE TABLE `jf_oss_permission` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `role_id` int(11) NOT NULL,
+  `role` varchar(50) NOT NULL DEFAULT '',
   `permission` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
