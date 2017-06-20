@@ -106,3 +106,20 @@ VALUES
 	(4,'代查户口',599,'2017-05-24 09:58:58',NULL,0,'H'),
 	(5,'查封信息',2999,'2017-05-24 09:58:58',NULL,0,'C'),
 	(6,'代查户口(学区房)',999,'2017-05-24 09:58:58',NULL,0,'HX');
+	
+	
+INSERT INTO `jf_oss_permission` (`id`, `role_id`, `permission`)
+VALUES
+	(1,1,'user'),
+	(2,1,'ossuser'),
+	(3,1,'article'),
+	(4,1,'lawyer'),
+	(5,1,'corder'),
+	(6,1,'iorder'),
+	(7,2,'article'),
+	(8,2,'lawyer'),
+	(9,2,'user'),
+	(10,2,'corder'),
+	(11,2,'iorder'),
+	(12,3,'corder'),
+	(13,3,'iorder');
