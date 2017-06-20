@@ -8,4 +8,6 @@ public interface OssRoleService {
 
 	List<RoleBo> getRoles();
 
+	List<String> getPermissionsByRoleName(String roleName);
+
 }

@@ -1,6 +1,7 @@
 package com.jfzy.web;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import com.jfzy.base.CookieUtil;
 import com.jfzy.base.OssWebConstants;
 import com.jfzy.base.SessionConstants;
 import com.jfzy.base.Token;
+import com.jfzy.service.OssRoleService;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.repository.RedisRepository;
@@ -33,6 +35,9 @@ public class LoginController {
 
 	@Autowired
 	private OssUserService ossUserService;
+
+	@Autowired
+	private OssRoleService ossRoleService;
 
 	@Autowired
 	private RedisRepository redisRepo;
@@ -62,7 +67,8 @@ public class LoginController {
 
 			injectCookie(user.getId(), response);
 
-			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user));
+			List<String> permissions = ossRoleService.getPermissionsByRoleName(user.getRole());
+			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user, permissions));
 		}
 		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在", null);
 	}
@@ -74,9 +80,10 @@ public class LoginController {
 		CookieUtil.addAuthCookie(t, response);
 	}
 
-	private static OssUserVo boToVo(OssUserBo bo) {
+	private static OssUserVo boToVo(OssUserBo bo, List<String> permissions) {
 		OssUserVo vo = new OssUserVo();
 		BeanUtils.copyProperties(bo, vo);
+		vo.setPermissions(permissions);
 		return vo;
 	}
 

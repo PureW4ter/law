@@ -1,6 +1,7 @@
 package com.jfzy.service.bo;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class RoleBo {
 
@@ -8,6 +9,7 @@ public class RoleBo {
 	private String name;
 	private String desc;
 	private int status;
+	private List<String> permissons;
 	private Timestamp createTime;
 	private Timestamp updateTime;
 
@@ -57,6 +59,14 @@ public class RoleBo {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<String> getPermissons() {
+		return permissons;
+	}
+
+	public void setPermissons(List<String> permissons) {
+		this.permissons = permissons;
 	}
 
 }
