@@ -33,8 +33,8 @@ define(["utility"], function(util) {
             }
             var me = this;
             var token = "";
-            if(this.getData("userInfo")){
-                var userInfo = JSON.parse(this.getData("userInfo"));
+            if(util.getData("userInfo")){
+                var userInfo = JSON.parse(util.getData("userInfo"));
                 token = userInfo.token;
             }
             me.isPaging = isPaging;
