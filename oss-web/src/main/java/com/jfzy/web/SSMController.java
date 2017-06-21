@@ -27,8 +27,7 @@ public class SSMController extends BaseController {
 	public ResponseVo<String> getCode(HttpServletRequest request, String phoneNum) {
 		String code = Utils.getSmsCode(4);
 
-		redisRepo.setWithTimeout(
-				String.format(OssWebConstants.REDIS_PREFIX_VERIFY_CODE, request.getRequestedSessionId()), code,
+		redisRepo.setWithTimeout(String.format(OssWebConstants.REDIS_PREFIX_VERIFY_CODE, phoneNum), code,
 				OssWebConstants.TIMEOUT_VERIFY_CODE);
 
 		smsService.sendRegisterCode(phoneNum, code);

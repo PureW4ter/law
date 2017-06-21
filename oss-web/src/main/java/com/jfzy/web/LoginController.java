@@ -28,7 +28,7 @@ import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
 
 @RestController
-public class LoginController {
+public class LoginController extends BaseController {
 
 	@Autowired
 	private HttpSession session;
@@ -51,10 +51,10 @@ public class LoginController {
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "电话或验证码不能为空", null);
 		}
 
-		String codeInRedis = redisRepo
-				.get(String.format(OssWebConstants.REDIS_PREFIX_VERIFY_CODE, request.getRequestedSessionId()));
+		String codeInRedis = redisRepo.get(String.format(OssWebConstants.REDIS_PREFIX_VERIFY_CODE, phoneNum));
 
 		if (!StringUtils.equals(code, codeInRedis)) {
+			logger.info(String.format("Code stored %s, code given %s", codeInRedis, code));
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "验证码错误", null);
 		}
 
