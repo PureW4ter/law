@@ -48,7 +48,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Scheduled(fixedRate = 60000)
 	public void retriveArticles() {
-		List<ArticlePo> articlePos = articleRepo.findNotDeleted(lastUpdatedTime, ArticleTypeEnum.ARTICLE.getId());
+		List<ArticlePo> articlePos = articleRepo.findUpdates(lastUpdatedTime, ArticleTypeEnum.ARTICLE.getId());
 		Timestamp tmpTimestamp = lastUpdatedTime;
 		for (ArticlePo po : articlePos) {
 			if (po.getUpdateTime() != null && po.getUpdateTime().after(tmpTimestamp)) {
@@ -67,7 +67,9 @@ public class ArticleServiceImpl implements ArticleService {
 		Pageable page = new PageRequest(pageIndex, size, sort);
 
 		if (tags != null && tags.length() > 0) {
-			QueryBuilder qb = QueryBuilders.termsQuery("tags", tags.split(","));
+			QueryBuilder qb = QueryBuilders.boolQuery().must(QueryBuilders.termsQuery("tags", tags.split(",")))
+					.must(QueryBuilders.matchQuery("deleteFlag", "0"));
+
 			Iterable<ArticleBo> values = articleElasticRepo.search(qb, page);
 			List<ArticleBo> results = new ArrayList<ArticleBo>();
 			values.forEach(bo -> results.add(bo));
@@ -99,9 +101,10 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void create(ArticleBo bo) {
 		ArticlePo po = bo2Po(bo);
-		po.setContent(po.getContent().
-				replaceAll("http://read\\.html5\\.qq\\.com/image\\?src=forum&q=5&r=0&imgflag=7&imageUrl=", "").
-				replaceAll("http://mmbiz\\.qpic\\.cn", "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpiwc.cn/"));
+		po.setContent(po.getContent()
+				.replaceAll("http://read\\.html5\\.qq\\.com/image\\?src=forum&q=5&r=0&imgflag=7&imageUrl=", "")
+				.replaceAll("http://mmbiz\\.qpic\\.cn",
+						"http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpiwc.cn/"));
 		articleRepo.save(po);
 	}
 
@@ -121,6 +124,7 @@ public class ArticleServiceImpl implements ArticleService {
 		ArticleBo result = new ArticleBo();
 		BeanUtils.copyProperties(po, result);
 		result.setTags(getTags(po.getTags()));
+		result.setDeleteFlag(po.isDeleted() ? 1 : 0);
 		return result;
 	}
 
