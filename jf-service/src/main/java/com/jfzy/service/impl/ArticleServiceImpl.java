@@ -92,6 +92,9 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void create(ArticleBo bo) {
 		ArticlePo po = bo2Po(bo);
+		po.setContent(po.getContent().
+				replaceAll("http://read\\.html5\\.qq\\.com/image\\?src=forum&q=5&r=0&imgflag=7&imageUrl=", "").
+				replaceAll("http://mmbiz\\.qpic\\.cn", "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpiwc.cn/"));
 		articleRepo.save(po);
 	}
 
