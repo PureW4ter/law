@@ -23,6 +23,7 @@ public class ArticleBo {
 	private String summary;
 	private int cityId;
 	private int type;
+	private int deleteFlag;
 
 	public int getType() {
 		return type;
@@ -36,7 +37,7 @@ public class ArticleBo {
 	private String[] tags;
 
 	public ArticleBo(int id, String title, String titleImgUrl, String content, String shareIconUrl, String summary,
-			String[] tags, Timestamp createTime, Timestamp updateTime, int cityId, int type) {
+			String[] tags, Timestamp createTime, Timestamp updateTime, int cityId, int type, int deleteFlag) {
 		this.id = id;
 		this.title = title;
 		this.titleImgUrl = titleImgUrl;
@@ -48,6 +49,7 @@ public class ArticleBo {
 		this.updateTime = updateTime;
 		this.cityId = cityId;
 		this.type = type;
+		this.deleteFlag = deleteFlag;
 	}
 
 	public ArticleBo() {
@@ -131,6 +133,14 @@ public class ArticleBo {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public int getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 
 }

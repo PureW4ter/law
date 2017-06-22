@@ -25,11 +25,14 @@ public interface ArticleRepository extends JpaRepository<ArticlePo, Integer> {
 	@Query(value = "SELECT t FROM ArticlePo t WHERE t.deleted=0")
 	Page<ArticlePo> getArticles(Pageable page);
 	
+	@Query(value = "SELECT t FROM ArticlePo t WHERE t.type=?2 and t.updateTime>?1")
+	List<ArticlePo> findUpdates(Timestamp lastDatetime, int type);
+
 	@Query(value = "SELECT t FROM ArticlePo t WHERE t.id=?1 and t.deleted=0")
 	ArticlePo getById(int id);
-	
+
 	Page<ArticlePo> findByType(int type, Pageable page);
-	
+
 	@Transactional
 	@Modifying
 	@Query("UPDATE ArticlePo SET deleted=1 WHERE id=:id")
