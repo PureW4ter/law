@@ -24,5 +24,9 @@ public interface OssUserRepository extends JpaRepository<OssUserPo, Integer> {
 	void updateAuth(String role, Timestamp updateTime, int id);
 	
 	List<OssUserPo> findByPhoneNum(String phoneNum);
+	
+	List<OssUserPo> findByLoginNameAndPassword(String loginName, String password);
+	
+	List<OssUserPo> findByLoginName(String loginName);
 
 }

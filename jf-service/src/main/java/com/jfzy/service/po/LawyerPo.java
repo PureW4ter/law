@@ -34,6 +34,11 @@ public class LawyerPo {
 
 	@Column(name = "update_time")
 	private Timestamp updateTime;
+	
+	@Column(name = "login_name")
+	private String loginName;
+	
+	private String password;
 
 	private double score;
 
@@ -161,6 +166,30 @@ public class LawyerPo {
 
 	public void setTotalTask(int totalTask) {
 		this.totalTask = totalTask;
+	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 }

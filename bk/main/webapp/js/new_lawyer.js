@@ -59,6 +59,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             if ($(".popover.in").length < 1) { 
                 var formJson = {};
                 formJson.name = $("#i_name").val();
+                formJson.loginName = $("#i_login_name").val();
+                formJson.password = $("#i_login_password").val();
                 formJson.phoneNum = $("#i_phone").val();
                 formJson.cityId = $("#i_city").data("value");
                 formJson.memo = $("#i_memo").val();

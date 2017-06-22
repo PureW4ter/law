@@ -34,6 +34,11 @@ public class OssUserPo {
 
 	@Column(name = "create_time")
 	private Timestamp createTime;
+	
+	@Column(name = "login_name")
+	private String loginName;
+	
+	private String password;
 
 	public int getId() {
 		return id;
@@ -98,4 +103,21 @@ public class OssUserPo {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }
