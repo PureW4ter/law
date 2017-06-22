@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.service.OrderService;
 import com.jfzy.service.UserService;
 import com.jfzy.service.WechatService;
 import com.jfzy.service.bo.UserAccountBo;
@@ -28,6 +29,10 @@ import com.jfzy.web.vo.UserVo;
 
 @RestController
 public class APPUserController {
+	
+	@Autowired
+	private OrderService orderService;
+	
 	@Autowired
 	private UserService userService;
 	
@@ -45,7 +50,9 @@ public class APPUserController {
 		List<UserBo> values = userService.getUsers(new PageRequest(page, size, sort));
 		List<UserVo> resultUsers = new ArrayList<UserVo>(values.size());
 		for (UserBo bo : values) {
-			resultUsers.add(boToVoForUser(bo));
+			UserVo vo = boToVoForUser(bo);
+			vo.setOrderCount(orderService.getTotal(bo.getId()));
+			resultUsers.add(vo);
 		}
 		return new ResponseVo<List<UserVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}

@@ -16,6 +16,7 @@ public class Constants {
 	public static String PRODUCT_CODE_ZIXUNP = "YP";
 	public static String PRODUCT_CODE_JIANDANWEN = "J";
 	public static String PRODUCT_CODE_HUKOU = "H";
+	public static String PRODUCT_CODE_HUKOUXQ = "HX";
 	public static String PRODUCT_CODE_CHAFENG = "C";
 
 	public static final String ENCODING_AES_KEY = "H8brc7y62mQ7gkW4F27sR6f5R9MAZdBW0EJ5LTaLlCm";

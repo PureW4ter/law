@@ -40,8 +40,8 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE OrderPo SET startTime=?1, endTime=?2 , updateTime=?3 WHERE id=?4")
-	void setStartAndEndTime(Timestamp startTime, Timestamp endTime, Timestamp updateTime, int id);
+	@Query("UPDATE OrderPo SET startTime=?1, endTime=?2 , phoneEndTime=?3, updateTime=?4 WHERE id=?5")
+	void setStartAndEndTime(Timestamp startTime, Timestamp endTime, Timestamp phoneEndTime, Timestamp updateTime, int id);
 
 	@Transactional
 	@Modifying
@@ -50,12 +50,21 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	Page<OrderPo> findByUserId(int userId, Pageable page);
 
-	@Query(value = "SELECT t FROM OrderPo t WHERE t.productCode='H' or t.productCode='C'")
+	@Query(value = "SELECT t FROM OrderPo t WHERE t.productCode='H' or t.productCode='C' or t.productCode='HX'")
 	Page<OrderPo> getSearchOrders(Pageable page);
 
 	@Query(value = "SELECT t FROM OrderPo t WHERE t.productCode='Y' or t.productCode='YP' or t.productCode='J'")
 	Page<OrderPo> getInvestOrders(Pageable page);
 
+	@Query(value = "SELECT t FROM OrderPo t WHERE (t.productCode='H' or t.productCode='C' or t.productCode='HX') and t.userId=?1")
+	Page<OrderPo> getSearchOrdersById(int userId, Pageable page);
+
+	@Query(value = "SELECT t FROM OrderPo t WHERE (t.productCode='Y' or t.productCode='YP' or t.productCode='J') and t.userId=?1")
+	Page<OrderPo> getInvestOrdersById(int userId, Pageable page);
+	
+	@Query(value = "SELECT count(*) FROM OrderPo t WHERE t.userId=?1")
+	int getTotal(int userId);
+	
 	OrderPo findByUserIdAndId(int userId, int id);
 
 	int countByCityIdAndStatus(int cityId, int status);

@@ -20,6 +20,7 @@ public class UserVo {
 	private Timestamp createTime;
 	private String phone;
 	private int level;
+	private int orderCount;
 	
 	public int getId() {
 		return id;
@@ -110,5 +111,11 @@ public class UserVo {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public int getOrderCount() {
+		return orderCount;
+	}
+	public void setOrderCount(int orderCount) {
+		this.orderCount = orderCount;
 	}
 }

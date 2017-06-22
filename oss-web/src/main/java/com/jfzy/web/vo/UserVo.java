@@ -1,8 +1,5 @@
 package com.jfzy.web.vo;
 
-import java.sql.Timestamp;
-
-
 public class UserVo {
 
 	private int id;
@@ -20,6 +17,7 @@ public class UserVo {
 	private String createTime;
 	private String phone;
 	private int level;
+	private int orderCount;
 	
 	public int getId() {
 		return id;
@@ -110,5 +108,11 @@ public class UserVo {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public int getOrderCount() {
+		return orderCount;
+	}
+	public void setOrderCount(int orderCount) {
+		this.orderCount = orderCount;
 	}
 }

@@ -85,8 +85,38 @@ public class OrderController extends BaseController {
 		if (page < 0) {
 			page = 0;
 		}
-		Sort sort = new Sort(Direction.DESC, "phoneEndTime");
+		Sort sort = new Sort(Direction.DESC, "createTime");
 		List<OrderBo> values = orderService.getInvestOrders(new PageRequest(page, size, sort));
+		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
+		for (OrderBo bo : values) {
+			result.add(boToVo(bo));
+		}
+		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
+	}
+	
+	@ResponseBody
+	@GetMapping("/api/order/slistbyuser")
+	public ResponseVo<List<OrderVo>> getSearchOrdersByUser(int page, int size, int userId) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		List<OrderBo> values = orderService.getSearchOrdersByUser(new PageRequest(page, size, sort), userId);
+		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
+		for (OrderBo bo : values) {
+			result.add(boToVo(bo));
+		}
+		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
+	}
+	
+	@ResponseBody
+	@GetMapping("/api/order/ilistbyuser")
+	public ResponseVo<List<OrderVo>> getInvestOrdersByUser(int page, int size, int userId) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "phoneEndTime");
+		List<OrderBo> values = orderService.getInvestOrdersByUser(new PageRequest(page, size, sort), userId);
 		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
 		for (OrderBo bo : values) {
 			result.add(boToVo(bo));
@@ -116,7 +146,6 @@ public class OrderController extends BaseController {
 		if (ossUser != null) {
 			orderService.assignOrder(orderId, lawyerId, ossUser.getId(), ossUser.getName());
 		}
-		//orderService.assignOrder(orderId, lawyerId, 101, "崔哥哥");
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
 

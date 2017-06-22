@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService{
 			abo.setValue(phone);
 			abo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 			this.register(abo);
+			userRepo.updateLevel(1, userId);
 		}
 		return bo;
 	}

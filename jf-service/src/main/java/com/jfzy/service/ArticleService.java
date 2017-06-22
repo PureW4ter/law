@@ -16,4 +16,6 @@ public interface ArticleService {
 	void create(ArticleBo bo);
 
 	void delete(int id);
+	
+	List<ArticleBo> getArticles(Pageable page);
 }

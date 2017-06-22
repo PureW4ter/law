@@ -112,12 +112,17 @@ public class OrderServiceImpl implements OrderService {
 		OrderBo obo = getOrderById(id);
 		if (Constants.PRODUCT_CODE_ZIXUNP.equals(obo.getProductCode())) {
 			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
+					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
 					new Timestamp(System.currentTimeMillis() + 2 * 60 * 60 * 1000),
 					new Timestamp(System.currentTimeMillis()), id);
-		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())) {
+			
+		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode()) || Constants.PRODUCT_CODE_CHAFENG.equals(obo.getProductCode())) {
 			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
 					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
+					null,
 					new Timestamp(System.currentTimeMillis()), id);
+		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())) {
+			
 		}
 	}
 
@@ -206,6 +211,26 @@ public class OrderServiceImpl implements OrderService {
 		return results;
 	}
 
+	@Override
+	public List<OrderBo> getSearchOrdersByUser(Pageable page, int userId) {
+		Page<OrderPo> poPage = orderRepo.getSearchOrdersById(userId, page);
+		List<OrderBo> results = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(poToBo(po)));
+		}
+		return results;
+	}
+
+	@Override
+	public List<OrderBo> getInvestOrdersByUser(Pageable page, int userId) {
+		Page<OrderPo> poPage = orderRepo.getInvestOrdersById(userId, page);
+		List<OrderBo> results = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(poToBo(po)));
+		}
+		return results;
+	}
+	
 	@Override
 	public Page<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
 		Page<OrderPo> poPage = orderRepo.findByLawyerId(lawyerId, page);
@@ -304,7 +329,12 @@ public class OrderServiceImpl implements OrderService {
 	 public int getNumbersOfUnAssignedOrdersByCity(int city) {
 		return orderRepo.countByCityIdAndStatus(city, OrderStatusEnum.NEED_DISPATCH.getId());
 	}
-	 
+	
+	@Override
+	public int getTotal(int userId) {
+		return orderRepo.getTotal(userId);
+	}
+	
 	private static OrderPo boToPo(OrderBo bo) {
 		OrderPo po = new OrderPo();
 		BeanUtils.copyProperties(bo, po);

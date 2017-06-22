@@ -81,6 +81,16 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	public List<ArticleBo> getArticles(Pageable page) {
+		Page<ArticlePo> poPage = articleRepo.getArticles(page);
+		List<ArticleBo> results = new ArrayList<ArticleBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(po2Bo(po)));
+		}
+		return results;
+	}
+	
+	@Override
 	public List<ArticleBo> getQAs(Pageable page) {
 		Page<ArticlePo> poPage = articleRepo.findByType(ArticleTypeEnum.QA.getId(), page);
 		List<ArticleBo> results = new ArrayList<ArticleBo>();
@@ -99,9 +109,9 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void create(ArticleBo bo) {
 		ArticlePo po = bo2Po(bo);
-		po.setContent(po.getContent().
-				replaceAll("http://read\\.html5\\.qq\\.com/image\\?src=forum&q=5&r=0&imgflag=7&imageUrl=", "").
-				replaceAll("http://mmbiz\\.qpic\\.cn", "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpiwc.cn/"));
+		po.setContent(po.getContent());
+				//replaceAll("http://read\\.html5\\.qq\\.com/image\\?src=forum&q=5&r=0&imgflag=7&imageUrl=", "").
+				//replaceAll("http://mmbiz\\.qpic\\.cn", "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpiwc.cn/"));
 		articleRepo.save(po);
 	}
 

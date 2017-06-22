@@ -792,3 +792,7 @@ textarea.foreword{
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
+.order_type_title{
+    font-size: 14px;
+    font-weight: bold;
+}
