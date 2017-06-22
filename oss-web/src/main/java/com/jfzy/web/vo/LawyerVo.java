@@ -1,5 +1,6 @@
 package com.jfzy.web.vo;
 
+
 public class LawyerVo {
 
 	private int id;
@@ -8,14 +9,14 @@ public class LawyerVo {
 	private String name;
 	private String phoneNum;
 	private String memo;
-	private String creatTime;
+	private String createTime;
 	private String updateTime;
 	private double score;
-	private int level;
-	private double money;
-	private int process;
-	private int completed;
-	private int totalTask;
+	private int onProcessTask;
+	private int finishedTask;
+	private double totalMoney;
+	private double finishedMoney;
+	private String openId;
 	private String loginName;
 	private String password;
 	
@@ -55,11 +56,11 @@ public class LawyerVo {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	public String getCreatTime() {
-		return creatTime;
+	public String getCreateTime() {
+		return createTime;
 	}
-	public void setCreatTime(String creatTime) {
-		this.creatTime = creatTime;
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
 	public String getUpdateTime() {
 		return updateTime;
@@ -73,35 +74,35 @@ public class LawyerVo {
 	public void setScore(double score) {
 		this.score = score;
 	}
-	public int getLevel() {
-		return level;
+	public int getOnProcessTask() {
+		return onProcessTask;
 	}
-	public void setLevel(int level) {
-		this.level = level;
+	public void setOnProcessTask(int onProcessTask) {
+		this.onProcessTask = onProcessTask;
 	}
-	public double getMoney() {
-		return money;
+	public int getFinishedTask() {
+		return finishedTask;
 	}
-	public void setMoney(double money) {
-		this.money = money;
+	public void setFinishedTask(int finishedTask) {
+		this.finishedTask = finishedTask;
 	}
-	public int getProcess() {
-		return process;
+	public double getTotalMoney() {
+		return totalMoney;
 	}
-	public void setProcess(int process) {
-		this.process = process;
+	public void setTotalMoney(double totalMoney) {
+		this.totalMoney = totalMoney;
 	}
-	public int getTotalTask() {
-		return totalTask;
+	public double getFinishedMoney() {
+		return finishedMoney;
 	}
-	public void setTotalTask(int totalTask) {
-		this.totalTask = totalTask;
+	public void setFinishedMoney(double finishedMoney) {
+		this.finishedMoney = finishedMoney;
 	}
-	public int getCompleted() {
-		return completed;
+	public String getOpenId() {
+		return openId;
 	}
-	public void setCompleted(int completed) {
-		this.completed = completed;
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 	public String getLoginName() {
 		return loginName;
@@ -115,5 +116,4 @@ public class LawyerVo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 }

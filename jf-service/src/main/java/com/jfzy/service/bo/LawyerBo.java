@@ -13,149 +13,108 @@ public class LawyerBo {
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private double score;
-	private int level;
-	private double money;
-	private int completed;
-	private int process;
-	private int totalTask;
+	private int onProcessTask;
+	private int finishedTask;
+	private double totalMoney;
+	private double finishedMoney;
 	private String openId;
 	private String loginName;
 	private String password;
-
+	
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public int getCityId() {
 		return cityId;
 	}
-
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
 	}
-
 	public int getStatus() {
 		return status;
 	}
-
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getPhoneNum() {
 		return phoneNum;
 	}
-
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 	}
-
 	public String getMemo() {
 		return memo;
 	}
-
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-
 	public Timestamp getCreateTime() {
 		return createTime;
 	}
-
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
-
 	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
-
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
-
 	public double getScore() {
 		return score;
 	}
-
 	public void setScore(double score) {
 		this.score = score;
 	}
-
-	public int getLevel() {
-		return level;
+	public int getOnProcessTask() {
+		return onProcessTask;
 	}
-
-	public void setLevel(int level) {
-		this.level = level;
+	public void setOnProcessTask(int onProcessTask) {
+		this.onProcessTask = onProcessTask;
 	}
-
-	public double getMoney() {
-		return money;
+	public int getFinishedTask() {
+		return finishedTask;
 	}
-
-	public void setMoney(double money) {
-		this.money = money;
+	public void setFinishedTask(int finishedTask) {
+		this.finishedTask = finishedTask;
 	}
-
-	public int getCompleted() {
-		return completed;
+	public double getTotalMoney() {
+		return totalMoney;
 	}
-
-	public void setCompleted(int completed) {
-		this.completed = completed;
+	public void setTotalMoney(double totalMoney) {
+		this.totalMoney = totalMoney;
 	}
-
-	public int getProcess() {
-		return process;
+	public double getFinishedMoney() {
+		return finishedMoney;
 	}
-
-	public void setProcess(int process) {
-		this.process = process;
+	public void setFinishedMoney(double finishedMoney) {
+		this.finishedMoney = finishedMoney;
 	}
-
-	public int getTotalTask() {
-		return totalTask;
-	}
-
-	public void setTotalTask(int totalTask) {
-		this.totalTask = totalTask;
-	}
-
 	public String getOpenId() {
 		return openId;
 	}
-
 	public void setOpenId(String openId) {
 		this.openId = openId;
 	}
-
 	public String getLoginName() {
 		return loginName;
 	}
-
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 }
