@@ -22,6 +22,29 @@
         </div>
         <div class="col-sm-10">
             <div class="row" id="i_header"></div>
+            <div class="form-group">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-2">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-value="0" id="i_search_value">
+                                    <span>全部用户</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" id="i_user_filter">
+                                    <li data-value="0">全部用户</li>
+                                    <li data-value="1">关注用户</li>
+                                    <li data-value="2">绑定用户</li>
+                                    <li data-value="3">交易用户</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div  class="btn btn-warning" id="i_search">过滤</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div id="i_mainbox">
             <script type="text/template" id="i_tpl">
                 <div class="panel panel-default text-center">
@@ -44,14 +67,14 @@
                                     <td><a href="user_info.html?id=<%=item.id%>" class="blue_link"><%=item.name%></a></td>
                                     <td><%=item.realName%></td>
                                     <td><%=item.createTime%></td>
-                                    <td><a href="user_orders.html?id=<%=item.id%>" class="blue_link">8</a></td>
+                                    <td><a href="user_orders.html?id=<%=item.id%>" class="blue_link"><%=item.orderCount%></a></td>
                                     <td>
-                                        <%if(item.level==0){%>
-                                            看客
-                                        <%}else if(item.level==1){%>
-                                            普通
+                                        <%if(item.level==3){%>
+                                            交易用户
                                         <%}else if(item.level==2){%>
-                                            白金
+                                            绑定用户
+                                        <%}else if(item.level==1){%>
+                                            关注用户
                                         <%}%>
                                     </td>
                                 </tr>

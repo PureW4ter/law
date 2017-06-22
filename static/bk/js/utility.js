@@ -106,6 +106,13 @@ define([],function(){
         getJson: function (res) {
             return '{"' + res.replace(/=/g, '":"').replace(/&/g, '","').replace(/\n/g,'\\n').replace(/\r/g,'\\r') + '"}';
         },
+        getUserId: function(){
+        	if(!this.getData("userInfo")){
+        		window.location = "login.html";
+        	}
+        	var userInfo = JSON.parse(this.getData("userInfo"));
+        	return userInfo.id;
+        }
 	};
 	return Utility;
 });

@@ -60,7 +60,7 @@ define(["utility"], function(util) {
                         if(data && data.s == 401){
                             window.location = "regist.html";
                         }else{
-                            util.showToast("服务器出错，类型：" + data.s);
+                            util.showToast(data.m);
                         }
                     }
                 },
