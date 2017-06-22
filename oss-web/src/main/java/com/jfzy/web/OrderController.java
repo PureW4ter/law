@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.OrderService;
+import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.LawyerReplyBo;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderPhotoBo;
@@ -44,6 +45,9 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private OssUserService userService;
 
 	@Autowired
 	private LawyerReplyService lawyerReplyService;
@@ -141,8 +145,8 @@ public class OrderController extends BaseController {
 	
 	@ResponseBody
 	@GetMapping("/api/order/assignment")
-	public SimpleResponseVo assignOrder(int lawyerId, int orderId) {
-		OssUserBo ossUser = getOssUser();
+	public SimpleResponseVo assignOrder(int lawyerId, int orderId, int opId) {
+		OssUserBo ossUser = userService.getUserById(opId);
 		if (ossUser != null) {
 			orderService.assignOrder(orderId, lawyerId, ossUser.getId(), ossUser.getName());
 		}

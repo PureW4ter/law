@@ -23,5 +23,7 @@ public interface LawyerRepository extends JpaRepository<LawyerPo, Integer> {
 	void updateStatus(int status, Timestamp updateTime, int id);
 	
 	List<LawyerPo> findByPhoneNum(String phoneNum);
+	
+	List<LawyerPo> findByLoginNameAndPassword(String loginName, String password);
 
 }

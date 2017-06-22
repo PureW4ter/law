@@ -26,6 +26,7 @@ import com.jfzy.service.bo.OrderPhotoBo;
 import com.jfzy.service.bo.OrderPhotoTypeEnum;
 import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.PayWayEnum;
+import com.jfzy.service.bo.UserLevelEnum;
 import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
@@ -33,6 +34,7 @@ import com.jfzy.service.po.OrderPhotoPo;
 import com.jfzy.service.po.OrderPo;
 import com.jfzy.service.repository.OrderPhotoRepository;
 import com.jfzy.service.repository.OrderRepository;
+import com.jfzy.service.repository.UserRepository;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -41,6 +43,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderRepository orderRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 
 	@Autowired
 	private OrderPhotoRepository orderPhotoRepo;
@@ -60,6 +65,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
 		OrderPo po = orderRepo.save(boToPo(bo));
+		//升级用户等级
+		userRepo.updateLevel(UserLevelEnum.PAIED.getId(), bo.getUserId());
 		return poToBo(po);
 	}
 
@@ -72,6 +79,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
 		OrderPo po = orderRepo.save(boToPo(bo));
+		//升级用户等级
+		userRepo.updateLevel(UserLevelEnum.PAIED.getId(), bo.getUserId());
 		return poToBo(po);
 	}
 

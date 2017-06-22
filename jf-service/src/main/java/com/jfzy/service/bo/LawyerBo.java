@@ -19,6 +19,8 @@ public class LawyerBo {
 	private int process;
 	private int totalTask;
 	private String openId;
+	private String loginName;
+	private String password;
 
 	public int getId() {
 		return id;
@@ -139,4 +141,21 @@ public class LawyerBo {
 	public void setOpenId(String openId) {
 		this.openId = openId;
 	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }

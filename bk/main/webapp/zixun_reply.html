@@ -73,7 +73,7 @@
                                         <%if(result.r.orderPhotoList){%>
                                         <ul>
                                             <%_.each(result.r.orderPhotoList, function(item, index){%>
-                                            <li><img src="<%=item.photoPath%>"></li>
+                                            <li><a href="<%=item.photoPath%>" target="_black"><img src="<%=item.photoPath%>"></a></li>
                                                 <%if(index%3==2){%>
                                         </ul>
                                         <ul>

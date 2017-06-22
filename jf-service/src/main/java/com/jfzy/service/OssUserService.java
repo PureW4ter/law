@@ -9,6 +9,8 @@ import com.jfzy.service.bo.OssUserBo;
 public interface OssUserService {
 
 	OssUserBo login(String phoneNum, String code);
+	
+	public OssUserBo loginWithPassword(String loginName, String password);
 
 	void updateStatus(int status, int id);
 

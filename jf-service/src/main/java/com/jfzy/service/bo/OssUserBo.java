@@ -12,6 +12,8 @@ public class OssUserBo {
 	private String role;
 	private Timestamp createTime;
 	private Timestamp updateTime;
+	private String loginName;
+	private String password;
 
 	public String getPhoneNum() {
 		return phoneNum;
@@ -76,4 +78,21 @@ public class OssUserBo {
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }

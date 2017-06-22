@@ -42,11 +42,7 @@ public class UserServiceImpl implements UserService{
 	public void register(UserAccountBo ua){
 		UserAccountPo userAccountPo = bo2PoForUserAccount(ua);
 		userAccountRepo.save(userAccountPo);
-		UserBo bo = this.getUser(ua.getUserId());
-		bo.setLevel(UserLevelEnum.NORMAL.getId());
-		userRepo.save(bo2PoForUser(bo));
 	}
-
 
 	@Override
 	public UserBo bind(String phone, int userId) {
@@ -59,7 +55,7 @@ public class UserServiceImpl implements UserService{
 			abo.setValue(phone);
 			abo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 			this.register(abo);
-			userRepo.updateLevel(1, userId);
+			userRepo.updateLevel(UserLevelEnum.NORMAL.getId(), userId);
 		}
 		return bo;
 	}

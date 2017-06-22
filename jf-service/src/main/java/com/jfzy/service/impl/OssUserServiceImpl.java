@@ -27,6 +27,20 @@ public class OssUserServiceImpl implements OssUserService {
 	@Autowired
 	private LawyerRepository lawyerRepo;
 	
+	@Override
+	public OssUserBo loginWithPassword(String loginName, String password) {
+		String checksum = MD5.MD5Encode(password);
+
+		List<OssUserPo> users = ossUserRepo.findByLoginNameAndPassword(loginName, checksum);
+		if (users != null && users.size() == 1) {
+			OssUserPo po = users.get(0);
+			OssUserBo bo = poToBo(po);
+			bo.setPassword("");
+			return bo;
+		} else {
+			return null;
+		}
+	}
 	
 	@Override
 	public OssUserBo login(String phoneNum, String code) {
@@ -69,11 +83,11 @@ public class OssUserServiceImpl implements OssUserService {
 
 	@Override
 	public void create(OssUserBo bo) {
-
 		List<OssUserPo> pos = ossUserRepo.findByPhoneNum(bo.getPhoneNum());
 		if (pos != null && pos.size() > 0) {
 			throw new JfApplicationRuntimeException("用户手机已存在");
 		}
+		bo.setPassword(MD5.MD5Encode(bo.getPassword()));
 		OssUserPo po = boToPo(bo);
 		ossUserRepo.save(po);
 	}

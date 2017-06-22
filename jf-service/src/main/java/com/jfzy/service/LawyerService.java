@@ -8,6 +8,8 @@ import com.jfzy.service.bo.LawyerBo;
 
 public interface LawyerService {
 
+	public LawyerBo loginWithPassword(String loginName, String password);
+	
 	List<LawyerBo> getActiveLawyerByCity(int cityId);
 
 	List<LawyerBo> getLawyerByCity(int cityId);
