@@ -12,6 +12,7 @@ public class OssUserVo {
 	private String createTime;
 	private Timestamp updateTime;
 	private List<String> permissions;
+	private String role;
 
 	public int getId() {
 		return id;
@@ -75,6 +76,14 @@ public class OssUserVo {
 
 	public void setPermissions(List<String> permissions) {
 		this.permissions = permissions;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

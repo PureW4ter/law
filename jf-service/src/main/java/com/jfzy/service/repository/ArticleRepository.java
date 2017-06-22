@@ -21,7 +21,10 @@ public interface ArticleRepository extends JpaRepository<ArticlePo, Integer> {
 
 	@Query(value = "SELECT t FROM ArticlePo t WHERE t.deleted=0 and t.type=?2 and t.updateTime>?1")
 	List<ArticlePo> findNotDeleted(Timestamp lastDatetime, int type);
-
+	
+	@Query(value = "SELECT t FROM ArticlePo t WHERE t.deleted=0")
+	Page<ArticlePo> getArticles(Pageable page);
+	
 	@Query(value = "SELECT t FROM ArticlePo t WHERE t.type=?2 and t.updateTime>?1")
 	List<ArticlePo> findUpdates(Timestamp lastDatetime, int type);
 

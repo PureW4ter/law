@@ -44,14 +44,14 @@
                                     <td><a href="user_info.html?id=<%=item.id%>" class="blue_link"><%=item.name%></a></td>
                                     <td><%=item.realName%></td>
                                     <td><%=item.createTime%></td>
-                                    <td><a href="user_orders.html?id=<%=item.id%>" class="blue_link">8</a></td>
+                                    <td><a href="user_orders.html?id=<%=item.id%>" class="blue_link"><%=item.orderCount%></a></td>
                                     <td>
-                                        <%if(item.level==0){%>
-                                            看客
+                                        <%if(item.orderCount>0){%>
+                                            交易用户
                                         <%}else if(item.level==1){%>
-                                            普通
-                                        <%}else if(item.level==2){%>
-                                            白金
+                                            绑定用户
+                                        <%}else if(item.level==0){%>
+                                            关注用户
                                         <%}%>
                                     </td>
                                 </tr>

@@ -21,4 +21,10 @@ public interface UserRepository extends JpaRepository<UserPo, Integer> {
 	@Modifying
 	@Query("UPDATE UserPo SET memo=:memo WHERE id=:id")
 	void updateMemo(@Param("memo") String memo, @Param("id") int id);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE UserPo SET level=:level WHERE id=:id")
+	void updateLevel(@Param("level") int level, @Param("id") int id);
 }

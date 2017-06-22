@@ -54,11 +54,12 @@ public class ArticleController {
 
 	@ResponseBody
 	@GetMapping("/api/article/list")
-	public ResponseVo<List<SimpleArticleVo>> getArticles(String tags, int page, int size) {
+	public ResponseVo<List<SimpleArticleVo>> getArticles(int page, int size) {
 		if (page < 0) {
 			page = 0;
 		}
-		List<ArticleBo> values = articleService.searchByTags(tags, page, size);
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		List<ArticleBo> values = articleService.getArticles(new PageRequest(page, size, sort));
 		List<SimpleArticleVo> resultArticles = new ArrayList<SimpleArticleVo>(values.size());
 		for (ArticleBo bo : values) {
 			resultArticles.add(boToSVo(bo));

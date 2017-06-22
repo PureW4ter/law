@@ -41,6 +41,10 @@ public interface OrderService {
 	List<OrderBo> getSearchOrders(Pageable page);
 
 	List<OrderBo> getInvestOrders(Pageable page);
+	
+	List<OrderBo> getSearchOrdersByUser(Pageable page, int userId);
+
+	List<OrderBo> getInvestOrdersByUser(Pageable page, int userId);
 
 	void acceptorOrder(int lawyerId, int orderId);
 	
@@ -53,4 +57,6 @@ public interface OrderService {
 	List<OrderBo> getUnconfirmedOrders(int size);
 
 	void updateOrderStatus(int orderId, int previousStatus, int newStatus);
+	
+	int getTotal(int userId);
 }
