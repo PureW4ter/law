@@ -31,7 +31,7 @@
                                     <label for="" class="col-sm-3 control-label">姓名:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="" id="i_name" maxlength="10"
+                                        value="" id="i_name" maxlength="20"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -43,7 +43,7 @@
                                     <label for="" class="col-sm-3 control-label">电话:</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="noIm form-control" 
-                                        value="" id="i_phone" maxlength="10"
+                                        value="" id="i_phone" maxlength="20"
                                                  data-pattern="/.+/"
                                                  data-container="body"
                                                  data-toggle="popover"
@@ -68,11 +68,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group clearfix">
+                                <div class="form-group">
                                     <label class="control-label col-sm-3">权限:</label>
                                     <div class="col-sm-6" id="">
                                        <div class="btn-group" id="i_selAuth" data-value="super_admin">
-                                            <button type="button" class="btn btn-default">超级管理员</button>
+                                            <button type="button" class="btn btn-default">高级管理员</button>
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                                 <span class="caret"></span>
                                             </button>
@@ -82,6 +82,30 @@
                                                 <%})%>
                                             </ul>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">登录账号:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="noIm form-control" 
+                                        value="" id="i_login_name" maxlength="10"
+                                                 data-pattern="/.+/"
+                                                 data-container="body"
+                                                 data-toggle="popover"
+                                                 data-placement="right"
+                                                 data-content="请输入登录账号！"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">登录密码:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="noIm form-control" 
+                                        value="" id="i_login_password" maxlength="10"
+                                                 data-pattern="/.+/"
+                                                 data-container="body"
+                                                 data-toggle="popover"
+                                                 data-placement="right"
+                                                 data-content="请输入登录密码！"/>
                                     </div>
                                 </div>
                             </form>
@@ -94,7 +118,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
     <script src="js/include.js?ver={front_version}" type="text/javascript"></script>
 </body>
 

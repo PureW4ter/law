@@ -21,8 +21,24 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._registEvent();
         },
         _registEvent: function () {
-            
+            $("#i_user_filter li").off("click", this._status).on("click",{ctx: this}, this._status);
+            $("#i_search").off("click", this._doSearch).on("click",{ctx: this}, this._doSearch);
         },
+        _status:function(e){
+            var value = $(this).data("value");
+            var text = $(this).text();
+            var userId = $($(this).parents("tr")).data("id");
+            $(this).closest("ul").prev("button").data("value", value).find("span").eq(0).text(text);
+        },
+        _doSearch:function(e){
+            var params={
+                "value": $("#i_search_value").data("value"),
+                "page": 0,
+                "size":20
+            };
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/user/list",
+                params, e.data.ctx, e.data.ctx._render);
+        }
     };
     return UserManagement;
 });
