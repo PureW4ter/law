@@ -42,16 +42,17 @@ public class LawyerPo {
 
 	private double score;
 
-	private int level;
-
-	private double money;
-
-	private int completed;
-
-	private int process;
-
-	@Column(name = "total_task")
-	private int totalTask;
+	@Column(name = "on_process_task")
+	private int onProcessTask;
+	
+	@Column(name = "finished_task")
+	private int finishedTask;
+	
+	@Column(name = "total_money")
+	private double totalMoney;
+	
+	@Column(name = "finished_money")
+	private double finishedMoney;
 
 	@Column(name = "open_id")
 	private String openId;
@@ -120,54 +121,6 @@ public class LawyerPo {
 		this.updateTime = updateTime;
 	}
 
-	public double getScore() {
-		return score;
-	}
-
-	public void setScore(double score) {
-		this.score = score;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-	public double getMoney() {
-		return money;
-	}
-
-	public void setMoney(double money) {
-		this.money = money;
-	}
-
-	public int getCompleted() {
-		return completed;
-	}
-
-	public void setCompleted(int completed) {
-		this.completed = completed;
-	}
-
-	public int getProcess() {
-		return process;
-	}
-
-	public void setProcess(int process) {
-		this.process = process;
-	}
-
-	public int getTotalTask() {
-		return totalTask;
-	}
-
-	public void setTotalTask(int totalTask) {
-		this.totalTask = totalTask;
-	}
-
 	public String getLoginName() {
 		return loginName;
 	}
@@ -184,6 +137,46 @@ public class LawyerPo {
 		this.password = password;
 	}
 
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
+	}
+
+	public int getOnProcessTask() {
+		return onProcessTask;
+	}
+
+	public void setOnProcessTask(int onProcessTask) {
+		this.onProcessTask = onProcessTask;
+	}
+
+	public int getFinishedTask() {
+		return finishedTask;
+	}
+
+	public void setFinishedTask(int finishedTask) {
+		this.finishedTask = finishedTask;
+	}
+
+	public double getTotalMoney() {
+		return totalMoney;
+	}
+
+	public void setTotalMoney(double totalMoney) {
+		this.totalMoney = totalMoney;
+	}
+
+	public double getFinishedMoney() {
+		return finishedMoney;
+	}
+
+	public void setFinishedMoney(double finishedMoney) {
+		this.finishedMoney = finishedMoney;
+	}
+
 	public String getOpenId() {
 		return openId;
 	}
@@ -191,5 +184,4 @@ public class LawyerPo {
 	public void setOpenId(String openId) {
 		this.openId = openId;
 	}
-
 }

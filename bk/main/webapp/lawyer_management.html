@@ -34,12 +34,11 @@
                                 <tr>
                                     <td>编号</td>
                                     <td>姓名</td>
-                                    <td>电话</td>
                                     <td>评分</td>
-                                    <td>待办</td>
-                                    <td>已完成</td>
-                                    <td>总任务量</td>
-                                    <td>财富</td>
+                                    <td>待办任务</td>
+                                    <td>已完成任务</td>
+                                    <td>总任务金额</td>
+                                    <td>完成任务金额</td>
                                     <td>操作</td>
                                 </tr>
                             </thead>
@@ -48,12 +47,11 @@
                                 <tr data-id="<%=item.id%>">
                                     <td><%=item.id%></td>
                                     <td><a class="blue_link" href="new_lawyer.html?id=<%=item.id%>"><%=item.name%></a></td>
-                                    <td><%=item.phoneNum%></td>
                                     <td><%=item.score%></td>
-                                    <td><%=item.process%></td>
-                                    <td><%=item.completed%></td>
-                                    <td><%=item.totalTask%></td>
-                                    <td><%=item.money%></td>
+                                    <td><%=item.onProcessTask%></td>
+                                    <td><%=item.finishedTask%></td>
+                                    <td><%=item.totalMoney%></td>
+                                    <td><%=item.finishedMoney%></td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
