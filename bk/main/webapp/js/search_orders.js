@@ -44,6 +44,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             var oid = $("#i_modal").data("id");
             var lawyerId = $(e.currentTarget).parents("tr").data("id");
             var params = {
+                opId : util.getUserId(),
                 lawyerId : lawyerId,
                 orderId : oid
             };

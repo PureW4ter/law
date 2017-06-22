@@ -1,7 +1,7 @@
 package com.jfzy.service.bo;
 
 public enum UserLevelEnum {
-	VISITOR(0), NORMAL(1), PLATINUM (2);
+	VISITOR(1), NORMAL(2), PAIED (3);
 	
 	private int id;
 
