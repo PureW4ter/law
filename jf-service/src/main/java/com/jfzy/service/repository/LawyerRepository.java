@@ -25,5 +25,25 @@ public interface LawyerRepository extends JpaRepository<LawyerPo, Integer> {
 	List<LawyerPo> findByPhoneNum(String phoneNum);
 	
 	List<LawyerPo> findByLoginNameAndPassword(String loginName, String password);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE LawyerPo SET finishedTask=finishedTask+?1 WHERE id=?2")
+	void updateFinishedTask(int count, int id);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE LawyerPo SET onProcessTask=onProcessTask+?1 WHERE id=?2")
+	void updateOnProcessTask(int count, int id);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE LawyerPo SET totalMoney=totalMoney+?1 WHERE id=?2")
+	void updateTotalMoney(double money, int id);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE LawyerPo SET finishedMoney=finishedMoney+?1 WHERE id=?2")
+	void updateFinishedMoney(double money, int id);
 
 }

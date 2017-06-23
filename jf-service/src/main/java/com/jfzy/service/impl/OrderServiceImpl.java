@@ -154,6 +154,7 @@ public class OrderServiceImpl implements OrderService {
 				po.setProcessorName(processorName);
 				po.setStatus(OrderStatusEnum.DISPATCHED.getId());
 				orderRepo.save(po);
+				lawyerSerivce.updateOnProcessTask(1, lawyerId);
 			} else {
 				throw new JfApplicationRuntimeException(400, "订单状态错误");
 			}

@@ -86,6 +86,13 @@ public class LawyerController {
 		return new ResponseVo<LawyerVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 	}
 	
+	@ResponseBody
+	@GetMapping("/api/lawyer/addtask")
+	public ResponseVo<Object> addtask(int id, double money) {
+		lawyerService.addLaywerTask(money, id);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
 	private static LawyerVo boToVo(LawyerBo bo) {
 		LawyerVo vo = new LawyerVo();
 		BeanUtils.copyProperties(bo, vo);
