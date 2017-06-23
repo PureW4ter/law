@@ -1,7 +1,7 @@
 define([],function(){
 	var Utility = {
 		pageSize:10,
-		cities:[{"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
+		cities:[{"name":"全国", "id": 0}, {"name":"北京", "id": 1}, {"name":"上海", "id": 2}, {"name":"广州", "id": 3}],
 		PRODUCT_CODE_ZIXUN:"Y",
 		PRODUCT_CODE_ZIXUNP:"YP",
 		PRODUCT_CODE_JIANDANWEN:"J",

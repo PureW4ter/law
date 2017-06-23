@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jfzy.service.LawyerReplyService;
+import com.jfzy.service.LawyerService;
+import com.jfzy.service.OrderService;
 import com.jfzy.service.bo.LawyerReplyBo;
 import com.jfzy.service.bo.LawyerReplyStatusEnum;
+import com.jfzy.service.bo.OrderBo;
+import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.LawyerReplyPo;
 import com.jfzy.service.repository.LawyerReplyRepository;
@@ -19,6 +23,12 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 
 	@Autowired
 	private LawyerReplyRepository replyRepo;
+	
+	@Autowired
+	private LawyerService lawyerSerivce;
+	
+	@Autowired
+	private OrderService orderSerivce;
 
 	@Override
 	public void createReply(LawyerReplyBo bo) {
@@ -26,6 +36,15 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		replyRepo.save(po);
 	}
 
+	@Override
+	public void confirmReply(int orderId) {
+		OrderBo obo = orderSerivce.getOrderById(orderId);
+		orderSerivce.updateOrderStatus(orderId, OrderStatusEnum.FINISHED_NEEDCONFIRM.getId(), OrderStatusEnum.FINISHED.getId());
+		lawyerSerivce.updateFinishedTask(1, obo.getLawyerId());
+		lawyerSerivce.updateOnProcessTask(-1, obo.getLawyerId());
+		lawyerSerivce.updateFinishedMoney(obo.getOriginPrice(), obo.getLawyerId());
+	}
+	
 	@Override
 	public LawyerReplyBo getReply(int orderId) {
 		List<LawyerReplyPo> pos = replyRepo.findByOrderId(orderId);

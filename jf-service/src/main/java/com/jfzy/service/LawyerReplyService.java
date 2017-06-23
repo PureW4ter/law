@@ -9,5 +9,7 @@ public interface LawyerReplyService {
 	LawyerReplyBo getReply(int orderId);
 
 	void scoreReply(int replyId, int score);
+	
+	public void confirmReply(int orderId);
 
 }

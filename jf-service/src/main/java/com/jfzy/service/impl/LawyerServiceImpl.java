@@ -85,6 +85,35 @@ public class LawyerServiceImpl implements LawyerService {
 		return results;
 	}
 
+	@Override
+	public void updateFinishedTask(int count, int id) {
+		lawyerRepo.updateFinishedTask(count, id);
+		
+	}
+
+	@Override
+	public void updateOnProcessTask(int count, int id) {
+		lawyerRepo.updateOnProcessTask(count, id);
+		
+	}
+
+	@Override
+	public void updateTotalMoney(double money, int id) {
+		lawyerRepo.updateTotalMoney(money, id);
+		
+	}
+
+	@Override
+	public void updateFinishedMoney(double money, int id) {
+		lawyerRepo.updateFinishedMoney(money, id);
+		
+	}
+	
+	@Override
+	public void addLaywerTask(double money, int id) {
+		lawyerRepo.updateTotalMoney(money, id);
+	}
+	
 	private static LawyerBo poToBo(LawyerPo po) {
 		LawyerBo bo = new LawyerBo();
 		BeanUtils.copyProperties(po, bo);
