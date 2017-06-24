@@ -211,3 +211,15 @@ CREATE TABLE `jf_oss_permission` (
   `permission` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+
+
+DROP TABLE IF EXISTS `jf_id`;
+CREATE TABLE `jf_id` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL DEFAULT '0',
+  `page` int(11) NOT NULL DEFAULT '0',
+  `current_id` int(11) NOT NULL DEFAULT '0',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uidx_type_page` (`type`,`page`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
