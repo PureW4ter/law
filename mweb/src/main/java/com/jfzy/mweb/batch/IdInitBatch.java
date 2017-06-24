@@ -27,8 +27,8 @@ public class IdInitBatch {
 	public void initOrder() {
 		DateTime today = new DateTime();
 		idService.init(IdTypeEnum.ORDER.getId(), getOrderPage(today));
-		idService.init(IdTypeEnum.ORDER.getId(), getOrderPage(today.plus(1)));
-		idService.init(IdTypeEnum.ORDER.getId(), getOrderPage(today.plus(2)));
+		idService.init(IdTypeEnum.ORDER.getId(), getOrderPage(today.plusDays(1)));
+		idService.init(IdTypeEnum.ORDER.getId(), getOrderPage(today.plusDays(2)));
 	}
 
 	private int getOrderPage(DateTime today) {

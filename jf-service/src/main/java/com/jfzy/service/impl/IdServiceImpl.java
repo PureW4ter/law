@@ -5,11 +5,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jfzy.service.IdService;
 import com.jfzy.service.po.IdPo;
 import com.jfzy.service.repository.IdRepository;
 
+@Service
 public class IdServiceImpl implements IdService {
 
 	private static final Logger logger = LoggerFactory.getLogger(IdServiceImpl.class);

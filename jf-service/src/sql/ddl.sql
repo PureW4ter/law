@@ -29,7 +29,7 @@ CREATE TABLE `jf_lawyer` (
   `memo` varchar(200) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
-  `score` double DEFAULT NULL,
+  `score` double DEFAULT '0',
   `on_process_task` int(4) DEFAULT '0',
   `finished_task` int(4) DEFAULT '0',
   `total_money` double DEFAULT '0',
