@@ -1,17 +1,10 @@
 package com.jfzy.service.impl;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.slf4j.Logger;
