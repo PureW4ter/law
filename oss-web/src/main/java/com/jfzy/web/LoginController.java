@@ -44,21 +44,14 @@ public class LoginController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/api/user/login")
-	public ResponseVo<OssUserVo> login(HttpServletRequest request, HttpServletResponse response, String phoneNum,
-			String code) {
+	public ResponseVo<OssUserVo> login(HttpServletRequest request, HttpServletResponse response, String userName,
+			String password) {
 		// do some check
-		if (StringUtils.isBlank(phoneNum) || StringUtils.isBlank(code)) {
-			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "电话或验证码不能为空", null);
+		if (StringUtils.isBlank(userName) || StringUtils.isBlank(password)) {
+			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户名或密码不能为空", null);
 		}
 
-		String codeInRedis = redisRepo.get(String.format(OssWebConstants.REDIS_PREFIX_VERIFY_CODE, phoneNum));
-
-		if (!StringUtils.equals(code, codeInRedis)) {
-			logger.info(String.format("Code stored %s, code given %s", codeInRedis, code));
-			return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "验证码错误", null);
-		}
-
-		OssUserBo user = ossUserService.login(phoneNum, code);
+		OssUserBo user = ossUserService.login(userName, password);
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);
 			AuthInfo authInfo = new AuthInfo();
