@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -274,8 +273,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId,
-			int status) {
+	public List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int status) {
 		Page<OrderPo> poPage = orderRepo.getSearchOrdersByLawyerId(lawyerId, status, page);
 		List<OrderBo> results = new ArrayList<OrderBo>();
 		if (poPage.getContent() != null) {
@@ -285,8 +283,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId,
-			int status) {
+	public List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int status) {
 		Page<OrderPo> poPage = orderRepo.getInvestOrdersByLawyerId(lawyerId, status, page);
 		List<OrderBo> results = new ArrayList<OrderBo>();
 		if (poPage.getContent() != null) {
@@ -294,8 +291,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return results;
 	}
-	
-	
+
 	@Override
 	public Page<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
 		Page<OrderPo> poPage = orderRepo.findByLawyerId(lawyerId, page);
@@ -375,7 +371,7 @@ public class OrderServiceImpl implements OrderService {
 	public void updateOrderStatus(int orderId, int newStatus) {
 		orderRepo.updateStatus(orderId, newStatus);
 	}
-	
+
 	@Override
 	public List<OrderBo> getUnconfirmedOrders(int size) {
 		PageRequest page = new PageRequest(1, size);

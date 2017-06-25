@@ -135,14 +135,15 @@ public class OrderController extends BaseController {
 			page = 0;
 		}
 		Sort sort = new Sort(Direction.DESC, "createTime");
-		List<OrderBo> values = orderService.getSearchOrdersByLawyer(new PageRequest(page, size, sort), lawyerId, status);
+		List<OrderBo> values = orderService.getSearchOrdersByLawyer(new PageRequest(page, size, sort), lawyerId,
+				status);
 		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
 		for (OrderBo bo : values) {
 			result.add(boToVo(bo));
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/ilistbylawyer")
 	public ResponseVo<List<OrderVo>> getInvestOrdersByLawyer(int page, int size, int lawyerId, int status) {
@@ -150,14 +151,15 @@ public class OrderController extends BaseController {
 			page = 0;
 		}
 		Sort sort = new Sort(Direction.DESC, "phoneEndTime");
-		List<OrderBo> values = orderService.getInvestOrdersByLawyer(new PageRequest(page, size, sort), lawyerId, status);
+		List<OrderBo> values = orderService.getInvestOrdersByLawyer(new PageRequest(page, size, sort), lawyerId,
+				status);
 		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
 		for (OrderBo bo : values) {
 			result.add(boToVo(bo));
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/lawyer")
 	public ResponseVo<List<OrderVo>> getOrderByLawyer(int lawyerId, int page, int size) {
@@ -189,7 +191,7 @@ public class OrderController extends BaseController {
 		lawyerReplyService.confirmReply(orderId);
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
-	
+
 	@ResponseBody
 	@GetMapping(value = "/api/order/getreply")
 	public ResponseVo<OrderWithReplyVo> getReply(int id) {
@@ -217,7 +219,7 @@ public class OrderController extends BaseController {
 		}
 		lawyerReplyService.createReply(bo);
 		lawyerReplyService.addReplyPhotos(vo.getPicList(), vo.getOrderId());
-		
+
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 
@@ -232,11 +234,10 @@ public class OrderController extends BaseController {
 		BeanUtils.copyProperties(bo, vo);
 		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat myFmt3 = new SimpleDateFormat("yyyyMMdd");
 		if (bo.getCreateTime() != null)
 			vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		// 订单编号：时间+code+id
-		vo.setOrderCode(myFmt3.format(bo.getCreateTime()) + bo.getProductCode() + bo.getId());
+		vo.setOrderCode(bo.getSn());
 		if (bo.getUpdateTime() != null)
 			vo.setUpdateTime(myFmt2.format(bo.getUpdateTime()));
 		if (bo.getStartTime() != null)
