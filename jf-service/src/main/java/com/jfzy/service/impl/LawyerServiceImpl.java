@@ -74,7 +74,7 @@ public class LawyerServiceImpl implements LawyerService {
 
 	@Override
 	public LawyerBo getLawyerById(int id) {
-		LawyerPo po = lawyerRepo.getOne(id);
+		LawyerPo po = lawyerRepo.findOne(id);
 		return poToBo(po);
 	}
 

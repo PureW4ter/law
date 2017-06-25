@@ -171,7 +171,7 @@ public class OrderServiceImpl implements OrderService {
 
 		LawyerBo lawyer = lawyerSerivce.getLawyerById(lawyerId);
 		if (lawyer != null && lawyer.getStatus() == LawyerStatusEnum.ACTIVE.getId()) {
-			OrderPo po = orderRepo.getOne(orderId);
+			OrderPo po = orderRepo.findOne(orderId);
 			if (po == null) {
 				throw new JfErrorCodeRuntimeException(400, "无此订单",
 						String.format("ASSIGN-ORDER: Order not found:%s", orderId));
@@ -359,7 +359,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new JfErrorCodeRuntimeException(400, "律师不存在",
 					String.format("ORDER-ACCEPTORDER:Lawyer not found: %s", lawyerId));
 		}
-		OrderPo order = orderRepo.getOne(orderId);
+		OrderPo order = orderRepo.findOne(orderId);
 		if (order == null) {
 			throw new JfErrorCodeRuntimeException(400, "订单不存在",
 					String.format("ORDER-ACCEPTORDER:Order not found: %s", orderId));

@@ -16,13 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.base.AuthInfo;
 import com.jfzy.base.CookieUtil;
-import com.jfzy.base.OssWebConstants;
 import com.jfzy.base.SessionConstants;
 import com.jfzy.base.Token;
 import com.jfzy.service.OssRoleService;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
-import com.jfzy.service.repository.RedisRepository;
 import com.jfzy.web.vo.OssUserVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
@@ -38,9 +36,6 @@ public class LoginController extends BaseController {
 
 	@Autowired
 	private OssRoleService ossRoleService;
-
-	@Autowired
-	private RedisRepository redisRepo;
 
 	@ResponseBody
 	@GetMapping("/api/user/login")
