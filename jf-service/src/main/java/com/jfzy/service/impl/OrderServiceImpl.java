@@ -420,7 +420,7 @@ public class OrderServiceImpl implements OrderService {
 		return bo;
 	}
 
-	private static long getNextWorkingDay(long startTimeOfMs, int msToRoll) {
+	private static long getNextWorkingDay(long startTimeOfMs, long msToRoll) {
 		DateTime date = new DateTime(startTimeOfMs);
 		date = date.plus(msToRoll);
 		if (date.getDayOfWeek() == 6) {

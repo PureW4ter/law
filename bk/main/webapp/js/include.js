@@ -1,7 +1,7 @@
 window.frontJSVersion = "{front_version}";
 window.frontJSHost = "{frontJSHost}";
-//window.frontJSHost = "oss.jf-zy.com";
-window.frontJSHost = "localhost:8080";
+window.frontJSHost = "oss.jf-zy.com";
+//window.frontJSHost = "localhost:8080";
 window.qiniuDomain = "http://oqtjthr3a.bkt.clouddn.com/";
 
 document.write('<script data-main="js/app.js?ver='+ window.frontJSVersion + '" src="js/lib/require.js" type="text/javascript"></script>');

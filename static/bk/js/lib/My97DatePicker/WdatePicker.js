@@ -2,5 +2,408 @@
  * My97 DatePicker 4.8 Beta3
  * License: http://www.my97.net/dp/license.asp
  */
+var $dp, WdatePicker;
+(function () {
+    var $ = {
+        $langList: [
+            {name: "en", charset: "UTF-8"},
+            {name: "zh-cn", charset: "UTF-8"},
+            {name: "zh-tw", charset: "UTF-8"}],
+        $skinList: [
+            {name: "default", charset: "gb2312"},
+            {name: "whyGreen", charset: "gb2312"},
+            {name: "blue", charset: "gb2312"},
+            {name: "ext", charset: "gb2312"},
+            {name: "twoer", charset: "gb2312"}],
+        $wdate: true,
+        $crossFrame: true,
+        $preLoad: false,
+        $dpPath: "",
+        doubleCalendar: false,
+        enableKeyboard: true,
+        enableInputMask: true,
+        autoUpdateOnChanged: null,
+        weekMethod: "ISO8601",
+        position: {},
+        lang: "auto",
+        skin: "default",
+        dateFmt: "yyyy-MM-dd",
+        realDateFmt: "yyyy-MM-dd",
+        realTimeFmt: "HH:mm:ss",
+        realFullFmt: "%Date %Time",
+        minDate: "1900-01-01 00:00:00",
+        maxDate: "2099-12-31 23:59:59",
+        startDate: "",
+        alwaysUseStartDate: false,
+        yearOffset: 1911,
+        firstDayOfWeek: 0,
+        isShowWeek: false,
+        highLineWeekDay: true,
+        isShowClear: true,
+        isShowToday: true,
+        isShowOK: true,
+        isShowOthers: true,
+        readOnly: false,
+        errDealMode: 0,
+        autoPickDate: null,
+        qsEnabled: true,
+        autoShowQS: false,
 
-var $dp,WdatePicker;(function(){function p(){try{o[r],o.$dp=o.$dp||{}}catch(e){o=t,$dp=$dp||{}}var n={win:t,$:function(e){return typeof e=="string"?t[r].getElementById(e):e},$D:function(e,t){return this.$DV(this.$(e).value,t)},$DV:function(e,t){if(e!=""){this.dt=$dp.cal.splitDate(e,$dp.cal.dateFmt);if(t)for(var n in t)if(this.dt[n]===undefined)this.errMsg="invalid property:"+n;else{this.dt[n]+=t[n];if(n=="M"){var r=t.M>0?1:0,i=(new Date(this.dt.y,this.dt.M,0)).getDate();this.dt.d=Math.min(i+r,this.dt.d)}}if(this.dt.refresh())return this.dt}return""},show:function(){var e=o[r].getElementsByTagName("div"),t=1e5;for(var n=0;n<e.length;n++){var i=parseInt(e[n].style.zIndex);i>t&&(t=i)}this.dd.style.zIndex=t+2,k(this.dd,"block")},hide:function(){k(this.dd,"none")},attachEvent:d};for(var i in n)o.$dp[i]=n[i];$dp=o.$dp}function d(e,t,n){if(a)e.attachEvent(t,n);else if(n){var r=t.replace(/on/,"");n._ieEmuEventHandler=function(e){return n(e)},e.addEventListener(r,n._ieEmuEventHandler,!1)}}function v(){var e,n,i=t[r][s]("script");for(var o=0;o<i.length;o++){e=i[o].getAttribute("src")||"",e=e.substr(0,e.toLowerCase().indexOf("wdatepicker.js")),n=e.lastIndexOf("/"),n>0&&(e=e.substring(0,n+1));if(e)break}return e}function m(e,n,i){var o=t[r][s]("HEAD").item(0),u=t[r].createElement("link");o&&(u.href=e,u.rel="stylesheet",u.type="text/css",n&&(u.title=n),i&&(u.charset=i),o.appendChild(u))}function g(e){e=e||o;var t=0,n=0;while(e!=o){var i=e.parent[r][s]("iframe");for(var u=0;u<i.length;u++)try{if(i[u].contentWindow==e){var a=y(i[u]);t+=a.left,n+=a.top;break}}catch(f){}e=e.parent}return{leftM:t,topM:n}}function y(e,t){if(e.getBoundingClientRect)return e.getBoundingClientRect();var n={ROOT_TAG:/^body|html$/i,OP_SCROLL:/^(?:inline|table-row)$/i},r=!1,i=null,s=e.offsetTop,o=e.offsetLeft,u=e.offsetWidth,a=e.offsetHeight,f=e.offsetParent;if(f!=e)while(f)o+=f.offsetLeft,s+=f.offsetTop,C(f,"position").toLowerCase()=="fixed"?r=!0:f.tagName.toLowerCase()=="body"&&(i=f.ownerDocument.defaultView),f=f.offsetParent;f=e.parentNode;while(f.tagName&&!n.ROOT_TAG.test(f.tagName))(f.scrollTop||f.scrollLeft)&&!n.OP_SCROLL.test(k(f))&&(!l||f.style.overflow!=="visible")&&(o-=f.scrollLeft,s-=f.scrollTop),f=f.parentNode;if(!r){var c=w(i);o-=c.left,s-=c.top}return u+=o,a+=s,{left:o,top:s,right:u,bottom:a}}function b(e){e=e||o;var t=e[r],n=e.innerWidth?e.innerWidth:t[i]&&t[i].clientWidth?t[i].clientWidth:t.body.offsetWidth,s=e.innerHeight?e.innerHeight:t[i]&&t[i].clientHeight?t[i].clientHeight:t.body.offsetHeight;return{width:n,height:s}}function w(e){e=e||o;var t=e[r],n=t[i],s=t.body;return t=n&&n.scrollTop!=null&&(n.scrollTop>s.scrollTop||n.scrollLeft>s.scrollLeft)?n:s,{top:t.scrollTop,left:t.scrollLeft}}function E(e){try{var t=e?e.srcElement||e.target:null;$dp.cal&&!$dp.eCont&&$dp.dd&&t!=$dp.el&&$dp.dd.style.display=="block"&&$dp.cal.close()}catch(e){}}function S(){$dp.status=2}function N(i,s){function m(){return a&&o!=t&&o[r].readyState!="complete"?!1:!0}function g(){if(f){func=g.caller;while(func!=null){var e=func.arguments[0];if(e&&(e+"").indexOf("Event")>=0)return e;func=func.caller}return null}return event}if(!$dp)return;p(),i=i||{};for(var u in e)u.substring(0,1)!="$"&&i[u]===undefined&&(i[u]=e[u]);if(s){if(!m()){T=T||setInterval(function(){o[r].readyState=="complete"&&clearInterval(T),N(null,!0)},50);return}if($dp.status!=0)return;$dp.status=1,i.el=n,L(i,!0)}else if(i.eCont)i.eCont=$dp.$(i.eCont),i.el=n,i.autoPickDate=!0,i.qsEnabled=!1,L(i);else{if(e.$preLoad&&$dp.status!=2)return;var l=g();if(t.event===l||l)i.srcEl=l.srcElement||l.target,l.cancelBubble=!0;i.el=i.el=$dp.$(i.el||i.srcEl);if(!i.el||i.el.My97Mark===!0||i.el.disabled||$dp.dd&&k($dp.dd)!="none"&&$dp.dd.style.left!="-970px"){try{i.el.My97Mark&&(i.el.My97Mark=!1)}catch(c){}return}if(l&&i.el.nodeType==1&&i.el.My97Mark===undefined){var h,v;l.type=="focus"?d(i.el,"onclick",function(){N(i)}):d(i.el,"onfocus",function(){N(i)})}L(i)}}function C(e,t){return e.currentStyle?e.currentStyle[t]:document.defaultView.getComputedStyle(e,!1)[t]}function k(e,t){if(e){if(t==null)return C(e,"display");e.style.display=t}}function L(i,s){function c(n,i){var s=t[r].domain,o=!1;n.innerHTML='<iframe hideFocus=true width=9 height=7 frameborder=0 border=0 scrolling=no src="about:blank"></iframe>';var a=e.$langList,f=e.$skinList,l;try{l=n.lastChild.contentWindow[r]}catch(c){o=!0,n.lastChild.src="javascript:void((function(){document.open();document.domain='"+s+"';})())",l=n.lastChild.contentWindow[r]}var p=i.getRealLang();n.lang=p.name,n.skin=i.skin;var d=["<head><script>","","var $d, $dp, $cfg=document.cfg, $pdp = parent.$dp, $dt, $tdt, $sdt, $lastInput, $IE=$pdp.ie, $FF = $pdp.ff,$OPERA=$pdp.opera, $ny, $cMark = false;","if($cfg.eCont){$dp = {};for(var p in $pdp)$dp[p]=$pdp[p];}else{$dp=$pdp;};for(var p in $cfg){$dp[p]=$cfg[p];}","document.oncontextmenu=function(){try{$c._fillQS(!$dp.has.d,1);showB($d.qsDivSel);}catch(e){};return false;};","</script><script src=",u,"lang/",p.name,".js charset=",p.charset,"></script>"];o&&(d[1]='document.domain="'+s+'";');for(var v=0;v<f.length;v++)f[v].name==i.skin&&d.push('<link rel="stylesheet" type="text/css" href="'+u+"skin/"+f[v].name+'/datepicker.css" charset="'+f[v].charset+'"/>');d.push('<script type="text/javascript" src="'+u+'calendar.js?"+Math.random()+""></script>'),d.push('</head><body leftmargin="0" topmargin="0" tabindex=0></body></html>'),d.push("<script>var t;t=t||setInterval(function(){if(document.ready){new My97DP();$cfg.onload();$c.autoSize();$cfg.setPos($dp);clearInterval(t);}},20);</script>"),i.setPos=h,i.onload=S,l.write("<html>"),l.cfg=i,l.write(d.join("")),l.close()}function h(e){var r=e.position.left,i=e.position.top,s=e.el;if(s==n)return;s!=e.srcEl&&(k(s)=="none"||s.type=="hidden")&&(s=e.srcEl);var u=y(s),f=g(t),l=b(o),c=w(o),h=$dp.dd.offsetHeight,p=$dp.dd.offsetWidth;isNaN(i)&&(i=0);if(f.topM+u.bottom+h>l.height&&f.topM+u.top-h>0)i+=c.top+f.topM+u.top-h-2;else{i+=c.top+f.topM+u.bottom;var d=i-c.top+h-l.height;d>0&&(i-=d)}isNaN(r)&&(r=0),r+=c.left+Math.min(f.leftM+u.left,l.width-p-5)-(a?2:0),e.dd.style.top=i+"px",e.dd.style.left=r+"px"}var f=i.el?i.el.nodeName:"INPUT";if(!(s||i.eCont||(new RegExp(/input|textarea|div|span|p|a/ig)).test(f)))return;i.elProp=f=="INPUT"?"value":"innerHTML",i.lang=="auto"&&(i.lang=a?navigator.browserLanguage.toLowerCase():navigator.language.toLowerCase());if(!i.eCont)for(var l in i)$dp[l]=i[l];!$dp.dd||i.eCont||$dp.dd&&(i.getRealLang().name!=$dp.dd.lang||i.skin!=$dp.dd.skin)?i.eCont?c(i.eCont,i):($dp.dd=o[r].createElement("DIV"),$dp.dd.style.cssText="position:absolute",o[r].body.appendChild($dp.dd),c($dp.dd,i),s?$dp.dd.style.left=$dp.dd.style.top="-970px":($dp.show(),h($dp))):$dp.cal&&($dp.show(),$dp.cal.init(),$dp.eCont||h($dp))}var e={$langList:[{name:"en",charset:"UTF-8"},{name:"zh-cn",charset:"UTF-8"},{name:"zh-tw",charset:"UTF-8"}],$skinList:[{name:"default",charset:"gb2312"},{name:"whyGreen",charset:"gb2312"},{name:"blue",charset:"gb2312"},{name:"ext",charset:"gb2312"},{name:"twoer",charset:"gb2312"}],$wdate:!0,$crossFrame:!0,$preLoad:!1,$dpPath:"",doubleCalendar:!1,enableKeyboard:!0,enableInputMask:!0,autoUpdateOnChanged:null,weekMethod:"ISO8601",position:{},lang:"auto",skin:"default",dateFmt:"yyyy-MM-dd",realDateFmt:"yyyy-MM-dd",realTimeFmt:"HH:mm:ss",realFullFmt:"%Date %Time",minDate:"1900-01-01 00:00:00",maxDate:"2099-12-31 23:59:59",startDate:"",alwaysUseStartDate:!1,yearOffset:1911,firstDayOfWeek:0,isShowWeek:!1,highLineWeekDay:!0,isShowClear:!0,isShowToday:!0,isShowOK:!0,isShowOthers:!0,readOnly:!1,errDealMode:0,autoPickDate:null,qsEnabled:!0,autoShowQS:!1,specialDates:null,specialDays:null,disabledDates:null,disabledDays:null,opposite:!1,onpicking:null,onpicked:null,onclearing:null,oncleared:null,ychanging:null,ychanged:null,Mchanging:null,Mchanged:null,dchanging:null,dchanged:null,Hchanging:null,Hchanged:null,mchanging:null,mchanged:null,schanging:null,schanged:null,eCont:null,vel:null,elProp:"",errMsg:"",quickSel:[],has:{},getRealLang:function(){var t=e.$langList;for(var n=0;n<t.length;n++)if(t[n].name==this.lang)return t[n];return t[0]}};WdatePicker=N;var t=window,n={innerHTML:""},r="document",i="documentElement",s="getElementsByTagName",o,u,a,f,l,c=navigator.appName;c=="Microsoft Internet Explorer"?a=!0:c=="Opera"?l=!0:f=!0,u=e.$dpPath||v(),e.$wdate&&m(u+"skin/WdatePicker.css"),o=t;if(e.$crossFrame)try{while(o.parent!=o&&o.parent[r][s]("frameset").length==0)o=o.parent}catch(h){}o.$dp||(o.$dp={ff:f,ie:a,opera:l,status:0,defMinDate:e.minDate,defMaxDate:e.maxDate}),p(),e.$preLoad&&$dp.status==0&&d(t,"onload",function(){N(null,!0)}),t[r].docMD||(d(t[r],"onmousedown",E),t[r].docMD=!0),o[r].docMD||(d(o[r],"onmousedown",E),o[r].docMD=!0),d(t,"onunload",function(){$dp.dd&&k($dp.dd,"none")});var x,T})();
+        specialDates: null,
+        specialDays: null,
+        disabledDates: null,
+        disabledDays: null,
+        opposite: false,
+        onpicking: null,
+        onpicked: null,
+        onclearing: null,
+        oncleared: null,
+        ychanging: null,
+        ychanged: null,
+        Mchanging: null,
+        Mchanged: null,
+        dchanging: null,
+        dchanged: null,
+        Hchanging: null,
+        Hchanged: null,
+        mchanging: null,
+        mchanged: null,
+        schanging: null,
+        schanged: null,
+        eCont: null,
+        vel: null,
+        elProp: "",
+        errMsg: "",
+        quickSel: [],
+        has: {},
+        getRealLang: function () {
+            var _ = $.$langList;
+            for (var A = 0; A < _.length; A++)if (_[A].name == this.lang)return _[A];
+            return _[0]
+        }
+    };
+    WdatePicker = T;
+    var X = window, S = {innerHTML: ""}, M = "document", H = "documentElement", C = "getElementsByTagName", U, A, R, G, a, W = navigator.appName;
+    if (W == "Microsoft Internet Explorer")R = true; else if (W == "Opera")a = true; else G = true;
+    A = $.$dpPath || J();
+    if ($.$wdate)K(A + "skin/WdatePicker.css");
+    U = X;
+    if ($.$crossFrame) {
+        try {
+            while (U.parent != U && U.parent[M][C]("frameset").length == 0)U = U.parent
+        } catch (N) {
+        }
+    }
+    if (!U.$dp)U.$dp = {ff: G, ie: R, opera: a, status: 0, defMinDate: $.minDate, defMaxDate: $.maxDate};
+    B();
+    if ($.$preLoad && $dp.status == 0)E(X, "onload", function () {
+        T(null, true)
+    });
+    if (!X[M].docMD) {
+        E(X[M], "onmousedown", D);
+        X[M].docMD = true
+    }
+    if (!U[M].docMD) {
+        E(U[M], "onmousedown", D);
+        U[M].docMD = true
+    }
+    E(X, "onunload", function () {
+        if ($dp.dd)O($dp.dd, "none")
+    });
+    function B() {
+        try {
+            U[M], U.$dp = U.$dp || {}
+        } catch ($) {
+            U = X;
+            $dp = $dp || {}
+        }
+        var A = {
+            win: X, $: function ($) {
+                return (typeof $ == "string") ? X[M].getElementById($) : $
+            }, $D: function ($, _) {
+                return this.$DV(this.$($).value, _)
+            }, $DV: function (_, $) {
+                if (_ != "") {
+                    this.dt = $dp.cal.splitDate(_, $dp.cal.dateFmt);
+                    if ($)for (var B in $)if (this.dt[B] === undefined)this.errMsg = "invalid property:" + B; else {
+                        this.dt[B] += $[B];
+                        if (B == "M") {
+                            var C = $["M"] > 0 ? 1 : 0, A = new Date(this.dt["y"], this.dt["M"], 0).getDate();
+                            this.dt["d"] = Math.min(A + C, this.dt["d"])
+                        }
+                    }
+                    if (this.dt.refresh())return this.dt
+                }
+                return ""
+            }, show: function () {
+                var A = U[M].getElementsByTagName("div"), $ = 100000;
+                for (var B = 0; B < A.length; B++) {
+                    var _ = parseInt(A[B].style.zIndex);
+                    if (_ > $)$ = _
+                }
+                this.dd.style.zIndex = $ + 2;
+                O(this.dd, "block")
+            }, hide: function () {
+                O(this.dd, "none")
+            }, attachEvent: E
+        };
+        for (var _ in A)U.$dp[_] = A[_];
+        $dp = U.$dp
+    }
+
+    function E(A, $, _) {
+        if (R)A.attachEvent($, _); else if (_) {
+            var B = $.replace(/on/, "");
+            _._ieEmuEventHandler = function ($) {
+                return _($)
+            };
+            A.addEventListener(B, _._ieEmuEventHandler, false)
+        }
+    }
+
+    function J() {
+        var _, A, $ = X[M][C]("script");
+        for (var B = 0; B < $.length; B++) {
+            _ = $[B].getAttribute("src") || "";
+            _ = _.substr(0, _.toLowerCase().indexOf("wdatepicker.js"));
+            A = _.lastIndexOf("/");
+            if (A > 0)_ = _.substring(0, A + 1);
+            if (_)break
+        }
+        return _
+    }
+
+    function K(A, $, B) {
+        var D = X[M][C]("HEAD").item(0), _ = X[M].createElement("link");
+        if (D) {
+            _.href = A;
+            _.rel = "stylesheet";
+            _.type = "text/css";
+            if ($)_.title = $;
+            if (B)_.charset = B;
+            D.appendChild(_)
+        }
+    }
+
+    function F($) {
+        $ = $ || U;
+        var A = 0, _ = 0;
+        while ($ != U) {
+            var D = $.parent[M][C]("iframe");
+            for (var F = 0; F < D.length; F++) {
+                try {
+                    if (D[F].contentWindow == $) {
+                        var E = V(D[F]);
+                        A += E.left;
+                        _ += E.top;
+                        break
+                    }
+                } catch (B) {
+                }
+            }
+            $ = $.parent
+        }
+        return {"leftM": A, "topM": _}
+    }
+
+    function V(G, F) {
+        if (G.getBoundingClientRect)return G.getBoundingClientRect(); else {
+            var A = {
+                ROOT_TAG: /^body|html$/i,
+                OP_SCROLL: /^(?:inline|table-row)$/i
+            }, E = false, I = null, _ = G.offsetTop, H = G.offsetLeft, D = G.offsetWidth, B = G.offsetHeight, C = G.offsetParent;
+            if (C != G)while (C) {
+                H += C.offsetLeft;
+                _ += C.offsetTop;
+                if (Q(C, "position").toLowerCase() == "fixed")E = true; else if (C.tagName.toLowerCase() == "body")I = C.ownerDocument.defaultView;
+                C = C.offsetParent
+            }
+            C = G.parentNode;
+            while (C.tagName && !A.ROOT_TAG.test(C.tagName)) {
+                if (C.scrollTop || C.scrollLeft)if (!A.OP_SCROLL.test(O(C)))if (!a || C.style.overflow !== "visible") {
+                    H -= C.scrollLeft;
+                    _ -= C.scrollTop
+                }
+                C = C.parentNode
+            }
+            if (!E) {
+                var $ = Z(I);
+                H -= $.left;
+                _ -= $.top
+            }
+            D += H;
+            B += _;
+            return {"left": H, "top": _, "right": D, "bottom": B}
+        }
+    }
+
+    function L($) {
+        $ = $ || U;
+        var B = $[M], A = ($.innerWidth) ? $.innerWidth : (B[H] && B[H].clientWidth) ? B[H].clientWidth : B.body.offsetWidth, _ = ($.innerHeight) ? $.innerHeight : (B[H] && B[H].clientHeight) ? B[H].clientHeight : B.body.offsetHeight;
+        return {"width": A, "height": _}
+    }
+
+    function Z($) {
+        $ = $ || U;
+        var B = $[M], A = B[H], _ = B.body;
+        B = (A && A.scrollTop != null && (A.scrollTop > _.scrollTop || A.scrollLeft > _.scrollLeft)) ? A : _;
+        return {"top": B.scrollTop, "left": B.scrollLeft}
+    }
+
+    function D($) {
+        try {
+            var _ = $ ? ($.srcElement || $.target) : null;
+            if ($dp.cal && !$dp.eCont && $dp.dd && _ != $dp.el && $dp.dd.style.display == "block")$dp.cal.close()
+        } catch ($) {
+        }
+    }
+
+    function Y() {
+        $dp.status = 2
+    }
+
+    var P, _;
+
+    function T(N, F) {
+        if (!$dp)return;
+        B();
+        N = N || {};
+        for (var K in $)if (K.substring(0, 1) != "$" && N[K] === undefined)N[K] = $[K];
+        if (F) {
+            if (!L()) {
+                _ = _ || setInterval(function () {
+                    if (U[M].readyState == "complete")clearInterval(_);
+                    T(null, true)
+                }, 50);
+                return
+            }
+            if ($dp.status == 0) {
+                $dp.status = 1;
+                N.el = S;
+                I(N, true)
+            } else return
+        } else if (N.eCont) {
+            N.eCont = $dp.$(N.eCont);
+            N.el = S;
+            N.autoPickDate = true;
+            N.qsEnabled = false;
+            I(N)
+        } else {
+            if ($.$preLoad && $dp.status != 2)return;
+            var J = H();
+            if (X.event === J || J) {
+                N.srcEl = J.srcElement || J.target;
+                J.cancelBubble = true
+            }
+            N.el = N.el = $dp.$(N.el || N.srcEl);
+            if (!N.el || N.el["My97Mark"] === true || N.el.disabled || ($dp.dd && O($dp.dd) != "none" && $dp.dd.style.left != "-970px")) {
+                try {
+                    if (N.el["My97Mark"])N.el["My97Mark"] = false
+                } catch (C) {
+                }
+                return
+            }
+            if (J && N.el.nodeType == 1 && N.el["My97Mark"] === undefined) {
+                var A, D;
+                if (J.type == "focus")E(N.el, "onclick", function () {
+                    T(N)
+                }); else E(N.el, "onfocus", function () {
+                    T(N)
+                })
+            }
+            I(N)
+        }
+        function L() {
+            if (R && U != X && U[M].readyState != "complete")return false;
+            return true
+        }
+
+        function H() {
+            if (G) {
+                func = H.caller;
+                while (func != null) {
+                    var $ = func.arguments[0];
+                    if ($ && ($ + "").indexOf("Event") >= 0)return $;
+                    func = func.caller
+                }
+                return null
+            }
+            return event
+        }
+    }
+
+    function Q(_, $) {
+        return _.currentStyle ? _.currentStyle[$] : document.defaultView.getComputedStyle(_, false)[$]
+    }
+
+    function O(_, $) {
+        if (_)if ($ != null)_.style.display = $; else return Q(_, "display")
+    }
+
+    function I(G, _) {
+        var D = G.el ? G.el.nodeName : "INPUT";
+        if (_ || G.eCont || new RegExp(/input|textarea|div|span|p|a/ig).test(D))G.elProp = D == "INPUT" ? "value" : "innerHTML"; else return;
+        if (G.lang == "auto")G.lang = R ? navigator.browserLanguage.toLowerCase() : navigator.language.toLowerCase();
+        if (!G.eCont)for (var C in G)$dp[C] = G[C];
+        if (!$dp.dd || G.eCont || ($dp.dd && (G.getRealLang().name != $dp.dd.lang || G.skin != $dp.dd.skin))) {
+            if (G.eCont)E(G.eCont, G); else {
+                $dp.dd = U[M].createElement("DIV");
+                $dp.dd.style.cssText = "position:absolute";
+                U[M].body.appendChild($dp.dd);
+                E($dp.dd, G);
+                if (_)$dp.dd.style.left = $dp.dd.style.top = "-970px"; else {
+                    $dp.show();
+                    B($dp)
+                }
+            }
+        } else if ($dp.cal) {
+            $dp.show();
+            $dp.cal.init();
+            if (!$dp.eCont)B($dp)
+        }
+        function E(I, H) {
+            var G = X[M].domain, E = false;
+            I.innerHTML = "<iframe hideFocus=true width=9 height=7 frameborder=0 border=0 scrolling=no src=\"about:blank\"></iframe>";
+            var _ = $.$langList, C = $.$skinList, F;
+            try {
+                F = I.lastChild.contentWindow[M]
+            } catch (D) {
+                E = true;
+                I.lastChild.src = "javascript:void((function(){document.open();document.domain='" + G + "';})())";
+                F = I.lastChild.contentWindow[M]
+            }
+            var K = H.getRealLang();
+            I.lang = K.name;
+            I.skin = H.skin;
+            var J = ["<head><script>", "", "var $d, $dp, $cfg=document.cfg, $pdp = parent.$dp, $dt, $tdt, $sdt, $lastInput, $IE=$pdp.ie, $FF = $pdp.ff,$OPERA=$pdp.opera, $ny, $cMark = false;", "if($cfg.eCont){$dp = {};for(var p in $pdp)$dp[p]=$pdp[p];}else{$dp=$pdp;};for(var p in $cfg){$dp[p]=$cfg[p];}", "document.oncontextmenu=function(){try{$c._fillQS(!$dp.has.d,1);showB($d.qsDivSel);}catch(e){};return false;};", "</script><script src=", A, "lang/", K.name, ".js charset=", K.charset, "></script>"];
+            if (E)J[1] = "document.domain=\"" + G + "\";";
+            for (var L = 0; L < C.length; L++)if (C[L].name == H.skin)J.push("<link rel=\"stylesheet\" type=\"text/css\" href=\"" + A + "skin/" + C[L].name + "/datepicker.css\" charset=\"" + C[L].charset + "\"/>");
+            J.push("<script type=\"text/javascript\" src=\"" + A + "calendar.js?\"+Math.random()+\"\"></script>");
+            J.push("</head><body leftmargin=\"0\" topmargin=\"0\" tabindex=0></body></html>");
+            J.push("<script>var t;t=t||setInterval(function(){if(document.ready){new My97DP();$cfg.onload();$c.autoSize();$cfg.setPos($dp);clearInterval(t);}},20);</script>");
+            H.setPos = B;
+            H.onload = Y;
+            F.write("<html>");
+            F.cfg = H;
+            F.write(J.join(""));
+            F.close()
+        }
+
+        function B(J) {
+            var H = J.position.left, C = J.position.top, D = J.el;
+            if (D == S)return;
+            if (D != J.srcEl && (O(D) == "none" || D.type == "hidden"))D = J.srcEl;
+            var I = V(D), $ = F(X), E = L(U), B = Z(U), G = $dp.dd.offsetHeight, A = $dp.dd.offsetWidth;
+            if (isNaN(C))C = 0;
+            if (($.topM + I.bottom + G > E.height) && ($.topM + I.top - G > 0))C += B.top + $.topM + I.top - G - 2; else {
+                C += B.top + $.topM + I.bottom;
+                var _ = C - B.top + G - E.height;
+                if (_ > 0)C -= _
+            }
+            if (isNaN(H))H = 0;
+            H += B.left + Math.min($.leftM + I.left, E.width - A - 5) - (R ? 2 : 0);
+            J.dd.style.top = C + "px";
+            J.dd.style.left = H + "px"
+        }
+    }
+})()
