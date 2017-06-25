@@ -43,9 +43,11 @@ public class OssUserServiceImpl implements OssUserService {
 	}
 
 	@Override
-	public OssUserBo login(String phoneNum, String code) {
-		List<OssUserPo> users = ossUserRepo.findByPhoneNum(phoneNum);
-		List<LawyerPo> lawyers = lawyerRepo.findByPhoneNum(phoneNum);
+	public OssUserBo login(String userName, String password) {
+		String checksum = MD5.MD5Encode(password);
+
+		List<OssUserPo> users = ossUserRepo.findByLoginNameAndPassword(userName, checksum);
+		List<LawyerPo> lawyers = lawyerRepo.findByLoginNameAndPassword(userName, checksum);
 
 		if (users != null && users.size() == 1) {
 			OssUserPo po = users.get(0);
