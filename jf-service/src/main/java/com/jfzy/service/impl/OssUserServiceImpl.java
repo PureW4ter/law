@@ -87,9 +87,15 @@ public class OssUserServiceImpl implements OssUserService {
 	@Override
 	public void create(OssUserBo bo) {
 		List<OssUserPo> pos = ossUserRepo.findByPhoneNum(bo.getPhoneNum());
+
 		if (pos != null && pos.size() > 0) {
 			throw new JfApplicationRuntimeException("用户手机已存在");
 		}
+		pos = ossUserRepo.findByLoginName(bo.getLoginName());
+		if (pos != null && pos.size() > 0) {
+			throw new JfApplicationRuntimeException("用户名已经存在");
+		}
+
 		bo.setPassword(MD5.MD5Encode(bo.getPassword()));
 		OssUserPo po = boToPo(bo);
 		ossUserRepo.save(po);

@@ -36,7 +36,7 @@ public class ExceptionFilter implements Filter {
 		} catch (JfApplicationRuntimeException jfe) {
 			logger.error("Error occur in chain", jfe);
 			resp.getWriter().write(
-					objToJsonString(new SimpleResponseVo(ResponseStatusEnum.SERVER_ERROR.getCode(), jfe.getMessage())));
+					objToJsonString(new SimpleResponseVo(ResponseStatusEnum.BAD_REQUEST.getCode(), jfe.getMessage())));
 			resp.flushBuffer();
 		} catch (RuntimeException e) {
 			logger.error("Error occur in chain", e);

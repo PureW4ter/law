@@ -20,6 +20,9 @@ public class OrderPo {
 	@Column(name = "order_sn")
 	private String sn;
 
+	@Column(name = "order_num")
+	private String orderNum;
+
 	@Column(name = "city_id")
 	private int cityId;
 
@@ -74,7 +77,7 @@ public class OrderPo {
 
 	@Column(name = "end_time")
 	private Timestamp endTime;
-	
+
 	@Column(name = "phone_end_time")
 	private Timestamp phoneEndTime;
 
@@ -92,16 +95,16 @@ public class OrderPo {
 
 	@Column(name = "owner_phone")
 	private String ownerPhone;
-	
+
 	private String email;
-	
+
 	private String address;
 
 	private String role;
-	
+
 	@Column(name = "trade_phase")
 	private String tradePhase;
-	
+
 	@Column(name = "trade_subphase")
 	private String tradeSubphase;
 
@@ -359,6 +362,14 @@ public class OrderPo {
 
 	public void setTradeSubphase(String tradeSubphase) {
 		this.tradeSubphase = tradeSubphase;
+	}
+
+	public String getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
 	}
 
 }

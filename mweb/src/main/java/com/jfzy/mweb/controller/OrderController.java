@@ -205,11 +205,10 @@ public class OrderController extends BaseController {
 		BeanUtils.copyProperties(bo, vo);
 		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat myFmt3 = new SimpleDateFormat("yyyyMMdd");
 		if (bo.getCreateTime() != null)
 			vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		// 订单编号：时间+code+id
-		vo.setOrderCode(myFmt3.format(bo.getCreateTime()) + bo.getProductCode() + bo.getId());
+		vo.setOrderCode(bo.getOrderNum());
 		if (bo.getUpdateTime() != null)
 			vo.setUpdateTime(myFmt2.format(bo.getUpdateTime()));
 		if (bo.getStartTime() != null)

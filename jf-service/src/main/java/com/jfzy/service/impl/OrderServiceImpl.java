@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
 
+import javax.transaction.Transactional;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public OrderBo createSOrder(OrderBo bo) {
 		String sn = generateOrderSN(bo.getProductCode(), bo.getCityId());
-		bo.setSn(sn);
+		bo.setOrderNum(sn);
 
 		if (Constants.PRODUCT_CODE_JIANDANWEN.equals(bo.getProductCode())) {
 			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
@@ -103,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public OrderBo createIOrder(OrderBo bo) {
 		String sn = generateOrderSN(bo.getProductCode(), bo.getCityId());
-		bo.setSn(sn);
+		bo.setOrderNum(sn);
 
 		if (Constants.PRODUCT_CODE_HUKOU.equals(bo.getProductCode())) {
 			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
@@ -272,8 +272,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId,
-			int status) {
+	public List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int status) {
 		Page<OrderPo> poPage = orderRepo.getSearchOrdersByLawyerId(lawyerId, status, page);
 		List<OrderBo> results = new ArrayList<OrderBo>();
 		if (poPage.getContent() != null) {
@@ -283,8 +282,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId,
-			int status) {
+	public List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int status) {
 		Page<OrderPo> poPage = orderRepo.getInvestOrdersByLawyerId(lawyerId, status, page);
 		List<OrderBo> results = new ArrayList<OrderBo>();
 		if (poPage.getContent() != null) {
@@ -292,8 +290,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return results;
 	}
-	
-	
+
 	@Override
 	public Page<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
 		Page<OrderPo> poPage = orderRepo.findByLawyerId(lawyerId, page);
@@ -315,7 +312,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public void markPayed(WxPayEventBo bo, int userId) {
-		OrderPo po = orderRepo.findBySn(bo.getOutTradeNo());
+		OrderPo po = orderRepo.findByOrderNum(bo.getOutTradeNo());
 		if (po != null && userId == po.getUserId()) {
 			if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
 
@@ -376,7 +373,7 @@ public class OrderServiceImpl implements OrderService {
 	public void updateOrderStatus(int orderId, int newStatus) {
 		orderRepo.updateStatus(orderId, newStatus);
 	}
-	
+
 	@Override
 	public List<OrderBo> getUnconfirmedOrders(int size) {
 		PageRequest page = new PageRequest(1, size);
@@ -421,5 +418,22 @@ public class OrderServiceImpl implements OrderService {
 		OrderPhotoBo bo = new OrderPhotoBo();
 		BeanUtils.copyProperties(po, bo);
 		return bo;
+	}
+
+	private static long getNextWorkingDay(long startTimeOfMs, int msToRoll) {
+		DateTime date = new DateTime(startTimeOfMs);
+		date = date.plus(msToRoll);
+		if (date.getDayOfWeek() == 6) {
+			date = date.plusDays(2);
+		} else if (date.getDayOfWeek() == 7) {
+			date = date.plusDays(1);
+		}
+
+		return date.getMillis();
+	}
+
+	public static void main(String[] args) {
+		DateTime date = new DateTime(getNextWorkingDay(System.currentTimeMillis(), 2 * 24 * 3600 * 1000));
+		System.out.println(date);
 	}
 }
