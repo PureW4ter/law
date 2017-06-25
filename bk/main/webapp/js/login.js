@@ -1,5 +1,4 @@
-define(['component/header', 'ajaxhelper', 'utility', 'component/time_button'], 
-    function (header, ajaxHelper, util, timeBtn) {
+define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header, ajaxHelper, util, md5) {
     var Login = {
         initialize: function () {
             //body
@@ -13,26 +12,11 @@ define(['component/header', 'ajaxhelper', 'utility', 'component/time_button'],
         },
         _render: function (data) {
             this.mainBox.html(this.logontplfun());
-            timeBtn.initialize("i_getcode_btn");
             this._registEvent();
         },
         _registEvent: function () {
             $("[data-toggle='popover']").bind({'focus': p_destroy, 'blur': input_check});
             $('.submit').off('click', this.subIt).on('click', {ctx: this}, this.subIt);
-            timeBtn.registBtnEvent(this.getCode);
-        },
-        getCode:function(){
-            var phone = $("#i_phone").val();
-            if(!phone){
-                util.showToast("请先输入手机号码");
-                return;
-            }
-            var params = {
-                "phoneNum":phone
-            }
-            ajaxHelper.get("http://" + window.frontJSHost + "/api/ssm/code",
-                params, this, function(){});
-            timeBtn.startCount();
         },
         subIt: function (e) {
             var params = util.getFormValues('loginIt');
@@ -40,7 +24,7 @@ define(['component/header', 'ajaxhelper', 'utility', 'component/time_button'],
             if ($('.popover.in').length < 1) {
                 ajaxHelper.get("http://" + window.frontJSHost + "/api/user/login", 
                     params, e.data.ctx, e.data.ctx.success, null);
-            }
+            } 
         },
         bindEnter: function (e) {
             if (e.keyCode == 13){
