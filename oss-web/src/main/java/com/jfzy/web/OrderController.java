@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.base.AuthCheck;
 import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.OssUserService;
@@ -40,22 +41,22 @@ import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
 import com.jfzy.web.vo.SimpleResponseVo;
 
+@AuthCheck(privileges = { "admin", "csr" })
 @RestController
 public class OrderController extends BaseController {
 
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private OssUserService userService;
 
 	@Autowired
 	private LawyerReplyService lawyerReplyService;
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/find")
-	public PageResponseVo<List<OrderVo>> getOrdersByCityIdAndStatus(int cityId, int status, int pageNo,
-			int size) {
+	public PageResponseVo<List<OrderVo>> getOrdersByCityIdAndStatus(int cityId, int status, int pageNo, int size) {
 		Pageable page = new PageRequest(pageNo, size);
 		Page<OrderBo> orders = orderService.getOrdersByCityIdAndStatus(cityId, status, page);
 		List<OrderVo> vos = new ArrayList<OrderVo>();
@@ -67,7 +68,6 @@ public class OrderController extends BaseController {
 				orders.getTotalElements());
 	}
 
-	
 	@ResponseBody
 	@GetMapping("/api/order/slist")
 	public ResponseVo<List<OrderVo>> getSearchOrders(int page, int size) {
@@ -82,7 +82,7 @@ public class OrderController extends BaseController {
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/ilist")
 	public ResponseVo<List<OrderVo>> getInvestOrders(int page, int size) {
@@ -97,7 +97,7 @@ public class OrderController extends BaseController {
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/slistbyuser")
 	public ResponseVo<List<OrderVo>> getSearchOrdersByUser(int page, int size, int userId) {
@@ -112,7 +112,7 @@ public class OrderController extends BaseController {
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/ilistbyuser")
 	public ResponseVo<List<OrderVo>> getInvestOrdersByUser(int page, int size, int userId) {
@@ -127,7 +127,7 @@ public class OrderController extends BaseController {
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/lawyer")
 	public ResponseVo<List<OrderVo>> getOrderByLawyer(int lawyerId, int page, int size) {
@@ -142,7 +142,7 @@ public class OrderController extends BaseController {
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/assignment")
 	public SimpleResponseVo assignOrder(int lawyerId, int orderId, int opId) {
@@ -161,10 +161,10 @@ public class OrderController extends BaseController {
 		List<OrderPhotoBo> orderPhotoList = orderService.getOrderPhotos(id);
 		List<OrderPhotoBo> replyPhotoList = orderService.getReplyPhotos(id);
 		OrderWithReplyVo vo = boToVo(obo, rbo, orderPhotoList, replyPhotoList);
-		
+
 		return new ResponseVo<OrderWithReplyVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 	}
-	
+
 	@ResponseBody
 	@PostMapping(path = "/api/order/reply", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> reply(HttpServletRequest request, HttpServletResponse response,
@@ -173,21 +173,21 @@ public class OrderController extends BaseController {
 		OrderBo obo = orderService.getOrderById(vo.getOrderId());
 		bo.setProductCode(obo.getProductCode());
 		bo.setLawyerId(obo.getLawyerId());
-		if(bo.getId()>0){
+		if (bo.getId() > 0) {
 			bo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		}else{
+		} else {
 			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		}
 		lawyerReplyService.createReply(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	private static OrderPhotoVo boToVo(OrderPhotoBo bo) {
 		OrderPhotoVo vo = new OrderPhotoVo();
 		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
-	
+
 	private static OrderVo boToVo(OrderBo bo) {
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(bo, vo);
@@ -225,36 +225,36 @@ public class OrderController extends BaseController {
 		}
 		return vo;
 	}
-	
+
 	private static LawyerReplyBo voToBo(LawyerReplyVo vo) {
-		if(vo == null)
+		if (vo == null)
 			return null;
 		LawyerReplyBo bo = new LawyerReplyBo();
 		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
-	
+
 	private static LawyerReplyVo boToVo(LawyerReplyBo bo) {
-		if(bo == null)
+		if (bo == null)
 			return null;
 		LawyerReplyVo vo = new LawyerReplyVo();
 		BeanUtils.copyProperties(bo, vo);
 		return vo;
 	}
-	
-	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo, 
-			List<OrderPhotoBo> orderPhotoList, List<OrderPhotoBo> replyPhotoList) {
+
+	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo, List<OrderPhotoBo> orderPhotoList,
+			List<OrderPhotoBo> replyPhotoList) {
 		OrderWithReplyVo vo = new OrderWithReplyVo();
 		vo.setLawyerReplyVo(boToVo(rbo));
 		vo.setOrderVo(boToVo(obo));
-		if(orderPhotoList!=null){
+		if (orderPhotoList != null) {
 			List<OrderPhotoVo> result = new ArrayList<OrderPhotoVo>(orderPhotoList.size());
 			for (OrderPhotoBo bo : orderPhotoList) {
 				result.add(boToVo(bo));
 			}
 			vo.setOrderPhotoList(result);
 		}
-		if(replyPhotoList!=null){
+		if (replyPhotoList != null) {
 			List<OrderPhotoVo> result = new ArrayList<OrderPhotoVo>(replyPhotoList.size());
 			for (OrderPhotoBo bo : replyPhotoList) {
 				result.add(boToVo(bo));

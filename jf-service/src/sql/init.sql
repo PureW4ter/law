@@ -110,16 +110,16 @@ VALUES
 	
 INSERT INTO `jf_oss_permission` (`id`, `role`, `permission`)
 VALUES
-	(1,'super_admin','user'),
-	(2,'super_admin','ossuser'),
-	(3,'super_admin','article'),
-	(4,'super_admin','lawyer'),
-	(5,'super_admin','corder'),
-	(6,'super_admin','iorder'),
-	(7,'admin','article'),
-	(8,'admin','lawyer'),
-	(9,'admin','user'),
-	(10,'admin','corder'),
-	(11,'admin','iorder'),
-	(12,'order_admin','corder'),
-	(13,'order_admin','iorder');
+	(1,'admin','user'),
+	(2,'admin','ossuser'),
+	(3,'admin','article'),
+	(4,'admin','lawyer'),
+	(5,'admin','corder'),
+	(6,'admin','iorder'),
+	(7,'editor','article'),
+	(8,'editor','lawyer'),
+	(9,'editor','user'),
+	(10,'editor','corder'),
+	(11,'editor','iorder'),
+	(12,'csr','corder'),
+	(13,'csr','iorder');

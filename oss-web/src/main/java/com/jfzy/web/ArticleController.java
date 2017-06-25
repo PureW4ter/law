@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.base.AuthCheck;
 import com.jfzy.service.ArticleService;
 import com.jfzy.service.TagService;
 import com.jfzy.service.bo.ArticleBo;
@@ -30,6 +31,7 @@ import com.jfzy.web.vo.ResponseVo;
 import com.jfzy.web.vo.SimpleArticleVo;
 import com.jfzy.web.vo.TagVo;
 
+@AuthCheck(privileges = { "admin,editor" })
 @RestController
 public class ArticleController {
 

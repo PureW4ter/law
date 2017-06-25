@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.base.AuthCheck;
 import com.jfzy.service.OssRoleService;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
@@ -29,6 +30,7 @@ import com.jfzy.web.vo.OssUserVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
 
+@AuthCheck(privileges = { "admin" })
 @RestController
 public class OssUserController {
 
@@ -64,26 +66,25 @@ public class OssUserController {
 		}
 		return new ResponseVo<List<OssUserVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/ossuser/ustatus")
 	public ResponseVo<Object> updateStatus(int id, int status) {
 		ossUserService.updateStatus(status, id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
-	
+
 	@ResponseBody
 	@GetMapping("/api/ossuser/urole")
 	public ResponseVo<Object> updateRole(int id, String role) {
 		ossUserService.updateAuth(role, id);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
-	
+
 	@ResponseBody
-	@PostMapping(path="/api/ossuser/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseVo<Object> create(HttpServletRequest request, HttpServletResponse response, @RequestBody OssUserVo vo) {
+	@PostMapping(path = "/api/ossuser/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseVo<Object> create(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody OssUserVo vo) {
 
 		OssUserBo bo = voToBo(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
