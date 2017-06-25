@@ -44,7 +44,7 @@
                             </thead>
                             <tbody>
                                 <%_.each(result.r, function(item){%>
-                                <tr data-id="<%=item.id%>">
+                                <tr data-id="<%=item.id%>" class="<%=item.score>0&&item.score<=2?'yellow_row':''%>">
                                     <td><a class="blue_link" href="new_lawyer.html?id=<%=item.id%>"><%=item.name%></a></td>
                                     <td><a href="user_orders.html?lid=<%=item.id%>&status=4" class="blue_link"><%=item.onProcessTask%></a></td>
                                     <td><a href="user_orders.html?lid=<%=item.id%>&status=5" class="blue_link"><%=item.finishedTask%></a></td>
@@ -103,8 +103,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-default" id="i_confirm" data-dismiss="modal">确定</button>
-                    <button class="btn yu_btn_cancel cancel" data-dismiss="modal">取消</button>
+                    <button class="btn btn-yel" id="i_confirm" data-dismiss="modal">确定</button>
+                    <button class="btn btn-cancel cancel" data-dismiss="modal">取消</button>
                 </div>
             </div>
         </div>

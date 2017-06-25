@@ -165,11 +165,13 @@
                             </thead>
                             <tbody>
                                 <%_.each(result.r, function(item){%>
-                                <tr data-id="<%=item.id%>">
-                                    <td><%=item.name%></td>
-                                    <td><%=item.phoneNum%></td>
-                                    <td><div class="j_do_assign btn btn-default">指派</div></td>
-                                </tr>
+                                <%if(item.onProcessTask<5){%>
+                                    <tr data-id="<%=item.id%>">
+                                        <td><%=item.name%></td>
+                                        <td><%=item.phoneNum%></td>
+                                        <td><div class="j_do_assign btn btn-default">指派</div></td>
+                                    </tr>
+                                <%}%>
                                 <%})%>
                             </tbody>
                         </table>
