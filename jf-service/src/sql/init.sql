@@ -117,9 +117,5 @@ VALUES
 	(5,'admin','corder'),
 	(6,'admin','iorder'),
 	(7,'editor','article'),
-	(8,'editor','lawyer'),
-	(9,'editor','user'),
-	(10,'editor','corder'),
-	(11,'editor','iorder'),
-	(12,'csr','corder'),
-	(13,'csr','iorder');
+	(8,'csr','corder'),
+	(9,'csr','iorder');
