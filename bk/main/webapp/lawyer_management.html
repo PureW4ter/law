@@ -32,26 +32,26 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <td>编号</td>
                                     <td>姓名</td>
                                     <td>待办任务</td>
                                     <td>已完成任务</td>
                                     <td>总任务金额</td>
                                     <td>完成任务金额</td>
                                     <td>评分</td>
+                                    <td>任务</td>
                                     <td>操作</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <%_.each(result.r, function(item){%>
-                                <tr data-id="<%=item.id%>">
-                                    <td><%=item.id%></td>
+                                <tr data-id="<%=item.id%>" class="<%=item.score>0&&item.score<=2?'yellow_row':''%>">
                                     <td><a class="blue_link" href="new_lawyer.html?id=<%=item.id%>"><%=item.name%></a></td>
-                                    <td><%=item.onProcessTask%></td>
-                                    <td><%=item.finishedTask%></td>
+                                    <td><a href="user_orders.html?lid=<%=item.id%>&status=4" class="blue_link"><%=item.onProcessTask%></a></td>
+                                    <td><a href="user_orders.html?lid=<%=item.id%>&status=5" class="blue_link"><%=item.finishedTask%></a></td>
                                     <td><%=item.totalMoney%></td>
                                     <td><%=item.finishedMoney%></td>
                                     <td><%=item.score%></td>
+                                    <td><a class="blue_link j_addTask" data-city="<%=item.cityId%>">新增</a></button></td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -80,7 +80,35 @@
             </div>
         </div>
     </div>
-    <script src="js/include.js?ver={front_version}" type="text/javascript"></script>
+    <div class="modal fade" id="i_modal">
+        <div class="modal-dialog" style="width:800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">增加任务</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="i_task" data-value="4000">
+                            <span>
+                                2000
+                            </span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu j_tasks">
+                            <li data-value="4000">2000</li>
+                            <li data-value="8000">5000</li>
+                            <li data-value="15000">10000</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-yel" id="i_confirm" data-dismiss="modal">确定</button>
+                    <button class="btn btn-cancel cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
+<script src="js/include.js?ver={front_version}" type="text/javascript"></script>
 </html>

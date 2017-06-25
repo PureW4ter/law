@@ -274,6 +274,29 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId,
+			int status) {
+		Page<OrderPo> poPage = orderRepo.getSearchOrdersByLawyerId(lawyerId, status, page);
+		List<OrderBo> results = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(poToBo(po)));
+		}
+		return results;
+	}
+
+	@Override
+	public List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId,
+			int status) {
+		Page<OrderPo> poPage = orderRepo.getInvestOrdersByLawyerId(lawyerId, status, page);
+		List<OrderBo> results = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(poToBo(po)));
+		}
+		return results;
+	}
+	
+	
+	@Override
 	public Page<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page) {
 		Page<OrderPo> poPage = orderRepo.findByLawyerId(lawyerId, page);
 		List<OrderBo> bos = new ArrayList<OrderBo>();
@@ -348,6 +371,11 @@ public class OrderServiceImpl implements OrderService {
 		orderRepo.updateStatus(orderId, previousStatus, newStatus);
 	}
 
+	@Override
+	public void updateOrderStatus(int orderId, int newStatus) {
+		orderRepo.updateStatus(orderId, newStatus);
+	}
+	
 	@Override
 	public List<OrderBo> getUnconfirmedOrders(int size) {
 		PageRequest page = new PageRequest(1, size);

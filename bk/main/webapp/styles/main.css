@@ -796,3 +796,25 @@ textarea.foreword{
     font-size: 14px;
     font-weight: bold;
 }
+.question_complete_imgs{
+    background-color: #ffffff;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.question_complete_imgs>ul{
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.question_complete_imgs>ul>li{
+    position: relative;
+    float: left;
+    width: 25%;
+    padding-right: 15px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+.yellow_row{
+    background-color:  #f0ad4e;
+}

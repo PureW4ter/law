@@ -43,7 +43,7 @@
                                         <tbody>
                                             <%_.each(result.r, function(item){%>
                                             <tr data-id="<%=item.id%>">
-                                                <td><%=item.orderCode%></td>
+                                                <td><a href="zixun_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
                                                 <td><%=item.createTime%></td>
                                                 <td><%=item.productName%></td>
                                                 <td>
@@ -102,7 +102,7 @@
                                         <tbody>
                                             <%_.each(result.r, function(item){%>
                                             <tr data-id="<%=item.id%>">
-                                                <td><%=item.orderCode%></td>
+                                                <td><a href="diaocha_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
                                                 <td><%=item.productName%></td>
                                                 <td><%=item.createTime%></td>
                                                 <td><%=item.phoneEndTime%></td>
@@ -165,11 +165,13 @@
                             </thead>
                             <tbody>
                                 <%_.each(result.r, function(item){%>
-                                <tr data-id="<%=item.id%>">
-                                    <td><%=item.name%></td>
-                                    <td><%=item.phoneNum%></td>
-                                    <td><div class="j_do_assign btn btn-default">指派</div></td>
-                                </tr>
+                                <%if(item.onProcessTask<5){%>
+                                    <tr data-id="<%=item.id%>">
+                                        <td><%=item.name%></td>
+                                        <td><%=item.phoneNum%></td>
+                                        <td><div class="j_do_assign btn btn-default">指派</div></td>
+                                    </tr>
+                                <%}%>
                                 <%})%>
                             </tbody>
                         </table>

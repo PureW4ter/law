@@ -39,7 +39,7 @@ public class LawyerController {
 		if (page < 0) {
 			page = 0;
 		}
-		Sort sort = new Sort(Direction.DESC, "createTime");
+		Sort sort = new Sort(Direction.DESC, "createTime"); 
 		List<LawyerBo> values = lawyerService.getLawyers(new PageRequest(page, size, sort));
 		List<LawyerVo> resultUsers = new ArrayList<LawyerVo>(values.size());
 		for (LawyerBo bo : values) {

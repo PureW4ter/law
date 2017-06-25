@@ -127,7 +127,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
                 formJson.shareIconUrl = $("#i_head_img").attr("src");
                 formJson.cityId = $("#i_city").data("id");
                 formJson.type = $("#i_artType").data("id");
-                formJson.content = e.data.ctx.editor.getSource();
+                formJson.content = e.data.ctx.editor.getSource().replace(/&quot;/g, "'");
                 var tags = new Array();
                 $("#i_articl_keys").find(".j_act_check").each(function(){
                     if($(this).hasClass("active")){
