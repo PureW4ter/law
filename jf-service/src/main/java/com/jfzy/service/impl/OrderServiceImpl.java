@@ -417,4 +417,21 @@ public class OrderServiceImpl implements OrderService {
 		BeanUtils.copyProperties(po, bo);
 		return bo;
 	}
+
+	private static long getNextWorkingDay(long startTimeOfMs, int msToRoll) {
+		DateTime date = new DateTime(startTimeOfMs);
+		date = date.plus(msToRoll);
+		if (date.getDayOfWeek() == 6) {
+			date = date.plusDays(2);
+		} else if (date.getDayOfWeek() == 7) {
+			date = date.plusDays(1);
+		}
+
+		return date.getMillis();
+	}
+
+	public static void main(String[] args) {
+		DateTime date = new DateTime(getNextWorkingDay(System.currentTimeMillis(), 2 * 24 * 3600 * 1000));
+		System.out.println(date);
+	}
 }
