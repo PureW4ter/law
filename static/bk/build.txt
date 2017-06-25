@@ -1,23 +1,23 @@
 
-js/lib/My97DatePicker/develper/skin/WdatePicker.css
+js/lib/My97DatePicker/develper/skin/default/datepicker.css
 ----------------
-js/lib/My97DatePicker/develper/skin/WdatePicker.css
+js/lib/My97DatePicker/develper/skin/default/datepicker.css
 
-js/lib/My97DatePicker/develper/skin/default/datepicker.css
+js/lib/My97DatePicker/develper/skin/WdatePicker.css
 ----------------
-js/lib/My97DatePicker/develper/skin/default/datepicker.css
+js/lib/My97DatePicker/develper/skin/WdatePicker.css
 
 js/lib/My97DatePicker/develper/skin/whyGreen/datepicker.css
 ----------------
 js/lib/My97DatePicker/develper/skin/whyGreen/datepicker.css
 
-js/lib/My97DatePicker/skin/WdatePicker.css
+js/lib/My97DatePicker/skin/default/datepicker.css
 ----------------
-js/lib/My97DatePicker/skin/WdatePicker.css
+js/lib/My97DatePicker/skin/default/datepicker.css
 
-js/lib/My97DatePicker/skin/default/datepicker.css
+js/lib/My97DatePicker/skin/WdatePicker.css
 ----------------
-js/lib/My97DatePicker/skin/default/datepicker.css
+js/lib/My97DatePicker/skin/WdatePicker.css
 
 js/lib/My97DatePicker/skin/whyGreen/datepicker.css
 ----------------

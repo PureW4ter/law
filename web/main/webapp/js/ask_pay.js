@@ -75,13 +75,14 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
 				"ownerPhone": $("#i_phone").val()
 			}
 			ajaxHelper.post("http://" + window.frontJSHost + "/order/screate",
-                params, this, function(data){
+                params, e.data.ctx, function(data){
+                	e.data.ctx.oid = data.r.id;
                 	var ps = {
                 		"id": data.r.id
                 	}
                 	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
                 		this, function(data){
-                			util.weixinPay(data.r, "question_complete.html");
+                			util.weixinPay(data.r, "question_complete.html?id="+this.oid);
                 		});
                 });
 		},

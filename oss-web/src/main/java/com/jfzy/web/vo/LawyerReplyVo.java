@@ -12,6 +12,7 @@ public class LawyerReplyVo {
 	private String replySuggests;
 	private String replyRules;
 	private int hasHukou;
+	private String[] picList;
 	
 	public int getId() {
 		return id;
@@ -78,5 +79,11 @@ public class LawyerReplyVo {
 	}
 	public void setHasHukou(int hasHukou) {
 		this.hasHukou = hasHukou;
+	}
+	public String[] getPicList() {
+		return picList;
+	}
+	public void setPicList(String[] picList) {
+		this.picList = picList;
 	}
 }

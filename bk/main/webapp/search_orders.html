@@ -39,7 +39,7 @@
                             <tbody>
                                 <%_.each(result.r, function(item){%>
                                 <tr data-id="<%=item.id%>">
-                                    <td><%=item.orderCode%></td>
+                                    <td><a href="diaocha_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
                                     <td><%=item.createTime%></td>
                                     <td><%=item.productName%></td>
                                     <td>

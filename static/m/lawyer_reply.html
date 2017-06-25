@@ -64,7 +64,7 @@
                         <%if(result.r.orderPhotoList){%>
                         <ul>
                             <%_.each(result.r.orderPhotoList, function(item, index){%>
-                            <li><img src="<%=item.photoPath%>"></li>
+                            <li><a href="<%=item.photoPath%>" target="_black"><img src="<%=item.photoPath%>"></a></li>
                                 <%if(index%3==2){%>
                         </ul>
                         <ul>
@@ -116,8 +116,8 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver={front_version}" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170624203103" type="text/javascript"></script>
 <script type="text/javascript">
-    //jscontent//
+    define('lawyer_reply',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={id:n.getQueryParameter("id")};t.get("http://"+window.frontJSHost+"/order/getreply",e,this,this._render)},_render:function(e){this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){}};return r});
 </script>
 </html>

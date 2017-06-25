@@ -66,7 +66,7 @@
                     <div class="blk10"></div>
                     <div class="new_input_box" id="i_phone_box">
                         <label>联系电话<span class="red_start">*</span></label>
-                        <input placeholder="查询成功后通知您（必填）" id="i_phone"/>
+                        <input placeholder="查询成功后通知您（必填）" id="i_phone" value="<%=window.localStorage['userInfo']?JSON.parse(window.localStorage['userInfo']).phone:''%>"/>
                     </div>
                     <div class="quesiton_count_title">提交后进入回复倒计时</div>
                     <div class="question_pay" id="i_pay_way">

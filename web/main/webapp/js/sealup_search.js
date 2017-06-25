@@ -40,13 +40,14 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
 				"email": $("#i_email").val(),
 			}
 			ajaxHelper.post("http://" + window.frontJSHost + "/order/icreate",
-                params, this, function(data){
+                params, e.data.ctx, function(data){
+                    e.data.ctx.oid = data.r.id;
                 	var ps = {
                 		"id": data.r.id
                 	}
                 	ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",  ps, 
                 		this, function(data){
-                			util.weixinPay(data.r, "question_complete2.html");
+                			util.weixinPay(data.r, "question_complete2.html?id="+ this.oid);
                 		});
                 }, null);
 		},

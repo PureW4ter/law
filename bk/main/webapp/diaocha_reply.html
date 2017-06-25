@@ -66,17 +66,51 @@
                                     </div>
                                 </div>
                                 <%}%>
+                                <%if(result.r.orderVo.productCode=="C"){%>
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">回复:</label>
                                     <div class="col-sm-9">
                                         <textarea id="i_reply" rows="5" class="xheditor"><%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.simpleReply:""%></textarea>
                                     </div>
                                 </div>
-                              </div>
+                                <%}else{%>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">有户口：</label>
+                                    <div class="col-sm-9">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-value="<%=result.r.lawyerReplyVo&&result.r.lawyerReplyVo.hasHukou%>" id="i_hukou">
+                                                <span>
+                                                    <%if(result.r.lawyerReplyVo&&result.r.lawyerReplyVo.hasHukou){%>
+                                                        有
+                                                    <%}else{%>
+                                                        无
+                                                    <%}%>
+                                                </span>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu j_hukou">
+                                                <li data-value="1">有</li>
+                                                <li data-value="0">无</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">附件:</label>
+                                    <div class="col-sm-9">
+                                        <div class="question_complete_imgs">
+                                            <ul>
+                                                <li id="i_img_selector"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}%>
                             </form>
                             <div class="col-sm-9 paddingtop30">
-                                <button class="btn btn-yel btn_big pull-right j_saveArtical" id="i_save">保存</button>
-                                <button class="btn btn-default btn_big pull-right marginR26" id="i_cancel">取消</button>
+                                <button class="btn btn-yel pull-right" id="i_save">保存并提交</button>
+                                <button class="btn btn-default pull-right marginR26" id="i_save_temp">暂存</button>
+                                <button class="btn btn-default pull-right marginR26" id="i_cancel">取消</button>
                             </div>
                         </script>
                     </div>

@@ -48,6 +48,11 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	@Query("UPDATE OrderPo SET status=?3 WHERE id=?1 AND status=?2")
 	int updateStatus(int id, int oldStatus, int newStatus);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE OrderPo SET status=?2 WHERE id=?1")
+	int updateStatus(int id, int newStatus);
+	
 	Page<OrderPo> findByUserId(int userId, Pageable page);
 
 	@Query(value = "SELECT t FROM OrderPo t WHERE t.productCode='H' or t.productCode='C' or t.productCode='HX'")
@@ -62,8 +67,16 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	@Query(value = "SELECT t FROM OrderPo t WHERE (t.productCode='Y' or t.productCode='YP' or t.productCode='J') and t.userId=?1")
 	Page<OrderPo> getInvestOrdersById(int userId, Pageable page);
 	
+	@Query(value = "SELECT t FROM OrderPo t WHERE (t.productCode='H' or t.productCode='C' or t.productCode='HX') and t.lawyerId=?1 and status=?2")
+	Page<OrderPo> getSearchOrdersByLawyerId(int lawyerId, int status, Pageable page);
+
+	@Query(value = "SELECT t FROM OrderPo t WHERE (t.productCode='Y' or t.productCode='YP' or t.productCode='J') and t.lawyerId=?1 and status=?2")
+	Page<OrderPo> getInvestOrdersByLawyerId(int lawyerId, int status, Pageable page);
+	
+	
 	@Query(value = "SELECT count(*) FROM OrderPo t WHERE t.userId=?1")
 	int getTotal(int userId);
+	
 	
 	OrderPo findByUserIdAndId(int userId, int id);
 

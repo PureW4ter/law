@@ -45,7 +45,7 @@
                     </div>
                     <div class="new_input_box">
                         <label>联系电话<span class="red_start">*</span></label>
-                        <input placeholder="查询成功后通知您（必填）" id="i_phone"/>
+                        <input placeholder="查询成功后通知您（必填）" id="i_phone" value="<%=window.localStorage['userInfo']?JSON.parse(window.localStorage['userInfo']).phone:''%>"/>
                     </div>
                 </div>
             </div>

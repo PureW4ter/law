@@ -129,6 +129,36 @@ public class OrderController extends BaseController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/api/order/slistbylawyer")
+	public ResponseVo<List<OrderVo>> getSearchOrdersByLawyer(int page, int size, int lawyerId, int status) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		List<OrderBo> values = orderService.getSearchOrdersByLawyer(new PageRequest(page, size, sort), lawyerId, status);
+		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
+		for (OrderBo bo : values) {
+			result.add(boToVo(bo));
+		}
+		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
+	}
+	
+	@ResponseBody
+	@GetMapping("/api/order/ilistbylawyer")
+	public ResponseVo<List<OrderVo>> getInvestOrdersByLawyer(int page, int size, int lawyerId, int status) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "phoneEndTime");
+		List<OrderBo> values = orderService.getInvestOrdersByLawyer(new PageRequest(page, size, sort), lawyerId, status);
+		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
+		for (OrderBo bo : values) {
+			result.add(boToVo(bo));
+		}
+		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
+	}
+	
+	@ResponseBody
 	@GetMapping("/api/order/lawyer")
 	public ResponseVo<List<OrderVo>> getOrderByLawyer(int lawyerId, int page, int size) {
 		if (page < 0) {
@@ -153,6 +183,13 @@ public class OrderController extends BaseController {
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
 
+	@ResponseBody
+	@GetMapping("/api/order/confirm")
+	public SimpleResponseVo confim(int orderId) {
+		lawyerReplyService.confirmReply(orderId);
+		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
+	}
+	
 	@ResponseBody
 	@GetMapping(value = "/api/order/getreply")
 	public ResponseVo<OrderWithReplyVo> getReply(int id) {
@@ -179,6 +216,8 @@ public class OrderController extends BaseController {
 			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		}
 		lawyerReplyService.createReply(bo);
+		lawyerReplyService.addReplyPhotos(vo.getPicList(), vo.getOrderId());
+		
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
 	
