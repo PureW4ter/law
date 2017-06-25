@@ -44,6 +44,7 @@ DROP TABLE IF EXISTS `jf_order`;
 CREATE TABLE `jf_order` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `order_sn` varchar(50) DEFAULT '',
+  `order_num` varchar(50) NOT NULL DEFAULT '',
   `city_id` int(11) DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `user_name` varchar(50) NOT NULL DEFAULT '',
@@ -78,7 +79,7 @@ CREATE TABLE `jf_order` (
   `owner_phone` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `jf_order_photo`;
 CREATE TABLE `jf_order_photo` (

@@ -208,7 +208,7 @@ public class OrderController extends BaseController {
 		if (bo.getCreateTime() != null)
 			vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		// 订单编号：时间+code+id
-		vo.setOrderCode(bo.getSn());
+		vo.setOrderCode(bo.getOrderNum());
 		if (bo.getUpdateTime() != null)
 			vo.setUpdateTime(myFmt2.format(bo.getUpdateTime()));
 		if (bo.getStartTime() != null)

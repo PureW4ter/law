@@ -36,6 +36,7 @@ public class OrderBo {
 	private String address;
 	private String ownerName;
 	private String ownerPhone;
+	private String orderNum;
 
 	public String getProductCode() {
 		return productCode;
@@ -276,11 +277,11 @@ public class OrderBo {
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
 	}
-	
+
 	public Timestamp getPhoneEndTime() {
 		return phoneEndTime;
 	}
-	
+
 	public void setPhoneEndTime(Timestamp phoneEndTime) {
 		this.phoneEndTime = phoneEndTime;
 	}
@@ -291,5 +292,13 @@ public class OrderBo {
 
 	public void setPayStatus(int payStatus) {
 		this.payStatus = payStatus;
+	}
+
+	public String getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
 	}
 }

@@ -84,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public OrderBo createSOrder(OrderBo bo) {
 		String sn = generateOrderSN(bo.getProductCode(), bo.getCityId());
-		bo.setSn(sn);
+		bo.setOrderNum(sn);
 
 		if (Constants.PRODUCT_CODE_JIANDANWEN.equals(bo.getProductCode())) {
 			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
@@ -101,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public OrderBo createIOrder(OrderBo bo) {
 		String sn = generateOrderSN(bo.getProductCode(), bo.getCityId());
-		bo.setSn(sn);
+		bo.setOrderNum(sn);
 
 		if (Constants.PRODUCT_CODE_HUKOU.equals(bo.getProductCode())) {
 			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
@@ -312,7 +312,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void markPayed(WxPayEventBo bo, int userId) {
-		OrderPo po = orderRepo.findBySn(bo.getOutTradeNo());
+		OrderPo po = orderRepo.findByOrderNum(bo.getOutTradeNo());
 		if (po != null && userId == po.getUserId()) {
 			if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
 
