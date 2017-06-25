@@ -31,7 +31,7 @@ import com.jfzy.web.vo.ResponseVo;
 import com.jfzy.web.vo.SimpleArticleVo;
 import com.jfzy.web.vo.TagVo;
 
-@AuthCheck(privileges = { "admin,editor" })
+@AuthCheck(privileges = { "admin", "editor" })
 @RestController
 public class ArticleController {
 
