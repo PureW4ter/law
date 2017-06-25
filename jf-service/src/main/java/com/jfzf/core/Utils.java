@@ -14,7 +14,7 @@ public class Utils {
 			md.update(input.getBytes());
 			return new String(new BigInteger(1, md.digest()).toString());
 		} catch (NoSuchAlgorithmException e) {
-			throw new JfApplicationRuntimeException(404, "Failed in getMd5");
+			throw new JfApplicationRuntimeException("Failed in getMd5");
 		}
 	}
 

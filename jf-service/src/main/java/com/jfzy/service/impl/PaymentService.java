@@ -17,7 +17,7 @@ import com.jfzf.core.HttpClientUtils;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.WxPayRequestDto;
 import com.jfzy.service.bo.WxPayResponseDto;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 
 @Service
 public class PaymentService {
@@ -50,7 +50,6 @@ public class PaymentService {
 		sign(dto, Constants.PAY_SECRET);
 
 		String xmlStr = XmlUtil.parseXml(dto);
-		logger.error(xmlStr);
 		String response;
 		try {
 			response = HttpClientUtils.post(PAY_URL, xmlStr);
@@ -58,12 +57,14 @@ public class PaymentService {
 			WxPayResponseDto responseDto = (WxPayResponseDto) XmlUtil.fromXml(response, WxPayResponseDto.class);
 			if (!StringUtils.equals("SUCCESS", responseDto.getResultCode())
 					|| !StringUtils.equals("SUCCESS", responseDto.getReturnCode())) {
-				logger.error(String.format("Failed to do prepay request:%s", xmlStr));
-				logger.error(String.format("Failed to do prepay response:%s", response));
+				throw new JfErrorCodeRuntimeException(400, "获取支付单失败",
+						String.format("PAY-UNIFYORDER:Response not success:%s", response));
+			} else {
+				return responseDto;
 			}
-			return responseDto;
 		} catch (IOException e) {
-			throw new JfApplicationRuntimeException("获取支付单失败", e);
+			throw new JfErrorCodeRuntimeException(400, "获取支付单失败",
+					String.format("PAY-UNIFYORDER:CALL wechat faild:orderNum:%s", order.getOrderNum()), e);
 		}
 	}
 

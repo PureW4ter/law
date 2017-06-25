@@ -13,6 +13,7 @@ import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.bo.OssUserTypeEnum;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 import com.jfzy.service.po.LawyerPo;
 import com.jfzy.service.po.OssUserPo;
 import com.jfzy.service.repository.LawyerRepository;
@@ -89,11 +90,13 @@ public class OssUserServiceImpl implements OssUserService {
 		List<OssUserPo> pos = ossUserRepo.findByPhoneNum(bo.getPhoneNum());
 
 		if (pos != null && pos.size() > 0) {
-			throw new JfApplicationRuntimeException("用户手机已存在");
+			throw new JfErrorCodeRuntimeException(400, "用户手机已存在",
+					String.format("OSSUSER-CREATE:PhoneNum exists:%s", bo.getPhoneNum()));
 		}
 		pos = ossUserRepo.findByLoginName(bo.getLoginName());
 		if (pos != null && pos.size() > 0) {
-			throw new JfApplicationRuntimeException("用户名已经存在");
+			throw new JfErrorCodeRuntimeException(400, "用户名已经存在",
+					String.format("OSSUSER-CREATE:Login name exists:%s", bo.getLoginName()));
 		}
 
 		bo.setPassword(MD5.MD5Encode(bo.getPassword()));

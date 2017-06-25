@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 import com.jfzy.service.po.LawyerPo;
 import com.jfzy.service.repository.LawyerRepository;
 
@@ -30,7 +30,7 @@ public class LawyerServiceImpl implements LawyerService {
 		return results;
 
 	}
-	
+
 	@Override
 	public LawyerBo loginWithPassword(String loginName, String password) {
 		String checksum = MD5.MD5Encode(password);
@@ -45,7 +45,7 @@ public class LawyerServiceImpl implements LawyerService {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public List<LawyerBo> getLawyerByCity(int cityId) {
 
@@ -60,8 +60,9 @@ public class LawyerServiceImpl implements LawyerService {
 	public void create(LawyerBo bo) {
 		List<LawyerPo> pos = lawyerRepo.findByPhoneNum(bo.getPhoneNum());
 		if (pos != null && pos.size() > 0) {
-			throw new JfApplicationRuntimeException("律师手机已存在");
-		}	
+			throw new JfErrorCodeRuntimeException(400, "律师手机已存在",
+					String.format("LAWYER-CREATE:Lawyer phoneNum exist:%s", bo.getPhoneNum()));
+		}
 		bo.setPassword(MD5.MD5Encode(bo.getPassword()));
 		lawyerRepo.save(boToPo(bo));
 	}
@@ -76,7 +77,7 @@ public class LawyerServiceImpl implements LawyerService {
 		LawyerPo po = lawyerRepo.getOne(id);
 		return poToBo(po);
 	}
-	
+
 	@Override
 	public List<LawyerBo> getLawyers(Pageable page) {
 		Iterable<LawyerPo> values = lawyerRepo.findAll(page);
@@ -88,32 +89,32 @@ public class LawyerServiceImpl implements LawyerService {
 	@Override
 	public void updateFinishedTask(int count, int id) {
 		lawyerRepo.updateFinishedTask(count, id);
-		
+
 	}
 
 	@Override
 	public void updateOnProcessTask(int count, int id) {
 		lawyerRepo.updateOnProcessTask(count, id);
-		
+
 	}
 
 	@Override
 	public void updateTotalMoney(double money, int id) {
 		lawyerRepo.updateTotalMoney(money, id);
-		
+
 	}
 
 	@Override
 	public void updateFinishedMoney(double money, int id) {
 		lawyerRepo.updateFinishedMoney(money, id);
-		
+
 	}
-	
+
 	@Override
 	public void addLaywerTask(double money, int id) {
 		lawyerRepo.updateTotalMoney(money, id);
 	}
-	
+
 	private static LawyerBo poToBo(LawyerPo po) {
 		LawyerBo bo = new LawyerBo();
 		BeanUtils.copyProperties(po, bo);

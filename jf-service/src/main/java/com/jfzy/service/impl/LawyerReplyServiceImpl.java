@@ -3,7 +3,6 @@ package com.jfzy.service.impl;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderPhotoBo;
 import com.jfzy.service.bo.OrderPhotoTypeEnum;
 import com.jfzy.service.bo.OrderStatusEnum;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.LawyerReplyPo;
 import com.jfzy.service.po.OrderPhotoPo;
 import com.jfzy.service.repository.LawyerReplyRepository;

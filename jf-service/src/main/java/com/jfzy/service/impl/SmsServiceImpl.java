@@ -12,7 +12,7 @@ import com.aliyun.mns.model.MessageAttributes;
 import com.aliyun.mns.model.RawTopicMessage;
 import com.aliyun.mns.model.TopicMessage;
 import com.jfzy.service.SmsService;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 
 @Service
 public class SmsServiceImpl implements SmsService {
@@ -70,7 +70,7 @@ public class SmsServiceImpl implements SmsService {
 			TopicMessage ret = topic.publishMessage(msg, messageAttributes);
 
 		} catch (RuntimeException e) {
-			throw new JfApplicationRuntimeException("短信验证码发送失败");
+			throw new JfErrorCodeRuntimeException(400, "短信验证码发送失败", "SMS-SEND failed", e);
 		}
 	}
 }

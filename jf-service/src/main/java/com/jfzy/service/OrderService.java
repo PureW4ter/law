@@ -20,7 +20,7 @@ public interface OrderService {
 
 	WxPayResponseDto pay(int id, int userId, String ip, String openId);
 
-	void markPayed(WxPayEventBo bo, int userId); 
+	void markPayed(WxPayEventBo bo, int userId);
 
 	void cancel(int id);
 
@@ -28,7 +28,7 @@ public interface OrderService {
 
 	OrderBo getOrderById(int id);
 
-	OrderBo getOrderBySn(String sn);
+	OrderBo getOrderByOrderNum(String orderNum);
 
 	Page<OrderBo> getOrdersByCityIdAndStatus(int cityId, int status, Pageable page);
 
@@ -41,29 +41,29 @@ public interface OrderService {
 	List<OrderBo> getSearchOrders(Pageable page);
 
 	List<OrderBo> getInvestOrders(Pageable page);
-	
+
 	List<OrderBo> getSearchOrdersByUser(Pageable page, int userId);
-	
+
 	List<OrderBo> getInvestOrdersByUser(Pageable page, int userId);
-	
+
 	List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int status);
-	
+
 	List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int status);
 
 	void acceptorOrder(int lawyerId, int orderId);
-	
+
 	List<OrderPhotoBo> getOrderPhotos(int orderId);
-	
+
 	List<OrderPhotoBo> getReplyPhotos(int orderId);
-	
+
 	int getNumbersOfUnAssignedOrdersByCity(int city);
 
 	List<OrderBo> getUnconfirmedOrders(int size);
 
 	void updateOrderStatus(int orderId, int previousStatus, int newStatus);
-	
+
 	void updateOrderStatus(int orderId, int newStatus);
-	
+
 	int getTotal(int userId);
-	
+
 }

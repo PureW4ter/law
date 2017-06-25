@@ -1,6 +1,7 @@
 package com.jfzy.mweb.base;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfzy.mweb.util.ResponseStatusEnum;
 import com.jfzy.mweb.vo.SimpleResponseVo;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 
 public class ExceptionFilter implements Filter {
 
@@ -33,15 +34,15 @@ public class ExceptionFilter implements Filter {
 			throws IOException, ServletException {
 		try {
 			chain.doFilter(req, resp);
-		} catch (JfApplicationRuntimeException jfe) {
-			logger.error("Error occur in chain", jfe);
-			resp.getWriter().write(
-					objToJsonString(new SimpleResponseVo(ResponseStatusEnum.SERVER_ERROR.getCode(), jfe.getMessage())));
+		} catch (JfErrorCodeRuntimeException jecr) {
+			logger.error("Error occur:", jecr);
+			resp.getWriter().write(objToJsonString(new SimpleResponseVo(jecr.getCode(), jecr.getToastMessage())));
 			resp.flushBuffer();
-		} catch (RuntimeException e) {
-			logger.error("Error occur in chain", e);
-			resp.getWriter()
-					.write(objToJsonString(new SimpleResponseVo(ResponseStatusEnum.SERVER_ERROR.getCode(), "请求失败")));
+		} catch (RuntimeException jfe) {
+			String code = UUID.randomUUID().toString();
+			logger.error(String.format("ERROR CODE:%s", code), jfe);
+			resp.getWriter().write(objToJsonString(
+					new SimpleResponseVo(ResponseStatusEnum.SERVER_ERROR.getCode(), String.format("Code:", code))));
 			resp.flushBuffer();
 		}
 	}

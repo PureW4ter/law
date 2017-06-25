@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.transaction.Transactional;
+
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ import com.jfzy.service.bo.PayWayEnum;
 import com.jfzy.service.bo.UserLevelEnum;
 import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 import com.jfzy.service.po.OrderPhotoPo;
 import com.jfzy.service.po.OrderPo;
 import com.jfzy.service.repository.OrderPhotoRepository;
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 		}
 
-		throw new JfApplicationRuntimeException("订单ID生成失败");
+		throw new JfErrorCodeRuntimeException(400, "订单ID生成失败", "Failed in generated id");
 	}
 
 	private String generateOrderSN(String orderTypeStr, int city) {
@@ -122,12 +122,14 @@ public class OrderServiceImpl implements OrderService {
 		// FIXED ME
 		OrderPo po = orderRepo.findByUserIdAndId(userId, id);
 		if (po == null) {
-			logger.error(String.format("Order not found : userId %s, orderId %s", userId, id));
-			throw new JfApplicationRuntimeException("订单不存在");
+			throw new JfErrorCodeRuntimeException(400, "订单不存在",
+					String.format("ORDER-PAY:Order not found : userId %s, orderId %s", userId, id));
 		} else if (po.getPayStatus() == OrderPayStatusEnum.PAYED.getId()) {
-			throw new JfApplicationRuntimeException("订单已支付");
+			throw new JfErrorCodeRuntimeException(400, "订单已支付",
+					String.format("ORDER-PAY:Order already payed : orderId %s", id));
 		} else if (po.getPayStatus() == OrderPayStatusEnum.REFUND.getId()) {
-			throw new JfApplicationRuntimeException("订单已退款");
+			throw new JfErrorCodeRuntimeException(400, "订单已退款",
+					String.format("ORDER-PAY:Order already refund : orderId %s", id));
 		} else {
 			return paymentService.unifiedOrder(poToBo(po), ip, openId);
 		}
@@ -159,12 +161,11 @@ public class OrderServiceImpl implements OrderService {
 					new Timestamp(System.currentTimeMillis()), id);
 		} else {
 			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), 
-					null,
+					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), null,
 					new Timestamp(System.currentTimeMillis()), id);
 		}
 	}
-	
+
 	@Override
 	public void assignOrder(int orderId, int lawyerId, int processorId, String processorName) {
 
@@ -172,9 +173,11 @@ public class OrderServiceImpl implements OrderService {
 		if (lawyer != null && lawyer.getStatus() == LawyerStatusEnum.ACTIVE.getId()) {
 			OrderPo po = orderRepo.getOne(orderId);
 			if (po == null) {
-				throw new JfApplicationRuntimeException(400, "无此订单");
+				throw new JfErrorCodeRuntimeException(400, "无此订单",
+						String.format("ASSIGN-ORDER: Order not found:%s", orderId));
 			} else if (po.getCityId() != lawyer.getCityId()) {
-				throw new JfApplicationRuntimeException(400, "城市不匹配");
+				throw new JfErrorCodeRuntimeException(400, "城市不匹配",
+						String.format("ASSIGN-ORDER: City not match. Order:%s,Lawyer:%s", orderId, lawyerId));
 			} else if (po.getStatus() == OrderStatusEnum.NEED_DISPATCH.getId()
 					|| po.getStatus() == OrderStatusEnum.DISPATCHED.getId()) {
 				po.setLawyerId(lawyerId);
@@ -186,10 +189,12 @@ public class OrderServiceImpl implements OrderService {
 				orderRepo.save(po);
 				lawyerSerivce.updateOnProcessTask(1, lawyerId);
 			} else {
-				throw new JfApplicationRuntimeException(400, "订单状态错误");
+				throw new JfErrorCodeRuntimeException(400, "订单状态错误",
+						String.format("ASSIGN-ORDER: Order wrong status.Order %s, Status %s", orderId, po.getStatus()));
 			}
 		} else {
-			throw new JfApplicationRuntimeException(400, "无此律师或非启用律师");
+			throw new JfErrorCodeRuntimeException(400, "无此律师或非启用律师",
+					String.format("ASSIGN-ORDER: Active lawyer not found:%s", lawyerId));
 		}
 	}
 
@@ -197,16 +202,23 @@ public class OrderServiceImpl implements OrderService {
 	public OrderBo getOrderById(int id) {
 		OrderPo po = orderRepo.findOne(id);
 		if (po == null) {
-			throw new JfApplicationRuntimeException(400, "此订单不存在");
+			throw new JfErrorCodeRuntimeException(400, "此订单不存在", String.format("GET-ORDER: Order not found:%s", id));
 		} else {
 			return poToBo(po);
 		}
 	}
 
 	@Override
-	public OrderBo getOrderBySn(String sn) {
-		// TODO Auto-generated method stub
-		return null;
+	public OrderBo getOrderByOrderNum(String orderNum) {
+		List<OrderPo> orderPos = orderRepo.findByOrderNum(orderNum);
+		if (orderPos != null && orderPos.size() == 1) {
+			return poToBo(orderPos.get(0));
+		} else if (orderPos != null && orderPos.size() > 1) {
+			throw new JfErrorCodeRuntimeException(400, "",
+					String.format("GET-ORDER-BY-ORDERNUM:More than one order with orderNum:%s", orderNum));
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -312,25 +324,31 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public void markPayed(WxPayEventBo bo, int userId) {
-		OrderPo po = orderRepo.findByOrderNum(bo.getOutTradeNo());
-		if (po != null && userId == po.getUserId()) {
-			if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
+		List<OrderPo> pos = orderRepo.findByOrderNum(bo.getOutTradeNo());
+		if (pos != null && pos.size() == 1) {
+			OrderPo po = pos.get(0);
+			if (po != null && userId == po.getUserId()) {
+				if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
 
-				if (po.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()) {
-					orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
-							OrderStatusEnum.NOT_COMPLETED.getId(), po.getId());
-				} else {
-					orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
-							OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
-					orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
-							new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), null,
-							new Timestamp(System.currentTimeMillis()), po.getId());
+					if (po.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()) {
+						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
+								OrderStatusEnum.NOT_COMPLETED.getId(), po.getId());
+					} else {
+						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
+								OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
+						orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
+								new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), null,
+								new Timestamp(System.currentTimeMillis()), po.getId());
+					}
 				}
+			} else {
+				logger.error(String.format("ORDER-MARKPAYED: Order user unable to match.Order_num:%s,userId:%s",
+						bo.getOutTradeNo(), userId));
 			}
-		} else if (po == null) {
-
+		} else if (pos == null || pos.size() <= 0) {
+			logger.error(String.format("ORDER-MARKPAYED: Order not found: %s", bo.getOutTradeNo()));
 		} else {
-			// userid not match
+			logger.error(String.format("ORDER-MARKPAYED: Multi order with order_num:%s", bo.getOutTradeNo()));
 		}
 	}
 
@@ -338,13 +356,13 @@ public class OrderServiceImpl implements OrderService {
 	public void acceptorOrder(int lawyerId, int orderId) {
 		LawyerBo lawyer = lawyerSerivce.getLawyerById(lawyerId);
 		if (lawyer == null) {
-			logger.error(String.format("AcceptorOrder failed, unable to find lawyer with id %s", lawyerId));
-			throw new JfApplicationRuntimeException("律师不存在");
+			throw new JfErrorCodeRuntimeException(400, "律师不存在",
+					String.format("ORDER-ACCEPTORDER:Lawyer not found: %s", lawyerId));
 		}
 		OrderPo order = orderRepo.getOne(orderId);
 		if (order == null) {
-			logger.error(String.format("AcceptorOrder failed, unable to find order with id %s", orderId));
-			throw new JfApplicationRuntimeException("订单不存在");
+			throw new JfErrorCodeRuntimeException(400, "订单不存在",
+					String.format("ORDER-ACCEPTORDER:Order not found: %s", orderId));
 		}
 	}
 

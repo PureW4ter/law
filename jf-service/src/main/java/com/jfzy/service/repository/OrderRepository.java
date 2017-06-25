@@ -1,6 +1,7 @@
 package com.jfzy.service.repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -83,6 +84,6 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	Page<OrderPo> findByStatus(int status, Pageable page);
 
-	OrderPo findByOrderNum(String orderNum);
+	List<OrderPo> findByOrderNum(String orderNum);
 
 }

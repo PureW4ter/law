@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.jfzy.service.PicService;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
+import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -72,7 +72,7 @@ public class PicServiceImpl implements PicService {
 			DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
 			return getUrl(hostPrefix, putRet.key);
 		} catch (QiniuException ex) {
-			throw new JfApplicationRuntimeException("上传图片失败", ex);
+			throw new JfErrorCodeRuntimeException(400, "上传图片失败", "PIC-UPLOAD failed", ex);
 		}
 	}
 
