@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import javax.transaction.Transactional;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,17 +157,14 @@ public class OrderServiceImpl implements OrderService {
 					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
 					new Timestamp(System.currentTimeMillis() + 2 * 60 * 60 * 1000),
 					new Timestamp(System.currentTimeMillis()), id);
-
-		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())
-				|| Constants.PRODUCT_CODE_CHAFENG.equals(obo.getProductCode())) {
+		} else {
 			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), null,
+					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), 
+					null,
 					new Timestamp(System.currentTimeMillis()), id);
-		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())) {
-
 		}
 	}
-
+	
 	@Override
 	public void assignOrder(int orderId, int lawyerId, int processorId, String processorName) {
 
@@ -311,6 +310,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public void markPayed(WxPayEventBo bo, int userId) {
 		OrderPo po = orderRepo.findByOrderNum(bo.getOutTradeNo());
 		if (po != null && userId == po.getUserId()) {
@@ -322,8 +322,10 @@ public class OrderServiceImpl implements OrderService {
 				} else {
 					orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
 							OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
+					orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
+							new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), null,
+							new Timestamp(System.currentTimeMillis()), po.getId());
 				}
-
 			}
 		} else if (po == null) {
 
