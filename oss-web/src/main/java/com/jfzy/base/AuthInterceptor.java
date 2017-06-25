@@ -34,8 +34,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-			processCookie(request);
-
 			AuthCheck authCheck = handlerMethod.getMethodAnnotation(AuthCheck.class);
 
 			if (authCheck == null) {
@@ -45,6 +43,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			if (authCheck == null) {
 				return true;
 			} else {
+				processCookie(request);
 				AuthInfo info = getInfo(request);
 				if (info != null) {
 					String[] privileges = authCheck.privileges();
