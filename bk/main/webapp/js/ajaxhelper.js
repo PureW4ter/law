@@ -51,7 +51,11 @@ define(["utility"], function(util) {
                         if (successFun && Object.prototype.toString.call(successFun) === '[object Function]')
                             successFun.apply(ctx, [data]);
                     }else{
-                        util.showToast(data.m);
+                        if(data && data.s == 401){
+                            window.location = "login.html";
+                        }else{
+                            util.showToast(data.m);
+                        }
                     }
                 },
                 error: function(xhr, type) {
