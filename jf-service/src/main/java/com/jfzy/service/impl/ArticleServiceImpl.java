@@ -4,8 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -16,8 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.jfzy.service.ArticleService;
@@ -27,7 +23,6 @@ import com.jfzy.service.po.ArticlePo;
 import com.jfzy.service.repository.ArticleElasticRepository;
 import com.jfzy.service.repository.ArticleRepository;
 
-@EnableScheduling
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
@@ -41,12 +36,6 @@ public class ArticleServiceImpl implements ArticleService {
 
 	private Timestamp lastUpdatedTime = new Timestamp(0);
 
-	@PostConstruct
-	public void init() {
-		retriveArticles();
-	}
-
-	@Scheduled(fixedRate = 60000)
 	public void retriveArticles() {
 		List<ArticlePo> articlePos = articleRepo.findUpdates(lastUpdatedTime, ArticleTypeEnum.ARTICLE.getId());
 		Timestamp tmpTimestamp = lastUpdatedTime;
@@ -91,7 +80,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		return results;
 	}
-	
+
 	@Override
 	public List<ArticleBo> getQAs(Pageable page) {
 		Page<ArticlePo> poPage = articleRepo.findByType(ArticleTypeEnum.QA.getId(), page);
@@ -112,8 +101,10 @@ public class ArticleServiceImpl implements ArticleService {
 	public void create(ArticleBo bo) {
 		ArticlePo po = bo2Po(bo);
 		po.setContent(po.getContent());
-				//replaceAll("http://read\\.html5\\.qq\\.com/image\\?src=forum&q=5&r=0&imgflag=7&imageUrl=", "").
-				//replaceAll("http://mmbiz\\.qpic\\.cn", "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpiwc.cn/"));
+		// replaceAll("http://read\\.html5\\.qq\\.com/image\\?src=forum&q=5&r=0&imgflag=7&imageUrl=",
+		// "").
+		// replaceAll("http://mmbiz\\.qpic\\.cn",
+		// "http://read.html5.qq.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpiwc.cn/"));
 		articleRepo.save(po);
 	}
 

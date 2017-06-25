@@ -41,7 +41,8 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	@Transactional
 	@Modifying
 	@Query("UPDATE OrderPo SET startTime=?1, endTime=?2 , phoneEndTime=?3, updateTime=?4 WHERE id=?5")
-	void setStartAndEndTime(Timestamp startTime, Timestamp endTime, Timestamp phoneEndTime, Timestamp updateTime, int id);
+	void setStartAndEndTime(Timestamp startTime, Timestamp endTime, Timestamp phoneEndTime, Timestamp updateTime,
+			int id);
 
 	@Transactional
 	@Modifying
@@ -66,6 +67,7 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	@Query(value = "SELECT t FROM OrderPo t WHERE (t.productCode='Y' or t.productCode='YP' or t.productCode='J') and t.userId=?1")
 	Page<OrderPo> getInvestOrdersById(int userId, Pageable page);
+
 	
 	@Query(value = "SELECT t FROM OrderPo t WHERE (t.productCode='H' or t.productCode='C' or t.productCode='HX') and t.lawyerId=?1 and status=?2")
 	Page<OrderPo> getSearchOrdersByLawyerId(int lawyerId, int status, Pageable page);
@@ -73,15 +75,15 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	@Query(value = "SELECT t FROM OrderPo t WHERE (t.productCode='Y' or t.productCode='YP' or t.productCode='J') and t.lawyerId=?1 and status=?2")
 	Page<OrderPo> getInvestOrdersByLawyerId(int lawyerId, int status, Pageable page);
 	
-	
 	@Query(value = "SELECT count(*) FROM OrderPo t WHERE t.userId=?1")
 	int getTotal(int userId);
-	
-	
+
 	OrderPo findByUserIdAndId(int userId, int id);
 
 	int countByCityIdAndStatus(int cityId, int status);
 
 	Page<OrderPo> findByStatus(int status, Pageable page);
+
+	OrderPo findBySn(String sn);
 
 }

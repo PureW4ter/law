@@ -1,17 +1,10 @@
 package com.jfzy.service.impl;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.codec.binary.StringUtils;
 import org.slf4j.Logger;
@@ -47,7 +40,7 @@ public class PaymentService {
 		dto.setNonceStr(UUID.randomUUID().toString().replace("-", ""));
 		dto.setMchId(Constants.MCH_ID);
 		dto.setBody(String.format("简法二手房-%s", order.getProductName()));
-		dto.setOutTradeNo(String.valueOf(order.getId()));
+		dto.setOutTradeNo(order.getSn());
 		dto.setTotalFee(getTotalFee(order.getRealPrice()));
 		dto.setSpbillCreateIp(ip);
 		dto.setNotifyUrl(NOTIFY_URL);

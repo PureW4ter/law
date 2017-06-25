@@ -29,7 +29,7 @@ CREATE TABLE `jf_lawyer` (
   `memo` varchar(200) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL,
-  `score` double DEFAULT NULL,
+  `score` double DEFAULT '0',
   `on_process_task` int(4) DEFAULT '0',
   `finished_task` int(4) DEFAULT '0',
   `total_money` double DEFAULT '0',
@@ -211,3 +211,15 @@ CREATE TABLE `jf_oss_permission` (
   `permission` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+
+
+DROP TABLE IF EXISTS `jf_id`;
+CREATE TABLE `jf_id` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL DEFAULT '0',
+  `page` int(11) NOT NULL DEFAULT '0',
+  `current_id` int(11) NOT NULL DEFAULT '0',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uidx_type_page` (`type`,`page`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

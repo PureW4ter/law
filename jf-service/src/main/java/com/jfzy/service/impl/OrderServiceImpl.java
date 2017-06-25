@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -16,8 +17,10 @@ import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPa
 import org.springframework.stereotype.Service;
 
 import com.jfzf.core.Constants;
+import com.jfzy.service.IdService;
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.OrderService;
+import com.jfzy.service.bo.IdTypeEnum;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
 import com.jfzy.service.bo.OrderBo;
@@ -43,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderRepository orderRepo;
-	
+
 	@Autowired
 	private UserRepository userRepo;
 
@@ -56,8 +59,34 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private PaymentService paymentService;
 
+	@Autowired
+	private IdService idService;
+
+	private int generateId(int page) {
+
+		for (int i = 0; i < 3; ++i) {
+			int id = idService.generateId(IdTypeEnum.ORDER.getId(), page);
+			if (id > 0) {
+				return id;
+			}
+		}
+
+		throw new JfApplicationRuntimeException("订单ID生成失败");
+	}
+
+	private String generateOrderSN(String orderTypeStr, int city) {
+		DateTime today = new DateTime();
+		int page = today.getYear() * 10000 + today.getMonthOfYear() * 100 + today.getDayOfMonth();
+		int id = generateId(page);
+
+		return String.format("%s%s%s%s", page, orderTypeStr, city, id);
+	}
+
 	@Override
 	public OrderBo createSOrder(OrderBo bo) {
+		String sn = generateOrderSN(bo.getProductCode(), bo.getCityId());
+		bo.setSn(sn);
+
 		if (Constants.PRODUCT_CODE_JIANDANWEN.equals(bo.getProductCode())) {
 			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
 		} else {
@@ -65,13 +94,16 @@ public class OrderServiceImpl implements OrderService {
 		}
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
 		OrderPo po = orderRepo.save(boToPo(bo));
-		//升级用户等级
+		// 升级用户等级
 		userRepo.updateLevel(UserLevelEnum.PAIED.getId(), bo.getUserId());
 		return poToBo(po);
 	}
 
 	@Override
 	public OrderBo createIOrder(OrderBo bo) {
+		String sn = generateOrderSN(bo.getProductCode(), bo.getCityId());
+		bo.setSn(sn);
+
 		if (Constants.PRODUCT_CODE_HUKOU.equals(bo.getProductCode())) {
 			bo.setStatus(OrderStatusEnum.NO_PAY.getId());
 		} else {
@@ -79,7 +111,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		bo.setPayWay(PayWayEnum.NO_PAY.getId());
 		OrderPo po = orderRepo.save(boToPo(bo));
-		//升级用户等级
+		// 升级用户等级
 		userRepo.updateLevel(UserLevelEnum.PAIED.getId(), bo.getUserId());
 		return poToBo(po);
 	}
@@ -124,14 +156,14 @@ public class OrderServiceImpl implements OrderService {
 					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
 					new Timestamp(System.currentTimeMillis() + 2 * 60 * 60 * 1000),
 					new Timestamp(System.currentTimeMillis()), id);
-			
-		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode()) || Constants.PRODUCT_CODE_CHAFENG.equals(obo.getProductCode())) {
+
+		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())
+				|| Constants.PRODUCT_CODE_CHAFENG.equals(obo.getProductCode())) {
 			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
-					null,
+					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), null,
 					new Timestamp(System.currentTimeMillis()), id);
 		} else if (Constants.PRODUCT_CODE_ZIXUN.equals(obo.getProductCode())) {
-			
+
 		}
 	}
 
@@ -240,7 +272,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return results;
 	}
-	
+
 	@Override
 	public List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId,
 			int status) {
@@ -282,32 +314,25 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
-
-
 	@Override
 	public void markPayed(WxPayEventBo bo, int userId) {
-		if (StringUtils.isNumeric(bo.getOutTradeNo())) {
-			OrderPo po = orderRepo.findOne(Integer.valueOf(bo.getOutTradeNo()));
-			if (po != null && userId == po.getUserId()) {
-				if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
-					
-					if(po.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()){
-						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
-								OrderStatusEnum.NOT_COMPLETED.getId(), po.getId());
-					}else{
-						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
-								OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
-					}
-					
+		OrderPo po = orderRepo.findBySn(bo.getOutTradeNo());
+		if (po != null && userId == po.getUserId()) {
+			if (po.getPayStatus() == OrderPayStatusEnum.NOT_PAYED.getId()) {
+
+				if (po.getStatus() == OrderStatusEnum.NO_PAY_NEED_COMPLETED.getId()) {
+					orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
+							OrderStatusEnum.NOT_COMPLETED.getId(), po.getId());
+				} else {
+					orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
+							OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
 				}
-			} else if (po == null) {
 
-			} else {
-				// userid not match
 			}
-		} else {
-			// order id error
+		} else if (po == null) {
 
+		} else {
+			// userid not match
 		}
 	}
 
@@ -340,12 +365,12 @@ public class OrderServiceImpl implements OrderService {
 		pos.forEach(po -> results.add(poToBo(po)));
 		return results;
 	}
-	
+
 	@Override
 	public void updateOrderStatus(int orderId, int previousStatus, int newStatus) {
 		orderRepo.updateStatus(orderId, previousStatus, newStatus);
 	}
-	
+
 	@Override
 	public void updateOrderStatus(int orderId, int newStatus) {
 		orderRepo.updateStatus(orderId, newStatus);
@@ -355,24 +380,24 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderBo> getUnconfirmedOrders(int size) {
 		PageRequest page = new PageRequest(1, size);
 		Page<OrderPo> pos = orderRepo.findByStatus(OrderStatusEnum.DISPATCHED.getId(), page);
-		
-	 	List<OrderBo> results = new ArrayList<OrderBo>(20);
-	 	if (pos != null) {
-	 		pos.forEach(po -> results.add(poToBo(po)));
-	 	}
-	 	return results;
+
+		List<OrderBo> results = new ArrayList<OrderBo>(20);
+		if (pos != null) {
+			pos.forEach(po -> results.add(poToBo(po)));
+		}
+		return results;
 	}
-	
+
 	@Override
-	 public int getNumbersOfUnAssignedOrdersByCity(int city) {
+	public int getNumbersOfUnAssignedOrdersByCity(int city) {
 		return orderRepo.countByCityIdAndStatus(city, OrderStatusEnum.NEED_DISPATCH.getId());
 	}
-	
+
 	@Override
 	public int getTotal(int userId) {
 		return orderRepo.getTotal(userId);
 	}
-	
+
 	private static OrderPo boToPo(OrderBo bo) {
 		OrderPo po = new OrderPo();
 		BeanUtils.copyProperties(bo, po);
