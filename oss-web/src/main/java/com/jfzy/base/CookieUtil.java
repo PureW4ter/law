@@ -15,7 +15,7 @@ public class CookieUtil {
 	private static TextEncryptor encryptor = Encryptors.delux("clIr7MPlKFpC", "881239bab013");
 
 	public static String generateTokenString(Token token) {
-		String rawData = String.format("%s|%s", token.getUserId(), System.currentTimeMillis());
+		String rawData = String.format("%s|%s|%s", token.getUserId(), token.getType(), System.currentTimeMillis());
 		return encryptor.encrypt(rawData);
 	}
 
@@ -24,11 +24,12 @@ public class CookieUtil {
 		String rawData = encryptor.decrypt(tokenString);
 
 		String[] params = StringUtils.split(rawData, '|');
-		if (params != null && params.length == 2 && StringUtils.isNumeric(params[0])
-				&& StringUtils.isNumeric(params[1])) {
+		if (params != null && params.length == 3 && StringUtils.isNumeric(params[0]) && StringUtils.isNumeric(params[1])
+				&& StringUtils.isNumeric(params[2])) {
 			Token t = new Token();
 			t.setUserId(Integer.valueOf(params[0]));
-			t.setTimestamp(Long.valueOf(params[1]));
+			t.setType(Integer.valueOf(params[1]));
+			t.setTimestamp(Long.valueOf(params[2]));
 
 			return t;
 		} else {

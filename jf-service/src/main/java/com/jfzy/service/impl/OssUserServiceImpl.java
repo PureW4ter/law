@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
+import com.jfzy.service.bo.OssUserTypeEnum;
 import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.po.LawyerPo;
 import com.jfzy.service.po.OssUserPo;
@@ -23,10 +24,9 @@ public class OssUserServiceImpl implements OssUserService {
 	@Autowired
 	private OssUserRepository ossUserRepo;
 
-
 	@Autowired
 	private LawyerRepository lawyerRepo;
-	
+
 	@Override
 	public OssUserBo loginWithPassword(String loginName, String password) {
 		String checksum = MD5.MD5Encode(password);
@@ -41,23 +41,24 @@ public class OssUserServiceImpl implements OssUserService {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public OssUserBo login(String phoneNum, String code) {
-		// FIXME
-		// code check
 		List<OssUserPo> users = ossUserRepo.findByPhoneNum(phoneNum);
 		List<LawyerPo> lawyers = lawyerRepo.findByPhoneNum(phoneNum);
-		
+
 		if (users != null && users.size() == 1) {
 			OssUserPo po = users.get(0);
 			OssUserBo bo = poToBo(po);
+			bo.setType(OssUserTypeEnum.USER.getId());
 			return bo;
-		} else if(lawyers != null && lawyers.size() == 1){
+		} else if (lawyers != null && lawyers.size() == 1) {
 			LawyerPo po = lawyers.get(0);
 			OssUserBo bo = poToBo(po);
+			bo.setRole("lawyer");
+			bo.setType(OssUserTypeEnum.LAWYER.getId());
 			return bo;
-		}else {
+		} else {
 			return null;
 		}
 	}
@@ -103,7 +104,7 @@ public class OssUserServiceImpl implements OssUserService {
 		BeanUtils.copyProperties(po, bo);
 		return bo;
 	}
-	
+
 	private static OssUserPo boToPo(OssUserBo bo) {
 		OssUserPo po = new OssUserPo();
 		BeanUtils.copyProperties(bo, po);

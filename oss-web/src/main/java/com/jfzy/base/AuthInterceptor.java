@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
+import com.jfzy.service.bo.OssUserTypeEnum;
 import com.jfzy.web.vo.SimpleResponseVo;
 
 @Controller
@@ -83,10 +84,16 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				Token t = CookieUtil.getAuthFromCookie(request);
 				if (t != null) {
 					int userId = t.getUserId();
-					OssUserBo user = ossUserService.getUserById(userId);
-					AuthInfo authInfo = new AuthInfo();
-					authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
-					session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
+					if (t.getType() == OssUserTypeEnum.USER.getId()) {
+						OssUserBo user = ossUserService.getUserById(userId);
+						AuthInfo authInfo = new AuthInfo();
+						authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
+						session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
+					} else if (t.getType() == OssUserTypeEnum.LAWYER.getId()) {
+						AuthInfo authInfo = new AuthInfo();
+						authInfo.setPrivileges(Arrays.asList(new String[] { "lawyer" }));
+						session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
+					}
 				}
 			}
 		}

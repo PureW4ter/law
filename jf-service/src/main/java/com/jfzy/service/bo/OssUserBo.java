@@ -14,6 +14,7 @@ public class OssUserBo {
 	private Timestamp updateTime;
 	private String loginName;
 	private String password;
+	private int type;
 
 	public String getPhoneNum() {
 		return phoneNum;
@@ -94,5 +95,13 @@ public class OssUserBo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
 }

@@ -65,7 +65,7 @@ public class LoginController extends BaseController {
 			authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
 			session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
 
-			injectCookie(user.getId(), response);
+			injectCookie(user.getId(), user.getType(), response);
 
 			List<String> permissions = ossRoleService.getPermissionsByRoleName(user.getRole());
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user, permissions));
@@ -73,10 +73,11 @@ public class LoginController extends BaseController {
 		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在", null);
 	}
 
-	private void injectCookie(int userId, HttpServletResponse response) {
+	private void injectCookie(int userId, int type, HttpServletResponse response) {
 		// 埋cookie
 		Token t = new Token();
 		t.setUserId(userId);
+		t.setType(type);
 		CookieUtil.addAuthCookie(t, response);
 	}
 
@@ -84,6 +85,7 @@ public class LoginController extends BaseController {
 		OssUserVo vo = new OssUserVo();
 		BeanUtils.copyProperties(bo, vo);
 		vo.setPermissions(permissions);
+		vo.setPassword("");
 		return vo;
 	}
 
