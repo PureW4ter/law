@@ -28,13 +28,13 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 
 	@Autowired
 	private LawyerReplyRepository replyRepo;
-	
+
 	@Autowired
 	private OrderPhotoRepository orderPhotoRepo;
-	
+
 	@Autowired
 	private LawyerService lawyerSerivce;
-	
+
 	@Autowired
 	private OrderService orderSerivce;
 
@@ -53,11 +53,11 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		lawyerSerivce.updateOnProcessTask(-1, obo.getLawyerId());
 		lawyerSerivce.updateFinishedMoney(obo.getOriginPrice(), obo.getLawyerId());
 	}
-	
+
 	@Override
 	public LawyerReplyBo getReply(int orderId) {
 		List<LawyerReplyPo> pos = replyRepo.findByOrderId(orderId);
-		if (pos != null && pos.size()>0) {
+		if (pos != null && pos.size() > 0) {
 			return poToBo(pos.get(0));
 		} else {
 			return null;
@@ -72,15 +72,17 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 	@Override
 	public void addReplyPhotos(String[] picList, int orderId) {
 		OrderPhotoBo bo = new OrderPhotoBo();
-		for (int i = 0; i < picList.length; i++) {
-			bo.setOrderId(orderId);
-			bo.setPhotoPath(picList[i]);
-			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-			bo.setType(OrderPhotoTypeEnum.REPLY.getId());
-			orderPhotoRepo.save(boToPo(bo));
+		if (picList != null && picList.length > 0) {
+			for (int i = 0; i < picList.length; i++) {
+				bo.setOrderId(orderId);
+				bo.setPhotoPath(picList[i]);
+				bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+				bo.setType(OrderPhotoTypeEnum.REPLY.getId());
+				orderPhotoRepo.save(boToPo(bo));
+			}
 		}
 	}
-	
+
 	private static LawyerReplyBo poToBo(LawyerReplyPo po) {
 		LawyerReplyBo bo = new LawyerReplyBo();
 		BeanUtils.copyProperties(po, bo);
@@ -92,6 +94,7 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		BeanUtils.copyProperties(bo, po);
 		return po;
 	}
+
 	private static OrderPhotoPo boToPo(OrderPhotoBo bo) {
 		OrderPhotoPo po = new OrderPhotoPo();
 		BeanUtils.copyProperties(bo, po);
