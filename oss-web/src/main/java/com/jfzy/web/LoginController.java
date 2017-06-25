@@ -65,7 +65,7 @@ public class LoginController extends BaseController {
 			authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
 			session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
 
-			injectCookie(user.getId(), response);
+			//injectCookie(user.getId(), response);
 
 			List<String> permissions = ossRoleService.getPermissionsByRoleName(user.getRole());
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user, permissions));

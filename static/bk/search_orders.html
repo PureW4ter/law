@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
     <meta name="format-detection" content="telephone=no" />
     <title>后台管理系统</title>
-    <link href="styles/bootstrap.css?ver={front_version}" rel="stylesheet" />
-    <link href="styles/main.css?ver={front_version}" rel="stylesheet" />
+    <link href="styles/bootstrap.css?ver=20170625104110" rel="stylesheet" />
+    <link href="styles/main.css?ver=20170625104110" rel="stylesheet" />
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -39,7 +39,7 @@
                             <tbody>
                                 <%_.each(result.r, function(item){%>
                                 <tr data-id="<%=item.id%>">
-                                    <td><%=item.orderCode%></td>
+                                    <td><a href="diaocha_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
                                     <td><%=item.createTime%></td>
                                     <td><%=item.productName%></td>
                                     <td>
@@ -116,5 +116,5 @@
         </div>
     </div>
 </body>
-<script src="js/include.js?ver={front_version}" type="text/javascript"></script>
+<script src="js/include.js?ver=20170625104110" type="text/javascript"></script>
 </html>

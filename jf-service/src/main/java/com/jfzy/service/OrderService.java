@@ -43,8 +43,12 @@ public interface OrderService {
 	List<OrderBo> getInvestOrders(Pageable page);
 	
 	List<OrderBo> getSearchOrdersByUser(Pageable page, int userId);
-
+	
 	List<OrderBo> getInvestOrdersByUser(Pageable page, int userId);
+	
+	List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int status);
+	
+	List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int status);
 
 	void acceptorOrder(int lawyerId, int orderId);
 	
@@ -58,5 +62,8 @@ public interface OrderService {
 
 	void updateOrderStatus(int orderId, int previousStatus, int newStatus);
 	
+	void updateOrderStatus(int orderId, int newStatus);
+	
 	int getTotal(int userId);
+	
 }

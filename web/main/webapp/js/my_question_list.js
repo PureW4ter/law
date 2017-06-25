@@ -68,10 +68,11 @@ define(['component/header','ajaxhelper', 'utility', 'scroll'], function(header, 
 			var oid = $(e.target).parents(".j_result_item").data("id");
 			var productId = $(e.target).parents(".j_result_item").data("pid");
 			var params = {"id": oid};
+			e.data.ctx.oid = oid;
 			ajaxHelper.get("http://" + window.frontJSHost + "/order/pay",
                 params, e.data.ctx, function(data){
                 	if(productId == 1 || productId == 2){
-                		util.weixinPay(data.r, "question_complete.html");
+                		util.weixinPay(data.r, "question_complete.html?id=" + this.oid);
                 	}else{
                 		util.weixinPay(data.r, "my_question_list.html");
                 	}

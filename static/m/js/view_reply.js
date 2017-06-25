@@ -1,8 +1,1 @@
-define(['ajaxhelper', 'utility'], function(ajaxHelper, util) {
-    var Regist = {
-        initialize: function() {
-           timeBtn.initialize("i_getcode_btn");
-        },
-    };
-    return Regist;
-});
+define('view_reply',["ajaxhelper","utility"],function(e,t){var n={initialize:function(){timeBtn.initialize("i_getcode_btn")}};return n});

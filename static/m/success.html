@@ -23,8 +23,8 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver={front_version}" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170624203103" type="text/javascript"></script>
 <script type="text/javascript">
-    //jscontent//
+    define('success',["ajaxhelper","utility"],function(e,t){var n={intervalId:null,count:3,initialize:function(){var e=this;e.intervalId&&clearInterval(e.intervalId),e.intervalId=setInterval(function(){e.count--,e.count==0&&(window.location="my_question_list.html"),e._updateTime(e.count)},1e3)},_updateTime:function(e){$("#i_time").text(e+"s")}};return n});
 </script>
 </html>

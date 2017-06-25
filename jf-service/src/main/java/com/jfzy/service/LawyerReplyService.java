@@ -11,5 +11,7 @@ public interface LawyerReplyService {
 	void scoreReply(int replyId, int score);
 	
 	public void confirmReply(int orderId);
+	
+	void addReplyPhotos(String[] picList, int orderId);
 
 }

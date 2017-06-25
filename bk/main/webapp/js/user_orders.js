@@ -16,16 +16,31 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._sendRequest();
         },
         _sendRequest: function () {
-            var params = {
-                "page": 0,
-                "size":20,
-                "userId": util.getQueryParameter("id")
-            };
-            ajaxHelper.get("http://" + window.frontJSHost + "/api/order/ilistbyuser",
-                params, this, this._render1, null);
+            if(util.getQueryParameter("uid")){
+                var params = {
+                    "page": 0,
+                    "size":20,
+                    "userId": util.getQueryParameter("uid")
+                };
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/order/ilistbyuser",
+                    params, this, this._render1, null);
 
-            ajaxHelper.get("http://" + window.frontJSHost + "/api/order/slistbyuser",
-                params, this, this._render2, null);
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/order/slistbyuser",
+                    params, this, this._render2, null);
+            }else{
+                var params = {
+                    "page": 0,
+                    "size":20,
+                    "lawyerId": util.getQueryParameter("lid"),
+                    "status": util.getQueryParameter("status")
+                };
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/order/ilistbylawyer",
+                    params, this, this._render1, null);
+
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/order/slistbylawyer",
+                    params, this, this._render2, null);
+            }
+            
         },
         _render1: function (data) {
             this.mainBox1.html(this.tplFun1({"result":data}));

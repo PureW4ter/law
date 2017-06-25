@@ -24,7 +24,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'],functio
                 this.id = data.r.lawyerReplyVo.id;
             }
 			this.mainBox.html(this.tplfun({"result": data}));
-			this._xheditor();
+            this._xheditor();
 			this._registEvent();
 		},
 		_registEvent: function () {
@@ -35,7 +35,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'],functio
             var url="http://" + window.frontJSHost + "/api/pic/upload";
             this.editorReply = $('#i_reply').xheditor({width:'100%',height:200, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
             this.editorShizhi = $('#i_shizhi').xheditor({width:'100%',height:200, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
-            this.editorSuggest = $('#i_suggest').xheditor({width:'100%',height:200, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png",});
+            this.editorSuggest = $('#i_suggest').xheditor({width:'100%',height:200, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
             this.editorRules = $('#i_rules').xheditor({width:'100%',height:200, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
         },
         _doSave:function(e){
