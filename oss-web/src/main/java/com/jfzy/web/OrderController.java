@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,6 +55,21 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	private LawyerReplyService lawyerReplyService;
+
+	@ResponseBody
+	@GetMapping("/api/order/{orderNum}")
+	public ResponseVo<OrderVo> getOrderBySn(@PathVariable(name = "orderNum") String orderNum) {
+		if (StringUtils.isBlank(orderNum)) {
+			return new ResponseVo<OrderVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "订单号为空", null);
+		} else {
+			OrderBo bo = orderService.getOrderByOrderNum(orderNum);
+			if (bo == null) {
+				return new ResponseVo<OrderVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "无此订单", null);
+			} else {
+				return new ResponseVo<OrderVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(bo));
+			}
+		}
+	}
 
 	@ResponseBody
 	@GetMapping("/api/order/find")
