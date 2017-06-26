@@ -16,12 +16,12 @@ public class OssUserPo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
 
 	@Column(name = "phone_num")
 	private String phoneNum;
-	
+
 	private int status;
 
 	private String role;
@@ -34,10 +34,10 @@ public class OssUserPo {
 
 	@Column(name = "create_time")
 	private Timestamp createTime;
-	
+
 	@Column(name = "login_name")
 	private String loginName;
-	
+
 	private String password;
 
 	public int getId() {
@@ -119,5 +119,5 @@ public class OssUserPo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 }

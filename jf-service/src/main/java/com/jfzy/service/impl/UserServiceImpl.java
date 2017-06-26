@@ -23,11 +23,11 @@ import com.jfzy.service.repository.UserAccountRepository;
 import com.jfzy.service.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private UserAccountRepository userAccountRepo;
 
@@ -37,9 +37,9 @@ public class UserServiceImpl implements UserService{
 		UserPo po = userRepo.save(userPo);
 		return po2BoForUser(po);
 	}
-	
+
 	@Override
-	public void register(UserAccountBo ua){
+	public void register(UserAccountBo ua) {
 		UserAccountPo userAccountPo = bo2PoForUserAccount(ua);
 		userAccountRepo.save(userAccountPo);
 	}
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserBo bind(String phone, int userId) {
 		UserBo bo = this.getUser(userId);
-		if(bo != null){
+		if (bo != null) {
 			UserAccountBo abo = new UserAccountBo();
 			abo.setUserId(userId);
 			abo.setStatus(StatusEnum.ENABLED.getId());
@@ -59,12 +59,12 @@ public class UserServiceImpl implements UserService{
 		}
 		return bo;
 	}
-	
+
 	@Override
 	public void unbind(int userAccountId) {
 		userAccountRepo.updateDeleted(userAccountId);
 	}
-	
+
 	@Override
 	public List<UserBo> getUsers(Pageable page) {
 		Iterable<UserPo> values = userRepo.findAll(page);
@@ -75,26 +75,26 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserBo getUser(int id) {
-		UserPo po = userRepo.getOne(id);
+		UserPo po = userRepo.findOne(id);
 		return po2BoForUser(po);
 	}
-	
+
 	@Override
 	public UserAccountBo getUserAccountByOpenid(String openid) {
 		UserAccountPo po = userAccountRepo.getByOpenid(openid);
-		if(po!=null)
+		if (po != null)
 			return po2BoForUserAccount(po);
 		return null;
 	}
-	
+
 	@Override
 	public UserAccountBo getUserAccountByUserId(int userId, int type) {
 		UserAccountPo po = userAccountRepo.getByUserid(userId, type);
-		if(po!=null)
+		if (po != null)
 			return po2BoForUserAccount(po);
 		return null;
 	}
-	
+
 	@Override
 	public void create(UserBo bo) {
 		UserPo po = bo2PoForUser(bo);
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService{
 	public void updateMemo(String memo, int id) {
 		userRepo.updateMemo(memo, id);
 	}
-	
+
 	private static UserPo bo2PoForUser(UserBo bo) {
 		UserPo po = new UserPo();
 		BeanUtils.copyProperties(bo, po);
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService{
 		BeanUtils.copyProperties(po, bo);
 		return bo;
 	}
-	
+
 	private static UserAccountPo bo2PoForUserAccount(UserAccountBo bo) {
 		UserAccountPo po = new UserAccountPo();
 		BeanUtils.copyProperties(bo, po);

@@ -8,11 +8,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.bo.OssUserTypeEnum;
-import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 import com.jfzy.service.po.LawyerPo;
 import com.jfzy.service.po.OssUserPo;
@@ -128,7 +128,7 @@ public class OssUserServiceImpl implements OssUserService {
 
 	@Override
 	public OssUserBo getUserById(int id) {
-		OssUserPo po = ossUserRepo.getOne(id);
+		OssUserPo po = ossUserRepo.findOne(id);
 		OssUserBo bo = poToBo(po);
 		return bo;
 	}
