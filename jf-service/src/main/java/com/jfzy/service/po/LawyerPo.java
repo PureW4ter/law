@@ -34,28 +34,31 @@ public class LawyerPo {
 
 	@Column(name = "update_time")
 	private Timestamp updateTime;
-	
+
 	@Column(name = "login_name")
 	private String loginName;
-	
+
 	private String password;
 
 	private double score;
 
 	@Column(name = "on_process_task")
 	private int onProcessTask;
-	
+
 	@Column(name = "finished_task")
 	private int finishedTask;
-	
+
 	@Column(name = "total_money")
 	private double totalMoney;
-	
+
 	@Column(name = "finished_money")
 	private double finishedMoney;
 
 	@Column(name = "open_id")
 	private String openId;
+
+	@Column(name = "scored_tasks")
+	private int scoredTasks;
 
 	public int getId() {
 		return id;
@@ -183,5 +186,13 @@ public class LawyerPo {
 
 	public void setOpenId(String openId) {
 		this.openId = openId;
+	}
+
+	public int getScoredTasks() {
+		return scoredTasks;
+	}
+
+	public void setScoredTasks(int scoredTasks) {
+		this.scoredTasks = scoredTasks;
 	}
 }

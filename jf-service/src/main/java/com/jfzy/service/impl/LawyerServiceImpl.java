@@ -126,4 +126,9 @@ public class LawyerServiceImpl implements LawyerService {
 		BeanUtils.copyProperties(bo, po);
 		return po;
 	}
+
+	@Override
+	public void updateLawyerScore(int lawyerId, int score) {
+		lawyerRepo.updateLawyerScore(score, lawyerId);
+	}
 }
