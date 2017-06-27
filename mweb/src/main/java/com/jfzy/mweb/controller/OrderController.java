@@ -212,9 +212,9 @@ public class OrderController extends BaseController {
 		if (bo.getUpdateTime() != null)
 			vo.setUpdateTime(myFmt2.format(bo.getUpdateTime()));
 		if (bo.getStartTime() != null)
-			vo.setStartTime(myFmt2.format(bo.getStartTime()));
+			vo.setStartTime(myFmt.format(bo.getStartTime()));
 		if (bo.getEndTime() != null)
-			vo.setEndTime(myFmt2.format(bo.getEndTime()));
+			vo.setEndTime(myFmt.format(bo.getEndTime()));
 		if (bo.getStartTime() != null && bo.getEndTime() != null) {
 			if (new Date().getTime() >= bo.getEndTime().getTime()
 					|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
