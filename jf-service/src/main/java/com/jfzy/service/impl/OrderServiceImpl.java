@@ -224,12 +224,15 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Page<OrderBo> getOrdersByCityIdAndStatus(int cityId, int status, Pageable page) {
 		Page<OrderPo> poPage = orderRepo.findByCityIdAndStatus(cityId, status, page);
+		return poPageToBoPage(poPage, page);
+	}
+
+	private static Page<OrderBo> poPageToBoPage(Page<OrderPo> poPage, Pageable page) {
 		List<OrderBo> bos = new ArrayList<OrderBo>();
 		if (poPage.getContent() != null) {
 			poPage.getContent().forEach(po -> bos.add(poToBo(po)));
 		}
 		Page<OrderBo> resultPage = new AggregatedPageImpl<OrderBo>(bos, page, poPage.getTotalElements());
-
 		return resultPage;
 	}
 
@@ -454,4 +457,27 @@ public class OrderServiceImpl implements OrderService {
 		DateTime date = new DateTime(getNextWorkingDay(System.currentTimeMillis(), 2 * 24 * 3600 * 1000));
 		System.out.println(date);
 	}
+
+	@Override
+	public Page<OrderBo> getUncompletedOrdersByCityIdAndStatus(int cityId, Integer status, Pageable page) {
+		if (status != null) {
+			Page<OrderPo> poPage = orderRepo.findUncompletedOrderByCityIdAndStatusOrderByAsc(cityId, status, page);
+			return poPageToBoPage(poPage, page);
+		} else {
+			Page<OrderPo> poPage = orderRepo.findUncompletedOrdersByCityIdOrderByAsc(cityId, page);
+			return poPageToBoPage(poPage, page);
+		}
+	}
+
+	@Override
+	public Page<OrderBo> getCompletedOrdersByCityIdAndStatus(int cityId, Integer status, Pageable page) {
+		if (status != null) {
+			Page<OrderPo> poPage = orderRepo.findCompletedByCityIdAndStatusOrderByDesc(cityId, status, page);
+			return poPageToBoPage(poPage, page);
+		} else {
+			Page<OrderPo> poPage = orderRepo.findCompletedByCityIdOrderByDesc(cityId, page);
+			return poPageToBoPage(poPage, page);
+		}
+	}
+
 }

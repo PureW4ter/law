@@ -73,6 +73,22 @@ public class OrderController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/api/order/find")
+	public PageResponseVo<List<OrderVo>> getOrdersByCityIdAndStatusAndLevel(int cityId, Integer status, Integer level,
+			int pageNo, int size) {
+		Pageable page = new PageRequest(pageNo, size);
+
+		Page<OrderBo> orders = orderService.getOrdersByCityIdAndStatus(cityId, status, page);
+		List<OrderVo> vos = new ArrayList<OrderVo>();
+		if (orders != null && orders.getContent() != null) {
+			orders.getContent().forEach(bo -> vos.add(boToVo(bo)));
+		}
+
+		return new PageResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, vos, pageNo, size,
+				orders.getTotalElements());
+	}
+
+	@ResponseBody
+	@GetMapping("/api/order/find")
 	public PageResponseVo<List<OrderVo>> getOrdersByCityIdAndStatus(int cityId, int status, int pageNo, int size) {
 		Pageable page = new PageRequest(pageNo, size);
 		Page<OrderBo> orders = orderService.getOrdersByCityIdAndStatus(cityId, status, page);

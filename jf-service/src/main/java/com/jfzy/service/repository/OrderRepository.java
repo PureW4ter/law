@@ -78,6 +78,18 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	@Query(value = "SELECT count(*) FROM OrderPo t WHERE t.userId=?1")
 	int getTotal(int userId);
 
+	@Query(value = "SELECT t FROM OrderPo t WHERE t.cityId=?1 AND t.status=?2 ORDER BY -t.phoneEndTime DESC,t.endTime ASC")
+	Page<OrderPo> findUncompletedOrderByCityIdAndStatusOrderByAsc(int cityId, int status, Pageable page);
+
+	@Query(value = "SELECT t FROM OrderPo t WHERE t.cityId=?1 AND t.status<90 AND t.status>0 ORDER BY -t.phoneEndTime DESC,t.endTime ASC")
+	Page<OrderPo> findUncompletedOrdersByCityIdOrderByAsc(int cityId, Pageable page);
+
+	@Query(value = "SELECT t FROM OrderPo t WHERE t.cityId=?1 AND t.status=?2 ORDER BY t.endTime DESC")
+	Page<OrderPo> findCompletedByCityIdAndStatusOrderByDesc(int cityId, int status, Pageable page);
+
+	@Query(value = "SELECT t FROM OrderPo t WHERE t.cityId=?1 AND t.status>=90 ORDER BY t.endTime DESC")
+	Page<OrderPo> findCompletedByCityIdOrderByDesc(int cityId, Pageable page);
+
 	OrderPo findByUserIdAndId(int userId, int id);
 
 	int countByCityIdAndStatus(int cityId, int status);
