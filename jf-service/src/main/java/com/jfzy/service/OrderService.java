@@ -32,6 +32,10 @@ public interface OrderService {
 
 	Page<OrderBo> getOrdersByCityIdAndStatus(int cityId, int status, Pageable page);
 
+	Page<OrderBo> getCompletedOrdersByCityIdAndStatus(int cityId, Integer status, Pageable page);
+
+	Page<OrderBo> getUncompletedOrdersByCityIdAndStatus(int cityId, Integer status, Pageable page);
+
 	List<OrderBo> getOrdersByUser(int userId, Pageable page);
 
 	Page<OrderBo> getOrdresByLawyer(int lawyerId, Pageable page);
