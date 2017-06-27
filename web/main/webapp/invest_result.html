@@ -108,12 +108,22 @@
                         如需原件请拨打客服电话
                     </div>
                     <div class="invest_result_line">
+                        <%if(result.r.lawyerReplyVo.score>0){%>
                         <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
                         <div class="invest_result_line_r">
                             <div class="star_bg">
-                                <div class="star_over"></div>
+                                <div class="star_over" style="width: <%=result.r.lawyerReplyVo.score*15%>px"></div>
                             </div>
                         </div>
+                        <%}else{%>
+                        <div class="invest_result_line_l">律师评分<span class="invest_result_sub">请评分</span></div>
+                        <div class="invest_result_line_r">
+                            <div class="star_bg2" id="i_start_click">
+                                <div class="star_over" id="i_star_over" data-replyid="<%=result.r.lawyerReplyVo.id%>"></div>
+                            </div>
+                            <span class="my_op_btn" id="i_score_submit">提交</span>
+                        </div>
+                        <%}%>
                     </div>
                 </div>
                 <%}%>

@@ -200,8 +200,9 @@ CREATE TABLE `jf_lawyer_reply` (
   `reply_summary` longtext,
   `reply_suggests` longtext,
   `reply_rules` longtext,
-  `score` double DEFAULT NULL,
+  `score` double DEFAULT '0',
   `has_hukou` tinyint(1) DEFAULT '0',
+  `status` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

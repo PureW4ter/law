@@ -165,6 +165,13 @@ public class OrderController extends BaseController {
 	}
 
 	@ResponseBody
+	@GetMapping(value = "/api/order/scorereply")
+	public ResponseVo<Object> scoreReply(int replyId, double score) {
+		lawyerReplyService.scoreReply(replyId, score);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
+	@ResponseBody
 	@PostMapping(value = "/api/order/complete", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody OrderCompleteVo vo) {

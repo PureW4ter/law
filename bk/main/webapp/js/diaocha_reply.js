@@ -42,7 +42,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility', 'lib/qi
 			this._registEvent();
 		},
 		_registEvent: function () {
-            $('#i_save').off("click", this._doSave).on("click", {"ctx":this}, this._doSave);
+            $('#i_save').off("click", this._doSave).on("click", {"ctx":this, isTemp:false}, this._doSave);
+            $('#i_save_temp').off("click", this._doSave).on("click", {"ctx":this, isTemp:true}, this._doSave);
             $('#i_cancel').off("click", this._doCancel).on("click", {"ctx":this}, this._doCancel);
             $(".j_hukou li").off("click",this._hukou).on("click",{ctx: this},this._hukou);
         },
@@ -62,10 +63,11 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility', 'lib/qi
             })
 
             var params = {
-                orderId: util.getQueryParameter("id"),
-                simpleReply: e.data.ctx.editorReply?e.data.ctx.editorReply.getSource():"",
-                hasHukou: $("#i_hukou").data("value"),
-                "picList": picList
+                "orderId": util.getQueryParameter("id"),
+                "simpleReply": e.data.ctx.editorReply?e.data.ctx.editorReply.getSource():"",
+                "hasHukou": $("#i_hukou").data("value"),
+                "picList": picList,
+                "isTemp": e.data.ctx.isTemp
             }
             if (e.data.ctx.id) { 
                 params.id=e.data.ctx.id;

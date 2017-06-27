@@ -18,6 +18,7 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
 		_render:function(data){
 			this.propertis = data;
 			this.mainBox.html(this.tplfun({"result": data}));
+			$($(".j_sign_desc")[1]).hide();
 			this._registEvent();
 		},
 		_registEvent:function(){
@@ -26,6 +27,7 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
 			$("#i_question_types li").off("click", this._chooseType).on("click", {ctx: this}, this._chooseType);
 			$("#i_identity").off("change", this._changeIdentity).on("change", {ctx: this}, this._changeIdentity);
 			$("#i_trade_phase").off("change", this._changePhase).on("change", {ctx: this}, this._changePhase);
+			$("#i_sign").off("change", this._changeSignDesc).on("change", {ctx: this}, this._changeSignDesc);
 			$("#i_pay_way li").off("click", this._selectPayWay).on("click", {ctx: this}, this._selectPayWay);
 		},
 		_doCall:function(){
@@ -60,6 +62,12 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
 				}
 			);
 			e.data.ctx._registEvent();
+		},
+		_changeSignDesc:function(e){
+			var index = $(e.target).find("option").
+						not(function(){ return !this.selected }).data("index");
+			$(".j_sign_desc").hide();
+			$($(".j_sign_desc")[index]).show();
 		},
 		_pay:function(e){
 			if($('#i_phone_box').css("display") == "block" && !e.data.ctx.validate()){

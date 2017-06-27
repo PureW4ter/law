@@ -28,7 +28,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'],functio
 			this._registEvent();
 		},
 		_registEvent: function () {
-            $('#i_save').off("click", this._doSave).on("click", {"ctx":this}, this._doSave);
+            $('#i_save').off("click", this._doSave).on("click", {"ctx":this, isTemp:false}, this._doSave);
+            $('#i_save_temp').off("click", this._doSave).on("click", {"ctx":this, isTemp:true}, this._doSave);
             $('#i_cancel').off("click", this._doCancel).on("click", {"ctx":this}, this._doCancel);
         },
         _xheditor: function(){
@@ -45,7 +46,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'],functio
                 replySummary:e.data.ctx.editorShizhi?e.data.ctx.editorShizhi.getSource():"",
                 replySuggests: e.data.ctx.editorSuggest?e.data.ctx.editorSuggest.getSource():"",
                 replyRules: e.data.ctx.editorRules?e.data.ctx.editorRules.getSource():"",
-                hasHukou: 0
+                hasHukou: 0,
+                isTemp: e.data.ctx.isTemp
             }
             if (e.data.ctx.id) { 
                 params.id=e.data.ctx.id;

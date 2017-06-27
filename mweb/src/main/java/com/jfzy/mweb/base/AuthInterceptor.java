@@ -26,7 +26,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
+		/*if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 
 			AuthCheck authCheck = handlerMethod.getMethodAnnotation(AuthCheck.class);
@@ -45,10 +45,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 					return false;
 				}
 			}
-		}
-
+		}*/
 		return true;
-
 	}
 
 	private UserSession processUserSession(HttpServletRequest request) {

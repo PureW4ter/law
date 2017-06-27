@@ -112,6 +112,37 @@ define([],function(){
         	}
         	var userInfo = JSON.parse(this.getData("userInfo"));
         	return userInfo.id;
+        },
+        checkAuth:function() {
+            var userIn=localStorage.getItem("userInfo");
+            if(!userIn ) {
+                window.location="login.html";
+            }
+            if(!JSON.parse(userIn).permissions){
+                this.showToast("获取权限出错！");
+                return;
+            }
+            var authes = JSON.parse(userIn).permissions;
+            var authObj = {};
+            for (var i = 0; i < authes.length; i++) {
+            	authObj[authes[i]] = 1;
+            }
+            //客户管理
+            if (!authObj["article"]) {
+                $(".j_auth_article").addClass("hidderHidden");
+            }
+            if (!authObj["lawyer"]) {
+                $(".j_auth_lawyer").addClass("hidderHidden");
+            }
+            if (!authObj["user"]) {
+                $(".j_auth_user").addClass("hidderHidden");
+            }
+            if (!authObj["corder"]) {
+                $(".j_auth_corder").addClass("hidderHidden");
+            }
+            if (!authObj["iorder"]) {
+                $(".j_auth_iorder").addClass("hidderHidden");
+            }
         }
 	};
 	return Utility;
