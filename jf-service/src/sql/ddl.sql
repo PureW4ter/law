@@ -37,6 +37,7 @@ CREATE TABLE `jf_lawyer` (
   `open_id` varchar(45) DEFAULT NULL,
   `login_name` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
+  `scored_tasks` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
