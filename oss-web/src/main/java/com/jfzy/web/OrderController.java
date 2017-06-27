@@ -72,12 +72,28 @@ public class OrderController extends BaseController {
 	}
 
 	@ResponseBody
-	@GetMapping("/api/order/find")
-	public PageResponseVo<List<OrderVo>> getOrdersByCityIdAndStatusAndLevel(int cityId, Integer status, Integer level,
-			int pageNo, int size) {
+	@GetMapping("/api/order/uncompleted")
+	public PageResponseVo<List<OrderVo>> getUncompletedOrdersByCityIdAndStatus(int cityId, Integer status, int pageNo,
+			int size) {
 		Pageable page = new PageRequest(pageNo, size);
 
-		Page<OrderBo> orders = orderService.getOrdersByCityIdAndStatus(cityId, status, page);
+		Page<OrderBo> orders = orderService.getUncompletedOrdersByCityIdAndStatus(cityId, status, page);
+		List<OrderVo> vos = new ArrayList<OrderVo>();
+		if (orders != null && orders.getContent() != null) {
+			orders.getContent().forEach(bo -> vos.add(boToVo(bo)));
+		}
+
+		return new PageResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, vos, pageNo, size,
+				orders.getTotalElements());
+	}
+
+	@ResponseBody
+	@GetMapping("/api/order/completed")
+	public PageResponseVo<List<OrderVo>> getCompletedOrdersByCityIdAndStatus(int cityId, Integer status, int pageNo,
+			int size) {
+		Pageable page = new PageRequest(pageNo, size);
+
+		Page<OrderBo> orders = orderService.getCompletedOrdersByCityIdAndStatus(cityId, status, page);
 		List<OrderVo> vos = new ArrayList<OrderVo>();
 		if (orders != null && orders.getContent() != null) {
 			orders.getContent().forEach(bo -> vos.add(boToVo(bo)));
