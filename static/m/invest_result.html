@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link href="styles/main.css" rel="stylesheet" />
     <title>查封咨询回复</title>
 </head>
@@ -105,12 +108,22 @@
                         如需原件请拨打客服电话
                     </div>
                     <div class="invest_result_line">
+                        <%if(result.r.lawyerReplyVo.score>0){%>
                         <div class="invest_result_line_l">律师评分<span class="invest_result_sub">已评分</span></div>
                         <div class="invest_result_line_r">
                             <div class="star_bg">
-                                <div class="star_over"></div>
+                                <div class="star_over" style="width: <%=result.r.lawyerReplyVo.score*15%>px"></div>
                             </div>
                         </div>
+                        <%}else{%>
+                        <div class="invest_result_line_l">律师评分<span class="invest_result_sub">请评分</span></div>
+                        <div class="invest_result_line_r">
+                            <div class="star_bg2" id="i_start_click">
+                                <div class="star_over" id="i_star_over" data-replyid="<%=result.r.lawyerReplyVo.id%>"></div>
+                            </div>
+                            <span class="my_op_btn" id="i_score_submit">提交</span>
+                        </div>
+                        <%}%>
                     </div>
                 </div>
                 <%}%>
@@ -120,8 +133,8 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170624203103" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170627121446" type="text/javascript"></script>
 <script type="text/javascript">
-    define('invest_result',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={id:n.getQueryParameter("id")};t.get("http://"+window.frontJSHost+"/order/getreply",e,this,this._render)},_render:function(e){this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){}};return r});
+    define('invest_result',["component/header","ajaxhelper","utility"],function(e,t,n){var r={starLength:15,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={id:n.getQueryParameter("id")};t.get("http://"+window.frontJSHost+"/order/getreply",e,this,this._render)},_render:function(e){this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){$("#i_start_click").off("click",this._setScore).on("click",{ctx:this},this._setScore),$("#i_score_submit").off("click",this._doScore).on("click",{ctx:this},this._doScore)},_setScore:function(e){var t=e.data.ctx;$("#i_star_over").width(Math.ceil(e.offsetX/t.starLength)*t.starLength)},_doScore:function(e){var r=$("#i_star_over").width()/e.data.ctx.starLength;if(r<1){n.showToast("至少评价1星");return}var i={replyId:$("#i_star_over").data("replyid"),score:r};t.get("http://"+window.frontJSHost+"/order/scorereply",i,e.data.ctx,function(){n.showToast("评分成功！",function(){e.data.ctx._sendRequest()})})}};return r});
 </script>
 </html>
