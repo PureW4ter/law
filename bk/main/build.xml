@@ -97,12 +97,12 @@
 		<replace file="webapp/dist/js/include.js" token="{front_version}" value="${my.dt}" encoding="UTF-8"/>
 
 		<!--js copy-->
-		<copy toDir="${server.base.output}" overwrite="true" filtering="false">
+		<copy toDir="${server.base.output}" overwrite="true" filtering="false" encoding="utf-8">
 			<fileSet dir="webapp/dist" casesensitive="false">
 				<include name="**/*.*" />
 			</fileSet>
 		</copy>
-		<copy toDir="${server.base.output}" overwrite="true" filtering="false">
+		<copy toDir="${server.base.output}" overwrite="true" filtering="false" encoding="utf-8">
 			<fileSet dir="webapp/dist" casesensitive="false">
 				<include name="**/*.js" />
 			</fileSet>
