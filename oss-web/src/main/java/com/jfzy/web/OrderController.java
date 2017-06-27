@@ -266,7 +266,7 @@ public class OrderController extends BaseController {
 		} else {
 			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		}
-		lawyerReplyService.createReply(bo);
+		lawyerReplyService.createReply(bo, vo.isTemp());
 		lawyerReplyService.addReplyPhotos(vo.getPicList(), vo.getOrderId());
 
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);

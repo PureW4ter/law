@@ -58,13 +58,16 @@
                     <div class="new_input_box arrow_down">
                         <label>我已经签署了<span class="red_start">*</span></label>
                         <select id="i_sign">
-                            <%_.each(result.r[1],function(item){%>
-                            <option value="<%=item.id%>"><%=item.name%></option>
+                            <%_.each(result.r[1],function(item, index){%>
+                            <option value="<%=item.id%>" data-index="<%=index%>"><%=item.name%></option>
                             <%})%>
                         </select>
                     </div>
-                    <div class="input_bottom">
-                        提示：根据选择的合同类型做提示说明
+                    <div class="input_bottom j_sign_desc">
+                        提示：根据选择的合同类型做提示说明1
+                    </div>
+                    <div class="input_bottom j_sign_desc">
+                        提示：根据选择的合同类型做提示说明2
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box" id="i_phone_box">

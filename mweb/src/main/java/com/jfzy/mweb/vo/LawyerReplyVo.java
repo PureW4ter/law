@@ -12,6 +12,8 @@ public class LawyerReplyVo {
 	private String replySuggests;
 	private String replyRules;
 	private int hasHukou;
+	private int status;
+	private double score;
 	
 	public int getId() {
 		return id;
@@ -79,4 +81,17 @@ public class LawyerReplyVo {
 	public void setHasHukou(int hasHukou) {
 		this.hasHukou = hasHukou;
 	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public double getScore() {
+		return score;
+	}
+	public void setScore(double score) {
+		this.score = score;
+	}
+	
 }

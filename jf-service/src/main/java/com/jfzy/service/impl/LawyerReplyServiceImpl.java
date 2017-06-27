@@ -37,10 +37,12 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 	private OrderService orderSerivce;
 
 	@Override
-	public void createReply(LawyerReplyBo bo) {
+	public void createReply(LawyerReplyBo bo, boolean isTemp) {
 		LawyerReplyPo po = boToPo(bo);
 		replyRepo.save(po);
-		orderSerivce.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED_NEEDCONFIRM.getId());
+		if(!isTemp){
+			orderSerivce.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED_NEEDCONFIRM.getId());
+		}
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 	}
 
 	@Override
-	public void scoreReply(int replyId, int score) {
+	public void scoreReply(int replyId, double score) {
 		replyRepo.updateScore(LawyerReplyStatusEnum.SCORED.getId(), score, replyId);
 	}
 

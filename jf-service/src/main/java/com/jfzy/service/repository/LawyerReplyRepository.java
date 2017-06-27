@@ -17,6 +17,6 @@ public interface LawyerReplyRepository extends JpaRepository<LawyerReplyPo, Inte
 	@Transactional
 	@Modifying
 	@Query("UPDATE LawyerReplyPo SET status=?1, score=?2 WHERE id=?3")
-	void updateScore(int status, int score, int id);
+	void updateScore(int status, double score, int id);
 
 }

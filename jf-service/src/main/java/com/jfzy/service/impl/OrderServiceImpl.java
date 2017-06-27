@@ -156,12 +156,13 @@ public class OrderServiceImpl implements OrderService {
 		OrderBo obo = getOrderById(id);
 		if (Constants.PRODUCT_CODE_ZIXUNP.equals(obo.getProductCode())) {
 			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000),
+					new Timestamp(getNextWorkingDay(System.currentTimeMillis(), 24 * 60 * 60 * 1000)),
 					new Timestamp(System.currentTimeMillis() + 2 * 60 * 60 * 1000),
 					new Timestamp(System.currentTimeMillis()), id);
 		} else {
 			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
-					new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), null,
+					new Timestamp(getNextWorkingDay(System.currentTimeMillis(), 24 * 60 * 60 * 1000)), 
+					null,
 					new Timestamp(System.currentTimeMillis()), id);
 		}
 	}
@@ -340,7 +341,7 @@ public class OrderServiceImpl implements OrderService {
 						orderRepo.updatePayStatusAndStatus(OrderPayStatusEnum.PAYED.getId(),
 								OrderStatusEnum.NEED_DISPATCH.getId(), po.getId());
 						orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
-								new Timestamp(System.currentTimeMillis() + 24 * 60 * 60 * 1000), null,
+								new Timestamp(getNextWorkingDay(System.currentTimeMillis(), 24 * 60 * 60 * 1000)), null,
 								new Timestamp(System.currentTimeMillis()), po.getId());
 					}
 				}

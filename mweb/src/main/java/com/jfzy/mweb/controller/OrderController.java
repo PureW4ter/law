@@ -165,6 +165,13 @@ public class OrderController extends BaseController {
 	}
 
 	@ResponseBody
+	@GetMapping(value = "/api/order/scorereply")
+	public ResponseVo<Object> scoreReply(int replyId, double score) {
+		lawyerReplyService.scoreReply(replyId, score);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
+	@ResponseBody
 	@PostMapping(value = "/api/order/complete", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody OrderCompleteVo vo) {
@@ -212,9 +219,9 @@ public class OrderController extends BaseController {
 		if (bo.getUpdateTime() != null)
 			vo.setUpdateTime(myFmt2.format(bo.getUpdateTime()));
 		if (bo.getStartTime() != null)
-			vo.setStartTime(myFmt2.format(bo.getStartTime()));
+			vo.setStartTime(myFmt.format(bo.getStartTime()));
 		if (bo.getEndTime() != null)
-			vo.setEndTime(myFmt2.format(bo.getEndTime()));
+			vo.setEndTime(myFmt.format(bo.getEndTime()));
 		if (bo.getStartTime() != null && bo.getEndTime() != null) {
 			if (new Date().getTime() >= bo.getEndTime().getTime()
 					|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {

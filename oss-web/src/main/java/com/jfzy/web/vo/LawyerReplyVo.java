@@ -13,6 +13,9 @@ public class LawyerReplyVo {
 	private String replyRules;
 	private int hasHukou;
 	private String[] picList;
+	private boolean isTemp;
+	private int status;
+	private double score;
 	
 	public int getId() {
 		return id;
@@ -85,5 +88,23 @@ public class LawyerReplyVo {
 	}
 	public void setPicList(String[] picList) {
 		this.picList = picList;
+	}
+	public boolean isTemp() {
+		return isTemp;
+	}
+	public void setTemp(boolean isTemp) {
+		this.isTemp = isTemp;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public double getScore() {
+		return score;
+	}
+	public void setScore(double score) {
+		this.score = score;
 	}
 }

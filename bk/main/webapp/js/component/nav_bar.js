@@ -9,7 +9,7 @@ define(['text!./nav_bar.html','../utility'], function (tempHtml,util) {
             //使用完成后，删除
             $("#i_navbar_tpl").remove();
             $("#" + divId).html(this.navbartplfun({"nav_select": nav_select}));
-            //util.checkAuth();
+            util.checkAuth();
             this._registEvent();
         },
         _registEvent: function () {
