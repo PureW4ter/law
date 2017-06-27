@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link href="styles/main.css" rel="stylesheet" />
     <title>律师代查</title>
 </head>
@@ -43,7 +46,7 @@
         </div>
     </div>
 </body>
-<script src="js/lib/lib.js?ver=20170624203103" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170627121446" type="text/javascript"></script>
 <script type="text/javascript">
     define('lawyer_invest_info',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this._sendRequest()},_sendRequest:function(){this._render()},_render:function(){this._registEvent()},_registEvent:function(){$("#i_help").off("click",this._doCall).on("click",{ctx:this},this._doCall),$("#i_go1").off("click",this._go1).on("click",{ctx:this},this._go1),$("#i_go2").off("click",this._go2).on("click",{ctx:this},this._go2)},_doCall:function(){window.location="tel://"+n.phone},_go1:function(){window.location="hukou_search.html"},_go2:function(){window.location="sealup_search.html"}};return r});
 </script>

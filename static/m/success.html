@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link href="styles/main.css" rel="stylesheet" />
     <title>提交成功</title>
 </head>
@@ -23,7 +26,7 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170624203103" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170627121446" type="text/javascript"></script>
 <script type="text/javascript">
     define('success',["ajaxhelper","utility"],function(e,t){var n={intervalId:null,count:3,initialize:function(){var e=this;e.intervalId&&clearInterval(e.intervalId),e.intervalId=setInterval(function(){e.count--,e.count==0&&(window.location="my_question_list.html"),e._updateTime(e.count)},1e3)},_updateTime:function(e){$("#i_time").text(e+"s")}};return n});
 </script>

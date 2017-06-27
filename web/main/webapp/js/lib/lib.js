@@ -27,13 +27,12 @@ $("body").append('<div id="i_loading_content" class="loading_content"><div class
 //---------------------------------------------------------------------------------------
 //配置信息
 
-
 window.frontJSVersion = "{front_version}";
 window.UrlHost = "{UrlHost}";
 window.frontJSHost = "{frontJSHost}";
 
 //window.frontJSHost = "wx.jf-zy.com/api";
-window.frontJSHost = "localhost:8080/api";
+//window.frontJSHost = "localhost:8080/api";
 //139.224.210.204,!qa2ws3ed
 window.UrlHost = "wx.jf-zy.com";
 
