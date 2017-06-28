@@ -31,5 +31,5 @@ public interface LawyerService {
 
 	void updateFinishedMoney(double money, int id);
 
-	void updateLawyerScore(int lawyerId, int score);
+	void updateLawyerScore(int lawyerId, double score);
 }

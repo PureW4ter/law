@@ -31,6 +31,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'],functio
             $('#i_save').off("click", this._doSave).on("click", {"ctx":this, isTemp:false}, this._doSave);
             $('#i_save_temp').off("click", this._doSave).on("click", {"ctx":this, isTemp:true}, this._doSave);
             $('#i_cancel').off("click", this._doCancel).on("click", {"ctx":this}, this._doCancel);
+            $('#i_confirm').off("click", this._doConfirm).on("click", {"ctx":this}, this._doConfirm);
+            $('#i_cancel_assign').off("click", this._doCancelAssign).on("click", {"ctx":this}, this._doCancelAssign);
         },
         _xheditor: function(){
             var url="http://" + window.frontJSHost + "/api/pic/upload";
@@ -38,6 +40,28 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'],functio
             this.editorShizhi = $('#i_shizhi').xheditor({width:'100%',height:200, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
             this.editorSuggest = $('#i_suggest').xheditor({width:'100%',height:200, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
             this.editorRules = $('#i_rules').xheditor({width:'100%',height:200, html5Upload:false, upImgUrl:url, upImgExt:"jpg,jpeg,gif,png"});
+        },
+        _doConfirm:function(e){
+            var params = {
+                "orderId": util.getQueryParameter("id"),
+            };
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/order/confirm",
+                params, e.data.ctx, function(){
+                        util.showToast("更新成功！", function(){
+                            window.location = "lawyer_home.html";
+                        })
+                    });
+        },
+        _doCancelAssign:function(e){
+            var params = {
+                "id": util.getQueryParameter("id"),
+            };
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/order/assignment",
+                params, e.data.ctx, function(){
+                        util.showToast("更新成功！", function(){
+                            window.location = "lawyer_home.html";
+                        })
+                    });
         },
         _doSave:function(e){
             var params = {
@@ -47,7 +71,8 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'],functio
                 replySuggests: e.data.ctx.editorSuggest?e.data.ctx.editorSuggest.getSource():"",
                 replyRules: e.data.ctx.editorRules?e.data.ctx.editorRules.getSource():"",
                 hasHukou: 0,
-                isTemp: e.data.ctx.isTemp
+                isTemp: e.data.ctx.isTemp,
+                needConfirm: util.isLawyer()
             }
             if (e.data.ctx.id) { 
                 params.id=e.data.ctx.id;

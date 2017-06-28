@@ -128,7 +128,7 @@ public class LawyerServiceImpl implements LawyerService {
 	}
 
 	@Override
-	public void updateLawyerScore(int lawyerId, int score) {
+	public void updateLawyerScore(int lawyerId, double score) {
 		lawyerRepo.updateLawyerScore(score, lawyerId);
 	}
 }

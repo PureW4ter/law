@@ -41,7 +41,7 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170627121446" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170628152259" type="text/javascript"></script>
 <script type="text/javascript">
     define('read_keys',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={};t.get("http://"+window.frontJSHost+"/article/tag",e,this,this._render)},_render:function(e){if(n.getData("readKeys")){var t=JSON.parse(n.getData("readKeys"));e.r.forEach(function(e,n){for(var r=0;r<t.length;r++)e.name==t[r]&&(e.selected=!0)})}this.mainBox.html(this.tplfun({result:e,readKeys:t})),this._registEvent()},_registEvent:function(){$("#i_read_keys").off("click","li",this._select).on("click","li",{ctx:this},this._select),$("#i_go").off("click",this._go).on("click",{ctx:this},this._go)},_go:function(e){var t=new Array;$(".key_selected").forEach(function(e,n){t.push($(e).parents("li").data("name"))}),n.saveData("readKeys",JSON.stringify(t)),window.location="read_list.html"},_select:function(e){$(e.currentTarget).find("div").toggleClass("key_selected")}};return r});
 </script>

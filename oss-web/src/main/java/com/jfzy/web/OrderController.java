@@ -102,7 +102,7 @@ public class OrderController extends BaseController {
 		return new PageResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, vos, pageNo, size,
 				orders.getTotalElements());
 	}
-
+	
 	@ResponseBody
 	@GetMapping("/api/order/find")
 	public PageResponseVo<List<OrderVo>> getOrdersByCityIdAndStatus(int cityId, int status, int pageNo, int size) {
@@ -268,6 +268,9 @@ public class OrderController extends BaseController {
 		}
 		lawyerReplyService.createReply(bo, vo.isTemp());
 		lawyerReplyService.addReplyPhotos(vo.getPicList(), vo.getOrderId());
+		if(!vo.isNeedConfirm()){
+			orderService.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED.getId());
+		}
 
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}

@@ -7,7 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <link href="styles/main.css" rel="stylesheet" />
-    <title>精准阅读详情</title>
+    <title>小编说</title>
 </head>
 <body>
     <div id="i_main">
@@ -21,7 +21,7 @@
                 <div class="read_detail_box">
                     <div class="read_detail_content">
                         <div class="read_detail_title"><%=result.r.title%></div>
-                        <div><%=result.r.content%></div>
+                        <div><%=result.r.content.replace(/http:\/\/mmbiz\.qpic\.cn/g, "http://read\.html5\.qq\.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpic.cn")%></div>
                     </div>
                 </div>
                 </script>

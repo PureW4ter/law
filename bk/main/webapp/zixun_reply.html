@@ -46,18 +46,29 @@
                                     <label class="col-sm-3 control-label">交易阶段:</label>
                                     <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.tradePhase%></p></label>
                                 </div>
-                                <%if(result.r.orderVo.productCode=="J"){%>
+<%if(result.r.orderVo.productCode=="J"){%>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">问题描述:</label>
                                     <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.memo%></p></label>
                                 </div>
+                <%if(result.r.orderVo.status==4 || result.r.orderVo.status==7){%>
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">回复:</label>
                                     <div class="col-sm-9">
                                         <textarea id="i_reply" rows="5" class="xheditor"><%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.simpleReply:""%></textarea>
                                     </div>
                                 </div>
-                                <%}else{%>
+                <%}else{%>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">回复:</label>
+                                    <div class="col-sm-9">
+                                       <%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.simpleReply:""%>
+                                    </div>
+                                </div>
+                <%}%>
+                            </form>
+<%}else{%>
+                <%if(result.r.orderVo.status==4 || result.r.orderVo.status==7){%>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">问题类型:</label>
                                     <label class="col-sm-8 control-label "><p class="text-left"><%=result.r.orderVo.tradeSubphase%></p></label>
@@ -86,7 +97,6 @@
                                         <%}%>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="" class="col-sm-3 control-label">实质:</label>
                                     <div class="col-sm-9">
@@ -105,14 +115,43 @@
                                         <textarea id="i_rules" rows="5" class="xheditor"><%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.replyRules:""%></textarea>
                                     </div>
                                 </div>
-                                <%}%>
+                                </form>
+                                <%if(result.r.orderVo.status!=7){%>
                                 <div class="col-sm-9 paddingtop30">
                                     <button class="btn btn-yel pull-right" id="i_save">保存并提交</button>
                                     <button class="btn btn-default pull-right marginR26" id="i_save_temp">暂存</button>
                                     <button class="btn btn-default pull-right marginR26" id="i_cancel">取消</button>
                                 </div>
+                                <%}else{%>
+                                <div class="col-sm-9 paddingtop30">
+                                    <button class="btn btn-yel pull-right" id="i_save">保存并通过</button>
+                                    <button class="btn btn-default pull-right marginR26" id="i_confirm">通过</button>
+                                    <button class="btn btn-default pull-right marginR26" id="i_cancel_assign">取消指派</button>
+                                </div>
+                                <%}%>
+                <%}else{%>
+                            <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">实质:</label>
+                                    <div class="col-sm-9">
+                                        <%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.replySummary:""%>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">律师建议:</label>
+                                    <div class="col-sm-9">
+                                       <%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.replySuggests:""%>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-3 control-label">法律法规:</label>
+                                    <div class="col-sm-9">
+                                        <%=result.r.lawyerReplyVo?result.r.lawyerReplyVo.replyRules:""%>
+                                    </div>
+                                </div>
+                <%}%>
                             </form>
-                            
+<%}%>
+
                         </script>
                     </div>
                 </div>
