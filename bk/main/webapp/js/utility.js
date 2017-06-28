@@ -113,6 +113,23 @@ define([],function(){
         	var userInfo = JSON.parse(this.getData("userInfo"));
         	return userInfo.id;
         },
+        isLawyer:function(){
+        	var userIn=localStorage.getItem("userInfo");
+            if(!userIn ) {
+                window.location="login.html";
+            }
+            if(!JSON.parse(userIn).permissions){
+                this.showToast("获取权限出错！");
+                return;
+            }
+            var authes = JSON.parse(userIn).permissions;
+            for (var i = 0; i < authes.length; i++) {
+            	if(authes[i] == "lawyer"){
+            		return true;
+            	}
+            }
+            return false;
+        },
         checkAuth:function() {
             var userIn=localStorage.getItem("userInfo");
             if(!userIn ) {

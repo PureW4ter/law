@@ -16,6 +16,7 @@ public class LawyerReplyVo {
 	private boolean isTemp;
 	private int status;
 	private double score;
+	private boolean needConfirm;
 	
 	public int getId() {
 		return id;
@@ -107,4 +108,11 @@ public class LawyerReplyVo {
 	public void setScore(double score) {
 		this.score = score;
 	}
+	public boolean isNeedConfirm() {
+		return needConfirm;
+	}
+	public void setNeedConfirm(boolean needConfirm) {
+		this.needConfirm = needConfirm;
+	}
+	
 }

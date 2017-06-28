@@ -17,16 +17,16 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 		},
 		_render:function(data){
 			this.detailBox.html(this.tplDetailfun({"result": data}));
+			$(".rich_media_global_msg").hide();
+			$("img").forEach(function(item, index){
+				$(item).attr("src", $(item).data("src"));
+			});
 			var params = {tags:data.r.tags.join(","), "page": 0, "size": 2};
 			ajaxHelper.get("http://" + window.frontJSHost + "/article/list",
                 params, this, this._renderList);
 		},
 		_renderList:function(data){
 			this.listBox.html(this.tplListfun({"result": data}));
-			$(".rich_media_global_msg").hide();
-			$("img").forEach(function(item, index){
-				$(item).attr("src", $(item).data("src"));
-			});
 			this._registEvent();
 		},
 		_registEvent:function(){

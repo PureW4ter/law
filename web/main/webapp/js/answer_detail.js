@@ -15,6 +15,10 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
 		},
 		_render:function(data){
 			this.detailBox.html(this.tplDetailfun({"result": data}));
+			$(".rich_media_global_msg").hide();
+			$("img").forEach(function(item, index){
+				$(item).attr("src", $(item).data("src"));
+			});
 		},
 		_registEvent:function(){
 		}

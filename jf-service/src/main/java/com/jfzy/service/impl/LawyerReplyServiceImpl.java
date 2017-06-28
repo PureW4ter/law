@@ -19,6 +19,7 @@ import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.po.LawyerReplyPo;
 import com.jfzy.service.po.OrderPhotoPo;
 import com.jfzy.service.repository.LawyerReplyRepository;
+import com.jfzy.service.repository.LawyerRepository;
 import com.jfzy.service.repository.OrderPhotoRepository;
 
 @Service
@@ -29,6 +30,9 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 
 	@Autowired
 	private OrderPhotoRepository orderPhotoRepo;
+	
+	@Autowired
+	private LawyerRepository lawyerRepo;
 
 	@Autowired
 	private LawyerService lawyerSerivce;
@@ -66,8 +70,11 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 
 	@Override
 	public void scoreReply(int replyId, double score) {
+		LawyerReplyPo po = replyRepo.getOne(replyId);
 		replyRepo.updateScore(LawyerReplyStatusEnum.SCORED.getId(), score, replyId);
+		lawyerRepo.updateLawyerScore(score, po.getLawyerId());
 	}
+	
 
 	@Override
 	public void addReplyPhotos(String[] picList, int orderId) {

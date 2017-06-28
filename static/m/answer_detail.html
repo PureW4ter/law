@@ -7,7 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <link href="styles/main.css" rel="stylesheet" />
-    <title>精准阅读详情</title>
+    <title>小编说</title>
 </head>
 <body>
     <div id="i_main">
@@ -21,7 +21,7 @@
                 <div class="read_detail_box">
                     <div class="read_detail_content">
                         <div class="read_detail_title"><%=result.r.title%></div>
-                        <div><%=result.r.content%></div>
+                        <div><%=result.r.content.replace(/http:\/\/mmbiz\.qpic\.cn/g, "http://read\.html5\.qq\.com/image?src=forum&q=5&r=0&imgflag=7&imageUrl=http://mmbiz.qpic.cn")%></div>
                     </div>
                 </div>
                 </script>
@@ -30,8 +30,8 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170627121446" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170628152259" type="text/javascript"></script>
 <script type="text/javascript">
-    define('answer_detail',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this.detailBox=$("#i_detail"),this.tplDetailfun=_.template($("#i_tpl_detail").html()),this._sendRequest()},_sendRequest:function(){var e={id:n.getQueryParameter("id")};t.get("http://"+window.frontJSHost+"/article/detail",e,this,this._render)},_render:function(e){this.detailBox.html(this.tplDetailfun({result:e}))},_registEvent:function(){}};return r});
+    define('answer_detail',["component/header","ajaxhelper","utility"],function(e,t,n){var r={initialize:function(){this.detailBox=$("#i_detail"),this.tplDetailfun=_.template($("#i_tpl_detail").html()),this._sendRequest()},_sendRequest:function(){var e={id:n.getQueryParameter("id")};t.get("http://"+window.frontJSHost+"/article/detail",e,this,this._render)},_render:function(e){this.detailBox.html(this.tplDetailfun({result:e})),$(".rich_media_global_msg").hide(),$("img").forEach(function(e,t){$(e).attr("src",$(e).data("src"))})},_registEvent:function(){}};return r});
 </script>
 </html>
