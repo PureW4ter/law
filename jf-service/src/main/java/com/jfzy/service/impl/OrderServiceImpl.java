@@ -1,7 +1,9 @@
 package com.jfzy.service.impl;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -21,6 +23,7 @@ import com.jfzf.core.Constants;
 import com.jfzy.service.IdService;
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.OrderService;
+import com.jfzy.service.SmsService;
 import com.jfzy.service.bo.IdTypeEnum;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
@@ -33,6 +36,7 @@ import com.jfzy.service.bo.PayWayEnum;
 import com.jfzy.service.bo.UserLevelEnum;
 import com.jfzy.service.bo.WxPayEventBo;
 import com.jfzy.service.bo.WxPayResponseDto;
+import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 import com.jfzy.service.po.OrderPhotoPo;
 import com.jfzy.service.po.OrderPo;
@@ -44,6 +48,8 @@ import com.jfzy.service.repository.UserRepository;
 public class OrderServiceImpl implements OrderService {
 
 	private static Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+
+	private static final String TIME_FORMAT = "MM月dd日HH时mm分";
 
 	@Autowired
 	private OrderRepository orderRepo;
@@ -62,6 +68,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private IdService idService;
+
+	@Autowired
+	private SmsService smsService;
 
 	private int generateId(int page) {
 
@@ -161,8 +170,7 @@ public class OrderServiceImpl implements OrderService {
 					new Timestamp(System.currentTimeMillis()), id);
 		} else {
 			orderRepo.setStartAndEndTime(new Timestamp(System.currentTimeMillis()),
-					new Timestamp(getNextWorkingDay(System.currentTimeMillis(), 24 * 60 * 60 * 1000)), 
-					null,
+					new Timestamp(getNextWorkingDay(System.currentTimeMillis(), 24 * 60 * 60 * 1000)), null,
 					new Timestamp(System.currentTimeMillis()), id);
 		}
 	}
@@ -187,8 +195,10 @@ public class OrderServiceImpl implements OrderService {
 				po.setProcessorId(processorId);
 				po.setProcessorName(processorName);
 				po.setStatus(OrderStatusEnum.DISPATCHED.getId());
+				po.setNotifyStatus(0);
 				orderRepo.save(po);
 				lawyerSerivce.updateOnProcessTask(1, lawyerId);
+				notify(po);
 			} else {
 				throw new JfErrorCodeRuntimeException(400, "订单状态错误",
 						String.format("ASSIGN-ORDER: Order wrong status.Order %s, Status %s", orderId, po.getStatus()));
@@ -197,6 +207,27 @@ public class OrderServiceImpl implements OrderService {
 			throw new JfErrorCodeRuntimeException(400, "无此律师或非启用律师",
 					String.format("ASSIGN-ORDER: Active lawyer not found:%s", lawyerId));
 		}
+	}
+
+	private void notify(OrderPo order) {
+		String time = getTime(order.getPhoneEndTime(), order.getEndTime());
+		smsService.sendLawyerNotify(order.getLawyerPhoneNum(), order.getProductName(),
+				String.valueOf(order.getRealPrice()), time, "");
+	}
+
+	private static String getTime(Timestamp phoneEndTime, Timestamp endTime) {
+		SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT);
+		if (phoneEndTime != null) {
+			return sdf.format(new Date(phoneEndTime.getTime()));
+		} else if (endTime != null) {
+			return sdf.format(new Date(endTime.getTime()));
+		} else {
+			throw new JfApplicationRuntimeException("end time is null");
+		}
+	}
+
+	public static void main(String[] args) {
+		System.out.println(getTime(new Timestamp(System.currentTimeMillis()), null));
 	}
 
 	@Override
@@ -452,11 +483,6 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		return date.getMillis();
-	}
-
-	public static void main(String[] args) {
-		DateTime date = new DateTime(getNextWorkingDay(System.currentTimeMillis(), 2 * 24 * 3600 * 1000));
-		System.out.println(date);
 	}
 
 	@Override

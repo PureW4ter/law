@@ -108,6 +108,9 @@ public class OrderPo {
 	@Column(name = "trade_subphase")
 	private String tradeSubphase;
 
+	@Column(name = "notify_status")
+	private int notifyStatus;
+
 	public int getId() {
 		return id;
 	}
@@ -370,6 +373,14 @@ public class OrderPo {
 
 	public void setOrderNum(String orderNum) {
 		this.orderNum = orderNum;
+	}
+
+	public int getNotifyStatus() {
+		return notifyStatus;
+	}
+
+	public void setNotifyStatus(int notifyStatus) {
+		this.notifyStatus = notifyStatus;
 	}
 
 }

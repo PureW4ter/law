@@ -2,6 +2,7 @@ package com.jfzy.service.impl;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.aliyun.mns.client.CloudAccount;
@@ -12,12 +13,14 @@ import com.aliyun.mns.model.MessageAttributes;
 import com.aliyun.mns.model.RawTopicMessage;
 import com.aliyun.mns.model.TopicMessage;
 import com.jfzy.service.SmsService;
+import com.jfzy.service.exception.JfApplicationRuntimeException;
 import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 
 @Service
 public class SmsServiceImpl implements SmsService {
 
 	private static final String TEMPLATE_REGISTER = "SMS_69015764";
+	private static final String TEMPLATE_NOTIFY = "SMS_70620533";
 	private static final String PARAM_CODE = "code";
 	private static final String PARAM_PRODUCT = "product";
 	private static final String VALUE_PRODUCT = "简法二手房";
@@ -40,29 +43,33 @@ public class SmsServiceImpl implements SmsService {
 		s.sendRegisterCode("18616800563", "1234");
 	}
 
-	@Override
-	public void sendRegisterCode(String phoneNum, String code) {
+	public void sendLawyerNotify(String lawyerPhone, String productType, String price, String time, String content) {
+		if (StringUtils.isNotBlank(lawyerPhone)) {
+			BatchSmsAttributes.SmsReceiverParams smsReceiverParams = new BatchSmsAttributes.SmsReceiverParams();
+			smsReceiverParams.setParam("productType", productType);
+			smsReceiverParams.setParam("price", price);
+			smsReceiverParams.setParam("time", time);
+			smsReceiverParams.setParam("content", content);
+			smsReceiverParams.setParam("tel", "");
+			send(smsReceiverParams, lawyerPhone, TEMPLATE_NOTIFY);
+		} else {
+			throw new JfApplicationRuntimeException("Sms phone num is empty");
+		}
+	}
+
+	private void send(BatchSmsAttributes.SmsReceiverParams smsReceiverParams, String phoneNum, String template) {
+
+		MessageAttributes messageAttributes = new MessageAttributes();
+		BatchSmsAttributes batchSmsAttributes = new BatchSmsAttributes();
+		batchSmsAttributes.setFreeSignName(SIGN_NAME);
+		batchSmsAttributes.setTemplateCode(template);
+		messageAttributes.setBatchSmsAttributes(batchSmsAttributes);
+		batchSmsAttributes.addSmsReceiver(phoneNum, smsReceiverParams);
 
 		MNSClient client = account.getMNSClient();
 		CloudTopic topic = client.getTopicRef(TOPIC_NAME);
 		RawTopicMessage msg = new RawTopicMessage();
 		msg.setMessageBody("sms-message");
-		/**
-		 * Step 3. 生成SMS消息属性
-		 */
-		MessageAttributes messageAttributes = new MessageAttributes();
-		BatchSmsAttributes batchSmsAttributes = new BatchSmsAttributes();
-		// 3.1 设置发送短信的签名（SMSSignName）
-		batchSmsAttributes.setFreeSignName(SIGN_NAME);
-		// 3.2 设置发送短信使用的模板（SMSTempateCode）
-		batchSmsAttributes.setTemplateCode(TEMPLATE_REGISTER);
-		// 3.3 设置发送短信所使用的模板中参数对应的值（在短信模板中定义的，没有可以不用设置）
-		BatchSmsAttributes.SmsReceiverParams smsReceiverParams = new BatchSmsAttributes.SmsReceiverParams();
-		smsReceiverParams.setParam(PARAM_CODE, code);
-		smsReceiverParams.setParam(PARAM_PRODUCT, VALUE_PRODUCT);
-		// 3.4 增加接收短信的号码
-		batchSmsAttributes.addSmsReceiver(phoneNum, smsReceiverParams);
-		messageAttributes.setBatchSmsAttributes(batchSmsAttributes);
 		try {
 			/**
 			 * Step 4. 发布SMS消息
@@ -72,5 +79,14 @@ public class SmsServiceImpl implements SmsService {
 		} catch (RuntimeException e) {
 			throw new JfErrorCodeRuntimeException(400, "短信验证码发送失败", "SMS-SEND failed", e);
 		}
+
+	}
+
+	@Override
+	public void sendRegisterCode(String phoneNum, String code) {
+		BatchSmsAttributes.SmsReceiverParams smsReceiverParams = new BatchSmsAttributes.SmsReceiverParams();
+		smsReceiverParams.setParam(PARAM_CODE, code);
+		smsReceiverParams.setParam(PARAM_PRODUCT, VALUE_PRODUCT);
+		send(smsReceiverParams, phoneNum, TEMPLATE_REGISTER);
 	}
 }
