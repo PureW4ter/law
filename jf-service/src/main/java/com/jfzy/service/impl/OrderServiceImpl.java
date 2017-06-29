@@ -211,8 +211,11 @@ public class OrderServiceImpl implements OrderService {
 
 	private void notify(OrderPo order) {
 		String time = getTime(order.getPhoneEndTime(), order.getEndTime());
-		smsService.sendLawyerNotify(order.getLawyerPhoneNum(), order.getProductName(),
-				String.valueOf(order.getRealPrice()), time, "");
+		String productName = Constants.PRODUCT_CODE_ZIXUNP.equals(order.getProductCode())
+				|| Constants.PRODUCT_CODE_ZIXUN.equals(order.getProductCode())
+				|| Constants.PRODUCT_CODE_JIANDANWEN.equals(order.getProductCode()) ? "咨询" : "调查";
+		smsService.sendLawyerNotify(order.getLawyerPhoneNum(), productName, String.valueOf(order.getRealPrice()), time,
+				"");
 	}
 
 	private static String getTime(Timestamp phoneEndTime, Timestamp endTime) {
