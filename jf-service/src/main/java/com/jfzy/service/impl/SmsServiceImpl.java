@@ -49,8 +49,8 @@ public class SmsServiceImpl implements SmsService {
 			smsReceiverParams.setParam("productType", productType);
 			smsReceiverParams.setParam("price", price);
 			smsReceiverParams.setParam("time", time);
-			smsReceiverParams.setParam("content", content);
-			smsReceiverParams.setParam("tel", "");
+			smsReceiverParams.setParam("content", "回复报告");
+			smsReceiverParams.setParam("tel", "17602105663");
 			send(smsReceiverParams, lawyerPhone, TEMPLATE_NOTIFY);
 		} else {
 			throw new JfApplicationRuntimeException("Sms phone num is empty");
