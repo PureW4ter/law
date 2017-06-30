@@ -9,12 +9,20 @@ import org.springframework.stereotype.Service;
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.NotificationService;
 import com.jfzy.service.OrderService;
+import com.jfzy.service.UserService;
 import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.OrderBo;
 import com.jfzy.service.bo.OrderStatusEnum;
+import com.jfzy.service.bo.UserAccountBo;
+import com.jfzy.service.bo.UserAccountTypeEnum;
+import com.jfzy.service.weixin.dto.MessageRequestDto;
+import com.jfzy.service.weixin.dto.MessageRequestDto.MessageData;
+import com.jfzy.service.weixin.dto.MessageRequestDto.MessageLine;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
+
+	private static final String TEMPLATE_NOTIFY_COMPLETE = "IDIlLV4zDpjXlK7dhmto_uZaug4ruTysvZ3L76oQBPDxA";
 
 	private static final int PAGE_SIZE = 20;
 
@@ -23,6 +31,9 @@ public class NotificationServiceImpl implements NotificationService {
 
 	@Autowired
 	private LawyerService lawyerService;
+
+	@Autowired
+	private UserService userService;
 
 	private static final int[] CITIES = { 1, 2, 3 };
 
@@ -68,4 +79,40 @@ public class NotificationServiceImpl implements NotificationService {
 
 	}
 
+	@Override
+	public void completeNotify(int orderId) {
+		OrderBo order = orderService.getOrderById(orderId);
+		if (order != null) {
+			UserAccountBo bo = userService.getUserAccountByUserId(order.getUserId(),
+					UserAccountTypeEnum.WECHAT_OPENID.getId());
+			if (bo != null && StringUtils.isNotBlank(bo.getValue())) {
+				notifyOrderCompleteByWechat(bo.getValue(), order);
+			}
+		}
+	}
+
+	private void notifyOrderCompleteByWechat(String openId, OrderBo bo) {
+		MessageRequestDto dto = new MessageRequestDto();
+		dto.setTemplate_id(TEMPLATE_NOTIFY_COMPLETE);
+		dto.setTouser(openId);
+		MessageData data = new MessageData();
+		dto.setData(data);
+		MessageLine first = new MessageLine();
+		first.setValue(String.format("您关于的咨询订单已完成"));
+		MessageLine keyword1 = new MessageLine();
+		keyword1.setValue(bo.getOrderNum());
+		MessageLine keyword2 = new MessageLine();
+		keyword2.setValue(String.valueOf(bo.getRealPrice()));
+		MessageLine keyword3 = new MessageLine();
+		// keyword3.setValue(bo.);
+		MessageLine keyword4 = new MessageLine();
+		MessageLine remark = new MessageLine();
+		remark.setValue("请至\"我的订单\"中查看");
+		data.setFirst(first);
+		data.setKeyword1(keyword1);
+		data.setKeyword2(keyword2);
+		data.setKeyword3(keyword3);
+		data.setKeyword4(keyword4);
+		data.setRemark(remark);
+	}
 }

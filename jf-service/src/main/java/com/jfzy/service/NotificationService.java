@@ -6,4 +6,6 @@ public interface NotificationService {
 
 	void notifyForConfirm();
 
+	void completeNotify(int orderId);
+
 }
