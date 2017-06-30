@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jfzy.base.AuthCheck;
 import com.jfzy.service.LawyerReplyService;
+import com.jfzy.service.LawyerService;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.LawyerReplyBo;
@@ -49,6 +50,9 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private LawyerService lawyerService;
 
 	@Autowired
 	private OssUserService userService;
@@ -234,6 +238,20 @@ public class OrderController extends BaseController {
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
 
+	@ResponseBody
+	@GetMapping("/api/order/cancelass")
+	public SimpleResponseVo cancelAssignment(int orderId, int opId) {
+		OrderBo bo = orderService.getOrderById(orderId);
+		OssUserBo ossUser = userService.getUserById(opId);
+		if (ossUser != null) {
+			orderService.assignOrder(orderId, 0, ossUser.getId(), ossUser.getName());
+		}
+		orderService.updateOrderStatus(orderId, OrderStatusEnum.NEED_DISPATCH.getId());
+		lawyerService.updateOnProcessTask(-1, bo.getLawyerId());
+		
+		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
+	}
+	
 	@ResponseBody
 	@GetMapping("/api/order/confirm")
 	public SimpleResponseVo confim(int orderId) {
