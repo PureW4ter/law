@@ -53,7 +53,9 @@ public interface OrderService {
 	List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int status);
 
 	List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int status);
-
+	
+	Page<OrderBo> getOrdersByType(Pageable page, String productCode);
+	
 	void acceptorOrder(int lawyerId, int orderId);
 
 	List<OrderPhotoBo> getOrderPhotos(int orderId);

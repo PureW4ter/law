@@ -216,6 +216,20 @@ public class OrderController extends BaseController {
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
 
+	@GetMapping("/api/order/listbytype")
+	public ResponseVo<List<OrderVo>> getOrdersByType(int page, int size, String productCode) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		Page<OrderBo> values = orderService.getOrdersByType(new PageRequest(page, size, sort), productCode);
+		List<OrderVo> result = new ArrayList<OrderVo>();
+		for (OrderBo bo : values) {
+			result.add(boToVo(bo));
+		}
+		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
+	}
+	
 	@ResponseBody
 	@GetMapping("/api/order/lawyer")
 	public ResponseVo<List<OrderVo>> getOrderByLawyer(int lawyerId, int page, int size) {
