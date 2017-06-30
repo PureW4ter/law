@@ -28,7 +28,7 @@ import com.jfzy.service.weixin.dto.MessageRequestDto.MessageLine;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
-	private static final String TEMPLATE_NOTIFY_COMPLETE = "IDIlLV4zDpjXlK7dhmto_uZaug4ruTysvZ3L76oQBPDxA";
+	private static final String TEMPLATE_NOTIFY_COMPLETE = "IlLV4zDpjXlK7dhmto_uZaug4ruTysvZ3L76oQBPDxA";
 	private static final String MESSAGE_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s";
 
 	private static final Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);

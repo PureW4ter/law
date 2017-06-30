@@ -83,6 +83,8 @@ public class AccessTokenServiceImpl implements AccessTokenService {
 				logger.error("QUERY ACCESS TOKEN FAILED:", e);
 			}
 		}
+
+		this.token = tmpToken;
 	}
 
 	@Override
