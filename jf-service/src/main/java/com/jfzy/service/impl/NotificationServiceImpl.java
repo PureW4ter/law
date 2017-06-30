@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfzf.core.HttpClientUtils;
 import com.jfzy.service.AccessTokenService;
@@ -132,9 +131,11 @@ public class NotificationServiceImpl implements NotificationService {
 		ObjectMapper mapper = new ObjectMapper();
 
 		String token = tokenService.getAccessToken();
+		logger.info(token);
 		if (StringUtils.isNotBlank(token)) {
 			try {
 				String messageBody = mapper.writeValueAsString(dto);
+				logger.info(messageBody);
 				String response = HttpClientUtils.post(String.format(MESSAGE_URL, token), messageBody);
 				logger.error(response);
 			} catch (IOException e) {

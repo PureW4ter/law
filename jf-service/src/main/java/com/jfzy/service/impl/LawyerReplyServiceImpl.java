@@ -50,7 +50,7 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		replyRepo.save(po);
 		if (!isTemp) {
 			orderSerivce.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED_NEEDCONFIRM.getId());
-			notifyService.completeNotify(bo.getOrderId());
+
 		}
 	}
 
@@ -61,6 +61,8 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		lawyerSerivce.updateFinishedTask(1, obo.getLawyerId());
 		lawyerSerivce.updateOnProcessTask(-1, obo.getLawyerId());
 		lawyerSerivce.updateFinishedMoney(obo.getOriginPrice(), obo.getLawyerId());
+
+		notifyService.completeNotify(orderId);
 	}
 
 	@Override

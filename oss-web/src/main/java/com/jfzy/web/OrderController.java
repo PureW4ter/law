@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jfzy.base.AuthCheck;
 import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.LawyerService;
+import com.jfzy.service.NotificationService;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.LawyerReplyBo;
@@ -59,6 +60,9 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	private LawyerReplyService lawyerReplyService;
+
+	@Autowired
+	private NotificationService notifyService;
 
 	@ResponseBody
 	@GetMapping("/api/order/{orderNum}")
@@ -231,7 +235,7 @@ public class OrderController extends BaseController {
 		}
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/lawyer")
 	public ResponseVo<List<OrderVo>> getOrderByLawyer(int lawyerId, int page, int size) {
@@ -307,6 +311,8 @@ public class OrderController extends BaseController {
 		lawyerReplyService.addReplyPhotos(vo.getPicList(), vo.getOrderId());
 		if (!vo.isNeedConfirm()) {
 			orderService.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED.getId());
+			logger.info("Notify order:" + bo.getOrderId());
+			notifyService.completeNotify(bo.getOrderId());
 		}
 
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
