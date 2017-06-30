@@ -43,12 +43,20 @@
                         </select>
                     </div>
                     <div class="blk10"></div>
+                    <div class="new_input_box arrow_down">
+                        <label>所在城市<span class="red_start">*</span></label>
+                        <select id="i_city">
+                            <%_.each(result.r[4], function(item){%>
+                                <option value="<%=item.id%>"><%=item.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <div class="blk10"></div>
                     <div class="free_ask_box">
                         <textarea rows="6" id="i_memo" placeholder="交易情况、问题及您的诉求"></textarea>
                     </div>
                     <div class="blk10"></div>
                     <div class="free_ask_intro"></div>
-                    
                     <div class="blk15"></div>
                 </div>
             </div>

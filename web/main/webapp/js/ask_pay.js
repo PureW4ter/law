@@ -3,6 +3,7 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
     var AskPay = {
     	propertis: null,
     	idIndex: 0,
+    	cities:util.cities,
         initialize :function(){
         	//body
 			this.mainBox = $('#i_mainbox');
@@ -16,6 +17,7 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
                 params, this, this._render, null);
 		},
 		_render:function(data){
+			data.r.push(this.cities);
 			this.propertis = data;
 			this.mainBox.html(this.tplfun({"result": data}));
 			$($(".j_sign_desc")[1]).hide();
@@ -75,6 +77,7 @@ define(['component/header','ajaxhelper', 'utility', 'validate'],
             };
 			var params = {
 				"userId": util.getUserId(),
+				"cityId": $("#i_city").val(),
 				"productId": $($(".question_pay_selected")[0]).data("id"),
 				"role": $("#i_identity option").not(function(){ return !this.selected }).text(),
 				"tradePhase": $("#i_trade_phase option").not(function(){ return !this.selected }).text(),

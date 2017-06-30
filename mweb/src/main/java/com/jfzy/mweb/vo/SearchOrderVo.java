@@ -13,6 +13,7 @@ public class SearchOrderVo {
 	private String tradeSubphase;
 	private String memo;
 	private String ownerPhone;
+	private int cityId;
 	
 	public int getId() {
 		return id;
@@ -80,4 +81,11 @@ public class SearchOrderVo {
 	public void setOwnerPhone(String ownerPhone) {
 		this.ownerPhone = ownerPhone;
 	}
+	public int getCityId() {
+		return cityId;
+	}
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+	
 }

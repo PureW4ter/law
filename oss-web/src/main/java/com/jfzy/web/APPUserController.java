@@ -64,7 +64,7 @@ public class APPUserController {
 			page = 0;
 		}
 		Sort sort = new Sort(Direction.DESC, "createTime");
-		List<UserBo> values = userService.getUsersByLevel(new PageRequest(page, size, sort));
+		List<UserBo> values = userService.getUsersByLevel(level, new PageRequest(page, size, sort));
 		List<UserVo> resultUsers = new ArrayList<UserVo>(values.size());
 		for (UserBo bo : values) {
 			UserVo vo = boToVoForUser(bo);

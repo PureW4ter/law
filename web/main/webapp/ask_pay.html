@@ -35,6 +35,15 @@
                     </div>
                     <div class="blk10"></div>
                     <div class="new_input_box arrow_down">
+                        <label>所在城市<span class="red_start">*</span></label>
+                        <select id="i_city">
+                            <%_.each(result.r[4], function(item){%>
+                                <option value="<%=item.id%>"><%=item.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <div class="blk10"></div>
+                    <div class="new_input_box arrow_down">
                         <label>目前所处的交易阶段<span class="red_start">*</span></label>
                         <select id="i_trade_phase">
                              <%_.each(result.r[2][0].phases,function(item, index){%>

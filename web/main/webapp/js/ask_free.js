@@ -2,6 +2,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
     var AskFree = {
         ipropertis: null,
     	idIndex: 0,
+    	cities:util.cities,
         initialize :function(){
         	//body
 			this.mainBox = $('#i_mainbox');
@@ -15,6 +16,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
                 params, this, this._render, null);
 		},
 		_render:function(data){
+			data.r.push(this.cities);
 			this.propertis = data;
 			this.mainBox.html(this.tplfun({"result": data}));
 			this._registEvent();
@@ -45,6 +47,7 @@ define(['component/header','ajaxhelper', 'utility'], function(header, ajaxHelper
             };
 			var params = {
 				"userId": util.getUserId(),
+				"cityId": $("#i_city").val(),
 				"productId": $("#i_product").data("id"),
 				"role": $("#i_identity option").not(function(){ return !this.selected }).text(),
 				"tradePhase": $("#i_trade_phase option").not(function(){ return !this.selected }).text(),
