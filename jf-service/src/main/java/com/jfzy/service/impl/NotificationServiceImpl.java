@@ -1,11 +1,18 @@
 package com.jfzy.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jfzf.core.HttpClientUtils;
+import com.jfzy.service.AccessTokenService;
 import com.jfzy.service.LawyerService;
 import com.jfzy.service.NotificationService;
 import com.jfzy.service.OrderService;
@@ -23,6 +30,9 @@ import com.jfzy.service.weixin.dto.MessageRequestDto.MessageLine;
 public class NotificationServiceImpl implements NotificationService {
 
 	private static final String TEMPLATE_NOTIFY_COMPLETE = "IDIlLV4zDpjXlK7dhmto_uZaug4ruTysvZ3L76oQBPDxA";
+	private static final String MESSAGE_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s";
+
+	private static final Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
 	private static final int PAGE_SIZE = 20;
 
@@ -34,6 +44,9 @@ public class NotificationServiceImpl implements NotificationService {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private AccessTokenService tokenService;
 
 	private static final int[] CITIES = { 1, 2, 3 };
 
@@ -115,5 +128,18 @@ public class NotificationServiceImpl implements NotificationService {
 		data.setKeyword3(keyword3);
 		data.setKeyword4(keyword4);
 		data.setRemark(remark);
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		String token = tokenService.getAccessToken();
+		if (StringUtils.isNotBlank(token)) {
+			try {
+				String messageBody = mapper.writeValueAsString(dto);
+				String response = HttpClientUtils.post(String.format(MESSAGE_URL, token), messageBody);
+				logger.error(response);
+			} catch (IOException e) {
+				logger.error("通知失败", e);
+			}
+		}
 	}
 }
