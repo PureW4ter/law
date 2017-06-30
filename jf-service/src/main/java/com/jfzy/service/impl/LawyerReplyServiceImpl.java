@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.jfzy.service.LawyerReplyService;
 import com.jfzy.service.LawyerService;
+import com.jfzy.service.NotificationService;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.bo.LawyerReplyBo;
 import com.jfzy.service.bo.LawyerReplyStatusEnum;
@@ -30,7 +31,7 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 
 	@Autowired
 	private OrderPhotoRepository orderPhotoRepo;
-	
+
 	@Autowired
 	private LawyerRepository lawyerRepo;
 
@@ -40,12 +41,16 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 	@Autowired
 	private OrderService orderSerivce;
 
+	@Autowired
+	private NotificationService notifyService;
+
 	@Override
 	public void createReply(LawyerReplyBo bo, boolean isTemp) {
 		LawyerReplyPo po = boToPo(bo);
 		replyRepo.save(po);
-		if(!isTemp){
+		if (!isTemp) {
 			orderSerivce.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED_NEEDCONFIRM.getId());
+			notifyService.completeNotify(bo.getOrderId());
 		}
 	}
 
@@ -74,7 +79,6 @@ public class LawyerReplyServiceImpl implements LawyerReplyService {
 		replyRepo.updateScore(LawyerReplyStatusEnum.SCORED.getId(), score, replyId);
 		lawyerRepo.updateLawyerScore(score, po.getLawyerId());
 	}
-	
 
 	@Override
 	public void addReplyPhotos(String[] picList, int orderId) {

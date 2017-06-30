@@ -104,8 +104,9 @@ public class NotificationServiceImpl implements NotificationService {
 		MessageLine keyword2 = new MessageLine();
 		keyword2.setValue(String.valueOf(bo.getRealPrice()));
 		MessageLine keyword3 = new MessageLine();
-		// keyword3.setValue(bo.);
+		keyword3.setValue(bo.getProductName());
 		MessageLine keyword4 = new MessageLine();
+		keyword4.setValue("");
 		MessageLine remark = new MessageLine();
 		remark.setValue("请至\"我的订单\"中查看");
 		data.setFirst(first);

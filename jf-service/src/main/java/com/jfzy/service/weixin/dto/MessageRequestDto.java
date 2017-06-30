@@ -62,7 +62,7 @@ public class MessageRequestDto {
 
 	public static class MessageLine {
 		private String value;
-		private String color;
+		private String color = "#173177";
 
 		public String getValue() {
 			return value;
