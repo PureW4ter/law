@@ -71,9 +71,10 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility', 'lib/qi
         },
         _doCancelAssign:function(e){
             var params = {
-                "id": util.getQueryParameter("id"),
+                "orderId": util.getQueryParameter("id"),
+                "opId" : util.getUserId()
             };
-            ajaxHelper.get("http://" + window.frontJSHost + "/api/order/assignment",
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/order/cancelass",
                 params, e.data.ctx, function(){
                         util.showToast("更新成功！", function(){
                             window.location = "lawyer_home.html";
@@ -91,7 +92,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility', 'lib/qi
                 "simpleReply": e.data.ctx.editorReply?e.data.ctx.editorReply.getSource():"",
                 "hasHukou": $("#i_hukou").data("value"),
                 "picList": picList,
-                "isTemp": e.data.ctx.isTemp,
+                "temp": e.data.isTemp,
                 "needConfirm": util.isLawyer()
             }
             if (e.data.ctx.id) { 

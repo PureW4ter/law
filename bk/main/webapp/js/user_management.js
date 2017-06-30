@@ -31,13 +31,20 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             $(this).closest("ul").prev("button").data("value", value).find("span").eq(0).text(text);
         },
         _doSearch:function(e){
+            var level = $("#i_search_value").data("value");
             var params={
-                "value": $("#i_search_value").data("value"),
+                "level": level,
                 "page": 0,
                 "size":20
             };
-            ajaxHelper.get("http://" + window.frontJSHost + "/api/user/list",
-                params, e.data.ctx, e.data.ctx._render);
+            if(level>0){
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/user/listbylevel",
+                    params, e.data.ctx, e.data.ctx._render);
+            }else{
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/user/list",
+                    params, e.data.ctx, e.data.ctx._render);
+            }
+            
         }
     };
     return UserManagement;

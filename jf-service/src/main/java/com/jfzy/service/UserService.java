@@ -28,4 +28,6 @@ public interface UserService {
 	void unbind(int userAccountId);
 	
 	UserBo bind(String phone, int userId);
+	
+	List<UserBo> getUsersByLevel(int level, Pageable page);
 }
