@@ -43,12 +43,20 @@
                         </select>
                     </div>
                     <div class="blk10"></div>
+                    <div class="new_input_box arrow_down">
+                        <label>所在城市<span class="red_start">*</span></label>
+                        <select id="i_city">
+                            <%_.each(result.r[4], function(item){%>
+                                <option value="<%=item.id%>"><%=item.name%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <div class="blk10"></div>
                     <div class="free_ask_box">
                         <textarea rows="6" id="i_memo" placeholder="交易情况、问题及您的诉求"></textarea>
                     </div>
                     <div class="blk10"></div>
                     <div class="free_ask_intro"></div>
-                    
                     <div class="blk15"></div>
                 </div>
             </div>
@@ -64,8 +72,8 @@
     </div>
 </body>
 <script src="js/lib/jweixin-1.0.0.js"></script>
-<script src="js/lib/lib.js?ver=20170629231913" type="text/javascript"></script>
+<script src="js/lib/lib.js?ver=20170630130838" type="text/javascript"></script>
 <script type="text/javascript">
-    define('ask_free',["component/header","ajaxhelper","utility"],function(e,t,n){var r={ipropertis:null,idIndex:0,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={};t.get("http://"+window.frontJSHost+"/ask/props",e,this,this._render,null)},_render:function(e){this.propertis=e,this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){$("#i_help").off("click",this._doCall).on("click",{ctx:this},this._doCall),$("#i_pay").off("click",this._pay).on("click",{ctx:this},this._pay),$("#i_identity").off("change",this._changeIdentity).on("change",{ctx:this},this._changeIdentity)},_changeIdentity:function(e){var t=$(e.target).find("option").not(function(){return!this.selected}).val();e.data.ctx.idIndex=t,$("#i_trade_phase").find("option").remove(),e.data.ctx.propertis.r[2][t].phases.forEach(function(e,t){$("#i_trade_phase").append("<option value='"+t+"'>"+e.phase+"</option>")}),e.data.ctx._registEvent()},_doCall:function(){window.location="tel://"+n.phone},_pay:function(e){if(!e.data.ctx.validate())return;var r={userId:n.getUserId(),productId:$("#i_product").data("id"),role:$("#i_identity option").not(function(){return!this.selected}).text(),tradePhase:$("#i_trade_phase option").not(function(){return!this.selected}).text(),memo:$("#i_memo").val()};t.post("http://"+window.frontJSHost+"/order/screate",r,this,function(e){var r={id:e.r.id};t.get("http://"+window.frontJSHost+"/order/pay",r,this,function(e){n.weixinPay(e.r,"success.html")})})},validate:function(){var e=!0,t=$("#i_memo").val();return t?t.length>500?(n.showToast("最多不可以超过500字"),e=!1,e):e:(n.showToast("交易情况，诉求不能为空"),e=!1,e)}};return r});
+    define('ask_free',["component/header","ajaxhelper","utility"],function(e,t,n){var r={ipropertis:null,idIndex:0,cities:n.cities,initialize:function(){this.mainBox=$("#i_mainbox"),this.tplfun=_.template($("#i_tpl").html()),this._sendRequest()},_sendRequest:function(){var e={};t.get("http://"+window.frontJSHost+"/ask/props",e,this,this._render,null)},_render:function(e){e.r.push(this.cities),this.propertis=e,this.mainBox.html(this.tplfun({result:e})),this._registEvent()},_registEvent:function(){$("#i_help").off("click",this._doCall).on("click",{ctx:this},this._doCall),$("#i_pay").off("click",this._pay).on("click",{ctx:this},this._pay),$("#i_identity").off("change",this._changeIdentity).on("change",{ctx:this},this._changeIdentity)},_changeIdentity:function(e){var t=$(e.target).find("option").not(function(){return!this.selected}).val();e.data.ctx.idIndex=t,$("#i_trade_phase").find("option").remove(),e.data.ctx.propertis.r[2][t].phases.forEach(function(e,t){$("#i_trade_phase").append("<option value='"+t+"'>"+e.phase+"</option>")}),e.data.ctx._registEvent()},_doCall:function(){window.location="tel://"+n.phone},_pay:function(e){if(!e.data.ctx.validate())return;var r={userId:n.getUserId(),cityId:$("#i_city").val(),productId:$("#i_product").data("id"),role:$("#i_identity option").not(function(){return!this.selected}).text(),tradePhase:$("#i_trade_phase option").not(function(){return!this.selected}).text(),memo:$("#i_memo").val()};t.post("http://"+window.frontJSHost+"/order/screate",r,this,function(e){var r={id:e.r.id};t.get("http://"+window.frontJSHost+"/order/pay",r,this,function(e){n.weixinPay(e.r,"success.html")})})},validate:function(){var e=!0,t=$("#i_memo").val();return t?t.length>500?(n.showToast("最多不可以超过500字"),e=!1,e):e:(n.showToast("交易情况，诉求不能为空"),e=!1,e)}};return r});
 </script>
 </html>
