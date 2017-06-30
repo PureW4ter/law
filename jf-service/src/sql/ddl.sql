@@ -78,9 +78,10 @@ CREATE TABLE `jf_order` (
   `email` varchar(200) DEFAULT NULL,
   `owner_name` varchar(45) DEFAULT NULL,
   `owner_phone` varchar(45) DEFAULT NULL,
+  `notify_status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `jf_order_photo`;
 CREATE TABLE `jf_order_photo` (
