@@ -48,12 +48,15 @@ public class LawyerServiceImpl implements LawyerService {
 
 	@Override
 	public List<LawyerBo> getLawyerByCity(int cityId) {
-
-		List<LawyerPo> pos = lawyerRepo.findByCityId(cityId);
+		List<LawyerPo> pos = null;
+		if(cityId>0){
+			pos = lawyerRepo.findByCityIdAndStatus(cityId, LawyerStatusEnum.ACTIVE.getId());
+		}else{
+			pos = lawyerRepo.findByStatus(LawyerStatusEnum.ACTIVE.getId());
+		}
 		List<LawyerBo> results = new ArrayList<LawyerBo>(pos.size());
 		pos.forEach(po -> results.add(poToBo(po)));
 		return results;
-
 	}
 
 	@Override

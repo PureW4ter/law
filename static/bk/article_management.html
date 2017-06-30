@@ -9,8 +9,8 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>后台管理系统</title>
-    <link href="styles/bootstrap.css?ver=20170628152600" rel="stylesheet" />
-    <link href="styles/main.css?ver=20170628152600" rel="stylesheet" />
+    <link href="styles/bootstrap.css?ver=20170629081854" rel="stylesheet" />
+    <link href="styles/main.css?ver=20170629081854" rel="stylesheet" />
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -35,22 +35,22 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <td>编号</td>
                                     <td>标题</td>
                                     <td>关键字</td>
                                     <td>创建时间</td>
                                     <td>更新时间</td>
-                                    <td>摘要</td>
                                     <td>操作</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <%_.each(result.r,function(item){%>
                                 <tr data-id="">
+                                    <td><%=item.id%></td>
                                     <td><a href="new_article.html?id=<%=item.id%>" class="blue_link"><%=item.title%></a></td>
                                     <td><%=item.tags.join(",")%></td>
                                     <td><%=item.createTime%></td>
                                     <td><%=item.updateTime%></td>
-                                    <td class="ar_summry"><%=item.summary%></td>
                                     <td>
                                         <a class="blue_link j_delete" data-id="<%=item.id%>">删除</a>
                                     </td>
@@ -65,7 +65,7 @@
             <div id="i_page" class="text-center fr"></div>
         </div>
     </div>
-    <script src="js/include.js?ver=20170628152600" type="text/javascript"></script>
+    <script src="js/include.js?ver=20170629081854" type="text/javascript"></script>
 </body>
 
 </html>

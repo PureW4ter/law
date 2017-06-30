@@ -67,7 +67,7 @@ define(['ajaxhelper', 'utility', 'validate', 'component/time_button'],
             timeBtn.startCount();
 		},
 		_bind:function(e){
-			if(!this.validate()){
+			if(!e.data.ctx.validate()){
                 return;
             };
 			var params = {
@@ -76,7 +76,7 @@ define(['ajaxhelper', 'utility', 'validate', 'component/time_button'],
 				"userId": e.data.ctx.user.id
 			}
 			ajaxHelper.get("http://" + window.frontJSHost + "/user/bind",
-                params, this, function(data){
+                params, e.data.ctx, function(data){
                 	util.saveData('userInfo', JSON.stringify(data.r));
                 	window.location = "index.html";
                 });

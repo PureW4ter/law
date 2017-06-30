@@ -58,6 +58,23 @@ public class APPUserController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/api/user/listbylevel")
+	public ResponseVo<List<UserVo>> listByLevel(int level, int page, int size) {
+		if (page < 0) {
+			page = 0;
+		}
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		List<UserBo> values = userService.getUsersByLevel(new PageRequest(page, size, sort));
+		List<UserVo> resultUsers = new ArrayList<UserVo>(values.size());
+		for (UserBo bo : values) {
+			UserVo vo = boToVoForUser(bo);
+			vo.setOrderCount(orderService.getTotal(bo.getId()));
+			resultUsers.add(vo);
+		}
+		return new ResponseVo<List<UserVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
+	}
+	
+	@ResponseBody
 	@GetMapping("/api/user/detail")
 	public ResponseVo<UserVo> detail(int id) {
 		UserBo bo = userService.getUser(id);

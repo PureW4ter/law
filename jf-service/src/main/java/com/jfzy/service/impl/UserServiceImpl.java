@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -104,6 +105,16 @@ public class UserServiceImpl implements UserService {
 		userRepo.updateMemo(memo, id);
 	}
 
+	@Override
+	public List<UserBo> getUsersByLevel(int level, Pageable page) {
+		Page<UserPo> poPage = userRepo.getUsersByLevel(level, page);
+		List<UserBo> results = new ArrayList<UserBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> results.add(po2BoForUser(po)));
+		}
+		return results;
+	}
+	
 	private static UserPo bo2PoForUser(UserBo bo) {
 		UserPo po = new UserPo();
 		BeanUtils.copyProperties(bo, po);

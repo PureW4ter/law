@@ -83,11 +83,9 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility','lib/qin
             $("#i_save_btn").off("click",this._doSave).on("click",{ctx: this},this._doSave);
             $("[data-toggle='popover']").off({
                 'focus': p_destroy,
-                'click': p_destroy,
                 'checkis': input_check
             }).on({
                 'focus': p_destroy,
-                'click': p_destroy,
                 'checkis': input_check
             });
         },

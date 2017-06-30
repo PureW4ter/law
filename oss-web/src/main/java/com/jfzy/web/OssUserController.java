@@ -51,7 +51,7 @@ public class OssUserController {
 
 		return new ResponseVo<List<OssRoleVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
-
+	
 	@ResponseBody
 	@GetMapping("/api/ossuser/list")
 	public ResponseVo<List<OssUserVo>> list(int page, int size) {
