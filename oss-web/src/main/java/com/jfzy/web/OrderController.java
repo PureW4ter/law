@@ -62,15 +62,18 @@ public class OrderController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/api/order/{orderNum}")
-	public ResponseVo<OrderVo> getOrderBySn(@PathVariable(name = "orderNum") String orderNum) {
+	public ResponseVo<List<OrderVo>> getOrderBySn(@PathVariable(name = "orderNum") String orderNum) {
 		if (StringUtils.isBlank(orderNum)) {
-			return new ResponseVo<OrderVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "订单号为空", null);
+			return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.BAD_REQUEST.getCode(), "订单号为空", new ArrayList<OrderVo>());
 		} else {
 			OrderBo bo = orderService.getOrderByOrderNum(orderNum);
+			
 			if (bo == null) {
-				return new ResponseVo<OrderVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "无此订单", null);
+				return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.BAD_REQUEST.getCode(), "无此订单", new ArrayList<OrderVo>());
 			} else {
-				return new ResponseVo<OrderVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(bo));
+				List<OrderVo> list = new ArrayList<OrderVo>();
+				list.add(boToVo(bo));
+				return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, list);
 			}
 		}
 	}

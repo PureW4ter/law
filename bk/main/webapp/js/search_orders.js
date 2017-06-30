@@ -25,6 +25,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             this._registEvent();
         },
         _registEvent: function () {
+            $("#i_search").off("click", this._doSearch).on("click",{ctx: this}, this._doSearch);
             $('.j_assign').off("click", this._assign).on("click", {"ctx":this}, this._assign);
             $('.j_do_assign').off("click", this._doAssign).on("click", {"ctx":this}, this._doAssign);
         },
@@ -54,6 +55,14 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
                     util.showToast("指派成功");
                     this._sendRequest();
                 }, null);
+        },
+        _doSearch:function(e){
+            var value = $("#i_order_search").val();
+            var params = {
+                
+            };
+            ajaxHelper.get("http://" + window.frontJSHost + "/api/order/"+value,
+                params, e.data.ctx, e.data.ctx._render, null);
         }
     };
     return UserManagement;
