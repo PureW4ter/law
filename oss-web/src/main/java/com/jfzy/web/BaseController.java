@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.jfzy.base.AuthInfo;
 import com.jfzy.base.SessionConstants;
 import com.jfzy.service.bo.OssUserBo;
 
@@ -18,6 +19,15 @@ public class BaseController {
 
 	public OssUserBo getOssUser() {
 		return session == null ? null : (OssUserBo) session.getAttribute(SessionConstants.SESSION_KEY_USER);
+	}
+
+	private AuthInfo getAuthInfo() {
+		return (AuthInfo) session.getAttribute(SessionConstants.SESSION_KEY_AUTH_INFO);
+	}
+
+	protected boolean isAdmin() {
+		AuthInfo info = getAuthInfo();
+		return info == null ? false : info.getPrivileges().contains("admin");
 	}
 
 }

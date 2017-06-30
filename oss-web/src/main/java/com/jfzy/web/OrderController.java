@@ -50,7 +50,7 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private LawyerService lawyerService;
 
@@ -106,7 +106,7 @@ public class OrderController extends BaseController {
 		return new PageResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, vos, pageNo, size,
 				orders.getTotalElements());
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/find")
 	public PageResponseVo<List<OrderVo>> getOrdersByCityIdAndStatus(int cityId, int status, int pageNo, int size) {
@@ -248,10 +248,10 @@ public class OrderController extends BaseController {
 		}
 		orderService.updateOrderStatus(orderId, OrderStatusEnum.NEED_DISPATCH.getId());
 		lawyerService.updateOnProcessTask(-1, bo.getLawyerId());
-		
+
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/order/confirm")
 	public SimpleResponseVo confim(int orderId) {
@@ -286,7 +286,7 @@ public class OrderController extends BaseController {
 		}
 		lawyerReplyService.createReply(bo, vo.isTemp());
 		lawyerReplyService.addReplyPhotos(vo.getPicList(), vo.getOrderId());
-		if(!vo.isNeedConfirm()){
+		if (!vo.isNeedConfirm()) {
 			orderService.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED.getId());
 		}
 
@@ -299,7 +299,7 @@ public class OrderController extends BaseController {
 		return vo;
 	}
 
-	private static OrderVo boToVo(OrderBo bo) {
+	private OrderVo boToVo(OrderBo bo) {
 		OrderVo vo = new OrderVo();
 		BeanUtils.copyProperties(bo, vo);
 		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -333,6 +333,13 @@ public class OrderController extends BaseController {
 				}
 			}
 		}
+
+		if (!isAdmin()) {
+			vo.setEmail("");
+			vo.setUserPhoneNum("");
+			vo.setUserName("");
+			vo.setLawyerPhoneNum("");
+		}
 		return vo;
 	}
 
@@ -352,7 +359,7 @@ public class OrderController extends BaseController {
 		return vo;
 	}
 
-	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo, List<OrderPhotoBo> orderPhotoList,
+	private OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo, List<OrderPhotoBo> orderPhotoList,
 			List<OrderPhotoBo> replyPhotoList) {
 		OrderWithReplyVo vo = new OrderWithReplyVo();
 		vo.setLawyerReplyVo(boToVo(rbo));
