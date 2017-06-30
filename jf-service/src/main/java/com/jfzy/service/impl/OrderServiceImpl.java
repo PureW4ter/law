@@ -354,6 +354,18 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public Page<OrderBo> getOrdersByType(Pageable page, String productCode) {
+		Page<OrderPo> poPage = orderRepo.findByProductCode(productCode, page);
+		List<OrderBo> bos = new ArrayList<OrderBo>();
+		if (poPage.getContent() != null) {
+			poPage.getContent().forEach(po -> bos.add(poToBo(po)));
+		}
+		Page<OrderBo> resultPage = new AggregatedPageImpl<OrderBo>(bos, page, poPage.getTotalElements());
+
+		return resultPage;
+	}
+	
+	@Override
 	public List<OrderBo> getUnprocessedOrdersByLawyer(int lawyerId, Pageable page) {
 		// TODO Auto-generated method stub
 		return null;

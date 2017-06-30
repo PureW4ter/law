@@ -95,6 +95,8 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 	int countByCityIdAndStatus(int cityId, int status);
 
 	Page<OrderPo> findByStatus(int status, Pageable page);
+	
+	Page<OrderPo> findByProductCode(String productCode, Pageable page);
 
 	List<OrderPo> findByOrderNum(String orderNum);
 
