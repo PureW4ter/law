@@ -110,9 +110,9 @@ public class NotificationServiceImpl implements NotificationService {
 
 	private String getFirstContent(OrderBo bo) {
 		if (StringUtils.isNotBlank(bo.getRole()) && StringUtils.isNotBlank(bo.getTradeSubphase())) {
-			return String.format("您关于%s-%s的订单已回复", bo.getRole(), bo.getTradeSubphase());
+			return String.format("您关于[%s-%s]的订单已回复", bo.getRole(), bo.getTradeSubphase());
 		} else {
-			return String.format("您的%s的订单已回复", bo.getProductName());
+			return String.format("您的[%s]的订单已回复", bo.getProductName());
 		}
 	}
 
