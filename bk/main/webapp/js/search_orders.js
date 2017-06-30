@@ -26,8 +26,16 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
         },
         _registEvent: function () {
             $("#i_search").off("click", this._doSearch).on("click",{ctx: this}, this._doSearch);
+            $("#i_filter").off("click", this._doFilter).on("click",{ctx: this}, this._doFilter);
             $('.j_assign').off("click", this._assign).on("click", {"ctx":this}, this._assign);
             $('.j_do_assign').off("click", this._doAssign).on("click", {"ctx":this}, this._doAssign);
+            $("#i_order_filter li").off("click", this._selProductCode).on("click",{ctx: this}, this._selProductCode);
+        },
+        _selProductCode:function(e){
+            var value = $(this).data("value");
+            var text = $(this).text();
+            var userId = $($(this).parents("tr")).data("id");
+            $(this).closest("ul").prev("button").data("value", value).find("span").eq(0).text(text);
         },
         _assign:function(e){
             var params = {
@@ -63,6 +71,22 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             };
             ajaxHelper.get("http://" + window.frontJSHost + "/api/order/"+value,
                 params, e.data.ctx, e.data.ctx._render, null);
+        },
+        _doFilter:function(e){
+            var productCode = $("#i_pd_value").data("value");
+            var params={
+                "productCode": productCode,
+                "page": 0,
+                "size":20
+            };
+            if(!productCode){
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/order/slist",
+                    params, e.data.ctx, e.data.ctx._render);
+            }else{
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/order/listbytype",
+                    params, e.data.ctx, e.data.ctx._render);
+            }
+            
         }
     };
     return UserManagement;
