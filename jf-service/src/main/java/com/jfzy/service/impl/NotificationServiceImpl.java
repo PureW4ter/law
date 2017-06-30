@@ -1,6 +1,9 @@
 package com.jfzy.service.impl;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +33,8 @@ public class NotificationServiceImpl implements NotificationService {
 
 	private static final String TEMPLATE_NOTIFY_COMPLETE = "IlLV4zDpjXlK7dhmto_uZaug4ruTysvZ3L76oQBPDxA";
 	private static final String MESSAGE_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s";
+
+	private static final String TIME_FORMAT = "MM月dd日HH时mm分";
 
 	private static final Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
@@ -103,6 +108,26 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 	}
 
+	private String getFirstContent(OrderBo bo) {
+		if (StringUtils.isNotBlank(bo.getRole()) && StringUtils.isNotBlank(bo.getTradeSubphase())) {
+			return String.format("您关于%s-%s的订单已回复", bo.getRole(), bo.getTradeSubphase());
+		} else {
+			return String.format("您的%s的订单已回复", bo.getProductName());
+		}
+	}
+
+	private String getUpdateTime(Timestamp updateTime) {
+		Date updateDate = null;
+		if (updateTime != null) {
+			updateDate = new Date(updateTime.getTime());
+		} else {
+			updateDate = new Date();
+		}
+
+		SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT);
+		return sdf.format(updateDate);
+	}
+
 	private void notifyOrderCompleteByWechat(String openId, OrderBo bo) {
 		MessageRequestDto dto = new MessageRequestDto();
 		dto.setTemplate_id(TEMPLATE_NOTIFY_COMPLETE);
@@ -110,17 +135,17 @@ public class NotificationServiceImpl implements NotificationService {
 		MessageData data = new MessageData();
 		dto.setData(data);
 		MessageLine first = new MessageLine();
-		first.setValue(String.format("您关于的咨询订单已完成"));
+		first.setValue(getFirstContent(bo));
 		MessageLine keyword1 = new MessageLine();
 		keyword1.setValue(bo.getOrderNum());
 		MessageLine keyword2 = new MessageLine();
 		keyword2.setValue(String.valueOf(bo.getRealPrice()));
 		MessageLine keyword3 = new MessageLine();
-		keyword3.setValue(bo.getProductName());
+		keyword3.setValue("已完成");
 		MessageLine keyword4 = new MessageLine();
-		keyword4.setValue("");
+		keyword4.setValue(getUpdateTime(bo.getUpdateTime()));
 		MessageLine remark = new MessageLine();
-		remark.setValue("请至\"我的订单\"中查看");
+		remark.setValue("请至\"我的订单\"中查看回复");
 		data.setFirst(first);
 		data.setKeyword1(keyword1);
 		data.setKeyword2(keyword2);
@@ -131,13 +156,10 @@ public class NotificationServiceImpl implements NotificationService {
 		ObjectMapper mapper = new ObjectMapper();
 
 		String token = tokenService.getAccessToken();
-		logger.info(token);
 		if (StringUtils.isNotBlank(token)) {
 			try {
 				String messageBody = mapper.writeValueAsString(dto);
-				logger.info(messageBody);
 				String response = HttpClientUtils.post(String.format(MESSAGE_URL, token), messageBody);
-				logger.error(response);
 			} catch (IOException e) {
 				logger.error("通知失败", e);
 			}

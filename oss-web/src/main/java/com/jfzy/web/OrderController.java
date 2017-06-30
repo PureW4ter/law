@@ -311,7 +311,6 @@ public class OrderController extends BaseController {
 		lawyerReplyService.addReplyPhotos(vo.getPicList(), vo.getOrderId());
 		if (!vo.isNeedConfirm()) {
 			orderService.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED.getId());
-			logger.info("Notify order:" + bo.getOrderId());
 			notifyService.completeNotify(bo.getOrderId());
 		}
 
