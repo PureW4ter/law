@@ -98,7 +98,4 @@ public interface OrderRepository extends JpaRepository<OrderPo, Integer> {
 
 	List<OrderPo> findByOrderNum(String orderNum);
 
-	@Query(value = "SELECT t FROM orderPo t WHERE t.status = 4 AND t.notifyStatus = 0")
-	Page<OrderPo> findUnNotifiedOrders(int size, Pageable page);
-
 }
