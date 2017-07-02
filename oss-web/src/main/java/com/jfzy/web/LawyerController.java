@@ -76,7 +76,7 @@ public class LawyerController {
 			@RequestBody LawyerVo vo) {
 		LawyerBo bo = voToBo(vo);
 		if (bo.getId() != 0) {
-			lawyerService.create(bo);
+			lawyerService.update(bo);
 			return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 		} else {
 
