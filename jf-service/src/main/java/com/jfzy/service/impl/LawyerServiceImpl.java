@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -49,9 +50,9 @@ public class LawyerServiceImpl implements LawyerService {
 	@Override
 	public List<LawyerBo> getLawyerByCity(int cityId) {
 		List<LawyerPo> pos = null;
-		if(cityId>0){
+		if (cityId > 0) {
 			pos = lawyerRepo.findByCityIdAndStatus(cityId, LawyerStatusEnum.ACTIVE.getId());
-		}else{
+		} else {
 			pos = lawyerRepo.findByStatus(LawyerStatusEnum.ACTIVE.getId());
 		}
 		List<LawyerBo> results = new ArrayList<LawyerBo>(pos.size());
@@ -133,5 +134,60 @@ public class LawyerServiceImpl implements LawyerService {
 	@Override
 	public void updateLawyerScore(int lawyerId, double score) {
 		lawyerRepo.updateLawyerScore(score, lawyerId);
+	}
+
+	@Override
+	public void update(LawyerBo bo) {
+		LawyerPo po = lawyerRepo.findOne(bo.getId());
+		if (po != null) {
+			if (!StringUtils.equals(bo.getPhoneNum(), po.getPhoneNum())) {
+				checkLawyerPhoneNum(bo.getId(), bo.getPhoneNum());
+			}
+
+			if (!StringUtils.equals(bo.getLoginName(), po.getLoginName())) {
+				checkLoginName(bo.getId(), bo.getLoginName());
+			}
+
+			if (!StringUtils.isBlank(bo.getPassword())) {
+				po.setPassword(bo.getPassword());
+			}
+
+			po.setCityId(bo.getCityId());
+			po.setLoginName(bo.getLoginName());
+			po.setMemo(bo.getMemo());
+			po.setName(bo.getName());
+
+			lawyerRepo.save(po);
+		}
+	}
+
+	private void checkLoginName(int id, String loginName) {
+		List<LawyerPo> pos = lawyerRepo.findByLoginName(loginName);
+		if (pos == null) {
+
+		} else if (pos.size() == 1) {
+			if (pos.get(0).getId() != id) {
+				throw new JfErrorCodeRuntimeException(400, "律师登录名已存在",
+						String.format("LAWYER-CREATE:Lawyer phoneNum exist:%s", loginName));
+			}
+		} else if (pos.size() > 1) {
+			throw new JfErrorCodeRuntimeException(400, "律师登录名已存在",
+					String.format("LAWYER-CREATE:Lawyer phoneNum exist:%s", loginName));
+		}
+	}
+
+	private void checkLawyerPhoneNum(int id, String phoneNum) {
+		List<LawyerPo> pos = lawyerRepo.findByPhoneNum(phoneNum);
+		if (pos == null) {
+
+		} else if (pos.size() == 1) {
+			if (pos.get(0).getId() != id) {
+				throw new JfErrorCodeRuntimeException(400, "律师手机已存在",
+						String.format("LAWYER-CREATE:Lawyer phoneNum exist:%s", phoneNum));
+			}
+		} else if (pos.size() > 1) {
+			throw new JfErrorCodeRuntimeException(400, "律师手机已存在",
+					String.format("LAWYER-CREATE:Lawyer phoneNum exist:%s", phoneNum));
+		}
 	}
 }

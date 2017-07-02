@@ -14,7 +14,7 @@ import com.jfzy.service.po.LawyerPo;
 public interface LawyerRepository extends JpaRepository<LawyerPo, Integer> {
 
 	List<LawyerPo> findByCityIdAndStatus(int cityId, int status);
-	
+
 	List<LawyerPo> findByStatus(int status);
 
 	List<LawyerPo> findByCityId(int cityId);
@@ -25,6 +25,8 @@ public interface LawyerRepository extends JpaRepository<LawyerPo, Integer> {
 	void updateStatus(int status, Timestamp updateTime, int id);
 
 	List<LawyerPo> findByPhoneNum(String phoneNum);
+
+	List<LawyerPo> findByLoginName(String loginName);
 
 	List<LawyerPo> findByLoginNameAndPassword(String loginName, String password);
 

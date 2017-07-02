@@ -39,7 +39,7 @@ public class LawyerController {
 		if (page < 0) {
 			page = 0;
 		}
-		Sort sort = new Sort(Direction.DESC, "createTime"); 
+		Sort sort = new Sort(Direction.DESC, "createTime");
 		List<LawyerBo> values = lawyerService.getLawyers(new PageRequest(page, size, sort));
 		List<LawyerVo> resultUsers = new ArrayList<LawyerVo>(values.size());
 		for (LawyerBo bo : values) {
@@ -75,9 +75,16 @@ public class LawyerController {
 	public ResponseVo<Object> create(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody LawyerVo vo) {
 		LawyerBo bo = voToBo(vo);
-		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		lawyerService.create(bo);
-		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+		if (bo.getId() != 0) {
+			lawyerService.create(bo);
+			return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+		} else {
+
+			bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			lawyerService.create(bo);
+			return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+		}
+
 	}
 
 	@ResponseBody

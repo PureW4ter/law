@@ -17,6 +17,8 @@ public interface LawyerService {
 
 	void create(LawyerBo bo);
 
+	void update(LawyerBo bo);
+
 	void updateLawyerStatus(int lawyerId, int status);
 
 	LawyerBo getLawyerById(int id);
