@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.base.AuthCheck;
 import com.jfzy.base.AuthInfo;
 import com.jfzy.base.CookieUtil;
 import com.jfzy.base.SessionConstants;
@@ -63,6 +64,7 @@ public class LoginController extends BaseController {
 		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在", null);
 	}
 
+	@AuthCheck(privileges = {})
 	@ResponseBody
 	@GetMapping("/api/user/resetpwd")
 	public SimpleResponseVo resetPassword(String oldPass, String newPass) {

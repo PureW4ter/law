@@ -51,12 +51,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 					String[] privileges = authCheck.privileges();
 
 					// 按照权限验证权限
-					if (privileges != null) {
+					if (privileges != null && privileges.length > 0) {
 						for (int i = 0; i < privileges.length; i++) {
 							if (info.getPrivileges().contains(privileges[i])) {
 								return true;
 							}
 						}
+					} else if (privileges.length == 0) {// only check login
+						return true;
 					}
 
 					response.getWriter().write(objToJsonString(new SimpleResponseVo(402, "权限不够")));
