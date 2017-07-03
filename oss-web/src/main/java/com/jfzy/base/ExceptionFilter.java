@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -44,6 +45,22 @@ public class ExceptionFilter implements Filter {
 			resp.getWriter().write(objToJsonString(
 					new SimpleResponseVo(ResponseStatusEnum.SERVER_ERROR.getCode(), String.format("Code:", code))));
 			resp.flushBuffer();
+		} catch (NestedServletException nse) {
+			Throwable cause = nse.getCause();
+			if (cause != null && cause instanceof JfErrorCodeRuntimeException) {
+
+				logger.error("Error occur:", cause);
+				resp.getWriter()
+						.write(objToJsonString(new SimpleResponseVo(((JfErrorCodeRuntimeException) cause).getCode(),
+								((JfErrorCodeRuntimeException) cause).getToastMessage())));
+				resp.flushBuffer();
+			} else {
+				String code = UUID.randomUUID().toString();
+				logger.error(String.format("ERROR CODE:%s", code), cause);
+				resp.getWriter().write(objToJsonString(
+						new SimpleResponseVo(ResponseStatusEnum.SERVER_ERROR.getCode(), String.format("Code:", code))));
+				resp.flushBuffer();
+			}
 		}
 	}
 
