@@ -283,6 +283,7 @@ public class OrderController extends BaseController {
 		return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), null);
 	}
 
+	@AuthCheck(privileges = { "lawyer", "admin", "csr" })
 	@ResponseBody
 	@GetMapping(value = "/api/order/getreply")
 	public ResponseVo<OrderWithReplyVo> getReply(int id) {
@@ -295,6 +296,7 @@ public class OrderController extends BaseController {
 		return new ResponseVo<OrderWithReplyVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 	}
 
+	@AuthCheck(privileges = { "lawyer", "admin", "csr" })
 	@ResponseBody
 	@PostMapping(path = "/api/order/reply", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> reply(HttpServletRequest request, HttpServletResponse response,
