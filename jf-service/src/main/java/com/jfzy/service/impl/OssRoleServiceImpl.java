@@ -57,8 +57,14 @@ public class OssRoleServiceImpl implements OssRoleService {
 		tmpRoles.addAll(roleMap.values());
 
 		Map<String, List<String>> tmpPermMap = new HashMap<String, List<String>>();
-		tmpRoles.forEach(role -> {
-			tmpPermMap.put(role.getName(), role.getPermissons());
+		permPos.forEach(permPo -> {
+			List<String> perms = tmpPermMap.get(permPo.getRole());
+			if (perms == null) {
+				perms = new ArrayList<String>();
+				tmpPermMap.put(permPo.getRole(), perms);
+			}
+			perms.add(permPo.getPermission());
+
 		});
 
 		this.roles = tmpRoles;
