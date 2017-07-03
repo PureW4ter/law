@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jfzy.base.AuthCheck;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.UserService;
-import com.jfzy.service.WechatService;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.bo.UserBo;
@@ -27,19 +27,16 @@ import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
 import com.jfzy.web.vo.UserVo;
 
+@AuthCheck(privileges = { "admin" })
 @RestController
 public class APPUserController {
-	
+
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private WechatService wechatService;
-	
-	
+
 	@ResponseBody
 	@GetMapping("/api/user/list")
 	public ResponseVo<List<UserVo>> list(int page, int size) {
@@ -56,7 +53,7 @@ public class APPUserController {
 		}
 		return new ResponseVo<List<UserVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/user/listbylevel")
 	public ResponseVo<List<UserVo>> listByLevel(int level, int page, int size) {
@@ -73,44 +70,44 @@ public class APPUserController {
 		}
 		return new ResponseVo<List<UserVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/api/user/detail")
 	public ResponseVo<UserVo> detail(int id) {
 		UserBo bo = userService.getUser(id);
 		UserVo vo = boToVoForUser(bo);
 		UserAccountBo abo = userService.getUserAccountByUserId(bo.getId(), UserAccountTypeEnum.MOBILE.getId());
-		if(abo != null)
+		if (abo != null)
 			vo.setPhone(abo.getValue());
 		return new ResponseVo<UserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, vo);
 	}
-	
+
 	@ResponseBody
-	@PostMapping(path="/api/user/memo", consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(path = "/api/user/memo", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> memo(@RequestBody UserVo vo) {
 		userService.updateMemo(vo.getMemo(), vo.getId());
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	@ResponseBody
-	@PostMapping(path="/api/user/create",consumes =MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(path = "/api/user/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> createArticle(@RequestBody UserVo vo) {
 		UserBo bo = voToBoForUser(vo);
 		bo.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		userService.create(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	private static UserBo voToBoForUser(UserVo vo) {
 		UserBo bo = new UserBo();
 		BeanUtils.copyProperties(vo, bo);
 		return bo;
 	}
-	
+
 	private static UserVo boToVoForUser(UserBo bo) {
 		UserVo vo = new UserVo();
 		BeanUtils.copyProperties(bo, vo);
-		SimpleDateFormat myFmt=new SimpleDateFormat("yyyy年MM月dd日");      
+		SimpleDateFormat myFmt = new SimpleDateFormat("yyyy年MM月dd日");
 		vo.setCreateTime(myFmt.format(bo.getCreateTime()));
 		return vo;
 	}
