@@ -60,11 +60,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 					} else if (privileges.length == 0) {// only check login
 						return true;
 					}
-
+					response.setCharacterEncoding("UTF-8");
+					response.setContentType("application/json; charset=utf-8");
 					response.getWriter().write(objToJsonString(new SimpleResponseVo(402, "权限不够")));
 					response.flushBuffer();
 				} else {// 未登陆
-
+					response.setCharacterEncoding("UTF-8");
+					response.setContentType("application/json; charset=utf-8");
 					response.getWriter().write(objToJsonString(new SimpleResponseVo(401, "未登录")));
 					response.flushBuffer();
 
