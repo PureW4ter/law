@@ -1,5 +1,6 @@
 package com.jfzy.web;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,6 +60,9 @@ public class LoginController extends BaseController {
 			injectCookie(user.getId(), user.getType(), response);
 
 			List<String> permissions = ossRoleService.getPermissionsByRoleName(user.getRole());
+			if (permissions == null) {
+				permissions = new ArrayList<String>(0);
+			}
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user, permissions));
 		}
 		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在", null);
