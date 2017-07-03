@@ -149,7 +149,8 @@ public class LawyerServiceImpl implements LawyerService {
 			}
 
 			if (!StringUtils.isBlank(bo.getPassword())) {
-				po.setPassword(bo.getPassword());
+				String checkSum = MD5.MD5Encode(bo.getPassword());
+				po.setPassword(checkSum);
 			}
 
 			po.setCityId(bo.getCityId());
