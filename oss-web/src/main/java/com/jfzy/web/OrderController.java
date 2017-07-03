@@ -236,6 +236,7 @@ public class OrderController extends BaseController {
 		return new ResponseVo<List<OrderVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, result);
 	}
 
+	@AuthCheck(privileges = { "lawyer" })
 	@ResponseBody
 	@GetMapping("/api/order/lawyer")
 	public ResponseVo<List<OrderVo>> getOrderByLawyer(int lawyerId, int page, int size) {
