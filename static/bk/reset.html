@@ -16,28 +16,28 @@
 <body style="background: #c9a063">
 <div id="i_main">
     <div id="i_mainbox">
-        <script type="text/template" id="i_login_tpl">
+        <script type="text/template" id="i_tpl">
             <div class="login">
                 <div class="login_body">
                     <div class="jumbotron">
-                        <h3>简法后台管理系统</h3>
+                        <h3>重置密码</h3>
                         <form role="form" id="loginIt">
                             <div class="input-group">
-                                <span class="input-group-addon glyphicon glyphicon-user"></span>
-                                <input type="text" class="form-control" data-pattern="/[a-zA-Z0-9]{1,16}/ "
-                                       placeholder="请输入名称" maxlength="20" value="" name="userName"
+                                <span class="input-group-addon glyphicon glyphicon-tasks"></span>
+                                <input type="text" class="form-control" data-pattern="/[a-zA-Z0-9]{3,16}/ "
+                                       placeholder="请输入旧密码" maxlength="20" value="" name="oldPwd"
                                        data-container="body" data-toggle="popover" data-placement="right"
-                                       data-content="用户名格式错误！" data-keep="用户名格式错误！">
+                                       data-content="密码格式错误！" data-keep="密码格式错误！">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon glyphicon glyphicon-credit-card"></span>
-                                <input type="password" class="form-control" data-pattern="/[a-zA-Z0-9]{3,16}/ "
-                                       placeholder="请输入密码" maxlength="30" value="" name="password"
+                                <span class="input-group-addon glyphicon glyphicon-asterisk"></span>
+                                <input class="form-control" data-pattern="/[a-zA-Z0-9]{3,16}/ "
+                                       placeholder="请输入新密码" maxlength="30" value="" name="newPwd"
                                        data-container="body" data-toggle="popover" data-placement="right"
                                        data-content="密码格式错误！" data-keep="密码格式错误！">
                             </div>
                             <p class="text-right">&nbsp;</p>
-                            <p class="text-center"><b data-location="" class="submit btn btn-warning  btn-lg">登录</b></p>
+                            <p class="text-center"><b data-location="" class="submit btn btn-warning  btn-lg">重置</b></p>
                             <a href="#myModal" class="disnone" id="i_login_warn" data-toggle="modal">
                                 <button></button>
                             </a>

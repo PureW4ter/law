@@ -91,7 +91,13 @@ public class OssUserController {
 		ossUserService.create(bo);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-
+	@ResponseBody
+	@GetMapping("/api/ossuser/restpwd")
+	public ResponseVo<Object> resetPassword(int id, String oldPwd, String newPwd) {
+		ossUserService.resetPassword(id, false, oldPwd, newPwd);
+		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
+	}
+	
 	private static OssUserVo boToVo(OssUserBo bo) {
 		OssUserVo vo = new OssUserVo();
 		BeanUtils.copyProperties(bo, vo);
