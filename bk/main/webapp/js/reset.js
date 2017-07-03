@@ -20,10 +20,9 @@ define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header
         },
         subIt: function (e) {
             var params = util.getFormValues('loginIt');
-            params.id = util.getUserId();
             $('input').blur();
             if ($('.popover.in').length < 1) {
-                ajaxHelper.get("http://" + window.frontJSHost + "/api/ossuser/restpwd", 
+                ajaxHelper.get("http://" + window.frontJSHost + "/api/user/resetpwd", 
                     params, e.data.ctx, e.data.ctx.success, null);
             } 
         },
