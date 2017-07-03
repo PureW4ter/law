@@ -15,13 +15,18 @@ import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.LawyerStatusEnum;
 import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 import com.jfzy.service.po.LawyerPo;
+import com.jfzy.service.po.OssUserPo;
 import com.jfzy.service.repository.LawyerRepository;
+import com.jfzy.service.repository.OssUserRepository;
 
 @Service
 public class LawyerServiceImpl implements LawyerService {
 
 	@Autowired
 	private LawyerRepository lawyerRepo;
+
+	@Autowired
+	private OssUserRepository userRepo;
 
 	@Override
 	public List<LawyerBo> getActiveLawyerByCity(int cityId) {
@@ -67,6 +72,21 @@ public class LawyerServiceImpl implements LawyerService {
 			throw new JfErrorCodeRuntimeException(400, "律师手机已存在",
 					String.format("LAWYER-CREATE:Lawyer phoneNum exist:%s", bo.getPhoneNum()));
 		}
+
+		if (StringUtils.isNotBlank(bo.getLoginName())) {
+			List<OssUserPo> tmpPos = userRepo.findByLoginName(bo.getLoginName());
+			if (tmpPos != null && tmpPos.size() > 0) {
+				throw new JfErrorCodeRuntimeException(400, "登录账号已存在",
+						String.format("LAWYER-CREATE:Lawyer login name exist in OssUser:%s", bo.getLoginName()));
+			}
+
+			pos = lawyerRepo.findByLoginName(bo.getLoginName());
+			if (pos != null && pos.size() > 0) {
+				throw new JfErrorCodeRuntimeException(400, "登录账号已存在",
+						String.format("LAWYER-CREATE:Lawyer login name exist:%s", bo.getLoginName()));
+			}
+		}
+
 		bo.setPassword(MD5.MD5Encode(bo.getPassword()));
 		lawyerRepo.save(boToPo(bo));
 	}
@@ -169,11 +189,18 @@ public class LawyerServiceImpl implements LawyerService {
 		} else if (pos.size() == 1) {
 			if (pos.get(0).getId() != id) {
 				throw new JfErrorCodeRuntimeException(400, "律师登录名已存在",
-						String.format("LAWYER-CREATE:Lawyer phoneNum exist:%s", loginName));
+						String.format("LAWYER-CREATE:Lawyer loginName exist:%s", loginName));
 			}
 		} else if (pos.size() > 1) {
 			throw new JfErrorCodeRuntimeException(400, "律师登录名已存在",
-					String.format("LAWYER-CREATE:Lawyer phoneNum exist:%s", loginName));
+					String.format("LAWYER-CREATE:Lawyer loginName exist:%s", loginName));
+		}
+
+		List<OssUserPo> userPos = userRepo.findByLoginName(loginName);
+		if (userPos != null && userPos.size() > 0) {
+
+			throw new JfErrorCodeRuntimeException(400, "律师登录名已存在",
+					String.format("LAWYER-CREATE:Lawyer loginName exist:%s", loginName));
 		}
 	}
 
