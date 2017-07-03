@@ -9,7 +9,7 @@ import com.jfzy.service.bo.OssUserBo;
 public interface OssUserService {
 
 	OssUserBo login(String phoneNum, String code);
-	
+
 	public OssUserBo loginWithPassword(String loginName, String password);
 
 	void updateStatus(int status, int id);
@@ -18,8 +18,10 @@ public interface OssUserService {
 
 	void create(OssUserBo bo);
 
-	public List<OssUserBo> getOssUsers(Pageable page);
+	List<OssUserBo> getOssUsers(Pageable page);
 
 	OssUserBo getUserById(int id);
+
+	void resetPassword(int userId, boolean isLawyer, String oldPwd, String newPwd);
 
 }

@@ -90,11 +90,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 					if (t.getType() == OssUserTypeEnum.USER.getId()) {
 						OssUserBo user = ossUserService.getUserById(userId);
 						AuthInfo authInfo = new AuthInfo();
+						authInfo.setUserId(userId);
 						authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
 						session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
 					} else if (t.getType() == OssUserTypeEnum.LAWYER.getId()) {
 						AuthInfo authInfo = new AuthInfo();
 						authInfo.setPrivileges(Arrays.asList(new String[] { "lawyer" }));
+						authInfo.setUserId(userId);
 						session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
 					}
 				}

@@ -22,11 +22,15 @@ public interface OssUserRepository extends JpaRepository<OssUserPo, Integer> {
 	@Modifying
 	@Query("UPDATE OssUserPo SET role=?1, updateTime=?2 WHERE id=?3")
 	void updateAuth(String role, Timestamp updateTime, int id);
-	
+
 	List<OssUserPo> findByPhoneNum(String phoneNum);
-	
+
 	List<OssUserPo> findByLoginNameAndPassword(String loginName, String password);
-	
+
 	List<OssUserPo> findByLoginName(String loginName);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE OssUserPo SET password=?3 WHERE id=?1 AND password=?2")
+	void updatePassword(int id, String oldPwd, String newPwd);
 }

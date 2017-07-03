@@ -4,6 +4,8 @@ import java.util.List;
 
 public class AuthInfo {
 
+	private int userId;
+
 	private List<String> privileges;
 
 	public List<String> getPrivileges() {
@@ -12,6 +14,14 @@ public class AuthInfo {
 
 	public void setPrivileges(List<String> privileges) {
 		this.privileges = privileges;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 }

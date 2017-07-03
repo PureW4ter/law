@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jfzy.base.AuthInfo;
 import com.jfzy.base.SessionConstants;
-import com.jfzy.service.bo.OssUserBo;
 
 public class BaseController {
 
@@ -17,17 +16,18 @@ public class BaseController {
 	@Autowired
 	private HttpSession session;
 
-	public OssUserBo getOssUser() {
-		return session == null ? null : (OssUserBo) session.getAttribute(SessionConstants.SESSION_KEY_USER);
-	}
-
-	private AuthInfo getAuthInfo() {
+	protected AuthInfo getAuthInfo() {
 		return (AuthInfo) session.getAttribute(SessionConstants.SESSION_KEY_AUTH_INFO);
 	}
 
 	protected boolean isAdmin() {
 		AuthInfo info = getAuthInfo();
 		return info == null ? false : info.getPrivileges().contains("admin");
+	}
+
+	protected boolean isLawyer() {
+		AuthInfo info = getAuthInfo();
+		return info == null ? false : info.getPrivileges().contains("lawyer");
 	}
 
 }

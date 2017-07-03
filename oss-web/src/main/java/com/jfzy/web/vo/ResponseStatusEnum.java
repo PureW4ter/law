@@ -2,7 +2,7 @@ package com.jfzy.web.vo;
 
 public enum ResponseStatusEnum {
 
-	SUCCESS(200), BAD_REQUEST(400), SERVER_ERROR(500), UNAUTH(404);
+	SUCCESS(200), BAD_REQUEST(400), SERVER_ERROR(500), UNAUTH(404), NOT_LOGIN(401);
 
 	private int code;
 

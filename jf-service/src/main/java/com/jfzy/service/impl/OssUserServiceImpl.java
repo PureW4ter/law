@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.jfzy.service.OssUserService;
 import com.jfzy.service.bo.OssUserBo;
@@ -122,14 +122,54 @@ public class OssUserServiceImpl implements OssUserService {
 		return po;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(MD5.MD5Encode("123456789."));
-	}
-
 	@Override
 	public OssUserBo getUserById(int id) {
 		OssUserPo po = ossUserRepo.findOne(id);
 		OssUserBo bo = poToBo(po);
 		return bo;
+	}
+
+	@Override
+	public void resetPassword(int userId, boolean isLawyer, String oldPwd, String newPwd) {
+		if (isLawyer) {
+			resetLawyerPassword(userId, oldPwd, newPwd);
+		} else {
+			resetOssUserPassword(userId, oldPwd, newPwd);
+		}
+	}
+
+	private void resetOssUserPassword(int userId, String oldPwd, String newPwd) {
+		OssUserPo po = ossUserRepo.findOne(userId);
+		if (po != null) {
+			String oldChecksum = MD5.MD5Encode(oldPwd);
+			String newChecksum = MD5.MD5Encode(newPwd);
+			if (StringUtils.equals(oldChecksum, po.getPassword())) {
+				ossUserRepo.updatePassword(userId, oldChecksum, newChecksum);
+			} else {
+				throw new JfErrorCodeRuntimeException(400, "旧密码不匹配",
+						String.format("OSSUSER-RESETPWD:User old password not match for id:%s", userId));
+			}
+		} else {
+			throw new JfErrorCodeRuntimeException(400, "员工账号不存在",
+					String.format("OSSUSER-RESETPWD:User not exists with id:%s", userId));
+		}
+	}
+
+	private void resetLawyerPassword(int userId, String oldPwd, String newPwd) {
+		LawyerPo po = lawyerRepo.findOne(userId);
+		if (po != null) {
+			String oldChecksum = MD5.MD5Encode(oldPwd);
+			String newChecksum = MD5.MD5Encode(newPwd);
+			if (StringUtils.equals(oldChecksum, po.getPassword())) {
+				lawyerRepo.updatePwd(userId, oldChecksum, newChecksum);
+			} else {
+				throw new JfErrorCodeRuntimeException(400, "旧密码不匹配",
+						String.format("OSSUSER-RESETPWD:Lawyer old password not match for id:%s", userId));
+			}
+		} else {
+			throw new JfErrorCodeRuntimeException(400, "律师账号不存在",
+					String.format("OSSUSER-RESETPWD:Lawyer not exists with id:%s", userId));
+		}
+
 	}
 }

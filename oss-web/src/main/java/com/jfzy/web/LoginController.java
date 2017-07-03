@@ -24,6 +24,7 @@ import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.web.vo.OssUserVo;
 import com.jfzy.web.vo.ResponseStatusEnum;
 import com.jfzy.web.vo.ResponseVo;
+import com.jfzy.web.vo.SimpleResponseVo;
 
 @RestController
 public class LoginController extends BaseController {
@@ -59,6 +60,26 @@ public class LoginController extends BaseController {
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user, permissions));
 		}
 		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在", null);
+	}
+
+	@ResponseBody
+	@GetMapping("/api/user/resetpwd")
+	public SimpleResponseVo resetPassword(String oldPass, String newPass) {
+		if (StringUtils.isBlank(oldPass)) {
+			return new SimpleResponseVo(ResponseStatusEnum.BAD_REQUEST.getCode(), "旧密码不能为空");
+		}
+		if (StringUtils.isBlank(newPass)) {
+			return new SimpleResponseVo(ResponseStatusEnum.BAD_REQUEST.getCode(), "新密码不能为空");
+		}
+
+		AuthInfo info = getAuthInfo();
+		if (info != null) {
+			ossUserService.resetPassword(info.getUserId(), this.isLawyer(), oldPass, newPass);
+			return new SimpleResponseVo(ResponseStatusEnum.SUCCESS.getCode(), "密码修改成功");
+		} else {
+			return new SimpleResponseVo(ResponseStatusEnum.NOT_LOGIN.getCode(), "未登录");
+		}
+
 	}
 
 	private void injectCookie(int userId, int type, HttpServletResponse response) {
