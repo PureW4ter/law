@@ -14,11 +14,15 @@ define(['text!./header.html'], function (tempHtml) {
         },
         _registEvent: function () {
             $('#i_logOut').off('click', this._cancelSuccess).on('click', this._cancelSuccess);
+            $('#i_reset').off('click', this._reset).on('click', this._reset);
         },
         _cancelSuccess: function(data){
             localStorage.removeItem('userInfo');
             window.location = 'login.html';
         },
+        _reset: function(data){
+            window.location = 'reset.html';
+        }
     };
     return Header;
 });
