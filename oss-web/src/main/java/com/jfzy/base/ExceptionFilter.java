@@ -33,6 +33,7 @@ public class ExceptionFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
+		resp.setCharacterEncoding("UTF-8");
 		try {
 			chain.doFilter(req, resp);
 		} catch (JfErrorCodeRuntimeException jecr) {
@@ -49,7 +50,7 @@ public class ExceptionFilter implements Filter {
 			Throwable cause = nse.getCause();
 			if (cause != null && cause instanceof JfErrorCodeRuntimeException) {
 
-				logger.error("Error occur:", cause);
+				logger.error("Error occur:", cause.getMessage());
 				resp.getWriter()
 						.write(objToJsonString(new SimpleResponseVo(((JfErrorCodeRuntimeException) cause).getCode(),
 								((JfErrorCodeRuntimeException) cause).getToastMessage())));

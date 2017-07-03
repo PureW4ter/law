@@ -51,6 +51,7 @@ public class LoginController extends BaseController {
 		if (user != null) {
 			session.setAttribute(SessionConstants.SESSION_KEY_USER, user);
 			AuthInfo authInfo = new AuthInfo();
+			authInfo.setUserId(user.getId());
 			authInfo.setPrivileges(Arrays.asList(new String[] { user.getRole() }));
 			session.setAttribute(SessionConstants.SESSION_KEY_AUTH_INFO, authInfo);
 
