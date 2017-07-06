@@ -52,7 +52,7 @@ public interface LawyerRepository extends JpaRepository<LawyerPo, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE LawyerPo SET scoredTasks=scoredTasks+1, score = (score*scoredTasks+?1-1)/scoredTasks WHERE id=?2")
+	@Query("UPDATE LawyerPo SET scoredTasks=scoredTasks+1, score = (score*(scoredTasks-1)+?1)/scoredTasks WHERE id=?2")
 	void updateLawyerScore(double score, int lawyerId);
 
 	@Transactional
