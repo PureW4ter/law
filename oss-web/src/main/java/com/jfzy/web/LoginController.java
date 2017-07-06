@@ -65,7 +65,7 @@ public class LoginController extends BaseController {
 			}
 			return new ResponseVo<OssUserVo>(ResponseStatusEnum.SUCCESS.getCode(), null, boToVo(user, permissions));
 		}
-		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在", null);
+		return new ResponseVo<OssUserVo>(ResponseStatusEnum.BAD_REQUEST.getCode(), "用户不存在或者密码错误", null);
 	}
 
 	@AuthCheck(privileges = {})
