@@ -322,20 +322,32 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int status) {
-		Page<OrderPo> poPage = orderRepo.getSearchOrdersByLawyerId(lawyerId, status, page);
+	public List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int[] status) {
+		Page<OrderPo> poPage = null;
+		if (status != null && status.length == 1) {
+			poPage = orderRepo.getSearchOrdersByLawyerId(lawyerId, status[0], page);
+		} else if (status != null && status.length > 1) {
+			poPage = orderRepo.getSearchOrdersByLawyerIdIn(lawyerId, status, page);
+		}
+
 		List<OrderBo> results = new ArrayList<OrderBo>();
-		if (poPage.getContent() != null) {
+		if (poPage != null && poPage.getContent() != null) {
 			poPage.getContent().forEach(po -> results.add(poToBo(po)));
 		}
 		return results;
 	}
 
 	@Override
-	public List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int status) {
-		Page<OrderPo> poPage = orderRepo.getInvestOrdersByLawyerId(lawyerId, status, page);
+	public List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int[] status) {
+		Page<OrderPo> poPage = null;
+		if (status != null && status.length == 1) {
+			poPage = orderRepo.getInvestOrdersByLawyerId(lawyerId, status[0], page);
+		} else if (status != null && status.length > 1) {
+			poPage = orderRepo.getInvestOrdersByLawyerIdIn(lawyerId, status, page);
+		}
+
 		List<OrderBo> results = new ArrayList<OrderBo>();
-		if (poPage.getContent() != null) {
+		if (poPage != null && poPage.getContent() != null) {
 			poPage.getContent().forEach(po -> results.add(poToBo(po)));
 		}
 		return results;
@@ -364,7 +376,7 @@ public class OrderServiceImpl implements OrderService {
 
 		return resultPage;
 	}
-	
+
 	@Override
 	public List<OrderBo> getUnprocessedOrdersByLawyer(int lawyerId, Pageable page) {
 		// TODO Auto-generated method stub

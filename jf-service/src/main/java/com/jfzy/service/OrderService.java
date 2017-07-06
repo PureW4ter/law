@@ -50,9 +50,9 @@ public interface OrderService {
 
 	List<OrderBo> getInvestOrdersByUser(Pageable page, int userId);
 
-	List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int status);
+	List<OrderBo> getSearchOrdersByLawyer(Pageable page, int lawyerId, int[] status);
 
-	List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int status);
+	List<OrderBo> getInvestOrdersByLawyer(Pageable page, int lawyerId, int[] status);
 	
 	Page<OrderBo> getOrdersByType(Pageable page, String productCode);
 	

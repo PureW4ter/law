@@ -196,9 +196,18 @@ public class OrderController extends BaseController {
 		if (page < 0) {
 			page = 0;
 		}
+		int[] statusArray = null;
+		if (status == 5) {
+			statusArray = new int[] { OrderStatusEnum.FINISHED.getId() };
+		} else if (status == 4) {
+			statusArray = new int[] { OrderStatusEnum.DISPATCHED.getId(),
+					OrderStatusEnum.FINISHED_NEEDCONFIRM.getId() };
+		} else {
+			statusArray = new int[] { status };
+		}
 		Sort sort = new Sort(Direction.DESC, "createTime");
 		List<OrderBo> values = orderService.getSearchOrdersByLawyer(new PageRequest(page, size, sort), lawyerId,
-				status);
+				statusArray);
 		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
 		for (OrderBo bo : values) {
 			result.add(boToVo(bo));
@@ -212,9 +221,18 @@ public class OrderController extends BaseController {
 		if (page < 0) {
 			page = 0;
 		}
+		int[] statusArray = null;
+		if (status == 5) {
+			statusArray = new int[] { OrderStatusEnum.FINISHED.getId() };
+		} else if (status == 4) {
+			statusArray = new int[] { OrderStatusEnum.DISPATCHED.getId(),
+					OrderStatusEnum.FINISHED_NEEDCONFIRM.getId() };
+		} else {
+			statusArray = new int[] { status };
+		}
 		Sort sort = new Sort(Direction.DESC, "phoneEndTime");
 		List<OrderBo> values = orderService.getInvestOrdersByLawyer(new PageRequest(page, size, sort), lawyerId,
-				status);
+				statusArray);
 		List<OrderVo> result = new ArrayList<OrderVo>(values.size());
 		for (OrderBo bo : values) {
 			result.add(boToVo(bo));
