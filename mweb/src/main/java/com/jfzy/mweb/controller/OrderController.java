@@ -170,7 +170,7 @@ public class OrderController extends BaseController {
 		lawyerReplyService.scoreReply(replyId, score);
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "/api/order/complete", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseVo<Object> complete(HttpServletRequest request, HttpServletResponse response,
@@ -287,6 +287,11 @@ public class OrderController extends BaseController {
 
 	private static OrderWithReplyVo boToVo(OrderBo obo, LawyerReplyBo rbo, List<OrderPhotoBo> orderPhotoList,
 			List<OrderPhotoBo> replyPhotoList) {
+		if (obo != null && (obo.getStatus() == OrderStatusEnum.DISPATCHED.getId()
+				|| obo.getStatus() == OrderStatusEnum.FINISHED_NEEDCONFIRM.getId())) {
+			rbo = null;
+			replyPhotoList = null;
+		}
 		OrderWithReplyVo vo = new OrderWithReplyVo();
 		vo.setLawyerReplyVo(boToVo(rbo));
 		vo.setOrderVo(boToVo(obo));
