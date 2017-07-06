@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jfzy.service.OssUserService;
+import com.jfzy.service.bo.LawyerStatusEnum;
 import com.jfzy.service.bo.OssUserBo;
 import com.jfzy.service.bo.OssUserTypeEnum;
 import com.jfzy.service.exception.JfErrorCodeRuntimeException;
@@ -60,7 +61,11 @@ public class OssUserServiceImpl implements OssUserService {
 			OssUserBo bo = poToBo(po);
 			bo.setRole("lawyer");
 			bo.setType(OssUserTypeEnum.LAWYER.getId());
-			return bo;
+			if (po.getStatus() != LawyerStatusEnum.ACTIVE.getId()) {
+				return null;
+			} else {
+				return bo;
+			}
 		} else {
 			return null;
 		}
