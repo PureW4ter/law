@@ -35,6 +35,8 @@
                                     <td>订单编号</td>
                                     <td>创建时间</td>
                                     <td>订单类型</td>
+                                    <td>电话截止日期</td>
+                                    <td>书面截止日期</td>
                                     <td>状态</td>
                                     <td>操作</td>
                                 </tr>
@@ -45,6 +47,8 @@
                                     <td><%=item.orderCode%></td>
                                     <td><%=item.createTime%></td>
                                     <td><%=item.productName%></td>
+                                    <td><%=item.phoneEndTime%></td>
+                                    <td><%=item.endTime%></td>
                                     <%if(item.status == 7){%>
                                         <td>已回复待审核</td>
                                         <td></td>

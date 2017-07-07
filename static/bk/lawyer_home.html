@@ -9,8 +9,8 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <title>后台管理系统</title>
-    <link href="styles/bootstrap.css?ver=20170707120754" rel="stylesheet" />
-    <link href="styles/main.css?ver=20170707120754" rel="stylesheet" />
+    <link href="styles/bootstrap.css?ver=20170707151514" rel="stylesheet" />
+    <link href="styles/main.css?ver=20170707151514" rel="stylesheet" />
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -35,6 +35,8 @@
                                     <td>订单编号</td>
                                     <td>创建时间</td>
                                     <td>订单类型</td>
+                                    <td>电话截止日期</td>
+                                    <td>书面截止日期</td>
                                     <td>状态</td>
                                     <td>操作</td>
                                 </tr>
@@ -45,6 +47,8 @@
                                     <td><%=item.orderCode%></td>
                                     <td><%=item.createTime%></td>
                                     <td><%=item.productName%></td>
+                                    <td><%=item.phoneEndTime%></td>
+                                    <td><%=item.endTime%></td>
                                     <%if(item.status == 7){%>
                                         <td>已回复待审核</td>
                                         <td></td>
@@ -71,7 +75,7 @@
             </div>
         </div>
     </div>
-    <script src="js/include.js?ver=20170707120754" type="text/javascript"></script>
+    <script src="js/include.js?ver=20170707151514" type="text/javascript"></script>
 </body>
 
 </html>
