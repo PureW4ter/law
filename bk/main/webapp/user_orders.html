@@ -39,6 +39,7 @@
                                                 <td>订单编号</td>
                                                 <td>提交日期</td>
                                                 <td>订单类型</td>
+                                                <td>用户电话</td>
                                                 <td>订单状态</td>
                                                 <td>责任律师</td>
                                             </tr>
@@ -49,6 +50,7 @@
                                                 <td><a href="zixun_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
                                                 <td><%=item.createTime%></td>
                                                 <td><%=item.productName%></td>
+                                                <td><%=item.userPhoneNum%></td>
                                                 <td>
                                                     <%if(item.status==0){%>
                                                         待支付
@@ -96,6 +98,7 @@
                                                 <td>订单编号</td>
                                                 <td>产品名称</td>
                                                 <td>提交日期</td>
+                                                <td>用户电话</td>
                                                 <td>电话截止日期</td>
                                                 <td>书面截止日期</td>
                                                 <td>订单状态</td>
@@ -108,8 +111,9 @@
                                                 <td><a href="diaocha_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
                                                 <td><%=item.productName%></td>
                                                 <td><%=item.createTime%></td>
+                                                <td><%=item.userPhoneNum%></td>
                                                 <td><%=item.phoneEndTime%></td>
-                                                <td><%=item.EndTime%></td>
+                                                <td><%=item.endTime%></td>
                                                 <td>
                                                     <%if(item.status==0){%>
                                                         待支付
