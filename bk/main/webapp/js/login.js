@@ -35,7 +35,12 @@ define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header
         success: function (data) {
             data.expires_time = new Date().getTime() + 3600 * 1000;
             window.localStorage.setItem('userInfo', JSON.stringify(data.r));
-            window.location = "user_management.html";
+            if(util.isLawyer()){
+                window.location = "lawyer_home.html";
+            }else{
+                window.location = "user_management.html";  
+            }
+            
         }
     };
     return Login;

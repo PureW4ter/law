@@ -2,8 +2,13 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
     var UserOrders = {
         initialize: function () {
             //nav_bar
-            nav_bar.initialize("i_navbar", 1);
-            header.initialize("i_header", "用户订单");
+            if(util.getQueryParameter("uid")){
+                nav_bar.initialize("i_navbar", 1);
+                header.initialize("i_header", "用户订单");
+            }else{
+                nav_bar.initialize("i_navbar", 4);
+                header.initialize("i_header", "律师订单");
+            }
 
             this.mainBox1 = $('#i_mainbox1');
             this.tplFun1 = _.template($("#i_tpl1").html());
