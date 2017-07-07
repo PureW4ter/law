@@ -20,7 +20,7 @@ import com.jfzy.service.exception.JfErrorCodeRuntimeException;
 public class SmsServiceImpl implements SmsService {
 
 	private static final String TEMPLATE_REGISTER = "SMS_69015764";
-	private static final String TEMPLATE_NOTIFY = "SMS_70620533";
+	private static final String TEMPLATE_NOTIFY = "SMS_76520005";
 	private static final String PARAM_CODE = "code";
 	private static final String PARAM_PRODUCT = "product";
 	private static final String VALUE_PRODUCT = "简法二手房";
