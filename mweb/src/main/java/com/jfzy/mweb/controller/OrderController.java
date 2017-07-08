@@ -225,6 +225,7 @@ public class OrderController extends BaseController {
 
 		if (bo.getStatus() == OrderStatusEnum.FINISHED_NEEDCONFIRM.getId()) {
 			bo.setStatus(OrderStatusEnum.DISPATCHED.getId());
+			vo.setStatus(OrderStatusEnum.DISPATCHED.getId());
 		}
 
 		if (bo.getStartTime() != null && bo.getEndTime() != null) {
