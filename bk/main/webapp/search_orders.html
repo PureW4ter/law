@@ -65,6 +65,7 @@
                                     <td>订单编号</td>
                                     <td>提交日期</td>
                                     <td>订单类型</td>
+									<td>书面截止日期</td>
                                     <td>订单状态</td>
                                     <td>责任律师</td>
                                 </tr>
@@ -75,25 +76,8 @@
                                     <td><a href="diaocha_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
                                     <td><%=item.createTime%></td>
                                     <td><%=item.productName%></td>
-                                    <td>
-                                        <%if(item.status==0){%>
-                                            待支付
-                                        <%}else if(item.status==1){%>
-                                            待支付
-                                        <%}else if(item.status==2){%>
-                                            待补充
-                                        <%}else if(item.status==3){%>
-                                            待指派
-                                        <%}else if(item.status==4){%>
-                                            已指派
-                                        <%}else if(item.status==98){%>
-                                            已完成
-                                        <%}else if(item.status==99){%>
-                                            已取消
-                                        <%}else if(item.status==7){%>
-                                            已回复待审核
-                                        <%}%> 
-                                    </td>
+									<td><%=item.endTime%></td>
+									<td><%=item.statusDesc%></td>
                                     <td>
                                         <%if(item.status==3 || item.status==4){%>
                                             <%if(!!item.lawyerName){%>
