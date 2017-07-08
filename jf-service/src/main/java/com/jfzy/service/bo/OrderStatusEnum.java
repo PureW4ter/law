@@ -20,4 +20,27 @@ public enum OrderStatusEnum {
 	public String getDesc() {
 		return desc;
 	}
+
+	public static OrderStatusEnum fromId(int id) {
+		if (id == NO_PAY.id) {
+			return NO_PAY;
+		} else if (id == NO_PAY_NEED_COMPLETED.id) {
+			return NO_PAY_NEED_COMPLETED;
+		} else if (id == NOT_COMPLETED.id) {
+			return NOT_COMPLETED;
+		} else if (id == NEED_DISPATCH.id) {
+			return NEED_DISPATCH;
+		} else if (id == DISPATCHED.id) {
+			return DISPATCHED;
+		} else if (id == FINISHED_NEEDCONFIRM.id) {
+			return FINISHED_NEEDCONFIRM;
+		} else if (id == FINISHED.id) {
+			return FINISHED;
+		} else if (id == CANCELED.id) {
+			return CANCELED;
+		} else {
+			return null;
+		}
+	}
+
 }

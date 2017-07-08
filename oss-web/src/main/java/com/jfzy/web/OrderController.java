@@ -379,6 +379,11 @@ public class OrderController extends BaseController {
 			}
 		}
 
+		OrderStatusEnum statusEnum = OrderStatusEnum.fromId(bo.getStatus());
+		if (statusEnum != null) {
+			vo.setStatusDesc(statusEnum.getDesc());
+		}
+
 		if (!isAdmin()) {
 			vo.setEmail("");
 			vo.setUserPhoneNum("");
