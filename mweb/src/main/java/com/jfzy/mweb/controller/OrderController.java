@@ -288,6 +288,7 @@ public class OrderController extends BaseController {
 			return null;
 		LawyerReplyVo vo = new LawyerReplyVo();
 		BeanUtils.copyProperties(bo, vo);
+		vo.setHasHukou(bo.getHasHukou() == 0 ? "无" : "有");
 		return vo;
 	}
 
