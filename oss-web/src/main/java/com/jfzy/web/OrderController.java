@@ -359,11 +359,11 @@ public class OrderController extends BaseController {
 			vo.setStartTime(myFmt.format(bo.getStartTime()));
 		if (bo.getEndTime() != null)
 			vo.setEndTime(myFmt.format(bo.getEndTime()));
+		if (bo.getPhoneEndTime() != null)
+			vo.setPhoneEndTime(myFmt2.format(bo.getPhoneEndTime()));
 		if (bo.getStartTime() != null && bo.getEndTime() != null) {
 			if (new Date().getTime() >= bo.getEndTime().getTime()
 					|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
-				if (bo.getPhoneEndTime() != null)
-					vo.setPhoneEndTime(myFmt2.format(bo.getPhoneEndTime()));
 				if (bo.getStartTime() != null && bo.getEndTime() != null) {
 					if (new Date().getTime() >= bo.getEndTime().getTime()
 							|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
