@@ -222,6 +222,11 @@ public class OrderController extends BaseController {
 			vo.setStartTime(myFmt.format(bo.getStartTime()));
 		if (bo.getEndTime() != null)
 			vo.setEndTime(myFmt.format(bo.getEndTime()));
+
+		if (bo.getStatus() == OrderStatusEnum.FINISHED_NEEDCONFIRM.getId()) {
+			bo.setStatus(OrderStatusEnum.DISPATCHED.getId());
+		}
+
 		if (bo.getStartTime() != null && bo.getEndTime() != null) {
 			if (new Date().getTime() >= bo.getEndTime().getTime()
 					|| bo.getStatus() == OrderStatusEnum.FINISHED.getId()) {
