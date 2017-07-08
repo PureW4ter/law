@@ -4,8 +4,6 @@ public interface NotificationService {
 
 	void notifyForAssignment();
 
-	void notifyForConfirm();
-
 	void completeNotify(int orderId);
 
 }

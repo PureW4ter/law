@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -15,13 +14,10 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfzf.core.HttpClientUtils;
 import com.jfzy.service.AccessTokenService;
-import com.jfzy.service.LawyerService;
 import com.jfzy.service.NotificationService;
 import com.jfzy.service.OrderService;
 import com.jfzy.service.UserService;
-import com.jfzy.service.bo.LawyerBo;
 import com.jfzy.service.bo.OrderBo;
-import com.jfzy.service.bo.OrderStatusEnum;
 import com.jfzy.service.bo.UserAccountBo;
 import com.jfzy.service.bo.UserAccountTypeEnum;
 import com.jfzy.service.weixin.dto.MessageRequestDto;
@@ -38,13 +34,8 @@ public class NotificationServiceImpl implements NotificationService {
 
 	private static final Logger logger = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
-	private static final int PAGE_SIZE = 20;
-
 	@Autowired
 	private OrderService orderService;
-
-	@Autowired
-	private LawyerService lawyerService;
 
 	@Autowired
 	private UserService userService;
@@ -54,26 +45,6 @@ public class NotificationServiceImpl implements NotificationService {
 
 	private static final int[] CITIES = { 1, 2, 3 };
 
-	private void orderAssignmentNotify(OrderBo order) {
-		if (order != null && order.getStatus() == OrderStatusEnum.DISPATCHED.getId()) {
-			LawyerBo lawyer = lawyerService.getLawyerById(order.getLawyerId());
-			if (lawyer != null && StringUtils.isNotBlank(lawyer.getOpenId())
-					&& StringUtils.isNotBlank(lawyer.getPhoneNum())) {
-				notifyByWechat(order, lawyer.getOpenId());
-				// finally update status
-				orderService.updateOrderStatus(order.getId(), OrderStatusEnum.DISPATCHED.getId(),
-						OrderStatusEnum.DISPATCHED_NOTIFIED.getId());
-			} else {
-				// log
-			}
-
-		}
-	}
-
-	private void notifyByWechat(OrderBo order, String openId) {
-		// TODO
-	}
-
 	@Override
 	public void notifyForAssignment() {
 		for (int i = 0; i < CITIES.length; ++i) {
@@ -82,18 +53,6 @@ public class NotificationServiceImpl implements NotificationService {
 
 			}
 		}
-	}
-
-	@Override
-	public void notifyForConfirm() {
-		List<OrderBo> orders = orderService.getUnconfirmedOrders(PAGE_SIZE);
-
-		do {
-			if (orders != null) {
-				orders.forEach(order -> orderAssignmentNotify(order));
-			}
-		} while (orders != null && orders.size() == PAGE_SIZE);
-
 	}
 
 	@Override
