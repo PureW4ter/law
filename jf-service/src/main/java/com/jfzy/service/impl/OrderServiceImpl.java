@@ -187,8 +187,9 @@ public class OrderServiceImpl implements OrderService {
 			} else if (po.getCityId() != lawyer.getCityId()) {
 				throw new JfErrorCodeRuntimeException(400, "城市不匹配",
 						String.format("ASSIGN-ORDER: City not match. Order:%s,Lawyer:%s", orderId, lawyerId));
-			} else if (po.getStatus() == OrderStatusEnum.NEED_DISPATCH.getId()
-					|| po.getStatus() == OrderStatusEnum.DISPATCHED.getId()) {
+			} else if ((po.getStatus() == OrderStatusEnum.NEED_DISPATCH.getId()
+					|| po.getStatus() == OrderStatusEnum.DISPATCHED.getId()) && po.getLawyerId() != lawyerId) {
+				int oldLawyerId = po.getLawyerId();
 				po.setLawyerId(lawyerId);
 				po.setLawyerName(lawyer.getName());
 				po.setLawyerPhoneNum(lawyer.getPhoneNum());
@@ -197,6 +198,7 @@ public class OrderServiceImpl implements OrderService {
 				po.setStatus(OrderStatusEnum.DISPATCHED.getId());
 				po.setNotifyStatus(0);
 				orderRepo.save(po);
+				lawyerSerivce.updateOnProcessTask(-1, oldLawyerId);
 				lawyerSerivce.updateOnProcessTask(1, lawyerId);
 				notify(po);
 			} else {
