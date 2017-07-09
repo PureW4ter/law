@@ -2,7 +2,7 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
     var LawyerManagement = {
         initialize: function () {
             //nav_bar
-            nav_bar.initialize("i_navbar", 4);
+            nav_bar.initialize("i_navbar", 8);
             header.initialize("i_header", "律师主页");
             this.mainBox = $('#i_mainbox');
             this.tplFun = _.template($("#i_tpl").html());
