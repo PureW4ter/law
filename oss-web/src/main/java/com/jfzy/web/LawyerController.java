@@ -50,6 +50,7 @@ public class LawyerController {
 		return new ResponseVo<List<LawyerVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
 	}
 
+	@AuthCheck(privileges = { "admin", "csr" })
 	@ResponseBody
 	@GetMapping("/api/lawyer/listbycity")
 	public ResponseVo<List<LawyerVo>> listByCity(int cityId) {
