@@ -25,9 +25,6 @@
         </div>
         <div class="col-sm-10">
             <div class="row" id="i_header"></div>
-            <div class="pd15">
-                <button class="btn btn-yel" id="i_new">录入文章</button>
-            </div>
             <div id="i_mainbox">
             <script type="text/template" id="i_tpl">
                 <div class="panel panel-default text-center album_list">
@@ -35,25 +32,23 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <td>编号</td>
-                                    <td>标题</td>
-                                    <td>关键字</td>
-                                    <td>创建时间</td>
-                                    <td>更新时间</td>
-                                    <td>操作</td>
+                                    <td>姓名</td>
+                                    <td>待办任务</td>
+                                    <td>已完成任务</td>
+                                    <td>总任务金额</td>
+                                    <td>完成任务金额</td>
+                                    <td>评分</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <%_.each(result.r,function(item){%>
-                                <tr data-id="">
-                                    <td><%=item.id%></td>
-                                    <td><a href="new_article.html?id=<%=item.id%>" class="blue_link"><%=item.title%></a></td>
-                                    <td><%=item.tags.join(",")%></td>
-                                    <td><%=item.createTime%></td>
-                                    <td><%=item.updateTime%></td>
-                                    <td>
-                                        <a class="blue_link j_delete" data-id="<%=item.id%>">删除</a>
-                                    </td>
+                                <%_.each(result.r, function(item){%>
+                                <tr data-id="<%=item.id%>" class="<%=item.score>0&&item.score<=2?'yellow_row':''%>">
+                                    <td><%=item.name%></td>
+                                    <td><a href="user_orders.html?lid=<%=item.id%>&status=4" class="blue_link"><%=item.onProcessTask%></a></td>
+                                    <td><a href="user_orders.html?lid=<%=item.id%>&status=5" class="blue_link"><%=item.finishedTask%></a></td>
+                                    <td><%=item.totalMoney%></td>
+                                    <td><%=item.finishedMoney%></td>
+                                    <td><%=item.score%></td>
                                 </tr>
                                 <%})%>
                             </tbody>
@@ -62,10 +57,8 @@
                 </div>
             </script>
             </div>
-            <div id="i_page" class="text-center fr"></div>
         </div>
     </div>
-    <script src="js/include.js?ver=20170709222333" type="text/javascript"></script>
 </body>
-
+<script src="js/include.js?ver=20170709222333" type="text/javascript"></script>
 </html>
