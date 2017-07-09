@@ -38,7 +38,7 @@ define(['component/header', 'ajaxhelper', 'utility','lib/MD5'], function (header
             if(util.isLawyer()){
                 window.location = "lawyer_home.html";
             }else{
-                window.location = "user_management.html";  
+                window.location = "invest_orders.html";  
             }
             
         }
