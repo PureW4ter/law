@@ -33,6 +33,7 @@ public class LawyerController extends BaseController {
 	@Autowired
 	private LawyerService lawyerService;
 
+	@AuthCheck(privileges = { "lawyer" })
 	@ResponseBody
 	@GetMapping("/api/lawyer/self")
 	public ResponseVo<List<LawyerVo>> self() {
