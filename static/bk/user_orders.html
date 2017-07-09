@@ -59,7 +59,9 @@
                                                         <%}else{%>
                                                             <a class="blue_link j_assign" data-city="<%=item.cityId%>">指派</a>
                                                         <%}%>
-                                                    <%}%>
+                                                    <%}else{%>
+														<%=item.lawyerName%>
+													<%}%>
                                                 </td>
                                             </tr>
                                             <%})%>
@@ -104,7 +106,9 @@
                                                         <%}else{%>
                                                             <a class="blue_link j_assign" data-city="<%=item.cityId%>">指派</a>
                                                         <%}%>
-                                                    <%}%>
+                                                    <%}else{%>
+														<%=item.lawyerName%>
+													<%}%>
                                                 </td>
                                             </tr>
                                             <%})%>
