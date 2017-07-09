@@ -28,10 +28,34 @@ import com.jfzy.web.vo.ResponseVo;
 
 @AuthCheck(privileges = { "admin" })
 @RestController
-public class LawyerController {
+public class LawyerController extends BaseController {
 
 	@Autowired
 	private LawyerService lawyerService;
+
+	@ResponseBody
+	@GetMapping("/api/lawyer/self")
+	public ResponseVo<List<LawyerVo>> self() {
+		if (!isLawyer()) {
+			return new ResponseVo<List<LawyerVo>>(ResponseStatusEnum.BAD_REQUEST.getCode(), "当前用户不是律师", null);
+		}
+
+		int lawyerId = getAuthInfo().getUserId();
+		LawyerBo lawyer = lawyerService.getLawyerById(lawyerId);
+		if (lawyer == null) {
+			return new ResponseVo<List<LawyerVo>>(ResponseStatusEnum.BAD_REQUEST.getCode(), "律师不存在", null);
+		}
+
+		List<LawyerBo> values = new ArrayList<LawyerBo>();
+		values.add(lawyer);
+		List<LawyerVo> resultUsers = new ArrayList<LawyerVo>(values.size());
+		for (LawyerBo bo : values) {
+			// 不显示密码
+			bo.setPassword("");
+			resultUsers.add(boToVo(bo));
+		}
+		return new ResponseVo<List<LawyerVo>>(ResponseStatusEnum.SUCCESS.getCode(), null, resultUsers);
+	}
 
 	@ResponseBody
 	@GetMapping("/api/lawyer/list")
