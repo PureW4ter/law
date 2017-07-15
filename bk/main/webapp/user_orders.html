@@ -36,22 +36,23 @@
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
+                                                <td>序号</td>
                                                 <td>订单编号</td>
-                                                <td>提交日期</td>
                                                 <td>订单类型</td>
-                                                <td>用户电话</td>
                                                 <td>订单状态</td>
+                                                <%if(showLawyer){%>
                                                 <td>责任律师</td>
+                                                <%}%>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%_.each(result.r, function(item){%>
+                                            <%_.each(result.r, function(item, index){%>
                                             <tr data-id="<%=item.id%>">
+                                                <td><%=index+start%></td>
                                                 <td><a href="zixun_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
-                                                <td><%=item.createTime%></td>
                                                 <td><%=item.productName%></td>
-                                                <td><%=item.userPhoneNum%></td>
                                                 <td><%=item.statusDesc%></td>
+                                                <%if(showLawyer){%>
                                                 <td>
                                                     <%if(item.status==3 || item.status==4){%>
                                                         <%if(!!item.lawyerName){%>
@@ -63,6 +64,7 @@
 														<%=item.lawyerName%>
 													<%}%>
                                                 </td>
+                                                <%}%>
                                             </tr>
                                             <%})%>
                                         </tbody>
@@ -79,26 +81,23 @@
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
+                                                <td>序号</td>
                                                 <td>订单编号</td>
-                                                <td>产品名称</td>
-                                                <td>提交日期</td>
-                                                <td>用户电话</td>
-                                                <td>电话截止日期</td>
-                                                <td>书面截止日期</td>
+                                                <td>订单类型</td>
                                                 <td>订单状态</td>
+                                                <%if(showLawyer){%>
                                                 <td>责任律师</td>
+                                                <%}%>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%_.each(result.r, function(item){%>
+                                            <%_.each(result.r, function(item, index){%>
                                             <tr data-id="<%=item.id%>">
+                                                <td><%=index+start%></td>
                                                 <td><a href="diaocha_reply.html?id=<%=item.id%>" class="blue_link"><%=item.orderCode%></a></td>
                                                 <td><%=item.productName%></td>
-                                                <td><%=item.createTime%></td>
-                                                <td><%=item.userPhoneNum%></td>
-                                                <td><%=item.phoneEndTime%></td>
-                                                <td><%=item.endTime%></td>
                                                 <td><%=item.statusDesc%></td>
+                                                <%if(showLawyer){%>
                                                 <td>
                                                     <%if(item.status==3 || item.status==4){%>
                                                         <%if(!!item.lawyerName){%>
@@ -110,6 +109,7 @@
 														<%=item.lawyerName%>
 													<%}%>
                                                 </td>
+                                                <%}%>
                                             </tr>
                                             <%})%>
                                         </tbody>

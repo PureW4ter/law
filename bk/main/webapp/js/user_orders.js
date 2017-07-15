@@ -7,7 +7,12 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
                 header.initialize("i_header", "用户订单");
             }else{
                 nav_bar.initialize("i_navbar", 4);
-                header.initialize("i_header", "律师订单");
+                if(util.getQueryParameter("status") == 4){
+                    header.initialize("i_header", util.getQueryParameter("n")+"的待办任务");
+                }else{
+                    header.initialize("i_header", util.getQueryParameter("n")+"的已完成任务");
+                }
+                
             }
 
             this.mainBox1 = $('#i_mainbox1');
@@ -48,11 +53,12 @@ define(['component/nav_bar','component/header', 'ajaxhelper', 'utility'], functi
             
         },
         _render1: function (data) {
-            this.mainBox1.html(this.tplFun1({"result":data}));
+            var showLawyer = util.getQueryParameter("uid")?true:false;
+            this.mainBox1.html(this.tplFun1({"result":data, "showLawyer": showLawyer, "start":1}));
             this._registEvent();
         },
         _render2: function (data) {
-            this.mainBox2.html(this.tplFun2({"result":data}));
+            this.mainBox2.html(this.tplFun2({"result":data, "showLawyer": showLawyer, "start":1}));
             this._registEvent();
         },
         _registEvent: function () {
