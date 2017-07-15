@@ -331,10 +331,7 @@ public class OrderController extends BaseController {
 		lawyerReplyService.createReply(bo, vo.isTemp());
 		lawyerReplyService.addReplyPhotos(vo.getPicList(), vo.getOrderId());
 		if (!vo.isNeedConfirm()) {
-			orderService.updateOrderStatus(bo.getOrderId(), OrderStatusEnum.FINISHED.getId());
-			lawyerService.updateFinishedTask(1, obo.getLawyerId());
-			lawyerService.updateOnProcessTask(-1, obo.getLawyerId());
-			notifyService.completeNotify(bo.getOrderId());
+			lawyerReplyService.confirmReply(obo.getId());
 		}
 
 		return new ResponseVo<Object>(ResponseStatusEnum.SUCCESS.getCode(), null, null);
