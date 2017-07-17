@@ -1,0 +1,1 @@
+define(["component/nav_bar","component/header","ajaxhelper","utility"],function(e,t,n,r){var i={initialize:function(){e.initialize("i_navbar",1),t.initialize("i_header","登录成功")}};return i});
